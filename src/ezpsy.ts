@@ -38,7 +38,7 @@ class Ezpsy {
     id: number
     dom: HTMLElement
     ctx: CanvasRenderingContext2D
-    cStyle: canvasStyle
+    cStyle?: canvasStyle
 
     // Rectangle: Rectangle
 

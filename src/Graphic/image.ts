@@ -42,7 +42,6 @@ export class Img extends Elements{
         name: "img" + nameId.toString(),
         graphicId: nameId
     }
-    shape: ImgShape
     Img?: any
     ImgData?: ImageData
     IsChange?: boolean

@@ -20,7 +20,6 @@ export class Polygon extends Elements{
         name: "polygon" + nameId.toString(),
         graphicId: nameId
     }
-    shape: PolygonShape
     constructor(opts: PolygonOpts){
         super()
         this.shape = opts.shape;

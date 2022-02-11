@@ -22,7 +22,6 @@ export class Text extends Elements{
         name: "text" + nameId.toString(),
         graphicId: nameId
     }
-    shape: TextShape
     constructor(opts: TextOpts){
         super()
         this.shape = opts.shape;

@@ -20,7 +20,7 @@ export class Circle extends Elements{
         name: "circle" + nameId.toString(),
         graphicId: nameId
     }
-    shape: CircleShape
+    declare shape: CircleShape
     constructor(opts: CircleOpts){
         super()
         this.shape = opts.shape;

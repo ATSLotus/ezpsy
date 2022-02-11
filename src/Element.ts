@@ -2,7 +2,7 @@ import { Rectangle } from './Graphic/rectangle'
 import { Shape,Style} from './DataType/dataType'
 
 export class Elements{
-    shape: Shape
+    shape?: Shape
     style?: Style 
     constructor(){
 

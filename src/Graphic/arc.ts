@@ -23,7 +23,6 @@ export class Arc extends Elements{
         name: "arc" + nameId.toString(),
         graphicId: nameId
     }
-    shape: ArcShape
     constructor(opts: ArcOpts){
         super()
         this.shape = opts.shape;

@@ -1,0 +1,24 @@
+{
+  "name": "ezpsy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node_modules/.bin/rollup -c ./build/rollup.config.prod.js",
+    "dev": "node_modules/.bin/rollup -w -c ./build/rollup.config.dev.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-buble": "^0.21.3",
+    "@rollup/plugin-typescript": "^8.3.0",
+    "rollup": "^2.63.0",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-uglify": "^6.0.4",
+    "typescript": "^4.5.4"
+  }
+}

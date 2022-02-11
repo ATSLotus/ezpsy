@@ -24,124 +24,48 @@ The library for ezpsy.
 	  	- 选择目标缓冲区
 	- 矩形操作类型（page122 in psy）
 		- 矩形拼接 two canvas zrender	**--
-			- AdjoinRect(fixedRect,rect,fixedStyle?)
-				- 矩形拼接 fixedRect基准矩形 rect待拼接矩形 fixedStyle拼接形式
-				- 返回待拼接矩形拼接后的新矩形
-				- fixedStyle 不区分字母大小写
-					- 左: 1,left,rectleft,l
-					- 上: 2,top,recttop,t
-					- 右: 3,right,rectright,r
-					- 下: 4,bottom,rectbottom,b
 		- 矩形对齐 位置定义				**--
-			- AlignRect(fixedRect,rect,side0,side1)
-				- 矩形对齐 fixedRect基准矩形 rect待对齐矩形 fixedStyle对齐形式
-				- 返回待对齐矩形对齐后的新矩形
-				- fixedStyle 不区分字母大小写
-					- 中: 0,center,rectcenter,c
-					- 左: 1,left,rectleft,l
-					- 上: 2,top,recttop,t
-					- 右: 3,right,rectright,r
-					- 下: 4,bottom,rectbottom,b
 		- 创建矩形阵列 					**--
-			- ArrangeRects(n,[xNumber,yNumber],windowRect,style)
-				- 创建矩形阵列  windowRect窗口矩阵  style排列方式
-				- n为阵列数,xNumber为将窗口矩阵分为几行,yNumber为将窗口矩阵分为几列
-				- style
-					- 0: 从左到右排列
-					- 1: 从右到左排列
 		- 矩形居中至某矩形或某点			**--
-			- CenterRect(fixedRect,rect)
-				- 移动矩形至某矩形中心 fixedRect基准矩形 rect待操作矩形
-				- 返回操作后的新矩形
-			- CenterRectOnPoint(rect,[x,y])
-				- 移动矩形至某点
-				- 返回操作后的新矩形
 		- 矩形重叠区域					**--
-			- ClipRect(rect0,rect1)
-				- 矩形重叠区域
 		- 矩形缩放	two改变矩形长宽		**--
-			- GrowRect(el,h,v)
-				- 正放负缩
-				- h控制水平方向,v控制竖直方向
-			- InsetRect(el,h,v)
-				- 正缩负放
-				- h控制水平方向,v控制竖直方向
-			- ScaleRect(el,h,v)
-				- 比例缩放
-				- h控制水平方向,v控制竖直方向
 		- 矩形是否为空					**--
-			- IsEmptyRect(rect)
-				- 判断矩阵是否为空
-				- 空则返回false,否则返回true
 		- 点是否在矩形内					**--
-			- IsInRect([x,y],rect)
-				- 判断点是否在矩形内
-				- 在矩形内返回true,否则返回false
 		- 矩形平移	two改变中心点位置		**--
-			- OffsetRect(rect,[x,y])
-				- 矩形平移
 		- /*获取矩形中心*/				**--
-			- RectCenter(rect)
 		- 获取矩阵的边界矩形				**?
 		- 获取矩形的宽高					**--
-			- RectWidth(rect)
-				- 矩形宽
-			- RectHeight(rect)
-				- 矩形高
-			- RectSize(rect)
-				- 矩形宽高
 		- 获取矩形左右顶底边坐标			**--
-			- RectLeft(rect)
-				- 左边坐标
-			- RectRight(rect)
-				- 右边坐标
-			- RectTop(rect)
-				- 顶边坐标
-			- RectBotom(rect)
-				- 底边坐标
 		- 创建矩形						**--
-			- 创建Rectangle类型
-			let rect = new ezpsy.Rectangle({
-				shape: {
-					x: ,
-					y: ,
-					width: ,
-					height: 
-				}
-			})
-			ez.add(rect)
-			<!-- - 根据canvas画布绘制
-				- makeRectangle(rect,ctx) -->
 		- 获取矩形的最小边界区域 //两矩形的并集		?--
-			- UnionRect(rect0,rect1)
-	- 绘制类函数（page130 in psy）//
-		- 画点 two.makeCircle()			**--
-		- 画线 two.makeLine()			**--
-		- 画多条线或虚线 组的形式			**--
-		- 画弧、粗线弧、扇形 two.makeArcSegment()	**--
-		- 画矩形 two.makeRectangle()		**--
-		- 画椭圆 two.makeEllipse()		**--
-		- 画多边形 two.makePolygon() two.makeStar() two.makeLine()	**--
-	- 文本操作类函数（page138 in psy）//
+	- 绘制类函数（page130 in psy）
+		- 画点 two.makeCircle()			**
+		- 画线 two.makeLine()			**
+		- 画多条线或虚线 组的形式			**
+		- 画弧、粗线弧、扇形 two.makeArcSegment()	**
+		- 画矩形 two.makeRectangle()		**
+		- 画椭圆 two.makeEllipse()		**
+		- 画多边形 two.makePolygon() two.makeStar() two.makeLine()	**
+	- 文本操作类函数（page138 in psy）
 		- 文本模式
-		- 绘制文本 						**--
+		- 绘制文本 						**
 		- 绘制格式化文本	
 		- 文本格式（字体、大小、样式、边界、颜色、背景色）
-		- 字符拼接 						**--
-		- 字符前拼接						**--
-		- 字符串比较						**--
-		- 字符替换						**--
-	- 图片图像处理类函数（page144 in psy）//
-		- 图片文件读取					**--
+		- 字符拼接 						**
+		- 字符前拼接						**
+		- 字符串比较						**
+		- 字符替换						**	
+	- 图片图像处理类函数（page144 in psy）
+		- 图片文件读取					**
 		- 生成圆或椭圆					**
 		- 在圆上均匀采样
 		- 在球面上均匀采样
 		- 正余弦函数图像（光栅）			
-		- 拆解彩色图片数据成分	将图片色彩拆解为RGB		**--
-		- 合并彩色图片成分  		将RGB合并				**--
-		- 透明化处理  			设置透明度				**--
-		- 纹理预加载								--
-		- 纹理绘制，多个纹理						--	
+		- 拆解彩色图片数据成分	将图片色彩拆解为RGB		**
+		- 合并彩色图片成分  		将RGB合并				**
+		- 透明化处理  			设置透明度				**
+		- 纹理预加载
+		- 纹理绘制，多个纹理
 		- 窗口复制
 		- 窗口图像获取
 		- 图像绘制
@@ -170,19 +94,19 @@ The library for ezpsy.
 		- 创建音频播放器
 		- 创建录音机对象
 		- 获取音频设备信息
-	- 时间类函数（page171 in psy）	//未完成
-		- 启动计时器				--
-		- 读取计时器时间进度		 --
-		- 获取时间值				--
-		- 等待指定时间				--
-		- 暂停					   
+	- 时间类函数（page171 in psy）
+		- 启动计时器
+		- 读取计时器时间进度
+		- 获取时间值
+		- 等待指定时间
+		- 暂停
 		- 获取时间
 		- 等待时间
 		- 获取滴答间隔
 		- 获取时间函数的时间精度  微秒级
 		- 获取总线滴答数
 		- 获取总线滴答数时间精度
-	- 按键操作类函数（page174 in psy）//
+	- 按键操作类函数（page174 in psy）
 		- 按键判断	keypress.js 	**
 		- 按键名称与扫描码
 		- 等待按键行为			**
@@ -232,7 +156,7 @@ The library for ezpsy.
 		- 停止视频捕获
 		- 关闭视频捕获设备
 		- 视频捕获参数设置
-  	- 对话类函数（page199 in psy）sweetAlert2.js//
+  	- 对话类函数（page199 in psy）sweetAlert2.js
   		- 输入对话框			**
   		- 错误提示对话框		**
   		- 帮助对话框			**

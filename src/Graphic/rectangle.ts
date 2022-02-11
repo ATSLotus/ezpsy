@@ -1,8 +1,6 @@
-import { ENETDOWN } from 'constants'
 import { Shape,Style,nameStyle,Opts } from '../DataType/dataType'
 import { judgeChangeType,judgeSide,judgeStyle } from '../Judge/judge'
 import { Group } from '../Group/group'
-import { Class } from 'estree' 
 import {Elements} from '../Element'
 
 
@@ -70,7 +68,6 @@ export class Rectangle extends Elements{
         name: "rect" + nameId.toString(),
         graphicId: nameId
     }
-    shape: RectangleShape
     constructor(opts: RectangleOpts){
         super()
         this.shape = opts.shape;

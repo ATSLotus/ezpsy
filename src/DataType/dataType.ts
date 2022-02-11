@@ -1,6 +1,6 @@
 
 export interface Shape{  
-    x?: number
+    x?: number     //postion x
     y?: number
     xEnd?: number
     yEnd?: number
@@ -26,7 +26,6 @@ export interface Style {
     fill?: string 
     stroke?: string
     lineWidth?: number
-
     fontSize?: number|string
     fontStyle?: number|string
     fontWeight?: number|string
@@ -41,6 +40,6 @@ export interface nameStyle{
 }
 
 export interface Opts{
-    shape: Shape
+    shape?: Shape
     style?: Style
 }

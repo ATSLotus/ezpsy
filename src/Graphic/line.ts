@@ -22,7 +22,6 @@ export class Line extends Elements{
         name: "line" + nameId.toString(),
         graphicId: nameId
     }
-    shape: LineShape
     constructor(opts: LineOpts){
         super()
         this.shape = opts.shape;

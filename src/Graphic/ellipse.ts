@@ -3,10 +3,10 @@ import { Elements } from '../Element'
 import { judgeStyle } from '../Judge/judge'
 
 interface EllipseShape extends Shape{
-    x: number,
-    y: number,
-    ra: number,
-    rb: number
+    x?: number,
+    y?: number,
+    ra?: number,
+    rb?: number
     //ra为横轴长 rb为纵轴长
 }
 
@@ -22,7 +22,6 @@ export class Ellipse extends Elements{
         name: "ellipse" + nameId.toString(),
         graphicId: nameId
     }
-    shape: EllipseShape
     constructor(opts: EllipseOpts){
         super()
         this.shape = opts.shape;

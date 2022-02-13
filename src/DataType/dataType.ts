@@ -1,36 +1,36 @@
 
 export interface Shape{  
-    x?: number     //postion x
-    y?: number
-    xEnd?: number
-    yEnd?: number
-    width?: number
+    x?: number     //position x
+    y?: number     //position y
+    xEnd?: number  //line's position x
+    yEnd?: number  //line's position y
+    width?: number 
     height?: number
-    r?: number
-    ang_f?: number
-    ang_e?: number
-    ra?: number
-    rb?: number
-    xA?: number[]
-    yA?: number[]
-    text?: string
-    maxWidth?: number
-    img?: string
-    sx?: number
-    sy?: number
-    swidth?: number
-    sheight?: number
+    r?: number     //arc's radius
+    ang_f?: number //arc's first angle
+    ang_e?: number //arc's ended angle
+    ra?: number    //the horizontal axis of the ellipse long
+    rb?: number    //the vertical axis of the ellipse long
+    xA?: number[]  //polygon's position x(array)
+    yA?: number[]  //polygon's position y(array)
+    text?: string  //text's contant
+    maxWidth?: number //text's maximum length
+    img?: string   //img's src
+    sx?: number    //The x-coordinate position at which the cut began
+    sy?: number    //The y-coordinate position at which the cut began
+    swidth?: number //The width of the image being clipped
+    sheight?: number//The height of the image being clipped
 }
  
 export interface Style {
-    fill?: string 
-    stroke?: string
-    lineWidth?: number
-    fontSize?: number|string
-    fontStyle?: number|string
-    fontWeight?: number|string
-    fontVariant?: boolean|string
-    fontFamily?: string
+    fill?: string   //graphic's fill color
+    stroke?: string //graphic's stroke color
+    lineWidth?: number  //graphic stroke width
+    fontSize?: number|string  //text's size
+    fontStyle?: number|string //text's style
+    fontWeight?: number|string//text's weight
+    fontVariant?: boolean|string //text's variant
+    fontFamily?: string //text's family
 }
 
 export interface nameStyle{

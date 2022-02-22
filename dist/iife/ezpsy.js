@@ -1784,7 +1784,38 @@ var ezpsy = (function () {
                 return false;
             }
         }
-        else ;
+        // else if(el instanceof Polygon)
+        // {
+        //     let f = false
+        //     let [x0,y0] = [el.shape.xA,el.shape.yA]
+        //     let i,j
+        //     let s = 0
+        //     let l = el.shape.yA.length
+        //     let s0 = PolygonArea(x0,y0)
+        //     // for(c = false,i = -1,j = l - 1; ++i < l; j = i) 
+        //     //     ( (el.shape.yA[i] <= y && y < el.shape.yA[j]) || (el.shape.yA[j] <= y && y < el.shape.yA[i]) ) 
+        //     //     && (x < (el.shape.xA[j] - el.shape.xA[i]) * (y - el.shape.yA[i]) / (el.shape.yA[j] - el.shape.yA[i]) + el.shape.xA[i]) 
+        //     //     && (c = !c); 
+        //     // return c; 
+        //     // for(i = 0;i < l;i++)
+        //     // {
+        //     //     if(i === l-1)
+        //     //     {
+        //     //         j = 0
+        //     //     }
+        //     //     else{
+        //     //         j = i + 1
+        //     //     }
+        //     //     s += PolygonArea([x0[i],x0[j],x],[y0[i],y0[j],y])
+        //     // }
+        //     // console.dir(s)
+        //     // console.dir(s0)
+        //     // if(s === s0)
+        //     // {
+        //     //     f = true
+        //     // }
+        //     // return f
+        // }
     }
 
     function createCanvas(dom, cStyle) {

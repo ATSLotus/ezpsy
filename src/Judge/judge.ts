@@ -465,8 +465,55 @@ export function judgeIsInElement([x,y]: [number,number],el: Elements): boolean{
             return false
         }
     }
-    else if(el instanceof Polygon)
+    // else if(el instanceof Polygon)
+    // {
+    //     let f = false
+    //     let [x0,y0] = [el.shape.xA,el.shape.yA]
+    //     let i,j
+    //     let s = 0
+    //     let l = el.shape.yA.length
+    //     let s0 = PolygonArea(x0,y0)
+    //     // for(c = false,i = -1,j = l - 1; ++i < l; j = i) 
+    //     //     ( (el.shape.yA[i] <= y && y < el.shape.yA[j]) || (el.shape.yA[j] <= y && y < el.shape.yA[i]) ) 
+    //     //     && (x < (el.shape.xA[j] - el.shape.xA[i]) * (y - el.shape.yA[i]) / (el.shape.yA[j] - el.shape.yA[i]) + el.shape.xA[i]) 
+    //     //     && (c = !c); 
+    //     // return c; 
+    //     // for(i = 0;i < l;i++)
+    //     // {
+    //     //     if(i === l-1)
+    //     //     {
+    //     //         j = 0
+    //     //     }
+    //     //     else{
+    //     //         j = i + 1
+    //     //     }
+    //     //     s += PolygonArea([x0[i],x0[j],x],[y0[i],y0[j],y])
+    //     // }
+    //     // console.dir(s)
+    //     // console.dir(s0)
+    //     // if(s === s0)
+    //     // {
+    //     //     f = true
+    //     // }
+    //     // return f
+    // }
+}
+
+function PolygonArea(xA: Array<number>,yA: Array<number>): number{
+    let s = 0
+    let i,j
+    let l = xA.length
+    for(i = 0;i < l;i++)
     {
-        
+        if(i === l-1)
+        {
+            j = 0
+        }
+        else{
+            j = i + 1
+        }
+        s += (xA[i]*yA[j] - xA[j]*yA[i])
     }
+    s = Math.abs(s)
+    return s
 }

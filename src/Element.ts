@@ -20,6 +20,5 @@ export class Elements{
         //     console.dir('Error!')
         // }
         this.style.stroke = 'none'
-        
     }
 }

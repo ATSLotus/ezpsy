@@ -412,3 +412,61 @@ export function judgeImageShape_true(img: Img,ctx: CanvasRenderingContext2D){
         ctx.putImageData(img.ImgData,sh.x,sh.y,sh.sx,sh.sy,sh.swidth,sh.sheight)
     }
 }
+
+export function judgeIsInElement([x,y]: [number,number],el: Elements): boolean{
+    if(el instanceof Rectangle){
+        let [x0,y0,w0,h0] = [el.shape.x,el.shape.y,el.shape.width,el.shape.height]
+        if(x >= x0 && x<=x0+w0 && y >= y0 && y <= y0+h0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else if(el instanceof Circle)
+    {
+        let [x0,y0,r0] = [el.shape.x,el.shape.y,el.shape.r]
+        let r = Math.sqrt(Math.pow(x-x0,2) + Math.pow(y-y0,2))
+        if(r <= r0)
+        {
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    else if(el instanceof Line)
+    {
+        let [x0,y0,x1,y1] = [el.shape.x,el.shape.y,el.shape.xEnd,el.shape.yEnd]
+        let yt = (y1-y0)/(x1-x0) * (x - x0) + y0
+        if(y >= yt-15 && y <= yt+15) //扩大范围以便操作
+        {
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    else if(el instanceof Arc)
+    {
+        
+    }
+    else if(el instanceof Ellipse)
+    {
+        let [x0,y0,ra0,rb0] = [el.shape.x,el.shape.y,el.shape.ra,el.shape.rb]
+        let t = Math.pow(x-x0,2)/Math.pow(ra0,2) + Math.pow(y-y0,2)/Math.pow(rb0,2)
+        if(t <= 1)
+        {
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    else if(el instanceof Polygon)
+    {
+        
+    }
+}

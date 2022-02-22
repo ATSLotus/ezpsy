@@ -1742,6 +1742,50 @@ var ezpsy = (function () {
             ctx.putImageData(img.ImgData, sh.x, sh.y, sh.sx, sh.sy, sh.swidth, sh.sheight);
         }
     }
+    function judgeIsInElement([x, y], el) {
+        if (el instanceof Rectangle) {
+            let [x0, y0, w0, h0] = [el.shape.x, el.shape.y, el.shape.width, el.shape.height];
+            if (x >= x0 && x <= x0 + w0 && y >= y0 && y <= y0 + h0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else if (el instanceof Circle) {
+            let [x0, y0, r0] = [el.shape.x, el.shape.y, el.shape.r];
+            let r = Math.sqrt(Math.pow(x - x0, 2) + Math.pow(y - y0, 2));
+            if (r <= r0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else if (el instanceof Line) {
+            let [x0, y0, x1, y1] = [el.shape.x, el.shape.y, el.shape.xEnd, el.shape.yEnd];
+            let yt = (y1 - y0) / (x1 - x0) * (x - x0) + y0;
+            if (y >= yt - 15 && y <= yt + 15) //扩大范围以便操作
+             {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else if (el instanceof Arc) ;
+        else if (el instanceof Ellipse) {
+            let [x0, y0, ra0, rb0] = [el.shape.x, el.shape.y, el.shape.ra, el.shape.rb];
+            let t = Math.pow(x - x0, 2) / Math.pow(ra0, 2) + Math.pow(y - y0, 2) / Math.pow(rb0, 2);
+            if (t <= 1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else ;
+    }
 
     function createCanvas(dom, cStyle) {
         let c = document.createElement('canvas');
@@ -1827,10 +1871,54 @@ var ezpsy = (function () {
         });
     }
 
-    function KbCheck(key, Func) {
+    function KbWait(key, Func) {
         document.onkeydown = function (event) {
             var e = event || window.event || arguments.callee.caller.arguments[0];
             if (e && e.keyCode === key) {
+                Func();
+            }
+        };
+    }
+    function KbName(key) {
+        let res;
+        if (typeof key === 'string') {
+            res = key.charCodeAt(0);
+        }
+        else {
+            res = String.fromCharCode(key);
+        }
+        console.dir(res);
+        return res;
+    }
+    function KbPressWait(key, Func) {
+        document.onkeydown = function (event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode === key) {
+                Func();
+            }
+        };
+    }
+    function KbReleaseWait(key, Func) {
+        document.onkeyup = function (event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode === key) {
+                Func();
+            }
+        };
+    }
+    function GetClick(el, Func) {
+        document.onmousedown = function (event) {
+            let e = event || window.event || arguments.callee.caller.arguments[0];
+            let x, y;
+            if (e.pageX || e.pageY) {
+                x = e.pageX;
+                y = e.pageY;
+            }
+            console.dir(x);
+            console.dir(y);
+            let f = judgeIsInElement([x, y], el);
+            // console.dir(f)
+            if (f === true) {
                 Func();
             }
         };
@@ -1948,7 +2036,11 @@ var ezpsy = (function () {
         GetSecs: GetSecs,
         WaitSecs: WaitSecs,
         delay_frame: delay_frame,
-        KbCheck: KbCheck
+        KbWait: KbWait,
+        KbName: KbName,
+        KbPressWait: KbPressWait,
+        KbReleaseWait: KbReleaseWait,
+        GetClick: GetClick
     });
 
     return EZPSY;

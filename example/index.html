@@ -10,7 +10,7 @@
     
     <script>
         let ez = ezpsy.init(document.getElementById("test"))
-        console.log(ez);
+        // console.log(ez);
         ez.setCanvasStyle({
             width: 1400,
             height: 1400
@@ -24,6 +24,22 @@
             height: 100
           }
         })
+        let ellipse = new ezpsy.Ellipse({
+          shape: {
+            x: 200,
+            y: 100,
+            ra: 200,
+            rb: 100
+          }
+        })
+        // ez.add(rect)
+        ez.add(ellipse)
+        let fun = function(){
+          console.dir('success')
+        }
+        ezpsy.GetClick(ellipse,fun)
+
+        // console.dir(ezpsy.KbName(67))
 
         // (async function(){
         //   time = ezpsy.Tic();
@@ -37,11 +53,13 @@
         //   a = ezpsy.Toc(time);
         //   console.dir(a)
 		    // }())
-        let test = function(){
-          console.dir('sucesss');
-          ez.add(rect)
-        }
-        ezpsy.KbCheck(13,test);
+        
+        // let test = function(){
+        //   console.dir('sucesss');
+        //   ez.add(rect)
+        //   console.dir(rect)
+        // }
+        // ezpsy.KbWait(13,test);
         
         
         

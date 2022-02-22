@@ -8,7 +8,8 @@
   },
   "scripts": {
     "build": "rm -rf dist/* && rollup -c",
-    "watch": "rm -rf dist/* && rollup -c -w"
+    "watch": "rm -rf dist/* && rollup -c -w",
+    "dev": "rm -rf dist/* && rollup -c -w"
   },
   "author": "",
   "license": "ISC",

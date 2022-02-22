@@ -440,14 +440,28 @@ export function judgeIsInElement([x,y]: [number,number],el: Elements): boolean{
     else if(el instanceof Line)
     {
         let [x0,y0,x1,y1] = [el.shape.x,el.shape.y,el.shape.xEnd,el.shape.yEnd]
-        let yt = (y1-y0)/(x1-x0) * (x - x0) + y0
-        if(y >= yt-15 && y <= yt+15) //扩大范围以便操作
+        if(x1 !== x0)
         {
-            return true
+            let yt = (y1-y0)/(x1-x0) * (x - x0) + y0
+            if(y >= yt-15 && y <= yt+15) //扩大范围以便操作
+            {
+                return true
+            }
+            else{
+                return false
+            }
         }
         else{
-            return false
+            let xt = (x1-x0)/(y1-y0) * (y - y0) + x0
+            if(y >= xt-15 && y <= xt+15) //扩大范围以便操作
+            {
+                return true
+            }
+            else{
+                return false
+            }
         }
+        
     }
     else if(el instanceof Arc)
     {
@@ -465,55 +479,55 @@ export function judgeIsInElement([x,y]: [number,number],el: Elements): boolean{
             return false
         }
     }
-    // else if(el instanceof Polygon)
-    // {
-    //     let f = false
-    //     let [x0,y0] = [el.shape.xA,el.shape.yA]
-    //     let i,j
-    //     let s = 0
-    //     let l = el.shape.yA.length
-    //     let s0 = PolygonArea(x0,y0)
-    //     // for(c = false,i = -1,j = l - 1; ++i < l; j = i) 
-    //     //     ( (el.shape.yA[i] <= y && y < el.shape.yA[j]) || (el.shape.yA[j] <= y && y < el.shape.yA[i]) ) 
-    //     //     && (x < (el.shape.xA[j] - el.shape.xA[i]) * (y - el.shape.yA[i]) / (el.shape.yA[j] - el.shape.yA[i]) + el.shape.xA[i]) 
-    //     //     && (c = !c); 
-    //     // return c; 
-    //     // for(i = 0;i < l;i++)
-    //     // {
-    //     //     if(i === l-1)
-    //     //     {
-    //     //         j = 0
-    //     //     }
-    //     //     else{
-    //     //         j = i + 1
-    //     //     }
-    //     //     s += PolygonArea([x0[i],x0[j],x],[y0[i],y0[j],y])
-    //     // }
-    //     // console.dir(s)
-    //     // console.dir(s0)
-    //     // if(s === s0)
-    //     // {
-    //     //     f = true
-    //     // }
-    //     // return f
-    // }
-}
-
-function PolygonArea(xA: Array<number>,yA: Array<number>): number{
-    let s = 0
-    let i,j
-    let l = xA.length
-    for(i = 0;i < l;i++)
+    else if(el instanceof Polygon)
     {
-        if(i === l-1)
+        let i = 0
+        let j = i + 1
+        let index = 0
+        let xt = new Array()
+        let yt = new Array()
+        let [x0,y0] = [el.shape.xA,el.shape.yA]
+        for(i = 0;i<el.shape.xA.length;i++)
         {
-            j = 0
+            if(i === el.shape.xA.length-1)
+            {
+                j = 0
+            }
+            else{
+                j = i + 1
+            }
+            if(y0[i] !== y0[j])
+            {
+                xt[index] = (x0[i]-x0[j])/(y0[i]-y0[j]) * (y - y0[i]) + x0[i]
+            }
+            else{
+                yt[index] = (y0[j]-y0[i])/(x0[j]-x0[i]) * (x - x0[i]) + y0[i]
+            }
+            if(x === xt[index])
+            {
+                return true
+            }
+            else if(xt[index] >= x){
+                index++
+            }
+        }
+        if(index%2===0)
+        {
+            return false
         }
         else{
-            j = i + 1
+            return true
         }
-        s += (xA[i]*yA[j] - xA[j]*yA[i])
     }
-    s = Math.abs(s)
-    return s
+    // else if(el instanceof Polygon)
+    // {
+    //     let c
+    //     let i,j
+    //     let l = el.shape.yA.length
+    //     for(c = false,i = -1,j = l - 1; ++i < l; j = i) 
+    //         ( (el.shape.yA[i] <= y && y < el.shape.yA[j]) || (el.shape.yA[j] <= y && y < el.shape.yA[i]) ) 
+    //         && (x < (el.shape.xA[j] - el.shape.xA[i]) * (y - el.shape.yA[i]) / (el.shape.yA[j] - el.shape.yA[i]) + el.shape.xA[i]) 
+    //         && (c = !c); 
+    //     return c; 
+    // }
 }

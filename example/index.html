@@ -9,12 +9,17 @@
     <!-- <img src="../img/OIP.png"> -->
     
     <script>
+        
         let ez = ezpsy.init(document.getElementById("test"))
         // console.log(ez);
         ez.setCanvasStyle({
             width: 1400,
             height: 1400
         })
+        let dlg = ezpsy.DlgInit(document.getElementById("test"))
+        dlg.helpdlg()
+        console.dir(dlg)
+        
 
         let rect = new ezpsy.Rectangle({
           shape:{

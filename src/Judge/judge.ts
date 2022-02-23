@@ -1,4 +1,5 @@
 import {canvasStyle} from '../Canvas/canvas'
+import { DivStyle } from '../Div/div'
 import { Rectangle,makeRectangle } from '../Graphic/rectangle'
 import { Group } from '../Group/group' 
 import { Elements } from '../Element'
@@ -9,6 +10,7 @@ import { Ellipse, makeEllipse } from '../Graphic/ellipse'
 import { makePolygon, Polygon } from '../Graphic/polygon'
 import { makeText, Text } from '../Graphic/text'
 import { Img, makeImg } from '../Graphic/image'
+import { contentStyle } from '../Dialogue/dialogue'
 
 export function judgeCanvasStyle(cStyle: canvasStyle):canvasStyle{
     if(!cStyle) 
@@ -27,6 +29,54 @@ export function judgeCanvasStyle(cStyle: canvasStyle):canvasStyle{
         cStyle.height = 400
     }
     return cStyle;
+}
+
+export function judgeDivStyle(dStyle: DivStyle): DivStyle{
+    if(!dStyle) 
+    {
+        dStyle = {
+            width: 400,
+            height: 260,
+            border: 'none',
+            borderRadius: '20px'
+        }
+    }
+    if(!dStyle.width)
+    {
+        dStyle.width = 400
+    }
+    if(!dStyle.height)
+    {
+        dStyle.height = 400
+    }
+    if(!dStyle.border)
+    {
+        dStyle.border = 'none'
+    }
+    if(!dStyle.borderRadius)
+    {
+        dStyle.borderRadius = '5px'
+    }
+    return dStyle;
+}
+
+export function judgeContentStyle(cStyle: contentStyle,title: string,content: string): contentStyle{
+    if(!cStyle)
+    {
+        cStyle = {
+            title: title,
+            content: content
+        }
+    }
+    if(!cStyle.title)
+    {
+        cStyle.title = title
+    }
+    if(!cStyle.content)
+    {
+        cStyle.content = content
+    }
+    return cStyle
 }
 
 // export function judgeStyle(style: Style){

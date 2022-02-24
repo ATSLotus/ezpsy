@@ -106,6 +106,7 @@ function createDlgTitle(dlg: Dialogue,conStyle: contentStyle,top: string){
     console.dir(title)
     title.dom.innerText = conStyle.title
     title.dom.style.fontSize = '26px'
+    title.dom.style.fontWeight = 'bold'
     title.dom.style.top = top
 }
 

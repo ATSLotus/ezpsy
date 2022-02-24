@@ -2136,6 +2136,7 @@ var ezpsy = (function () {
         console.dir(title);
         title.dom.innerText = conStyle.title;
         title.dom.style.fontSize = '26px';
+        title.dom.style.fontWeight = 'bold';
         title.dom.style.top = top;
     }
     function createDlgContent(dlg, conStyle, top) {

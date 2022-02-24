@@ -79,6 +79,17 @@ export function judgeContentStyle(cStyle: contentStyle,title: string,content: st
     return cStyle
 }
 
+export function judgeModel(model: string): [string,string]{
+    if(model === 'error')
+    {
+        return ["X",'red']
+    }
+    else if(model === 'help')
+    {
+        return ["!",'orange']
+    }
+}
+
 // export function judgeStyle(style: Style){
 //     if(!style)
 // }

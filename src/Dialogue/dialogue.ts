@@ -34,6 +34,10 @@ export class Dialogue{
         conStyle = ezJudge.judgeContentStyle(conStyle,"Quset Dialogue",'This is default error string!')
         createDlg(this,conStyle,['20px','70px','130px','210px'],"?",'grey',str);
     }
+    warndlg(conStyle?: contentStyle){
+        conStyle = ezJudge.judgeContentStyle(conStyle,'Warning Dialogue','This is default warning string!')
+        createDlg(this,conStyle,['20px','70px','130px','210px'],"!",'orange');
+    }
     remove(){
         let child = this.dom.lastElementChild
         while(child){
@@ -212,13 +216,14 @@ function createDlgBtn(dlg: Dialogue,BtnDiv: Content,str: string,status: boolean,
     btn.dom.style.fontSize = '22px'
     btn.dom.onmousedown = function(){
         (async function(){
+            dlg.statusValue = false
             btn.dom.style.background = '#eeeeee'
             btn.dom.style.boxShadow = '2px 2px 20px #008800'
             await delay_frame(10)
             dlg.remove()
             dlg.statusValue = status 
             await delay_frame(10)
-            console.dir(dlg.statusValue)
+            // console.dir(dlg.statusValue)
 		}())
     }
 }

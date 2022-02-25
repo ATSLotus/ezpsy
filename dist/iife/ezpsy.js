@@ -1456,14 +1456,23 @@ var ezpsy = (function () {
         if (!cStyle.content) {
             cStyle.content = content;
         }
+        if (!cStyle.btnStr) {
+            cStyle.btnStr = ['OK'];
+        }
         return cStyle;
     }
     function judgeModel(model) {
         if (model === 'error') {
-            return ["X", 'red'];
+            return ["X", 'red', 'Error Dialogue', 'This is default error string!'];
         }
         else if (model === 'help') {
-            return ["!", 'orange'];
+            return ["!", 'orange', 'Help Dialogue', 'This is default help string!'];
+        }
+        else if (model === 'quest') {
+            return ["?", 'grey', "Quset Dialogue", 'This is default error string!'];
+        }
+        else if (model === 'warn') {
+            return ["!", 'orange', 'Warning Dialogue', 'This is default warning string!'];
         }
     }
     // export function judgeStyle(style: Style){
@@ -2061,27 +2070,43 @@ var ezpsy = (function () {
             this.domParent = domParent;
             this.id = id++;
         }
-        errordlg(conStyle) {
-            conStyle = judgeContentStyle(conStyle, 'Error Dialogue', 'This is default error string!');
-            createDlg(this, conStyle, ['20px', '70px', '130px', '210px'], "X", 'red');
+        show(conStyle, func) {
+            if (!conStyle) {
+                conStyle = {
+                    type: 'help'
+                };
+            }
+            let [char, color, title, content] = judgeModel(conStyle.type);
+            conStyle = judgeContentStyle(conStyle, title, content);
+            if (func === undefined || func instanceof Function) {
+                func = function () {
+                    this.remove();
+                };
+            }
+            createDlg(this, conStyle, ['20px', '70px', '130px', '210px'], char, color, conStyle.btnStr, func);
+            // conStyle = ezJudge.judgeContentStyle(conStyle,)
         }
-        helpdlg(conStyle) {
-            conStyle = judgeContentStyle(conStyle, 'Help Dialogue', 'This is default help string!');
-            createDlg(this, conStyle, ['20px', '70px', '130px', '210px'], "!", 'orange');
-        }
-        msgbox(conStyle, model) {
-            conStyle = judgeContentStyle(conStyle, 'Error Dialogue', 'This is default error string!');
-            let [str, color] = judgeModel(model);
-            createDlg(this, conStyle, ['20px', '70px', '130px', '210px'], str, color);
-        }
-        questdlg(conStyle, str) {
-            conStyle = judgeContentStyle(conStyle, "Quset Dialogue", 'This is default error string!');
-            createDlg(this, conStyle, ['20px', '70px', '130px', '210px'], "?", 'grey', str);
-        }
-        warndlg(conStyle) {
-            conStyle = judgeContentStyle(conStyle, 'Warning Dialogue', 'This is default warning string!');
-            createDlg(this, conStyle, ['20px', '70px', '130px', '210px'], "!", 'orange');
-        }
+        // errordlg(conStyle?: contentStyle){
+        //     conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')
+        //     createDlg(this,conStyle,['20px','70px','130px','210px'],"X",'red');
+        // }
+        // helpdlg(conStyle?: contentStyle){
+        //     conStyle = ezJudge.judgeContentStyle(conStyle,'Help Dialogue','This is default help string!')
+        //     createDlg(this,conStyle,['20px','70px','130px','210px'],"!",'orange');
+        // }
+        // msgbox(conStyle?: contentStyle,model?: string){
+        //     conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')
+        //     let [str,color] = ezJudge.judgeModel(model)
+        //     createDlg(this,conStyle,['20px','70px','130px','210px'],str,color);
+        // }
+        // questdlg(conStyle?: contentStyle,str?: Array<string>){
+        //     conStyle = ezJudge.judgeContentStyle(conStyle,"Quset Dialogue",'This is default error string!')
+        //     createDlg(this,conStyle,['20px','70px','130px','210px'],"?",'grey',str);
+        // }
+        // warndlg(conStyle?: contentStyle){
+        //     conStyle = ezJudge.judgeContentStyle(conStyle,'Warning Dialogue','This is default warning string!')
+        //     createDlg(this,conStyle,['20px','70px','130px','210px'],"!",'orange');
+        // }
         remove() {
             let child = this.dom.lastElementChild;
             while (child) {
@@ -2112,7 +2137,7 @@ var ezpsy = (function () {
         let dlg = new Dialogue(dom, dStyle);
         return dlg;
     }
-    function createDlg(dlg, conStyle, top, imgStr, imgColor, str) {
+    function createDlg(dlg, conStyle, top, imgStr, imgColor, str, func) {
         dlg.dom.style.visibility = 'visible';
         createDlgTitle(dlg, conStyle, top[0]);
         createDlgContent(dlg, conStyle, top[1]);
@@ -2124,11 +2149,11 @@ var ezpsy = (function () {
                 createDlgImg0(dlg, conStyle, top[2]);
             }
             // createDlgConfirm(dlg,conStyle,top[3],false)
-            createDlgBtnDiv(dlg, conStyle, top[3], str);
+            createDlgBtnDiv(dlg, conStyle, top[3], str, func);
         }
         else if (top.length === 3) {
             // createDlgConfirm(dlg,conStyle,top[2],false)
-            createDlgBtnDiv(dlg, conStyle, top[2], str);
+            createDlgBtnDiv(dlg, conStyle, top[2], str, func);
         }
     }
     function createDlgTitle(dlg, conStyle, top) {
@@ -2137,7 +2162,7 @@ var ezpsy = (function () {
             height: 50
         };
         let title = new Content(dlg.dom, titleStyle);
-        console.dir(title);
+        // console.dir(title)
         title.dom.innerText = conStyle.title;
         title.dom.style.fontSize = '26px';
         title.dom.style.fontWeight = 'bold';
@@ -2190,20 +2215,27 @@ var ezpsy = (function () {
         img.src = conStyle.img;
         imgDiv.dom.append(img);
     }
-    function createDlgBtnDiv(dlg, conStyle, top, str) {
+    function createDlgBtnDiv(dlg, conStyle, top, str, func) {
         let BtnDivStyle = {
             width: dlg.dStyle.width,
             height: 35
         };
         let BtnDiv = new Content(dlg.dom, BtnDivStyle);
+        let fun = new Array();
         BtnDiv.dom.style.top = top;
         BtnDiv.dom.style.display = 'flex';
+        if (func instanceof Function) {
+            fun[0] = func;
+        }
+        else {
+            fun = func;
+        }
         if (!str) {
             str = ['OK'];
         }
         if (str.length === 1) {
             BtnDiv.dom.style.justifyContent = 'center';
-            createDlgBtn(dlg, BtnDiv, str[0], false, 120);
+            createDlgBtn(dlg, BtnDiv, str[0], false, 120, fun[0]);
         }
         else {
             BtnDiv.dom.style.justifyContent = 'space-evenly';
@@ -2215,11 +2247,11 @@ var ezpsy = (function () {
                 else {
                     f = false;
                 }
-                createDlgBtn(dlg, BtnDiv, str[i], f, 100);
+                createDlgBtn(dlg, BtnDiv, str[i], f, 100, fun[i]);
             }
         }
     }
-    function createDlgBtn(dlg, BtnDiv, str, status, width) {
+    function createDlgBtn(dlg, BtnDiv, str, status, width, func) {
         let btnStyle = {
             width: width,
             height: 35
@@ -2229,7 +2261,7 @@ var ezpsy = (function () {
         btn.dom.style.background = 'white';
         btn.dom.style.borderRadius = '10px';
         btn.dom.style.boxShadow = '2px 2px 20px #888888';
-        btn.dom.innerText = str;
+        btn.dom.innerHTML = str;
         btn.dom.style.fontSize = '22px';
         btn.dom.onmousedown = function () {
             (async function () {
@@ -2237,7 +2269,8 @@ var ezpsy = (function () {
                 btn.dom.style.background = '#eeeeee';
                 btn.dom.style.boxShadow = '2px 2px 20px #008800';
                 await delay_frame(10);
-                dlg.remove();
+                // dlg.remove()
+                func();
                 dlg.statusValue = status;
                 await delay_frame(10);
                 // console.dir(dlg.statusValue)

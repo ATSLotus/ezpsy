@@ -17,8 +17,14 @@
             height: 1400
         })
         let dlg = ezpsy.DlgInit(document.getElementById("test"))
-        dlg.questdlg({},['ok','no','cancel'])
-        console.dir(dlg)
+        // dlg.questdlg({},['ok','no','cancel'])
+        dlg.show({
+          type: 'error',
+          title: 'Err',
+          content: 'no!',
+          btnStr: ['confirm','cancle']
+        })
+        // console.dir(dlg)
         
 
         let rect = new ezpsy.Rectangle({

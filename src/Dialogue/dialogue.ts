@@ -17,27 +17,45 @@ export class Dialogue{
         this.domParent = domParent
         this.id = id++
     }
-    errordlg(conStyle?: contentStyle){
-        conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')
-        createDlg(this,conStyle,['20px','70px','130px','210px'],"X",'red');
+    show(conStyle: contentStyle,func: Function){
+        if(!conStyle)
+        {
+            conStyle = {
+                type: 'help'
+            }
+        }
+        let [char,color,title,content] = ezJudge.judgeModel(conStyle.type)
+        conStyle = ezJudge.judgeContentStyle(conStyle,title,content)
+        if(func === undefined || func instanceof Function)
+        {
+            func = function(){
+                this.remove();
+            }
+        }
+        createDlg(this,conStyle,['20px','70px','130px','210px'],char,color,conStyle.btnStr,func)
+        // conStyle = ezJudge.judgeContentStyle(conStyle,)
     }
-    helpdlg(conStyle?: contentStyle){
-        conStyle = ezJudge.judgeContentStyle(conStyle,'Help Dialogue','This is default help string!')
-        createDlg(this,conStyle,['20px','70px','130px','210px'],"!",'orange');
-    }
-    msgbox(conStyle?: contentStyle,model?: string){
-        conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')
-        let [str,color] = ezJudge.judgeModel(model)
-        createDlg(this,conStyle,['20px','70px','130px','210px'],str,color);
-    }
-    questdlg(conStyle?: contentStyle,str?: Array<string>){
-        conStyle = ezJudge.judgeContentStyle(conStyle,"Quset Dialogue",'This is default error string!')
-        createDlg(this,conStyle,['20px','70px','130px','210px'],"?",'grey',str);
-    }
-    warndlg(conStyle?: contentStyle){
-        conStyle = ezJudge.judgeContentStyle(conStyle,'Warning Dialogue','This is default warning string!')
-        createDlg(this,conStyle,['20px','70px','130px','210px'],"!",'orange');
-    }
+    // errordlg(conStyle?: contentStyle){
+    //     conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')
+    //     createDlg(this,conStyle,['20px','70px','130px','210px'],"X",'red');
+    // }
+    // helpdlg(conStyle?: contentStyle){
+    //     conStyle = ezJudge.judgeContentStyle(conStyle,'Help Dialogue','This is default help string!')
+    //     createDlg(this,conStyle,['20px','70px','130px','210px'],"!",'orange');
+    // }
+    // msgbox(conStyle?: contentStyle,model?: string){
+    //     conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')
+    //     let [str,color] = ezJudge.judgeModel(model)
+    //     createDlg(this,conStyle,['20px','70px','130px','210px'],str,color);
+    // }
+    // questdlg(conStyle?: contentStyle,str?: Array<string>){
+    //     conStyle = ezJudge.judgeContentStyle(conStyle,"Quset Dialogue",'This is default error string!')
+    //     createDlg(this,conStyle,['20px','70px','130px','210px'],"?",'grey',str);
+    // }
+    // warndlg(conStyle?: contentStyle){
+    //     conStyle = ezJudge.judgeContentStyle(conStyle,'Warning Dialogue','This is default warning string!')
+    //     createDlg(this,conStyle,['20px','70px','130px','210px'],"!",'orange');
+    // }
     remove(){
         let child = this.dom.lastElementChild
         while(child){
@@ -49,9 +67,11 @@ export class Dialogue{
 }
 
 export interface contentStyle{
+    type?: string
     title?: string
     content?: string  
     img?: string
+    btnStr?: Array<string>
 }
 
 class Content{
@@ -77,7 +97,7 @@ export function DlgInit(dom: HTMLElement,dStyle?: DivStyle) {
     return dlg;
 }
 
-function createDlg(dlg: Dialogue,conStyle: contentStyle,top: Array<string>,imgStr?: string,imgColor?: string,str?: Array<string>){
+function createDlg(dlg: Dialogue,conStyle: contentStyle,top: Array<string>,imgStr?: string,imgColor?: string,str?: Array<string>,func?: Function){
     dlg.dom.style.visibility = 'visible'
     createDlgTitle(dlg,conStyle,top[0])
     createDlgContent(dlg,conStyle,top[1])
@@ -91,12 +111,12 @@ function createDlg(dlg: Dialogue,conStyle: contentStyle,top: Array<string>,imgSt
             createDlgImg0(dlg,conStyle,top[2],imgStr,imgColor)
         }
         // createDlgConfirm(dlg,conStyle,top[3],false)
-        createDlgBtnDiv(dlg,conStyle,top[3],str)
+        createDlgBtnDiv(dlg,conStyle,top[3],str,func)
     }
     else if(top.length === 3)
     {
         // createDlgConfirm(dlg,conStyle,top[2],false)
-        createDlgBtnDiv(dlg,conStyle,top[2],str)
+        createDlgBtnDiv(dlg,conStyle,top[2],str,func)
     }
     
 }
@@ -107,7 +127,7 @@ function createDlgTitle(dlg: Dialogue,conStyle: contentStyle,top: string){
         height: 50
     }
     let title = new Content(dlg.dom,titleStyle)
-    console.dir(title)
+    // console.dir(title)
     title.dom.innerText = conStyle.title
     title.dom.style.fontSize = '26px'
     title.dom.style.fontWeight = 'bold'
@@ -168,14 +188,22 @@ function createDlgImg0(dlg: Dialogue,conStyle: contentStyle,top: string,str: str
     imgDiv.dom.append(img)
 }
 
-function createDlgBtnDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str?: Array<string>){
+function createDlgBtnDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str?: Array<string>,func?: Function|Array<Function>){
     let BtnDivStyle = {
         width: dlg.dStyle.width,
         height: 35
     }
     let BtnDiv = new Content(dlg.dom,BtnDivStyle)
+    let fun = new Array()
     BtnDiv.dom.style.top = top
     BtnDiv.dom.style.display = 'flex'
+    if(func instanceof Function)
+    {
+        fun[0] = func
+    }
+    else{
+        fun = func
+    }
     if(!str)
     {
         str = ['OK']
@@ -183,7 +211,7 @@ function createDlgBtnDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str?: 
     if(str.length === 1)
     {
         BtnDiv.dom.style.justifyContent = 'center'
-        createDlgBtn(dlg,BtnDiv,str[0],false,120)
+        createDlgBtn(dlg,BtnDiv,str[0],false,120,fun[0])
     }
     else{
         BtnDiv.dom.style.justifyContent = 'space-evenly'
@@ -197,12 +225,12 @@ function createDlgBtnDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str?: 
             else{
                 f = false
             }
-            createDlgBtn(dlg,BtnDiv,str[i],f,100)
+            createDlgBtn(dlg,BtnDiv,str[i],f,100,fun[i])
         }
     }
 }
 
-function createDlgBtn(dlg: Dialogue,BtnDiv: Content,str: string,status: boolean,width: number){
+function createDlgBtn(dlg: Dialogue,BtnDiv: Content,str: string,status: boolean,width: number,func: Function){
     let btnStyle = {
         width: width,
         height: 35
@@ -212,7 +240,7 @@ function createDlgBtn(dlg: Dialogue,BtnDiv: Content,str: string,status: boolean,
     btn.dom.style.background = 'white'
     btn.dom.style.borderRadius = '10px'
     btn.dom.style.boxShadow = '2px 2px 20px #888888'
-    btn.dom.innerText = str
+    btn.dom.innerHTML = str
     btn.dom.style.fontSize = '22px'
     btn.dom.onmousedown = function(){
         (async function(){
@@ -220,7 +248,8 @@ function createDlgBtn(dlg: Dialogue,BtnDiv: Content,str: string,status: boolean,
             btn.dom.style.background = '#eeeeee'
             btn.dom.style.boxShadow = '2px 2px 20px #008800'
             await delay_frame(10)
-            dlg.remove()
+            // dlg.remove()
+            func()
             dlg.statusValue = status 
             await delay_frame(10)
             // console.dir(dlg.statusValue)

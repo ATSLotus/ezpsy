@@ -76,17 +76,28 @@ export function judgeContentStyle(cStyle: contentStyle,title: string,content: st
     {
         cStyle.content = content
     }
+    if(!cStyle.btnStr){
+        cStyle.btnStr = ['OK']
+    }
     return cStyle
 }
 
-export function judgeModel(model: string): [string,string]{
+export function judgeModel(model: string): [string,string,string,string]{
     if(model === 'error')
     {
-        return ["X",'red']
+        return ["X",'red','Error Dialogue','This is default error string!']
     }
     else if(model === 'help')
     {
-        return ["!",'orange']
+        return ["!",'orange','Help Dialogue','This is default help string!']
+    }
+    else if(model === 'quest')
+    {
+        return ["?",'grey',"Quset Dialogue",'This is default error string!']
+    }
+    else if(model === 'warn')
+    {
+        return ["!",'orange','Warning Dialogue','This is default warning string!']
     }
 }
 

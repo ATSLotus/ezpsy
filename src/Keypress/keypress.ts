@@ -51,8 +51,8 @@ export function GetClick(el: Elements,Func: Function){
             x = e.pageX
             y = e.pageY
         }
-        console.dir(x)
-        console.dir(y)
+        // console.dir(x)
+        // console.dir(y)
         let f = judgeIsInElement([x,y],el)
         // console.dir(f)
         if(f === true)

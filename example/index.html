@@ -17,36 +17,43 @@
             height: 1400
         })
         let dlg = ezpsy.DlgInit(document.getElementById("test"))
+        // console.dir(dlg)
         // dlg.questdlg({},['ok','no','cancel'])
+        // dlg.show({
+        //   type: 'error',
+        //   title: 'Err',
+        //   content: 'no!',
+        //   btnStr: ['confirm','cancle']
+        // })
         dlg.show({
-          type: 'error',
-          title: 'Err',
-          content: 'no!',
-          btnStr: ['confirm','cancle']
+          btnStr: ['ok','no']
+        }).then(value =>{
+          console.dir(value)
+          console.dir('yes')
         })
         // console.dir(dlg)
         
 
-        let rect = new ezpsy.Rectangle({
-          shape:{
-            x: 100,
-            y: 100,
-            width: 100,
-            height: 100
-          }
-        })
-        let ellipse = new ezpsy.Polygon({
-          shape: {
-            xA: [200,200,300,400,500],
-            yA: [100,300,200,400,100]
-          }
-        })
-        // ez.add(rect)
-        ez.add(ellipse)
-        let fun = function(){
-          console.dir('success')
-        }
-        ezpsy.GetClick(ellipse,fun)
+        // let rect = new ezpsy.Rectangle({
+        //   shape:{
+        //     x: 100,
+        //     y: 100,
+        //     width: 100,
+        //     height: 100
+        //   }
+        // })
+        // let ellipse = new ezpsy.Polygon({
+        //   shape: {
+        //     xA: [200,200,300,400,500],
+        //     yA: [100,300,200,400,100]
+        //   }
+        // })
+        // // ez.add(rect)
+        // ez.add(ellipse)
+        // let fun = function(){
+        //   console.dir('success')
+        // }
+        // ezpsy.GetClick(ellipse,fun)
 
         // console.dir(ezpsy.KbName(67))
 

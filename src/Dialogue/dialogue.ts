@@ -9,31 +9,74 @@ export class Dialogue{
     id: number
     dom: HTMLElement
     domParent: HTMLElement
+    conT: Content
     dStyle?: DivStyle
     statusValue: boolean    //按钮点击状态 true为选择是 false为选择否或取消
     constructor(domParent: HTMLElement,dStyle?: DivStyle){
         [this.dom,this.dStyle] = ezDiv.createDiv(domParent,dStyle)
+        let conT = new Content(this.dom,this.dStyle)
+        this.conT = conT
         this.statusValue = false
         this.domParent = domParent
         this.id = id++
     }
-    show(conStyle: contentStyle,func: Function){
+    // show(conStyle: contentStyle,func: Function){
+    //     if(!conStyle)
+    //     {
+    //         conStyle = {
+    //             type: 'help'
+    //         }
+    //     }
+    //     let [char,color,title,content] = ezJudge.judgeModel(conStyle.type)
+    //     conStyle = ezJudge.judgeContentStyle(conStyle,title,content)
+    //     if(func === undefined || func instanceof Function)
+    //     {
+    //         func = function(){
+    //             this.remove();
+    //         }
+    //     }
+    //     createDlg(this,conStyle,['20px','70px','130px','210px'],char,color,conStyle.btnStr)
+    //     // conStyle = ezJudge.judgeContentStyle(conStyle,)
+    // }
+    show(conStyle: contentStyle){
+        let that = this
+        this.statusValue = false
         if(!conStyle)
         {
             conStyle = {
                 type: 'help'
             }
         }
+        else if(!conStyle.type)
+        {
+            conStyle.type = "help"
+        }
         let [char,color,title,content] = ezJudge.judgeModel(conStyle.type)
         conStyle = ezJudge.judgeContentStyle(conStyle,title,content)
-        if(func === undefined || func instanceof Function)
-        {
-            func = function(){
-                this.remove();
+        createDlg(that,conStyle,['20px','70px','130px','210px'],char,color,conStyle.btnStr)
+        // let btn = that.conT.child[that.conT.child.length - 1].child[0]
+        return new Promise(function(resolve,reject){
+            for(let i = 0;i < that.conT.child[that.conT.child.length - 1].child.length;i++)
+            { 
+                let btn = that.conT.child[that.conT.child.length - 1].child[i]
+                btn.dom.onmousedown = function(){
+                    (async function (){
+                        btn.dom.style.background = '#ffffff'
+                        btn.dom.style.boxShadow = '2px 2px 20px #008800'
+                        await delay_frame(10)
+                        that.remove()
+                        // if(that.conT.child.le )
+                        if(i === 0)
+                        {
+                            that.statusValue = true
+                        }
+                        resolve(that.statusValue)
+                    })()
+                    
+                    // reject("err")
+                }  
             }
-        }
-        createDlg(this,conStyle,['20px','70px','130px','210px'],char,color,conStyle.btnStr,func)
-        // conStyle = ezJudge.judgeContentStyle(conStyle,)
+        })
     }
     // errordlg(conStyle?: contentStyle){
     //     conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')
@@ -72,23 +115,36 @@ export interface contentStyle{
     content?: string  
     img?: string
     btnStr?: Array<string>
+
 }
 
 class Content{
     dom: HTMLElement
-    domParent: HTMLElement
+    parent: Content
+    child: Array<Content>
     dStyle: DivStyle
-    constructor(domParent: HTMLElement,dStyle: DivStyle){
+    constructor(conT: Content|HTMLElement,dStyle: DivStyle){
         this.dom = document.createElement('div')
-        this.domParent = domParent
         this.dom.style.width = dStyle.width.toString()
         this.dom.style.height = dStyle.height.toString()
         this.dom.style.position = 'absolute'
         this.dom.style.lineHeight = dStyle.height.toString() + 'px'
         this.dom.style.textAlign = 'center'
-        // // let h = this.domParent.clientHeight 
-        // this.dom.style.background = 'black'
-        this.domParent.append(this.dom)
+        let child = new Array()
+        this.child = child
+        if(conT instanceof HTMLElement)
+        {
+            this.parent = undefined
+            conT.append(this.dom)
+        }
+        else{
+            this.parent = conT
+            conT.child.push(this)
+            // // let h = this.domParent.clientHeight 
+            // this.dom.style.background = 'black'
+            conT.dom.append(this.dom)
+        }
+        
     }
 }
 
@@ -97,7 +153,7 @@ export function DlgInit(dom: HTMLElement,dStyle?: DivStyle) {
     return dlg;
 }
 
-function createDlg(dlg: Dialogue,conStyle: contentStyle,top: Array<string>,imgStr?: string,imgColor?: string,str?: Array<string>,func?: Function){
+function createDlg(dlg: Dialogue,conStyle: contentStyle,top: Array<string>,imgStr?: string,imgColor?: string,str?: Array<string>){
     dlg.dom.style.visibility = 'visible'
     createDlgTitle(dlg,conStyle,top[0])
     createDlgContent(dlg,conStyle,top[1])
@@ -111,12 +167,12 @@ function createDlg(dlg: Dialogue,conStyle: contentStyle,top: Array<string>,imgSt
             createDlgImg0(dlg,conStyle,top[2],imgStr,imgColor)
         }
         // createDlgConfirm(dlg,conStyle,top[3],false)
-        createDlgBtnDiv(dlg,conStyle,top[3],str,func)
+        createDlgBtnDiv(dlg,conStyle,top[3],str)
     }
     else if(top.length === 3)
     {
         // createDlgConfirm(dlg,conStyle,top[2],false)
-        createDlgBtnDiv(dlg,conStyle,top[2],str,func)
+        createDlgBtnDiv(dlg,conStyle,top[2],str)
     }
     
 }
@@ -126,7 +182,7 @@ function createDlgTitle(dlg: Dialogue,conStyle: contentStyle,top: string){
         width: dlg.dStyle.width,
         height: 50
     }
-    let title = new Content(dlg.dom,titleStyle)
+    let title = new Content(dlg.conT,titleStyle)
     // console.dir(title)
     title.dom.innerText = conStyle.title
     title.dom.style.fontSize = '26px'
@@ -139,7 +195,7 @@ function createDlgContent(dlg: Dialogue,conStyle: contentStyle,top: string){
         width: dlg.dStyle.width,
         height: 50
     }
-    let content = new Content(dlg.dom,contentStyle)
+    let content = new Content(dlg.conT,contentStyle)
     content.dom.innerText = conStyle.content
     content.dom.style.fontSize = '20px'
     content.dom.style.top = top
@@ -150,7 +206,7 @@ function createDlgImg(dlg: Dialogue,conStyle: contentStyle,top: string,str: stri
         width: dlg.dStyle.width,
         height: 60
     }
-    let imgDiv = new Content(dlg.dom,imgDivStyle)
+    let imgDiv = new Content(dlg.conT,imgDivStyle)
     imgDiv.dom.style.top = top
     imgDiv.dom.style.display = 'flex'
     imgDiv.dom.style.justifyContent = 'center'
@@ -158,7 +214,7 @@ function createDlgImg(dlg: Dialogue,conStyle: contentStyle,top: string,str: stri
         width: 60,
         height: 60
     }
-    let img = new Content(imgDiv.dom,imgStyle)
+    let img = new Content(imgDiv,imgStyle)
     img.dom.id = 'img'
     img.dom.innerText = str
     img.dom.style.fontSize = '54px'
@@ -173,7 +229,7 @@ function createDlgImg0(dlg: Dialogue,conStyle: contentStyle,top: string,str: str
         width: dlg.dStyle.width,
         height: 60
     }
-    let imgDiv = new Content(dlg.dom,imgDivStyle)
+    let imgDiv = new Content(dlg.conT,imgDivStyle)
     imgDiv.dom.style.top = top
     imgDiv.dom.style.display = 'flex'
     imgDiv.dom.style.justifyContent = 'center'
@@ -188,22 +244,15 @@ function createDlgImg0(dlg: Dialogue,conStyle: contentStyle,top: string,str: str
     imgDiv.dom.append(img)
 }
 
-function createDlgBtnDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str?: Array<string>,func?: Function|Array<Function>){
+function createDlgBtnDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str?: Array<string>){
     let BtnDivStyle = {
         width: dlg.dStyle.width,
         height: 35
     }
-    let BtnDiv = new Content(dlg.dom,BtnDivStyle)
-    let fun = new Array()
+    let BtnDiv = new Content(dlg.conT,BtnDivStyle)
+    let color = '#00d800'
     BtnDiv.dom.style.top = top
     BtnDiv.dom.style.display = 'flex'
-    if(func instanceof Function)
-    {
-        fun[0] = func
-    }
-    else{
-        fun = func
-    }
     if(!str)
     {
         str = ['OK']
@@ -211,50 +260,34 @@ function createDlgBtnDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str?: 
     if(str.length === 1)
     {
         BtnDiv.dom.style.justifyContent = 'center'
-        createDlgBtn(dlg,BtnDiv,str[0],false,120,fun[0])
+        createDlgBtn(BtnDiv,str[0],120,color)
     }
     else{
         BtnDiv.dom.style.justifyContent = 'space-evenly'
-        let f = false
         for(let i = 0;i < str.length;i++)
         {
-            if(i === 0)
+            if(i !== 0)
             {
-                f = true
+                color = '#dcdcdc'
             }
-            else{
-                f = false
-            }
-            createDlgBtn(dlg,BtnDiv,str[i],f,100,fun[i])
+            createDlgBtn(BtnDiv,str[i],100,color)
         }
     }
 }
 
-function createDlgBtn(dlg: Dialogue,BtnDiv: Content,str: string,status: boolean,width: number,func: Function){
+function createDlgBtn(BtnDiv: Content,str: string,width: number,color: string){
     let btnStyle = {
         width: width,
         height: 35
     }
-    let btn = new Content(BtnDiv.dom,btnStyle)
+    let btn = new Content(BtnDiv,btnStyle)
+    btn.dom.className = "Button"
     btn.dom.style.position = 'relative'
-    btn.dom.style.background = 'white'
+    btn.dom.style.background = color
     btn.dom.style.borderRadius = '10px'
     btn.dom.style.boxShadow = '2px 2px 20px #888888'
     btn.dom.innerHTML = str
     btn.dom.style.fontSize = '22px'
-    btn.dom.onmousedown = function(){
-        (async function(){
-            dlg.statusValue = false
-            btn.dom.style.background = '#eeeeee'
-            btn.dom.style.boxShadow = '2px 2px 20px #008800'
-            await delay_frame(10)
-            // dlg.remove()
-            func()
-            dlg.statusValue = status 
-            await delay_frame(10)
-            // console.dir(dlg.statusValue)
-		}())
-    }
 }
 
 // function createDlgConfirm(dlg: Dialogue,conStyle: contentStyle,top: string,IsNeedStatus: boolean){

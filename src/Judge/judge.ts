@@ -65,7 +65,9 @@ export function judgeContentStyle(cStyle: contentStyle,title: string,content: st
     {
         cStyle = {
             title: title,
-            content: content
+            content: content,
+            btnStr: ['OK'],
+            noIcon: false
         }
     }
     if(!cStyle.title)
@@ -78,6 +80,14 @@ export function judgeContentStyle(cStyle: contentStyle,title: string,content: st
     }
     if(!cStyle.btnStr){
         cStyle.btnStr = ['OK']
+    }
+    if(!cStyle.noIcon)
+    {
+        cStyle.noIcon = false
+    }
+    if(!cStyle.noInt)
+    {
+        cStyle.noInt = false
     }
     return cStyle
 }
@@ -98,6 +108,9 @@ export function judgeModel(model: string): [string,string,string,string]{
     else if(model === 'warn')
     {
         return ["!",'orange','Warning Dialogue','This is default warning string!']
+    }
+    else{
+        return ['～','green','Dailogue','This is default dailogue string']
     }
 }
 

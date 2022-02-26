@@ -20,40 +20,26 @@ export class Dialogue{
         this.domParent = domParent
         this.id = id++
     }
-    // show(conStyle: contentStyle,func: Function){
-    //     if(!conStyle)
-    //     {
-    //         conStyle = {
-    //             type: 'help'
-    //         }
-    //     }
-    //     let [char,color,title,content] = ezJudge.judgeModel(conStyle.type)
-    //     conStyle = ezJudge.judgeContentStyle(conStyle,title,content)
-    //     if(func === undefined || func instanceof Function)
-    //     {
-    //         func = function(){
-    //             this.remove();
-    //         }
-    //     }
-    //     createDlg(this,conStyle,['20px','70px','130px','210px'],char,color,conStyle.btnStr)
-    //     // conStyle = ezJudge.judgeContentStyle(conStyle,)
-    // }
     show(conStyle: contentStyle){
         let that = this
         this.statusValue = false
+        let topStr = ['20px','70px','130px','210px']
         if(!conStyle)
         {
             conStyle = {
-                type: 'help'
+                type: 'none'
             }
-        }
-        else if(!conStyle.type)
-        {
-            conStyle.type = "help"
         }
         let [char,color,title,content] = ezJudge.judgeModel(conStyle.type)
         conStyle = ezJudge.judgeContentStyle(conStyle,title,content)
-        createDlg(that,conStyle,['20px','70px','130px','210px'],char,color,conStyle.btnStr)
+        if(conStyle.noIcon)
+        {
+            if(!conStyle.intStr)
+            {
+                topStr = ['20px','90px','180px']
+            }
+        }
+        createDlg(this,conStyle,topStr,char,color,conStyle.btnStr)
         // let btn = that.conT.child[that.conT.child.length - 1].child[0]
         return new Promise(function(resolve,reject){
             for(let i = 0;i < that.conT.child[that.conT.child.length - 1].child.length;i++)
@@ -64,48 +50,77 @@ export class Dialogue{
                         btn.dom.style.background = '#ffffff'
                         btn.dom.style.boxShadow = '2px 2px 20px #008800'
                         await delay_frame(10)
-                        that.remove()
-                        // if(that.conT.child.le )
-                        if(i === 0)
-                        {
-                            that.statusValue = true
-                        }
-                        resolve(that.statusValue)
+                        that.remove().then(value=>{
+                            if(i === 0)
+                            {
+                                that.statusValue = true
+                            }
+                            resolve(that.statusValue)
+                        })
+                        await delay_frame(10)
+                        
                     })()
                     
-                    // reject("err")
                 }  
             }
         })
     }
-    // errordlg(conStyle?: contentStyle){
-    //     conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')
-    //     createDlg(this,conStyle,['20px','70px','130px','210px'],"X",'red');
-    // }
-    // helpdlg(conStyle?: contentStyle){
-    //     conStyle = ezJudge.judgeContentStyle(conStyle,'Help Dialogue','This is default help string!')
-    //     createDlg(this,conStyle,['20px','70px','130px','210px'],"!",'orange');
-    // }
-    // msgbox(conStyle?: contentStyle,model?: string){
-    //     conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')
-    //     let [str,color] = ezJudge.judgeModel(model)
-    //     createDlg(this,conStyle,['20px','70px','130px','210px'],str,color);
-    // }
-    // questdlg(conStyle?: contentStyle,str?: Array<string>){
-    //     conStyle = ezJudge.judgeContentStyle(conStyle,"Quset Dialogue",'This is default error string!')
-    //     createDlg(this,conStyle,['20px','70px','130px','210px'],"?",'grey',str);
-    // }
-    // warndlg(conStyle?: contentStyle){
-    //     conStyle = ezJudge.judgeContentStyle(conStyle,'Warning Dialogue','This is default warning string!')
-    //     createDlg(this,conStyle,['20px','70px','130px','210px'],"!",'orange');
-    // }
+    setDlgStyle(dStyle: DivStyle){
+        dStyle = ezJudge.judgeDivStyle(dStyle)
+        let domS = this.dom.style
+        domS.width = dStyle.width.toString() + 'px'
+        domS.height = dStyle.height.toString() + 'px'
+        domS.border = dStyle.border
+        domS.borderRadius = dStyle.borderRadius
+    }
+    inputdlg(conStyle: contentStyle){
+        this.show(conStyle)/*.then()*/
+    }
+    errordlg(conStyle: contentStyle){
+        conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')
+        conStyle.type = 'error'
+        conStyle.noInt = true
+        this.show(conStyle)
+    }
+    helpdlg(conStyle?: contentStyle){
+        conStyle = ezJudge.judgeContentStyle(conStyle,'Help Dialogue','This is default help string!')
+        conStyle.type = 'help'
+        conStyle.noInt = true
+        this.show(conStyle)
+    }
+    msgbox(conStyle?: contentStyle,model?: string){
+        conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')
+        conStyle.noInt = true
+        this.show(conStyle)
+    }
+    questdlg(conStyle?: contentStyle,str?: Array<string>){
+        conStyle = ezJudge.judgeContentStyle(conStyle,"Quset Dialogue",'This is default error string!')
+        conStyle.type = 'quest'
+        conStyle.noInt = true
+        this.show(conStyle)
+    }
+    warndlg(conStyle?: contentStyle){
+        conStyle = ezJudge.judgeContentStyle(conStyle,'Warning Dialogue','This is default warning string!')
+        conStyle.type = 'warn'
+        conStyle.noInt = true
+        this.show(conStyle)
+    }
     remove(){
-        let child = this.dom.lastElementChild
-        while(child){
-            this.dom.removeChild(child)
-            child = this.dom.lastElementChild
-        }
-        this.dom.remove()
+        let that = this
+        return new Promise(function(resolve,reject){
+            let child = that.dom.lastElementChild
+            while(child){
+                that.dom.removeChild(child)
+                child = that.dom.lastElementChild
+                console.dir('a')
+            }
+            that.conT.child = []
+            // console.dir(that)
+            // that.dom.remove()
+            that.dom.style.visibility = 'hidden'
+            resolve(0)
+        })
+        
     }
 }
 
@@ -115,7 +130,9 @@ export interface contentStyle{
     content?: string  
     img?: string
     btnStr?: Array<string>
-
+    intStr?: Array<string>
+    noIcon?: boolean
+    noInt?: Boolean
 }
 
 class Content{
@@ -124,20 +141,20 @@ class Content{
     child: Array<Content>
     dStyle: DivStyle
     constructor(conT: Content|HTMLElement,dStyle: DivStyle){
-        this.dom = document.createElement('div')
-        this.dom.style.width = dStyle.width.toString()
-        this.dom.style.height = dStyle.height.toString()
-        this.dom.style.position = 'absolute'
-        this.dom.style.lineHeight = dStyle.height.toString() + 'px'
-        this.dom.style.textAlign = 'center'
         let child = new Array()
         this.child = child
         if(conT instanceof HTMLElement)
         {
             this.parent = undefined
-            conT.append(this.dom)
+            this.dom = conT
         }
         else{
+            this.dom = document.createElement('div')
+            this.dom.style.width = dStyle.width.toString()
+            this.dom.style.height = dStyle.height.toString()
+            this.dom.style.position = 'absolute'
+            this.dom.style.lineHeight = dStyle.height.toString() + 'px'
+            this.dom.style.textAlign = 'center'
             this.parent = conT
             conT.child.push(this)
             // // let h = this.domParent.clientHeight 
@@ -154,24 +171,17 @@ export function DlgInit(dom: HTMLElement,dStyle?: DivStyle) {
 }
 
 function createDlg(dlg: Dialogue,conStyle: contentStyle,top: Array<string>,imgStr?: string,imgColor?: string,str?: Array<string>){
+    // console.dir(dlg)
     dlg.dom.style.visibility = 'visible'
     createDlgTitle(dlg,conStyle,top[0])
     createDlgContent(dlg,conStyle,top[1])
     if(top.length === 4)
     {
-        if(!conStyle.img)
-        {
-            createDlgImg(dlg,conStyle,top[2],imgStr,imgColor)
-        }
-        else{
-            createDlgImg0(dlg,conStyle,top[2],imgStr,imgColor)
-        }
-        // createDlgConfirm(dlg,conStyle,top[3],false)
+        createDlgImgDiv(dlg,conStyle,top[2],imgStr,imgColor)
         createDlgBtnDiv(dlg,conStyle,top[3],str)
     }
     else if(top.length === 3)
     {
-        // createDlgConfirm(dlg,conStyle,top[2],false)
         createDlgBtnDiv(dlg,conStyle,top[2],str)
     }
     
@@ -201,7 +211,8 @@ function createDlgContent(dlg: Dialogue,conStyle: contentStyle,top: string){
     content.dom.style.top = top
 }
 
-function createDlgImg(dlg: Dialogue,conStyle: contentStyle,top: string,str: string,color: string){
+function createDlgImgDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str: string,color: string)
+{
     let imgDivStyle = {
         width: dlg.dStyle.width,
         height: 60
@@ -210,6 +221,43 @@ function createDlgImg(dlg: Dialogue,conStyle: contentStyle,top: string,str: stri
     imgDiv.dom.style.top = top
     imgDiv.dom.style.display = 'flex'
     imgDiv.dom.style.justifyContent = 'center'
+    if(!conStyle.intStr||conStyle.noInt)
+    {
+        dlg.dom.style.height = dlg.dStyle.height.toString() + 'px'
+        if(!conStyle.img)
+        {
+            createDlgImg(imgDiv,str,color)
+        }
+        else{
+            createDlgImg0(imgDiv,conStyle)
+        }
+    }
+    else{
+        imgDiv.dom.style.height = (imgDivStyle.height * conStyle.intStr.length).toString() + 'px'
+        imgDiv.dom.style.flexDirection = 'column'
+        dlg.dom.style.height = (parseInt(dlg.dom.style.height) + imgDivStyle.height * (conStyle.intStr.length-1)).toString() + 'px'
+        // console.dir(conStyle)
+        for(let i = 0;i < conStyle.intStr.length;i++)
+        {
+            createDlgIntDiv(imgDiv,conStyle.intStr[i])
+        }
+    }
+}
+
+function createDlgIntDiv(imgDiv: Content,intStr: string)
+{
+    let intDivStyle = {
+        width: parseInt(imgDiv.dom.style.width),
+        height: 60
+    }
+    let intDiv = new Content(imgDiv,intDivStyle)
+    intDiv.dom.style.position = 'relative'
+    intDiv.dom.style.display = 'flex'
+    intDiv.dom.style.justifyContent = 'inherit'
+    createDlgInt(intDiv,intStr);
+}
+
+function createDlgImg(imgDiv: Content,str: string,color: string){
     let imgStyle = {
         width: 60,
         height: 60
@@ -224,24 +272,31 @@ function createDlgImg(dlg: Dialogue,conStyle: contentStyle,top: string,str: stri
     img.dom.style.borderRadius = '50%'
 }
 
-function createDlgImg0(dlg: Dialogue,conStyle: contentStyle,top: string,str: string,color: string){
-    let imgDivStyle = {
-        width: dlg.dStyle.width,
-        height: 60
-    }
-    let imgDiv = new Content(dlg.conT,imgDivStyle)
-    imgDiv.dom.style.top = top
-    imgDiv.dom.style.display = 'flex'
-    imgDiv.dom.style.justifyContent = 'center'
-    let imgStyle = {
-        width: 60,
-        height: 60
-    }
+function createDlgImg0(imgDiv: Content,conStyle: contentStyle){
     let img = document.createElement('img')
     img.width = 60
     img.height = 60
     img.src = conStyle.img
     imgDiv.dom.append(img)
+}
+
+function createDlgInt(imgDiv: Content,intStr: string)
+{
+    let keyStyle = {
+        width: 100,
+        height: 60
+    }
+    let key = new Content(imgDiv,keyStyle)
+    key.dom.style.position = 'relative'
+    key.dom.style.fontSize = '20px'
+    key.dom.innerHTML = intStr + ':'
+    let int = document.createElement('input')
+    int.id = intStr
+    int.style.width = '200px'
+    int.style.height = '40px'
+    int.style.borderRadius = '10px'
+    int.style.marginTop = '10px'
+    imgDiv.dom.append(int)
 }
 
 function createDlgBtnDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str?: Array<string>){
@@ -251,6 +306,10 @@ function createDlgBtnDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str?: 
     }
     let BtnDiv = new Content(dlg.conT,BtnDivStyle)
     let color = '#00d800'
+    if(conStyle.intStr&&!conStyle.noInt)
+    {
+        top = (parseInt(top) + 60*(conStyle.intStr.length-1)).toString() + 'px'
+    }
     BtnDiv.dom.style.top = top
     BtnDiv.dom.style.display = 'flex'
     if(!str)

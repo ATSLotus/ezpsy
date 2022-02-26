@@ -17,7 +17,37 @@
             height: 1400
         })
         let dlg = ezpsy.DlgInit(document.getElementById("test"))
+        console.dir(dlg)
+        // dlg.show()
+        dlg.show({
+          btnStr: ['confirm','refuse','cancel'],
+          intStr: ['name'],
+        })
+        .then(value=>{
+          if(value)
+          {
+            dlg.show({
+              btnStr: ['confirm','refuse','cancel'],
+              intStr: ['sex'],
+            }).then(value=>{
+              if(value)
+              {
+                dlg.show({
+                  btnStr: ['confirm','refuse','cancel'],
+                  intStr: ['birthday'],
+                }).then(value=>{
+                  console.dir('success')
+                })
+              }
+
+            })
+          }
+          
+        })
         // console.dir(dlg)
+        // dlg.show({
+        //   intStr: ['姓名','性别','出生年月']
+        // })
         // dlg.questdlg({},['ok','no','cancel'])
         // dlg.show({
         //   type: 'error',
@@ -25,12 +55,12 @@
         //   content: 'no!',
         //   btnStr: ['confirm','cancle']
         // })
-        dlg.show({
-          btnStr: ['ok','no']
-        }).then(value =>{
-          console.dir(value)
-          console.dir('yes')
-        })
+        // dlg.show({
+        //   btnStr: ['ok','no']
+        // }).then(value =>{
+        //   console.dir(value)
+        //   console.dir('yes')
+        // })
         // console.dir(dlg)
         
 

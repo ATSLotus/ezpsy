@@ -67,7 +67,9 @@ export function judgeContentStyle(cStyle: contentStyle,title: string,content: st
             title: title,
             content: content,
             btnStr: ['OK'],
-            noIcon: false
+            noIcon: false,
+            noInt: false,
+            confirmPosition: 0
         }
     }
     if(!cStyle.title)
@@ -88,6 +90,13 @@ export function judgeContentStyle(cStyle: contentStyle,title: string,content: st
     if(!cStyle.noInt)
     {
         cStyle.noInt = false
+    }
+    if(!cStyle.confirmPosition)
+    {
+        cStyle.confirmPosition = 0;
+    }
+    if(cStyle.confirmPosition !== 0 && cStyle.confirmPosition !== 1 && cStyle.confirmPosition !== 2){
+        cStyle.confirmPosition = 0
     }
     return cStyle
 }

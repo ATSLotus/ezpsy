@@ -12,12 +12,14 @@ export class Dialogue{
     conT: Content
     dStyle?: DivStyle
     statusValue: boolean    //按钮点击状态 true为选择是 false为选择否或取消
+    intValue: Array<string>
     constructor(domParent: HTMLElement,dStyle?: DivStyle){
         [this.dom,this.dStyle] = ezDiv.createDiv(domParent,dStyle)
         let conT = new Content(this.dom,this.dStyle)
         this.conT = conT
         this.statusValue = false
         this.domParent = domParent
+        this.intValue = []
         this.id = id++
     }
     show(conStyle: contentStyle){
@@ -41,8 +43,14 @@ export class Dialogue{
         }
         createDlg(this,conStyle,topStr,char,color,conStyle.btnStr)
         // let btn = that.conT.child[that.conT.child.length - 1].child[0]
+        let l = that.conT.child[that.conT.child.length - 1].child.length;
+        let int = new Array()
         return new Promise(function(resolve,reject){
-            for(let i = 0;i < that.conT.child[that.conT.child.length - 1].child.length;i++)
+            for(let i = 0;i < conStyle.intStr.length;i++)
+            {
+                int[i] = document.getElementById(conStyle.intStr[i])
+            }
+            for(let i = 0;i < l;i++)
             { 
                 let btn = that.conT.child[that.conT.child.length - 1].child[i]
                 btn.dom.onmousedown = function(){
@@ -51,8 +59,13 @@ export class Dialogue{
                         btn.dom.style.boxShadow = '2px 2px 20px #008800'
                         await delay_frame(10)
                         that.remove().then(value=>{
-                            if(i === 0)
+                            if(i === conStyle.confirmPosition||conStyle.btnStr.length === 1)
                             {
+                                for(let t = 0;t < conStyle.intStr.length;t++)
+                                {
+                                    that.intValue.push(conStyle.intStr[t])
+                                    that.intValue.push(int[t].value)
+                                }
                                 that.statusValue = true
                             }
                             resolve(that.statusValue)
@@ -125,14 +138,15 @@ export class Dialogue{
 }
 
 export interface contentStyle{
-    type?: string
-    title?: string
-    content?: string  
-    img?: string
-    btnStr?: Array<string>
-    intStr?: Array<string>
-    noIcon?: boolean
-    noInt?: Boolean
+    type?: string           //对话类型
+    title?: string          //对话标题
+    content?: string        //对话提示内容
+    img?: string            //自定义图片
+    btnStr?: Array<string>  //按钮字符
+    intStr?: Array<string>  //输入框提示
+    noIcon?: boolean        //设置是否有图标
+    noInt?: Boolean         //设置是否有输入框
+    confirmPosition?: number//设置确认键的位置，默认为0即从左往右的第一个
 }
 
 class Content{

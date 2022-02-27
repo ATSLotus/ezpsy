@@ -18,32 +18,38 @@
         })
         let dlg = ezpsy.DlgInit(document.getElementById("test"))
         console.dir(dlg)
-        // dlg.show()
         dlg.show({
-          btnStr: ['confirm','refuse','cancel'],
-          intStr: ['name'],
+          // btnStr: ['confirm','refuse','cancel'],
+          intStr: ['name','sex','birthday'],
+          confirmPosition: 2
+        }).then(value=>{
+          console.dir(dlg.intValue)
         })
-        .then(value=>{
-          if(value)
-          {
-            dlg.show({
-              btnStr: ['confirm','refuse','cancel'],
-              intStr: ['sex'],
-            }).then(value=>{
-              if(value)
-              {
-                dlg.show({
-                  btnStr: ['confirm','refuse','cancel'],
-                  intStr: ['birthday'],
-                }).then(value=>{
-                  console.dir('success')
-                })
-              }
+        // dlg.show({
+        //   btnStr: ['confirm','refuse','cancel'],
+        //   intStr: ['name'],
+        // })
+        // .then(value=>{
+        //   if(value)
+        //   {
+        //     dlg.show({
+        //       btnStr: ['confirm','refuse','cancel'],
+        //       intStr: ['sex'],
+        //     }).then(value=>{
+        //       if(value)
+        //       {
+        //         dlg.show({
+        //           btnStr: ['confirm','refuse','cancel'],
+        //           intStr: ['birthday'],
+        //         }).then(value=>{
+        //           console.dir('success')
+        //         })
+        //       }
 
-            })
-          }
+        //     })
+        //   }
           
-        })
+        // })
         // console.dir(dlg)
         // dlg.show({
         //   intStr: ['姓名','性别','出生年月']

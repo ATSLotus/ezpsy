@@ -1449,7 +1449,9 @@ var ezpsy = (function () {
                 title: title,
                 content: content,
                 btnStr: ['OK'],
-                noIcon: false
+                noIcon: false,
+                noInt: false,
+                confirmPosition: 0
             };
         }
         if (!cStyle.title) {
@@ -1466,6 +1468,12 @@ var ezpsy = (function () {
         }
         if (!cStyle.noInt) {
             cStyle.noInt = false;
+        }
+        if (!cStyle.confirmPosition) {
+            cStyle.confirmPosition = 0;
+        }
+        if (cStyle.confirmPosition !== 0 && cStyle.confirmPosition !== 1 && cStyle.confirmPosition !== 2) {
+            cStyle.confirmPosition = 0;
         }
         return cStyle;
     }
@@ -2076,12 +2084,14 @@ var ezpsy = (function () {
         conT;
         dStyle;
         statusValue; //按钮点击状态 true为选择是 false为选择否或取消
+        intValue;
         constructor(domParent, dStyle) {
             [this.dom, this.dStyle] = createDiv(domParent, dStyle);
             let conT = new Content(this.dom, this.dStyle);
             this.conT = conT;
             this.statusValue = false;
             this.domParent = domParent;
+            this.intValue = [];
             this.id = id++;
         }
         show(conStyle) {
@@ -2102,8 +2112,13 @@ var ezpsy = (function () {
             }
             createDlg(this, conStyle, topStr, char, color, conStyle.btnStr);
             // let btn = that.conT.child[that.conT.child.length - 1].child[0]
+            let l = that.conT.child[that.conT.child.length - 1].child.length;
+            let int = new Array();
             return new Promise(function (resolve, reject) {
-                for (let i = 0; i < that.conT.child[that.conT.child.length - 1].child.length; i++) {
+                for (let i = 0; i < conStyle.intStr.length; i++) {
+                    int[i] = document.getElementById(conStyle.intStr[i]);
+                }
+                for (let i = 0; i < l; i++) {
                     let btn = that.conT.child[that.conT.child.length - 1].child[i];
                     btn.dom.onmousedown = function () {
                         (async function () {
@@ -2111,7 +2126,11 @@ var ezpsy = (function () {
                             btn.dom.style.boxShadow = '2px 2px 20px #008800';
                             await delay_frame(10);
                             that.remove().then(value => {
-                                if (i === 0) {
+                                if (i === conStyle.confirmPosition || conStyle.btnStr.length === 1) {
+                                    for (let t = 0; t < conStyle.intStr.length; t++) {
+                                        that.intValue.push(conStyle.intStr[t]);
+                                        that.intValue.push(int[t].value);
+                                    }
                                     that.statusValue = true;
                                 }
                                 resolve(that.statusValue);

@@ -118,6 +118,10 @@ export function judgeModel(model: string): [string,string,string,string]{
     {
         return ["!",'orange','Warning Dialogue','This is default warning string!']
     }
+    else if(model === 'input')
+    {
+        return ['','',"input Dialogue","This is default input string"]
+    }
     else{
         return ['～','green','Dailogue','This is default dailogue string']
     }

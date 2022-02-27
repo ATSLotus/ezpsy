@@ -87,7 +87,9 @@ export class Dialogue{
         domS.borderRadius = dStyle.borderRadius
     }
     inputdlg(conStyle: contentStyle){
-        this.show(conStyle)/*.then()*/
+        conStyle = ezJudge.judgeContentStyle(conStyle,'Input Dialogue','This is default input string!')
+        conStyle.type = 'input'
+        return this.show(conStyle)/*.then()*/
     }
     errordlg(conStyle: contentStyle){
         conStyle = ezJudge.judgeContentStyle(conStyle,'Error Dialogue','This is default error string!')

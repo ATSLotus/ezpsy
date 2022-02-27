@@ -1490,6 +1490,9 @@ var ezpsy = (function () {
         else if (model === 'warn') {
             return ["!", 'orange', 'Warning Dialogue', 'This is default warning string!'];
         }
+        else if (model === 'input') {
+            return ['', '', "input Dialogue", "This is default input string"];
+        }
         else {
             return ['～', 'green', 'Dailogue', 'This is default dailogue string'];
         }
@@ -2150,7 +2153,9 @@ var ezpsy = (function () {
             domS.borderRadius = dStyle.borderRadius;
         }
         inputdlg(conStyle) {
-            this.show(conStyle); /*.then()*/
+            conStyle = judgeContentStyle(conStyle, 'Input Dialogue', 'This is default input string!');
+            conStyle.type = 'input';
+            return this.show(conStyle); /*.then()*/
         }
         errordlg(conStyle) {
             conStyle = judgeContentStyle(conStyle, 'Error Dialogue', 'This is default error string!');

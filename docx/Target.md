@@ -232,7 +232,7 @@ The library for ezpsy.
 		- 停止视频捕获
 		- 关闭视频捕获设备
 		- 视频捕获参数设置
-  	- 对话类函数（page199 in psy）sweetAlert2.js//
+  	- 对话类函数（page199 in psy）sweetAlert2.js//文件结果处理尚未解决
   		- 输入对话框			**--
   		- 错误提示对话框		**--
   		- 帮助对话框			**--

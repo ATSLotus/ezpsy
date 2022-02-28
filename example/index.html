@@ -17,14 +17,21 @@
             height: 1400
         })
         let dlg = ezpsy.DlgInit(document.getElementById("test"))
-        console.dir(dlg)
-        dlg.inputdlg({
-          // btnStr: ['confirm','refuse','cancel'],
-          intStr: ['name','sex','birthday'],
-          confirmPosition: 2
-        }).then(value=>{
-          console.dir(dlg.intValue)
+        // console.dir(dlg)
+        dlg.show({
+          type: 'file'
+        }).then(result=>{
+          
         })
+
+        
+        // dlg.inputdlg({
+        //   // btnStr: ['confirm','refuse','cancel'],
+        //   intStr: ['name','sex','birthday'],
+        //   confirmPosition: 2
+        // }).then(value=>{
+        //   console.dir(dlg.intValue)
+        // })
         // dlg.show({
         //   btnStr: ['confirm','refuse','cancel'],
         //   intStr: ['name'],

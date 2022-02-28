@@ -1491,7 +1491,10 @@ var ezpsy = (function () {
             return ["!", 'orange', 'Warning Dialogue', 'This is default warning string!'];
         }
         else if (model === 'input') {
-            return ['', '', "input Dialogue", "This is default input string"];
+            return ['', '', "Input Dialogue", "This is default input string"];
+        }
+        else if (model === 'file') {
+            return ['', '', 'File Dialogue', 'This is default file string'];
         }
         else {
             return ['～', 'green', 'Dailogue', 'This is default dailogue string'];
@@ -2088,6 +2091,7 @@ var ezpsy = (function () {
         dStyle;
         statusValue; //按钮点击状态 true为选择是 false为选择否或取消
         intValue;
+        files;
         constructor(domParent, dStyle) {
             [this.dom, this.dStyle] = createDiv(domParent, dStyle);
             let conT = new Content(this.dom, this.dStyle);
@@ -2118,9 +2122,12 @@ var ezpsy = (function () {
             let l = that.conT.child[that.conT.child.length - 1].child.length;
             let int = new Array();
             return new Promise(function (resolve, reject) {
-                for (let i = 0; i < conStyle.intStr.length; i++) {
-                    int[i] = document.getElementById(conStyle.intStr[i]);
+                if (conStyle.intStr) {
+                    for (let i = 0; i < conStyle.intStr.length; i++) {
+                        int[i] = document.getElementById(conStyle.intStr[i]);
+                    }
                 }
+                let file = document.getElementById('file');
                 for (let i = 0; i < l; i++) {
                     let btn = that.conT.child[that.conT.child.length - 1].child[i];
                     btn.dom.onmousedown = function () {
@@ -2128,17 +2135,34 @@ var ezpsy = (function () {
                             btn.dom.style.background = '#ffffff';
                             btn.dom.style.boxShadow = '2px 2px 20px #008800';
                             await delay_frame(10);
-                            that.remove().then(value => {
-                                if (i === conStyle.confirmPosition || conStyle.btnStr.length === 1) {
+                            if (i === conStyle.confirmPosition || conStyle.btnStr.length === 1) {
+                                if (conStyle.intStr) {
                                     for (let t = 0; t < conStyle.intStr.length; t++) {
                                         that.intValue.push(conStyle.intStr[t]);
                                         that.intValue.push(int[t].value);
                                     }
-                                    that.statusValue = true;
                                 }
-                                resolve(that.statusValue);
-                            });
+                                if (conStyle.type === 'file') {
+                                    // let f = file
+                                    new Promise((resolve, reject) => {
+                                        let file_Reader = new FileReader();
+                                        file_Reader.onload = result => {
+                                            let fc = file_Reader.result;
+                                            console.dir(fc);
+                                            resolve(fc);
+                                        };
+                                        // file_Reader.readAsDataURL((<HTMLInputElement>file).files[0])
+                                        // file_Reader.readAsText((<HTMLInputElement>file).files[0])
+                                        file_Reader.readAsArrayBuffer(file.files[0]);
+                                        that.files = file_Reader;
+                                    });
+                                }
+                                that.statusValue = true;
+                            }
                             await delay_frame(10);
+                            that.remove();
+                            await delay_frame(10);
+                            resolve(that.statusValue);
                         })();
                     };
                 }
@@ -2281,7 +2305,12 @@ var ezpsy = (function () {
         if (!conStyle.intStr || conStyle.noInt) {
             dlg.dom.style.height = dlg.dStyle.height.toString() + 'px';
             if (!conStyle.img) {
-                createDlgImg(imgDiv, str, color);
+                if (conStyle.type === 'file') {
+                    createDlgFile(imgDiv);
+                }
+                else {
+                    createDlgImg(imgDiv, str, color);
+                }
             }
             else {
                 createDlgImg0(imgDiv, conStyle);
@@ -2345,6 +2374,15 @@ var ezpsy = (function () {
         int.style.borderRadius = '10px';
         int.style.marginTop = '10px';
         imgDiv.dom.append(int);
+    }
+    function createDlgFile(imgDiv, dlg) {
+        let file = document.createElement('input');
+        // file.disabled = true
+        file.type = 'file';
+        file.id = 'file';
+        file.style.width = '160px';
+        file.style.lineHeight = '60px';
+        imgDiv.dom.append(file);
     }
     function createDlgBtnDiv(dlg, conStyle, top, str) {
         let BtnDivStyle = {

@@ -120,7 +120,10 @@ export function judgeModel(model: string): [string,string,string,string]{
     }
     else if(model === 'input')
     {
-        return ['','',"input Dialogue","This is default input string"]
+        return ['','',"Input Dialogue","This is default input string"]
+    }
+    else if(model === 'file'){
+        return ['','','File Dialogue','This is default file string']
     }
     else{
         return ['～','green','Dailogue','This is default dailogue string']

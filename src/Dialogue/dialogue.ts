@@ -55,7 +55,6 @@ export class Dialogue{
                 }
             }
             let file = document.getElementById('file')
-            let files
             for(let i = 0;i < l;i++)
             { 
                 let btn = that.conT.child[that.conT.child.length - 1].child[i]

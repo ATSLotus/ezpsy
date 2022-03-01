@@ -19,9 +19,11 @@
         let dlg = ezpsy.DlgInit(document.getElementById("test"))
         // console.dir(dlg)
         dlg.show({
-          type: 'file'
+          selStr: ['name','sex','birthday','hello','world','nannnnnnnnn'],
+          btnStr: ['confirm','cancel'],
+          IsMultiple: true
         }).then(result=>{
-          
+          console.dir(dlg)
         })
 
         

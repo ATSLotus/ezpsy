@@ -122,6 +122,9 @@ export function judgeModel(model: string): [string,string,string,string]{
     {
         return ['','',"Input Dialogue","This is default input string"]
     }
+    else if(model === 'select'){
+        return ['','',"Select Dialogue","This is default select string"]
+    }
     else if(model === 'file'){
         return ['','','File Dialogue','This is default file string']
     }

@@ -1493,6 +1493,9 @@ var ezpsy = (function () {
         else if (model === 'input') {
             return ['', '', "Input Dialogue", "This is default input string"];
         }
+        else if (model === 'select') {
+            return ['', '', "Select Dialogue", "This is default select string"];
+        }
         else if (model === 'file') {
             return ['', '', 'File Dialogue', 'This is default file string'];
         }
@@ -2091,6 +2094,7 @@ var ezpsy = (function () {
         dStyle;
         statusValue; //按钮点击状态 true为选择是 false为选择否或取消
         intValue;
+        selectValue;
         files;
         constructor(domParent, dStyle) {
             [this.dom, this.dStyle] = createDiv(domParent, dStyle);
@@ -2099,9 +2103,11 @@ var ezpsy = (function () {
             this.statusValue = false;
             this.domParent = domParent;
             this.intValue = [];
+            this.selectValue = [];
             this.id = id++;
         }
         show(conStyle) {
+            conStyle.seledStr = [];
             let that = this;
             this.statusValue = false;
             let topStr = ['20px', '70px', '130px', '210px'];
@@ -2134,12 +2140,22 @@ var ezpsy = (function () {
                         (async function () {
                             btn.dom.style.background = '#ffffff';
                             btn.dom.style.boxShadow = '2px 2px 20px #008800';
+                            btn.dom.style.color = 'blue';
                             await delay_frame(10);
                             if (i === conStyle.confirmPosition || conStyle.btnStr.length === 1) {
                                 if (conStyle.intStr) {
                                     for (let t = 0; t < conStyle.intStr.length; t++) {
                                         that.intValue.push(conStyle.intStr[t]);
                                         that.intValue.push(int[t].value);
+                                    }
+                                }
+                                else {
+                                    if (conStyle.seledStr) {
+                                        for (let t = 0; t < conStyle.seledStr.length; t++) {
+                                            if (conStyle.seledStr[t] !== undefined || conStyle.seledStr[t] !== '') {
+                                                that.selectValue.push(conStyle.seledStr[t]);
+                                            }
+                                        }
                                     }
                                 }
                                 if (conStyle.type === 'file') {
@@ -2181,32 +2197,43 @@ var ezpsy = (function () {
             conStyle.type = 'input';
             return this.show(conStyle); /*.then()*/
         }
+        listdlg(conStyle) {
+            conStyle = judgeContentStyle(conStyle, 'Select Dialogue', 'This is default select string!');
+            conStyle.type = 'select';
+            conStyle.noInt = true;
+            this.show(conStyle);
+        }
         errordlg(conStyle) {
             conStyle = judgeContentStyle(conStyle, 'Error Dialogue', 'This is default error string!');
             conStyle.type = 'error';
             conStyle.noInt = true;
+            conStyle.noSel = true;
             this.show(conStyle);
         }
         helpdlg(conStyle) {
             conStyle = judgeContentStyle(conStyle, 'Help Dialogue', 'This is default help string!');
             conStyle.type = 'help';
+            conStyle.noSel = true;
             conStyle.noInt = true;
             this.show(conStyle);
         }
         msgbox(conStyle, model) {
             conStyle = judgeContentStyle(conStyle, 'Error Dialogue', 'This is default error string!');
+            conStyle.noSel = true;
             conStyle.noInt = true;
             this.show(conStyle);
         }
         questdlg(conStyle, str) {
             conStyle = judgeContentStyle(conStyle, "Quset Dialogue", 'This is default error string!');
             conStyle.type = 'quest';
+            conStyle.noSel = true;
             conStyle.noInt = true;
             this.show(conStyle);
         }
         warndlg(conStyle) {
             conStyle = judgeContentStyle(conStyle, 'Warning Dialogue', 'This is default warning string!');
             conStyle.type = 'warn';
+            conStyle.noSel = true;
             conStyle.noInt = true;
             this.show(conStyle);
         }
@@ -2304,16 +2331,21 @@ var ezpsy = (function () {
         imgDiv.dom.style.justifyContent = 'center';
         if (!conStyle.intStr || conStyle.noInt) {
             dlg.dom.style.height = dlg.dStyle.height.toString() + 'px';
-            if (!conStyle.img) {
-                if (conStyle.type === 'file') {
-                    createDlgFile(imgDiv);
+            if (!conStyle.selStr || conStyle.noSel) {
+                if (!conStyle.img) {
+                    if (conStyle.type === 'file') {
+                        createDlgFile(imgDiv);
+                    }
+                    else {
+                        createDlgImg(imgDiv, str, color);
+                    }
                 }
                 else {
-                    createDlgImg(imgDiv, str, color);
+                    createDlgImg0(imgDiv, conStyle);
                 }
             }
             else {
-                createDlgImg0(imgDiv, conStyle);
+                createDlgSelect(imgDiv, conStyle);
             }
         }
         else {
@@ -2384,6 +2416,195 @@ var ezpsy = (function () {
         file.style.lineHeight = '60px';
         imgDiv.dom.append(file);
     }
+    function createDlgSelect(imgDiv, conStyle) {
+        let selectStyle = {
+            width: 200,
+            height: 36
+        };
+        let index = false;
+        let index0 = new Array();
+        let index1 = false;
+        let selectStr = new Array();
+        let Str = '';
+        let color = '#3771e0';
+        let color0 = '#ffffff';
+        let select = new Content(imgDiv, selectStyle);
+        select.dom.style.border = '1px solid';
+        select.dom.style.borderRadius = '15px';
+        select.dom.style.marginTop = '12px';
+        select.dom.style.zIndex = '2020';
+        let selectText = new Content(select, {
+            width: 200,
+            height: 36
+        });
+        selectText.dom.innerText = '展开选择';
+        selectText.dom.style.zIndex = '2010';
+        selectText.dom.style.top = '0';
+        selectText.dom.style.transition = 'top 1s linear';
+        selectText.dom.style.borderRadius = '15px';
+        selectText.dom.style.color = color;
+        let selectDiv = new Content(select, {
+            width: 200,
+            height: 36
+        });
+        // selectDiv.dom.style.border = '1px solid'
+        selectDiv.dom.style.borderRadius = '15px';
+        selectDiv.dom.style.boxShadow = '2px 2px 20px #888888';
+        selectDiv.dom.style.zIndex = "2000";
+        // selectDiv.dom.style.visibility = 'hidden'
+        selectDiv.dom.style.background = color0;
+        selectDiv.dom.style.transition = 'all 1s linear';
+        selectDiv.dom.style.top = '0px';
+        selectDiv.dom.style.opacity = '0';
+        selectDiv.dom.style.display = 'flex';
+        selectDiv.dom.style.flexDirection = 'column';
+        let selectContent = new Array();
+        for (let i = 0; i < conStyle.selStr.length; i++) {
+            selectContent[i] = new Content(selectDiv, {
+                width: 200,
+                height: 36 / (conStyle.selStr.length + 2)
+            });
+            selectContent[i].dom.innerText = conStyle.selStr[i];
+            selectContent[i].dom.style.borderRadius = '15px';
+            selectContent[i].dom.style.position = 'relative';
+            selectContent[i].dom.style.transition = 'all 1s linear';
+            selectContent[i].dom.style.lineHeight = (36 / (conStyle.selStr.length + 2)).toString() + "px";
+            selectContent[i].dom.style.color = color;
+        }
+        let selectAll = new Content(selectDiv, {
+            width: 200,
+            height: 36 / (conStyle.selStr.length + 2)
+        });
+        selectAll.dom.innerText = 'selectAll';
+        selectAll.dom.style.borderRadius = '15px';
+        selectAll.dom.style.position = 'relative';
+        selectAll.dom.style.transition = 'all 1s linear';
+        selectAll.dom.style.lineHeight = (36 / (conStyle.selStr.length + 2)).toString() + "px";
+        selectAll.dom.style.color = color;
+        if (!conStyle.IsMultiple) {
+            selectAll.dom.style.color = 'grey';
+            for (let i = 0; i < conStyle.selStr.length; i++) {
+                selectContent[i].dom.onclick = e => {
+                    if (!index0[i]) {
+                        selectStr[0] = conStyle.selStr[i];
+                        selectContent[i].dom.style.background = color;
+                        selectContent[i].dom.style.color = color0;
+                        for (let t = 0; t < conStyle.selStr.length; t++) {
+                            if (t !== i) {
+                                selectContent[t].dom.style.background = color0;
+                                selectContent[t].dom.style.color = color;
+                                index0[t] = false;
+                            }
+                        }
+                        index0[i] = true;
+                    }
+                    else {
+                        selectStr[0] = '';
+                        selectContent[i].dom.style.background = color0;
+                        selectContent[i].dom.style.color = color;
+                        index0[i] = false;
+                    }
+                };
+            }
+        }
+        else {
+            for (let i = 0; i < conStyle.selStr.length; i++) {
+                selectContent[i].dom.onclick = e => {
+                    if (!index0[i]) {
+                        selectStr[i] = conStyle.selStr[i];
+                        selectContent[i].dom.style.background = color;
+                        selectContent[i].dom.style.color = color0;
+                        index0[i] = true;
+                    }
+                    else {
+                        selectStr[i] = '';
+                        selectContent[i].dom.style.background = color0;
+                        selectContent[i].dom.style.color = color;
+                        selectAll.dom.style.background = color0;
+                        selectAll.dom.style.color = color;
+                        index1 = false;
+                        index0[i] = false;
+                    }
+                };
+            }
+            selectAll.dom.onclick = e => {
+                if (!index1) {
+                    selectAll.dom.style.background = color;
+                    selectAll.dom.style.color = color0;
+                    for (let i = 0; i < conStyle.selStr.length; i++) {
+                        selectContent[i].dom.style.background = color;
+                        selectContent[i].dom.style.color = color0;
+                        selectStr[i] = conStyle.selStr[i];
+                    }
+                    index1 = true;
+                }
+                else {
+                    selectAll.dom.style.background = color0;
+                    selectAll.dom.style.color = color;
+                    for (let i = 0; i < conStyle.selStr.length; i++) {
+                        selectContent[i].dom.style.background = color0;
+                        selectContent[i].dom.style.color = color;
+                        selectStr[i] = '';
+                    }
+                    index1 = false;
+                }
+            };
+        }
+        selectText.dom.onmousedown = e => {
+            selectText.dom.style.background = color;
+            selectText.dom.style.color = color0;
+        };
+        selectText.dom.onmouseup = e => {
+            selectText.dom.style.background = color0;
+            selectText.dom.style.color = color;
+        };
+        selectText.dom.onclick = e => {
+            if (!index) {
+                selectDiv.dom.style.opacity = '1';
+                selectDiv.dom.style.zIndex = '2100';
+                selectDiv.dom.style.height = (36 * (conStyle.selStr.length + 2)).toString();
+                selectDiv.dom.style.top = ((-36) * (conStyle.selStr.length + 1) / 2).toString() + 'px';
+                selectText.dom.style.top = (36 * (conStyle.selStr.length + 1) / 2).toString() + 'px';
+                selectText.dom.style.zIndex = '2101';
+                selectText.dom.innerText = 'Confirm';
+                for (let i = 0; i < conStyle.selStr.length; i++) {
+                    selectContent[i].dom.style.height = '36';
+                    selectContent[i].dom.style.lineHeight = '36px';
+                }
+                selectAll.dom.style.height = '36';
+                selectAll.dom.style.lineHeight = '36px';
+                index = true;
+            }
+            else {
+                selectDiv.dom.style.opacity = '0';
+                selectDiv.dom.style.zIndex = '2000';
+                selectDiv.dom.style.height = '36';
+                selectDiv.dom.style.top = '0';
+                for (let i = 0; i < conStyle.selStr.length; i++) {
+                    selectContent[i].dom.style.height = (36 / (conStyle.selStr.length + 2)).toString();
+                    selectContent[i].dom.style.lineHeight = (36 / (conStyle.selStr.length + 2)).toString() + "px";
+                }
+                selectAll.dom.style.height = (36 / (conStyle.selStr.length + 2)).toString();
+                selectAll.dom.style.lineHeight = (36 / (conStyle.selStr.length + 2)).toString() + "px";
+                selectText.dom.style.top = '0';
+                selectText.dom.style.zIndex = '2010';
+                Str = '';
+                conStyle.seledStr = selectStr;
+                for (let i = 0; i < selectStr.length; i++) {
+                    if (selectStr[i] !== undefined && selectStr[i] !== '') {
+                        Str += selectStr[i] + ',';
+                    }
+                }
+                Str = Str.substring(0, Str.length - 1);
+                Str = cutString(Str, 20);
+                if (Str === '' || Str === undefined) {
+                    Str = '展开选择';
+                }
+                selectText.dom.innerText = Str;
+                index = false;
+            }
+        };
+    }
     function createDlgBtnDiv(dlg, conStyle, top, str) {
         let BtnDivStyle = {
             width: dlg.dStyle.width,
@@ -2422,10 +2643,47 @@ var ezpsy = (function () {
         btn.dom.className = "Button";
         btn.dom.style.position = 'relative';
         btn.dom.style.background = color;
-        btn.dom.style.borderRadius = '10px';
+        btn.dom.style.color = 'white';
+        btn.dom.style.borderRadius = '14px';
         btn.dom.style.boxShadow = '2px 2px 20px #888888';
         btn.dom.innerHTML = str;
         btn.dom.style.fontSize = '22px';
+    }
+    function cutString(str, len) {
+        let s;
+        let s0, s1;
+        let sarr = str.split(',');
+        let l = sarr.length;
+        if (str.length <= len) {
+            return str;
+        }
+        else {
+            if ((sarr[0].length + sarr[1].length) >= (len / 2) - 2) {
+                s0 = str.substring(0, (len / 2));
+            }
+            else {
+                s0 = sarr[0] + ',' + sarr[1] + ',';
+            }
+            if ((sarr[l - 1].length + sarr[l - 2].length) >= (len / 2) - 2) {
+                if (sarr[l - 2].length >= (len / 2) - 2) {
+                    if (sarr[l - 1].length >= (len / 2) - 2) {
+                        s1 = sarr[l - 1].substring(0, (len / 2) - 2) + '..';
+                    }
+                    else {
+                        s1 = sarr[l - 1];
+                    }
+                }
+                else {
+                    s1 = sarr[l - 2] + ',' + sarr[l - 1].substring(0, (len / 2) - 2 - sarr[l - 2].length) + '..';
+                }
+            }
+            else {
+                s1 = sarr[l - 2] + ',' + sarr[l - 1];
+            }
+            // s1 = str.substring(str.length-8,str.length)
+            s = s0 + '....' + ',' + s1;
+            return s;
+        }
     }
     // function createDlgConfirm(dlg: Dialogue,conStyle: contentStyle,top: string,IsNeedStatus: boolean){
     //     let confirmDivStyle = {

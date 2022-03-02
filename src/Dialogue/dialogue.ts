@@ -82,7 +82,7 @@ export class Dialogue{
                                 {
                                     for(let t = 0;t < conStyle.seledStr.length;t++)
                                     {
-                                        if(conStyle.seledStr[t] !== undefined || conStyle.seledStr[t] !== '')
+                                        if(conStyle.seledStr[t] !== undefined && conStyle.seledStr[t] !== '')
                                         {
                                             that.selectValue.push(conStyle.seledStr[t])
                                         }
@@ -177,7 +177,6 @@ export class Dialogue{
             while(child){
                 that.dom.removeChild(child)
                 child = that.dom.lastElementChild
-                console.dir('a')
             }
             that.conT.child = []
             // console.dir(that)
@@ -400,6 +399,7 @@ function createDlgSelect(imgDiv: Content,conStyle: contentStyle){
     let index = false
     let index0 = new Array()
     let index1 = false
+    let count = 0
     let selectStr = new Array();
     let Str = '';
     let color = '#3771e0'
@@ -416,7 +416,7 @@ function createDlgSelect(imgDiv: Content,conStyle: contentStyle){
     selectText.dom.innerText = '展开选择'
     selectText.dom.style.zIndex = '2010'
     selectText.dom.style.top = '0'
-    selectText.dom.style.transition = 'top 1s linear'
+    selectText.dom.style.transition = 'top 0.8s linear'
     selectText.dom.style.borderRadius = '15px'
     selectText.dom.style.color = color
     let  selectDiv = new Content(select,{
@@ -429,7 +429,7 @@ function createDlgSelect(imgDiv: Content,conStyle: contentStyle){
     selectDiv.dom.style.zIndex = "2000"
     // selectDiv.dom.style.visibility = 'hidden'
     selectDiv.dom.style.background = color0
-    selectDiv.dom.style.transition = 'all 1s linear'
+    selectDiv.dom.style.transition = 'all 0.8s linear'
     selectDiv.dom.style.top = '0px'
     selectDiv.dom.style.opacity = '0'
     selectDiv.dom.style.display = 'flex'
@@ -442,9 +442,13 @@ function createDlgSelect(imgDiv: Content,conStyle: contentStyle){
             height: 36/(conStyle.selStr.length+2)
         })
         selectContent[i].dom.innerText = conStyle.selStr[i]
-        selectContent[i].dom.style.borderRadius = '15px'
+        if(i === 0)
+        {
+            selectContent[i].dom.style.borderRadius = '15px 15px 0px 0px'
+        }
+        // selectContent[i].dom.style.borderRadius = '15px'
         selectContent[i].dom.style.position = 'relative'
-        selectContent[i].dom.style.transition = 'all 1s linear'
+        selectContent[i].dom.style.transition = 'all 0.8s linear'
         selectContent[i].dom.style.lineHeight = (36/(conStyle.selStr.length+2)).toString() + "px" 
         selectContent[i].dom.style.color = color
     }
@@ -453,9 +457,9 @@ function createDlgSelect(imgDiv: Content,conStyle: contentStyle){
         height: 36/(conStyle.selStr.length+2)
     })
     selectAll.dom.innerText = 'selectAll'
-    selectAll.dom.style.borderRadius = '15px'
+    // selectAll.dom.style.borderRadius = '15px'
     selectAll.dom.style.position = 'relative'
-    selectAll.dom.style.transition = 'all 1s linear'
+    selectAll.dom.style.transition = 'all 0.8s linear'
     selectAll.dom.style.lineHeight = (36/(conStyle.selStr.length+2)).toString() + "px" 
     selectAll.dom.style.color = color
     if(!conStyle.IsMultiple)
@@ -498,6 +502,12 @@ function createDlgSelect(imgDiv: Content,conStyle: contentStyle){
                     selectContent[i].dom.style.background = color
                     selectContent[i].dom.style.color = color0
                     index0[i] = true
+                    count++
+                    if(count === conStyle.selStr.length)
+                    {
+                        selectAll.dom.style.background = color
+                        selectAll.dom.style.color = color0
+                    }  
                 }
                 else{
                     selectStr[i] = ''
@@ -507,7 +517,8 @@ function createDlgSelect(imgDiv: Content,conStyle: contentStyle){
                     selectAll.dom.style.color = color
                     index1 = false
                     index0[i] = false
-                }        
+                    count--
+                }     
             }
         }
         selectAll.dom.onclick = e => {
@@ -550,6 +561,7 @@ function createDlgSelect(imgDiv: Content,conStyle: contentStyle){
             selectDiv.dom.style.top = ((-36) * (conStyle.selStr.length + 1)/2).toString() + 'px'
             selectText.dom.style.top = (36 * (conStyle.selStr.length + 1)/2).toString() + 'px'
             selectText.dom.style.zIndex = '2101'
+            selectText.dom.style.borderRadius = '0px 0px 15px 15px'
             selectText.dom.innerText = 'Confirm'
             for(let i = 0;i < conStyle.selStr.length;i++)
             {
@@ -574,6 +586,7 @@ function createDlgSelect(imgDiv: Content,conStyle: contentStyle){
             selectAll.dom.style.lineHeight = (36/(conStyle.selStr.length+2)).toString() + "px"
             selectText.dom.style.top = '0'
             selectText.dom.style.zIndex = '2010'
+            selectText.dom.style.borderRadius = '15px'
             Str = ''
             conStyle.seledStr = selectStr
             for(let i = 0;i < selectStr.length;i++)

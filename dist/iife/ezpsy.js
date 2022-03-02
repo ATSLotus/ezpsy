@@ -2010,13 +2010,16 @@ var ezpsy = (function () {
         });
     }
 
-    function KbWait(key, Func) {
-        document.onkeydown = function (event) {
-            var e = event || window.event || arguments.callee.caller.arguments[0];
-            if (e && e.keyCode === key) {
-                Func();
-            }
-        };
+    function KbWait(key) {
+        return new Promise((resolve, rejected) => {
+            document.onkeydown = event => {
+                let e = event || window.event || arguments.callee.caller.arguments[0];
+                if (e && e.keyCode === key) {
+                    resolve(true);
+                }
+                rejected(false);
+            };
+        });
     }
     function KbName(key) {
         let res;
@@ -2029,38 +2032,47 @@ var ezpsy = (function () {
         console.dir(res);
         return res;
     }
-    function KbPressWait(key, Func) {
-        document.onkeydown = function (event) {
-            var e = event || window.event || arguments.callee.caller.arguments[0];
-            if (e && e.keyCode === key) {
-                Func();
-            }
-        };
+    function KbPressWait(key) {
+        return new Promise((resolve, rejected) => {
+            document.onkeydown = event => {
+                let e = event || window.event || arguments.callee.caller.arguments[0];
+                if (e && e.keyCode === key) {
+                    resolve(true);
+                }
+                rejected(false);
+            };
+        });
     }
-    function KbReleaseWait(key, Func) {
-        document.onkeyup = function (event) {
-            var e = event || window.event || arguments.callee.caller.arguments[0];
-            if (e && e.keyCode === key) {
-                Func();
-            }
-        };
+    function KbReleaseWait(key) {
+        return new Promise((resolve, rejected) => {
+            document.onkeyup = event => {
+                let e = event || window.event || arguments.callee.caller.arguments[0];
+                if (e && e.keyCode === key) {
+                    resolve(true);
+                }
+                rejected(false);
+            };
+        });
     }
-    function GetClick(el, Func) {
-        document.onmousedown = function (event) {
-            let e = event || window.event || arguments.callee.caller.arguments[0];
-            let x, y;
-            if (e.pageX || e.pageY) {
-                x = e.pageX;
-                y = e.pageY;
-            }
-            // console.dir(x) 
-            // console.dir(y)
-            let f = judgeIsInElement([x, y], el);
-            // console.dir(f)
-            if (f === true) {
-                Func();
-            }
-        };
+    function GetClick(el) {
+        return new Promise((resolve, rejected) => {
+            document.onmousedown = function (event) {
+                let e = event || window.event || arguments.callee.caller.arguments[0];
+                let x, y;
+                if (e.pageX || e.pageY) {
+                    x = e.pageX;
+                    y = e.pageY;
+                }
+                // console.dir(x) 
+                // console.dir(y)
+                let f = judgeIsInElement([x, y], el);
+                // console.dir(f)
+                if (f === true) {
+                    resolve(true);
+                }
+                rejected(false);
+            };
+        });
     }
 
     function createDiv(dom, dStyle) {

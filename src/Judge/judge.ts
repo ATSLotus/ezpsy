@@ -188,7 +188,7 @@ export function judgeStyle(el: Elements,ctx: CanvasRenderingContext2D){
     {
         el.style = {
             fill: "none",
-            stroke: "#000",
+            stroke: '"#000000"',
             lineWidth: 1
         }
     }
@@ -214,7 +214,7 @@ export function judgeStyle(el: Elements,ctx: CanvasRenderingContext2D){
             ctx.stroke();
         }
         else{
-            st.stroke = "#000"
+            st.stroke = '"#000000"'
             ctx.strokeStyle = st.stroke;
             ctx.lineWidth = st.lineWidth;
             ctx.stroke();

@@ -27,6 +27,7 @@ var ezpsy = (function () {
     class Elements {
         shape;
         style;
+        ctx;
         constructor() {
         }
         noFill() {
@@ -1547,7 +1548,7 @@ var ezpsy = (function () {
         if (el.style === undefined) {
             el.style = {
                 fill: "none",
-                stroke: "#000",
+                stroke: '"#000000"',
                 lineWidth: 1
             };
         }
@@ -1571,7 +1572,7 @@ var ezpsy = (function () {
                 ctx.stroke();
             }
             else {
-                st.stroke = "#000";
+                st.stroke = '"#000000"';
                 ctx.strokeStyle = st.stroke;
                 ctx.lineWidth = st.lineWidth;
                 ctx.stroke();
@@ -2768,7 +2769,11 @@ var ezpsy = (function () {
         add(el) {
             // console.dir('success')
             let ctx = this.ctx;
+            el.ctx = ctx;
             judgeElement(el, ctx);
+        }
+        aliasing(style) {
+            this.ctx.globalCompositeOperation = style;
         }
     }
     // export function pushEzpsyList(ez: Ezpsy){

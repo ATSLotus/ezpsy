@@ -62,7 +62,12 @@ class Ezpsy {
     add(el: Elements){
         // console.dir('success')
         let ctx = this.ctx
+        el.ctx = ctx;
         ezJudge.judgeElement(el,ctx)
+    }
+
+    aliasing(style: string){
+        this.ctx.globalCompositeOperation = style
     }
 
 }

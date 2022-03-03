@@ -16,107 +16,71 @@
             width: 1400,
             height: 1400
         })
-        let dlg = ezpsy.DlgInit(document.getElementById("test"))
-        // console.dir(dlg)
-        dlg.show({
-          title: '选择对话框',
-          content: '请选择所需要的选项,可多项选择',
-          selStr: ['name','sex','birthday','hello','world','nannnnnnnnn'],
-          btnStr: ['confirm','refuse','cancel'],
-          IsMultiple: true
-        }).then(result=>{
-              if(result){
-                let arr = ''
-                for(let i = 0;i < dlg.selectValue.length;i++){
-                  arr += dlg.selectValue[i];
-                  arr += ','
-                }
-                arr = arr.substring(0,arr.length - 1)
-                return dlg.show({
-                  title: '选择内容',
-                  content: arr,
-                  type: 'help',
-                  noIcon: true
-                })
-              }
-        })
-          .then(result=>{
-            console.dir(result)
-            dlg.show({
-              noIcon: true,
-              content: 'This is a success demo',
-              title: 'Success'
-            })
-          })
-
-        
-        // dlg.inputdlg({
-        //   // btnStr: ['confirm','refuse','cancel'],
-        //   intStr: ['name','sex','birthday'],
-        //   confirmPosition: 2
-        // }).then(value=>{
-        //   console.dir(dlg.intValue)
-        // })
+        // let dlg = ezpsy.DlgInit(document.getElementById("test"))
+        // // console.dir(dlg)
         // dlg.show({
+        //   title: '选择对话框',
+        //   content: '请选择所需要的选项,可多项选择',
+        //   selStr: ['name','sex','birthday','hello','world','nannnnnnnnn'],
         //   btnStr: ['confirm','refuse','cancel'],
-        //   intStr: ['name'],
-        // })
-        // .then(value=>{
-        //   if(value)
-        //   {
-        //     dlg.show({
-        //       btnStr: ['confirm','refuse','cancel'],
-        //       intStr: ['sex'],
-        //     }).then(value=>{
-        //       if(value)
-        //       {
-        //         dlg.show({
-        //           btnStr: ['confirm','refuse','cancel'],
-        //           intStr: ['birthday'],
-        //         }).then(value=>{
-        //           console.dir('success')
+        //   IsMultiple: true
+        // }).then(result=>{
+        //       if(result){
+        //         let arr = ''
+        //         for(let i = 0;i < dlg.selectValue.length;i++){
+        //           arr += dlg.selectValue[i];
+        //           arr += ','
+        //         }
+        //         arr = arr.substring(0,arr.length - 1)
+        //         return dlg.show({
+        //           title: '选择内容',
+        //           content: arr,
+        //           type: 'help',
+        //           noIcon: true
         //         })
         //       }
-
+        // })
+        //   .then(result=>{
+        //     console.dir(result)
+        //     dlg.show({
+        //       noIcon: true,
+        //       content: 'This is a success demo',
+        //       title: 'Success'
         //     })
-        //   }
-          
-        // })
-        // console.dir(dlg)
-        // dlg.show({
-        //   intStr: ['姓名','性别','出生年月']
-        // })
-        // dlg.questdlg({},['ok','no','cancel'])
-        // dlg.show({
-        //   type: 'error',
-        //   title: 'Err',
-        //   content: 'no!',
-        //   btnStr: ['confirm','cancle']
-        // })
-        // dlg.show({
-        //   btnStr: ['ok','no']
-        // }).then(value =>{
-        //   console.dir(value)
-        //   console.dir('yes')
-        // })
-        // console.dir(dlg)
+        //   })
         
 
-        // let rect = new ezpsy.Rectangle({
-        //   shape:{
-        //     x: 100,
-        //     y: 100,
-        //     width: 100,
-        //     height: 100
-        //   }
-        // })
+        let rect = new ezpsy.Rectangle({
+          shape:{
+            x: 100,
+            y: 100,
+            width: 100,
+            height: 100
+          },
+          style:{
+            fill: 'red'
+          }
+        })
+        let rect0 = new ezpsy.Circle({
+          shape:{
+            x: 180,
+            y: 180,
+            r: 50
+          },
+          style:{
+            fill: 'blue'
+          }
+        })
         // let ellipse = new ezpsy.Polygon({
         //   shape: {
         //     xA: [200,200,300,400,500],
         //     yA: [100,300,200,400,100]
         //   }
         // })
-        // // ez.add(rect)
+        ez.add(rect)
+        ez.aliasing('source-out')
+        ez.add(rect0)
+        // console.dir(rect)
         // ez.add(ellipse)
         // let fun = function(){
         //   console.dir('success')

@@ -1,7 +1,7 @@
 import { Shape,Style,nameStyle,Opts } from '../DataType/dataType'
 import { judgeChangeType,judgeSide,judgeStyle } from '../Judge/judge'
 import { Group } from '../Group/group'
-import {Elements} from '../Element'
+import { Elements } from '../Element'
 
 
 interface RectangleShape extends Shape{

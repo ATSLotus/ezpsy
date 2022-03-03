@@ -4,6 +4,7 @@ import { Shape,Style} from './DataType/dataType'
 export class Elements{
     shape?: Shape
     style?: Style 
+    ctx?: CanvasRenderingContext2D
     constructor(){
 
     }
@@ -21,4 +22,16 @@ export class Elements{
         // }
         this.style.stroke = 'none'
     }
+    // animate(){
+    //     if(this.ctx)
+    //     {
+    //         this.animate.prototype.done = function(func: Function){
+                 
+    //         }
+    //     }
+    //     else{
+    //         console.error();
+    //     }
+        
+    // }
 }

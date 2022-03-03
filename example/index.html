@@ -19,12 +19,35 @@
         let dlg = ezpsy.DlgInit(document.getElementById("test"))
         // console.dir(dlg)
         dlg.show({
+          title: '选择对话框',
+          content: '请选择所需要的选项,可多项选择',
           selStr: ['name','sex','birthday','hello','world','nannnnnnnnn'],
-          btnStr: ['confirm','cancel'],
+          btnStr: ['confirm','refuse','cancel'],
           IsMultiple: true
         }).then(result=>{
-          console.dir(dlg)
+              if(result){
+                let arr = ''
+                for(let i = 0;i < dlg.selectValue.length;i++){
+                  arr += dlg.selectValue[i];
+                  arr += ','
+                }
+                arr = arr.substring(0,arr.length - 1)
+                return dlg.show({
+                  title: '选择内容',
+                  content: arr,
+                  type: 'help',
+                  noIcon: true
+                })
+              }
         })
+          .then(result=>{
+            console.dir(result)
+            dlg.show({
+              noIcon: true,
+              content: 'This is a success demo',
+              title: 'Success'
+            })
+          })
 
         
         // dlg.inputdlg({

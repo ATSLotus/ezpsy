@@ -2557,6 +2557,7 @@ var ezpsy = (function () {
                         selectContent[i].dom.style.color = color0;
                         selectStr[i] = conStyle.selStr[i];
                     }
+                    count = conStyle.selStr.length;
                     index1 = true;
                 }
                 else {
@@ -2567,6 +2568,7 @@ var ezpsy = (function () {
                         selectContent[i].dom.style.color = color;
                         selectStr[i] = '';
                     }
+                    count = 0;
                     index1 = false;
                 }
             };

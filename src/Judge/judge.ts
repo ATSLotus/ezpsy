@@ -11,6 +11,7 @@ import { makePolygon, Polygon } from '../Graphic/polygon'
 import { makeText, Text } from '../Graphic/text'
 import { Img, makeImg } from '../Graphic/image'
 import { contentStyle } from '../Dialogue/dialogue'
+import { Grat, makeGrat } from '../Graphic/grating'
 
 export function judgeCanvasStyle(cStyle: canvasStyle):canvasStyle{
     if(!cStyle) 
@@ -167,6 +168,10 @@ export function judgeElement(el: Elements,ctx: CanvasRenderingContext2D){
     else if(el instanceof Text)
     {
         makeText(el,ctx);
+    }
+    else if(el instanceof Grat)
+    {
+        makeGrat(el,ctx);
     }
     else if(el instanceof Img)
     {

@@ -79,7 +79,7 @@ var ezpsy = (function () {
             this.ParentsRect = rect;
         }
     }
-    let nameId$7 = 0;
+    let nameId$8 = 0;
     // class TypeTest implements RectangleShape{
     //     x: number
     //     y: number
@@ -88,8 +88,8 @@ var ezpsy = (function () {
     // }
     class Rectangle extends Elements {
         name = {
-            name: "rect" + nameId$7.toString(),
-            graphicId: nameId$7
+            name: "rect" + nameId$8.toString(),
+            graphicId: nameId$8
         };
         constructor(opts) {
             super();
@@ -104,7 +104,7 @@ var ezpsy = (function () {
                     lineWidth: 1
                 };
             }
-            nameId$7++;
+            nameId$8++;
         }
     }
     class logicRect extends Rectangle {
@@ -628,11 +628,11 @@ var ezpsy = (function () {
         return rect0;
     }
 
-    let nameId$6 = 0;
+    let nameId$7 = 0;
     class Circle extends Elements {
         name = {
-            name: "circle" + nameId$6.toString(),
-            graphicId: nameId$6
+            name: "circle" + nameId$7.toString(),
+            graphicId: nameId$7
         };
         constructor(opts) {
             super();
@@ -648,7 +648,7 @@ var ezpsy = (function () {
                     lineWidth: 1
                 };
             }
-            nameId$6++;
+            nameId$7++;
         }
     }
     function makeCircle(circle, ctx) {
@@ -674,11 +674,11 @@ var ezpsy = (function () {
         return circle;
     }
 
-    let nameId$5 = 0;
+    let nameId$6 = 0;
     class Line extends Elements {
         name = {
-            name: "line" + nameId$5.toString(),
-            graphicId: nameId$5
+            name: "line" + nameId$6.toString(),
+            graphicId: nameId$6
         };
         constructor(opts) {
             super();
@@ -694,7 +694,7 @@ var ezpsy = (function () {
                     lineWidth: 1
                 };
             }
-            nameId$5++;
+            nameId$6++;
         }
     }
     // export class line{
@@ -825,11 +825,11 @@ var ezpsy = (function () {
     //     }
     // }
 
-    let nameId$4 = 0;
+    let nameId$5 = 0;
     class Arc extends Elements {
         name = {
-            name: "arc" + nameId$4.toString(),
-            graphicId: nameId$4
+            name: "arc" + nameId$5.toString(),
+            graphicId: nameId$5
         };
         constructor(opts) {
             super();
@@ -845,7 +845,7 @@ var ezpsy = (function () {
                     lineWidth: 1
                 };
             }
-            nameId$4++;
+            nameId$5++;
         }
     }
     function makeArc(arc, ctx) {
@@ -927,11 +927,11 @@ var ezpsy = (function () {
         return arc0;
     }
 
-    let nameId$3 = 0;
+    let nameId$4 = 0;
     class Ellipse extends Elements {
         name = {
-            name: "ellipse" + nameId$3.toString(),
-            graphicId: nameId$3
+            name: "ellipse" + nameId$4.toString(),
+            graphicId: nameId$4
         };
         constructor(opts) {
             super();
@@ -947,7 +947,7 @@ var ezpsy = (function () {
                     lineWidth: 1
                 };
             }
-            nameId$3++;
+            nameId$4++;
         }
     }
     function makeEllipse(ellipse, ctx) {
@@ -1006,11 +1006,11 @@ var ezpsy = (function () {
         return ellipse0;
     }
 
-    let nameId$2 = 0;
+    let nameId$3 = 0;
     class Polygon extends Elements {
         name = {
-            name: "polygon" + nameId$2.toString(),
-            graphicId: nameId$2
+            name: "polygon" + nameId$3.toString(),
+            graphicId: nameId$3
         };
         constructor(opts) {
             super();
@@ -1026,7 +1026,7 @@ var ezpsy = (function () {
                     lineWidth: 1
                 };
             }
-            nameId$2++;
+            nameId$3++;
         }
     }
     function makePolygon(polygon, ctx) {
@@ -1083,11 +1083,11 @@ var ezpsy = (function () {
         return polygon0;
     }
 
-    let nameId$1 = 0;
+    let nameId$2 = 0;
     class Text extends Elements {
         name = {
-            name: "text" + nameId$1.toString(),
-            graphicId: nameId$1
+            name: "text" + nameId$2.toString(),
+            graphicId: nameId$2
         };
         constructor(opts) {
             super();
@@ -1104,7 +1104,7 @@ var ezpsy = (function () {
                     fontStyle: 'normal'
                 };
             }
-            nameId$1++;
+            nameId$2++;
         }
     }
     function makeText(text, ctx) {
@@ -1143,7 +1143,7 @@ var ezpsy = (function () {
         return result;
     }
 
-    let nameId = 0;
+    let nameId$1 = 0;
     class RGBA {
         R;
         G;
@@ -1157,8 +1157,8 @@ var ezpsy = (function () {
     }
     class Img extends Elements {
         name = {
-            name: "img" + nameId.toString(),
-            graphicId: nameId
+            name: "img" + nameId$1.toString(),
+            graphicId: nameId$1
         };
         Img;
         ImgData;
@@ -1210,7 +1210,7 @@ var ezpsy = (function () {
             // {
             //     this.style = opts.style;
             // }
-            nameId++;
+            nameId$1++;
         }
         init() {
             let sh = this.shape;
@@ -1406,6 +1406,60 @@ var ezpsy = (function () {
         return T;
     }
 
+    let nameId = 0;
+    class Grat extends Elements {
+        name = {
+            name: "grat" + nameId.toString(),
+            graphicId: nameId
+        };
+        constructor(opts) {
+            super();
+            if (!opts.shape.desity) {
+                opts.shape.desity = 20;
+            }
+            this.shape = opts.shape;
+            if (opts.style) {
+                this.style = opts.style;
+            }
+            else {
+                this.style = {
+                    fill: "none",
+                    stroke: "none",
+                    lineWidth: 1
+                };
+            }
+            nameId++;
+        }
+    }
+    function makeGrat(grat, ctx) {
+        let sh = grat.shape;
+        // console.dir(sh)
+        let num = sh.desity;
+        let fill = ctx.createLinearGradient(sh.x - sh.r, sh.y - sh.r, sh.x - sh.r, sh.y + sh.r);
+        fill.addColorStop(0, 'white');
+        for (let i = 1; i < num; i++) {
+            if (i % 2 === 1) {
+                fill.addColorStop(i / num, 'black');
+            }
+            else {
+                fill.addColorStop(i / num, 'white');
+            }
+        }
+        fill.addColorStop(1, 'white');
+        grat.style.fill = fill;
+        ctx.beginPath();
+        ctx.rect(sh.x - sh.r, sh.y - sh.r, sh.x + sh.r, sh.y + sh.r);
+        judgeStyle(grat, ctx);
+        ctx.closePath();
+        ctx.globalCompositeOperation = 'destination-in';
+        ctx.beginPath();
+        ctx.fillStyle = 'black';
+        ctx.arc(sh.x, sh.y, sh.r, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.closePath();
+        return grat;
+    }
+
     function judgeCanvasStyle(cStyle) {
         if (!cStyle) {
             cStyle = {
@@ -1531,6 +1585,9 @@ var ezpsy = (function () {
         }
         else if (el instanceof Text) {
             makeText(el, ctx);
+        }
+        else if (el instanceof Grat) {
+            makeGrat(el, ctx);
         }
         else if (el instanceof Img) {
             makeImg(el, ctx);
@@ -2801,6 +2858,7 @@ var ezpsy = (function () {
         Img: Img,
         Time: Time,
         Dialogue: Dialogue,
+        Grat: Grat,
         RectGroup: RectGroup,
         makeRectangle: makeRectangle,
         AdjoinRect: AdjoinRect,
@@ -2867,7 +2925,8 @@ var ezpsy = (function () {
         KbPressWait: KbPressWait,
         KbReleaseWait: KbReleaseWait,
         GetClick: GetClick,
-        DlgInit: DlgInit
+        DlgInit: DlgInit,
+        makeGrat: makeGrat
     });
 
     return EZPSY;

@@ -20,10 +20,11 @@ export interface Shape{
     sy?: number    //The y-coordinate position at which the cut began
     swidth?: number //The width of the image being clipped
     sheight?: number//The height of the image being clipped
+    desity?: number
 }
  
 export interface Style {
-    fill?: string   //graphic's fill color
+    fill?: string|CanvasGradient   //graphic's fill color
     stroke?: string //graphic's stroke color
     lineWidth?: number  //graphic stroke width
     fontSize?: number|string  //text's size

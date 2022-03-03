@@ -16,6 +16,18 @@
             width: 1400,
             height: 1400
         })
+
+        let grat = new ezpsy.Grat({
+          shape: {
+            x: 200,
+            y: 200,
+            r: 200
+          }
+        })
+        console.dir(grat)
+        ez.add(grat)
+
+
         // let dlg = ezpsy.DlgInit(document.getElementById("test"))
         // // console.dir(dlg)
         // dlg.show({
@@ -50,36 +62,36 @@
         //   })
         
 
-        let rect = new ezpsy.Rectangle({
-          shape:{
-            x: 100,
-            y: 100,
-            width: 100,
-            height: 100
-          },
-          style:{
-            fill: 'red'
-          }
-        })
-        let rect0 = new ezpsy.Circle({
-          shape:{
-            x: 180,
-            y: 180,
-            r: 50
-          },
-          style:{
-            fill: 'blue'
-          }
-        })
+        // let rect = new ezpsy.Rectangle({
+        //   shape:{
+        //     x: 100,
+        //     y: 100,
+        //     width: 100,
+        //     height: 100
+        //   },
+        //   style:{
+        //     fill: 'red'
+        //   }
+        // })
+        // let rect0 = new ezpsy.Circle({
+        //   shape:{
+        //     x: 180,
+        //     y: 180,
+        //     r: 50
+        //   },
+        //   style:{
+        //     fill: 'blue'
+        //   }
+        // })
         // let ellipse = new ezpsy.Polygon({
         //   shape: {
         //     xA: [200,200,300,400,500],
         //     yA: [100,300,200,400,100]
         //   }
         // })
-        ez.add(rect)
-        ez.aliasing('source-out')
-        ez.add(rect0)
+        // ez.add(rect)
+        // ez.aliasing('source-out')
+        // ez.add(rect0)
         // console.dir(rect)
         // ez.add(ellipse)
         // let fun = function(){

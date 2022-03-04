@@ -194,12 +194,12 @@ export function judgeStyle(el: Elements,ctx: CanvasRenderingContext2D){
         el.style = {
             fill: "none",
             stroke: '"#000000"',
-            lineWidth: 1
+            lineWidth: 2
         }
     }
     let st = el.style;
     if(st.lineWidth === undefined){
-        st.lineWidth = 1;
+        st.lineWidth = 2;
     }
     if(st.fill !== 'none' && st.fill !== undefined){
 

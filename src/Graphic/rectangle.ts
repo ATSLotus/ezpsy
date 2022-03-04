@@ -71,6 +71,7 @@ export class Rectangle extends Elements{
     constructor(opts: RectangleOpts){
         super()
         this.shape = opts.shape;
+        this.ctx = super.ctx;
         if(opts.style)
         {
             this.style = opts.style;
@@ -79,7 +80,7 @@ export class Rectangle extends Elements{
             this.style = {
                 fill: "none",
                 stroke: "#000",
-                lineWidth: 1
+                lineWidth: 2
             }
         }
 

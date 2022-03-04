@@ -36,7 +36,7 @@ export class Grat extends Elements{
             this.style = {
                 fill: "none",
                 stroke: "none",
-                lineWidth: 1
+                lineWidth: 2
             }
         }
 
@@ -61,14 +61,15 @@ export function makeGrat(grat: Grat,ctx: CanvasRenderingContext2D): Grat{
     fill.addColorStop(1,'white')
     grat.style.fill = fill
     ctx.beginPath();
-    ctx.rect(sh.x-sh.r,sh.y-sh.r,sh.x+sh.r,sh.y+sh.r);
+    ctx.arc(sh.x,sh.y,sh.r,0,2*Math.PI);
     judgeStyle(grat,ctx);
     ctx.closePath()
-    ctx.globalCompositeOperation = 'destination-in'
-    ctx.beginPath()
-    ctx.fillStyle = 'black'
-    ctx.arc(sh.x,sh.y,sh.r,0,2*Math.PI);
-    ctx.fill()
-    ctx.closePath();
+    // ctx.globalCompositeOperation = 'destination-in'
+    // ctx.beginPath()
+    // ctx.fillStyle = 'black'
+    // ctx.arc(sh.x,sh.y,sh.r,0,2*Math.PI);
+    // ctx.fill()
+    // ctx.closePath();
+    
     return grat;
 }

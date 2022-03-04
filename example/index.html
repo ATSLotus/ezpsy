@@ -13,8 +13,8 @@
         let ez = ezpsy.init(document.getElementById("test"))
         // console.log(ez);
         ez.setCanvasStyle({
-            width: 1400,
-            height: 1400
+            width: 1000,
+            height: 1000
         })
 
         let grat = new ezpsy.Grat({
@@ -62,17 +62,17 @@
         //   })
         
 
-        // let rect = new ezpsy.Rectangle({
-        //   shape:{
-        //     x: 100,
-        //     y: 100,
-        //     width: 100,
-        //     height: 100
-        //   },
-        //   style:{
-        //     fill: 'red'
-        //   }
-        // })
+        let rect = new ezpsy.Rectangle({
+          shape:{
+            x: 100,
+            y: 100,
+            width: 100,
+            height: 100
+          },
+          style:{
+            fill: 'red'
+          }
+        })
         // let rect0 = new ezpsy.Circle({
         //   shape:{
         //     x: 180,
@@ -89,7 +89,8 @@
         //     yA: [100,300,200,400,100]
         //   }
         // })
-        // ez.add(rect)
+        ez.add(rect)
+        console.dir(rect)
         // ez.aliasing('source-out')
         // ez.add(rect0)
         // console.dir(rect)

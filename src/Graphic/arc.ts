@@ -26,6 +26,7 @@ export class Arc extends Elements{
     constructor(opts: ArcOpts){
         super()
         this.shape = opts.shape;
+        this.ctx = super.ctx
         // console.dir(opts.style)
         if(opts.style)
         {
@@ -35,7 +36,7 @@ export class Arc extends Elements{
             this.style = {
                 fill: "none",
                 stroke: "#000",
-                lineWidth: 1
+                lineWidth: 2
             }
         }
 

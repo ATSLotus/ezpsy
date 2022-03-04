@@ -23,6 +23,7 @@ export class Polygon extends Elements{
     constructor(opts: PolygonOpts){
         super()
         this.shape = opts.shape;
+        this.ctx = super.ctx
         // console.dir(opts.style)
         if(opts.style)
         {
@@ -32,7 +33,7 @@ export class Polygon extends Elements{
             this.style = {
                 fill: "none",
                 stroke: "#000",
-                lineWidth: 1
+                lineWidth: 2
             }
         }
 

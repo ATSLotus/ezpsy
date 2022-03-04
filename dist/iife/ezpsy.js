@@ -44,6 +44,8 @@ var ezpsy = (function () {
             // }
             this.style.stroke = 'none';
         }
+        remove() {
+        }
     }
 
     class Center {
@@ -94,6 +96,7 @@ var ezpsy = (function () {
         constructor(opts) {
             super();
             this.shape = opts.shape;
+            this.ctx = super.ctx;
             if (opts.style) {
                 this.style = opts.style;
             }
@@ -101,7 +104,7 @@ var ezpsy = (function () {
                 this.style = {
                     fill: "none",
                     stroke: "#000",
-                    lineWidth: 1
+                    lineWidth: 2
                 };
             }
             nameId$8++;
@@ -637,6 +640,7 @@ var ezpsy = (function () {
         constructor(opts) {
             super();
             this.shape = opts.shape;
+            this.ctx = super.ctx;
             // console.dir(opts.style)
             if (opts.style) {
                 this.style = opts.style;
@@ -645,7 +649,7 @@ var ezpsy = (function () {
                 this.style = {
                     fill: "none",
                     stroke: "#000",
-                    lineWidth: 1
+                    lineWidth: 2
                 };
             }
             nameId$7++;
@@ -683,6 +687,7 @@ var ezpsy = (function () {
         constructor(opts) {
             super();
             this.shape = opts.shape;
+            this.ctx = super.ctx;
             // console.dir(opts.style)
             if (opts.style) {
                 this.style = opts.style;
@@ -691,7 +696,7 @@ var ezpsy = (function () {
                 this.style = {
                     fill: "none",
                     stroke: "#000",
-                    lineWidth: 1
+                    lineWidth: 2
                 };
             }
             nameId$6++;
@@ -834,6 +839,7 @@ var ezpsy = (function () {
         constructor(opts) {
             super();
             this.shape = opts.shape;
+            this.ctx = super.ctx;
             // console.dir(opts.style)
             if (opts.style) {
                 this.style = opts.style;
@@ -842,7 +848,7 @@ var ezpsy = (function () {
                 this.style = {
                     fill: "none",
                     stroke: "#000",
-                    lineWidth: 1
+                    lineWidth: 2
                 };
             }
             nameId$5++;
@@ -936,6 +942,7 @@ var ezpsy = (function () {
         constructor(opts) {
             super();
             this.shape = opts.shape;
+            this.ctx = super.ctx;
             // console.dir(opts.style)
             if (opts.style) {
                 this.style = opts.style;
@@ -944,7 +951,7 @@ var ezpsy = (function () {
                 this.style = {
                     fill: "none",
                     stroke: "#000",
-                    lineWidth: 1
+                    lineWidth: 2
                 };
             }
             nameId$4++;
@@ -1015,6 +1022,7 @@ var ezpsy = (function () {
         constructor(opts) {
             super();
             this.shape = opts.shape;
+            this.ctx = super.ctx;
             // console.dir(opts.style)
             if (opts.style) {
                 this.style = opts.style;
@@ -1023,7 +1031,7 @@ var ezpsy = (function () {
                 this.style = {
                     fill: "none",
                     stroke: "#000",
-                    lineWidth: 1
+                    lineWidth: 2
                 };
             }
             nameId$3++;
@@ -1092,6 +1100,7 @@ var ezpsy = (function () {
         constructor(opts) {
             super();
             this.shape = opts.shape;
+            this.ctx = super.ctx;
             // console.dir(opts.style)
             if (opts.style) {
                 this.style = opts.style;
@@ -1166,6 +1175,7 @@ var ezpsy = (function () {
         constructor(opts) {
             super();
             this.shape = opts.shape;
+            this.ctx = super.ctx;
             if (opts.Img === undefined) {
                 let I = new Image();
                 I.src = opts.shape.img;
@@ -1425,7 +1435,7 @@ var ezpsy = (function () {
                 this.style = {
                     fill: "none",
                     stroke: "none",
-                    lineWidth: 1
+                    lineWidth: 2
                 };
             }
             nameId++;
@@ -1448,15 +1458,15 @@ var ezpsy = (function () {
         fill.addColorStop(1, 'white');
         grat.style.fill = fill;
         ctx.beginPath();
-        ctx.rect(sh.x - sh.r, sh.y - sh.r, sh.x + sh.r, sh.y + sh.r);
+        ctx.arc(sh.x, sh.y, sh.r, 0, 2 * Math.PI);
         judgeStyle(grat, ctx);
         ctx.closePath();
-        ctx.globalCompositeOperation = 'destination-in';
-        ctx.beginPath();
-        ctx.fillStyle = 'black';
-        ctx.arc(sh.x, sh.y, sh.r, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.closePath();
+        // ctx.globalCompositeOperation = 'destination-in'
+        // ctx.beginPath()
+        // ctx.fillStyle = 'black'
+        // ctx.arc(sh.x,sh.y,sh.r,0,2*Math.PI);
+        // ctx.fill()
+        // ctx.closePath();
         return grat;
     }
 
@@ -1606,12 +1616,12 @@ var ezpsy = (function () {
             el.style = {
                 fill: "none",
                 stroke: '"#000000"',
-                lineWidth: 1
+                lineWidth: 2
             };
         }
         let st = el.style;
         if (st.lineWidth === undefined) {
-            st.lineWidth = 1;
+            st.lineWidth = 2;
         }
         if (st.fill !== 'none' && st.fill !== undefined) {
             ctx.fillStyle = st.fill;

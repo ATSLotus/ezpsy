@@ -24,6 +24,7 @@ export class Circle extends Elements{
     constructor(opts: CircleOpts){
         super()
         this.shape = opts.shape;
+        this.ctx = super.ctx
         // console.dir(opts.style)
         if(opts.style)
         {
@@ -33,7 +34,7 @@ export class Circle extends Elements{
             this.style = {
                 fill: "none",
                 stroke: "#000",
-                lineWidth: 1
+                lineWidth: 2
             }
         }
 

@@ -22,6 +22,9 @@ export class Elements{
         // }
         this.style.stroke = 'none'
     }
+    remove(){
+        
+    }
     // animate(){
     //     if(this.ctx)
     //     {

@@ -25,6 +25,7 @@ export class Text extends Elements{
     constructor(opts: TextOpts){
         super()
         this.shape = opts.shape;
+        this.ctx = super.ctx
         // console.dir(opts.style)
         if(opts.style)
         {

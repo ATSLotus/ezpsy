@@ -138,7 +138,7 @@ export function judgeModel(model: string): [string,string,string,string]{
 //     if(!style)
 // }
 
-export function judgeElement(el: Elements,ctx: CanvasRenderingContext2D){
+export function judgeElement(el: Elements|Group,ctx: CanvasRenderingContext2D){
     // console.dir(el)
     // console.dir(Rectangle)
     // console.dir(el instanceof Rectangle)

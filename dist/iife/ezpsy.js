@@ -6,22 +6,18 @@ var ezpsy = (function () {
         return idStart++;
     }
 
-    let groupId = 0;
-    class Group {
-        id;
-        length;
-        groupList;
-        constructor(el) {
-            this.id = groupId;
-            if (el instanceof Group) {
-                this.length = 1;
-            }
-            else {
-                this.length = el.length;
-            }
-            this.groupList = el;
-            groupId++;
-        }
+    function createCanvas(dom, cStyle) {
+        let c = document.createElement('canvas');
+        // let cStyle: canvasStyle = {
+        //     width: 100,
+        //     height: 100
+        // }
+        c.style.position = 'absolute';
+        c.width = cStyle.width;
+        c.height = cStyle.height;
+        let ctx = c.getContext('2d');
+        dom.append(c);
+        return ctx;
     }
 
     class Elements {
@@ -44,7 +40,74 @@ var ezpsy = (function () {
             // }
             this.style.stroke = 'none';
         }
+        // setCanvasStyle(cStyle: canvasStyle){
+        //     let c = this.ctx.canvas;
+        //     cStyle = ezJudge.judgeCanvasStyle(cStyle);
+        //     c.width = cStyle.width;
+        //     c.height = cStyle.height;
+        // }
         remove() {
+            let ctx = this.ctx;
+            ctx.save();
+            ctx.beginPath();
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, 1, 1);
+            ctx.globalCompositeOperation = "destination-in";
+            ctx.fillRect(0, 0, 1, 1);
+            ctx.closePath();
+            ctx.restore();
+            // ctx.globalCompositeOperation='source-over'
+        }
+        scale(scaleWidth, scaleHeight) {
+            let ctx = this.ctx;
+            this.remove();
+            ctx.save();
+            ctx.beginPath();
+            ctx.scale(scaleWidth, scaleHeight);
+            judgeElement(this, ctx);
+            ctx.closePath();
+            ctx.restore();
+        }
+        rotate(ang) {
+            let ctx = this.ctx;
+            this.remove();
+            ctx.save();
+            ctx.beginPath();
+            ctx.rotate(ang);
+            judgeElement(this, ctx);
+            ctx.closePath();
+            ctx.restore();
+        }
+        translate(x, y) {
+            let ctx = this.ctx;
+            this.remove();
+            ctx.save();
+            ctx.beginPath();
+            ctx.translate(x, y);
+            judgeElement(this, ctx);
+            ctx.closePath();
+            ctx.restore();
+        }
+    }
+
+    let groupId = 0;
+    class Group extends Elements {
+        id;
+        length;
+        // ctx: CanvasRenderingContext2D
+        groupList;
+        constructor(el) {
+            super();
+            this.ctx = super.ctx;
+            this.id = groupId;
+            if (el instanceof Group) {
+                this.length = 1;
+            }
+            else {
+                this.length = el.length;
+            }
+            this.groupList = el;
+            groupId++;
         }
     }
 
@@ -1416,6 +1479,21 @@ var ezpsy = (function () {
         return T;
     }
 
+    function createGratLinearGradient(ctx, [x0, y0, x1, y1], num, s) {
+        let fill = ctx.createLinearGradient(x0, y0 - s, x1, y1 - s);
+        fill.addColorStop(0, '#fff');
+        for (let i = 1; i < num; i++) {
+            if (i % 2 === 1) {
+                fill.addColorStop(i / num, '#000');
+            }
+            else {
+                fill.addColorStop(i / num, '#fff');
+            }
+        }
+        fill.addColorStop(1, '#fff');
+        return fill;
+    }
+
     let nameId = 0;
     class Grat extends Elements {
         name = {
@@ -1425,7 +1503,7 @@ var ezpsy = (function () {
         constructor(opts) {
             super();
             if (!opts.shape.desity) {
-                opts.shape.desity = 20;
+                opts.shape.desity = 35;
             }
             this.shape = opts.shape;
             if (opts.style) {
@@ -1440,34 +1518,103 @@ var ezpsy = (function () {
             }
             nameId++;
         }
+        // play(speed?: number,delay?: number){
+        //     if(!delay){
+        //         delay = 8
+        //         if(!speed)
+        //         {
+        //             speed = 8
+        //         }
+        //     }
+        //     let ctx = this.ctx
+        //     let [x0,y0,x1,y1] = [this.shape.x-this.shape.r,this.shape.y-this.shape.r,this.shape.x-this.shape.r,this.shape.y+3*this.shape.r]
+        //     let index = speed;
+        //     let that = this;
+        //     (async function(){
+        //         for(let i = 0;i > -1;i++)
+        //         {
+        //             let fill = createGratLinearGradient(ctx,[x0,y0,x1,y1],that.shape.desity,index*i);
+        //             if(index*i >= 2*that.shape.r)
+        //             {
+        //                 i = 0
+        //             }
+        //             updateGrat(that,ctx,fill)
+        //             // console.dir(i)
+        //             await delay_frame(delay)
+        //         }
+        //     })()
+        // }
+        play(speed, delay) {
+            if (!delay) {
+                delay = 8;
+                if (!speed) {
+                    speed = 8;
+                }
+            }
+            let ctx = this.ctx;
+            // console.dir('a')
+            // let [x0,y0,x1,y1] = [this.shape.x-this.shape.r,this.shape.y-this.shape.r,this.shape.x-this.shape.r,this.shape.y+3*this.shape.r]
+            let index = speed;
+            let that = this;
+            (async function () {
+                for (let i = 0; i > -1; i++) {
+                    if (index * i >= that.shape.r) {
+                        i = 0;
+                    }
+                    updateGrat0(that, ctx, index * i);
+                    console.dir(i);
+                    await delay_frame(delay);
+                }
+            })();
+        }
     }
     function makeGrat(grat, ctx) {
         let sh = grat.shape;
         // console.dir(sh)
         let num = sh.desity;
-        let fill = ctx.createLinearGradient(sh.x - sh.r, sh.y - sh.r, sh.x - sh.r, sh.y + sh.r);
-        fill.addColorStop(0, 'white');
-        for (let i = 1; i < num; i++) {
-            if (i % 2 === 1) {
-                fill.addColorStop(i / num, 'black');
-            }
-            else {
-                fill.addColorStop(i / num, 'white');
-            }
-        }
-        fill.addColorStop(1, 'white');
+        // let fill = ctx.createLinearGradient(sh.x-sh.r,sh.y-sh.r,sh.x-sh.r,sh.y+sh.r)
+        // fill.addColorStop(0,'white')
+        // for(let i = 1;i < num;i++){
+        //     if(i%2 === 1){
+        //         fill.addColorStop(i/num,'black')
+        //     }
+        //     else{
+        //         fill.addColorStop(i/num,'white')
+        //     }
+        // }
+        // fill.addColorStop(1,'white')
+        let fill = createGratLinearGradient(ctx, [sh.x - sh.r, sh.y - sh.r, sh.x - sh.r, sh.y + 3 * sh.r], num, 0);
+        let c = ctx.canvas;
+        c.style.borderRadius = '50%';
         grat.style.fill = fill;
         ctx.beginPath();
-        ctx.arc(sh.x, sh.y, sh.r, 0, 2 * Math.PI);
+        // ctx.arc(sh.x,sh.y,sh.r,0,2*Math.PI)
+        ctx.rect(sh.x - sh.r, sh.y - sh.r, sh.x + sh.r, sh.y + 3 * sh.r);
         judgeStyle(grat, ctx);
         ctx.closePath();
+        // ctx.save()
+        // ctx.beginPath();
+        // ctx.rect(sh.x-sh.r,sh.y-sh.r,sh.x+sh.r,sh.y+2*sh.r);
+        // judgeStyle(grat,ctx);
+        // ctx.closePath()
         // ctx.globalCompositeOperation = 'destination-in'
         // ctx.beginPath()
         // ctx.fillStyle = 'black'
         // ctx.arc(sh.x,sh.y,sh.r,0,2*Math.PI);
         // ctx.fill()
         // ctx.closePath();
+        // ctx.restore()
         return grat;
+    }
+    function updateGrat0(grat, ctx, num) {
+        grat.remove();
+        ctx.save();
+        ctx.beginPath();
+        ctx.translate(0, -num);
+        ctx.rect(grat.shape.x - grat.shape.r, grat.shape.y - grat.shape.r, grat.shape.x + grat.shape.r, grat.shape.y + 3 * grat.shape.r);
+        judgeStyle(grat, ctx);
+        ctx.closePath();
+        ctx.restore();
     }
 
     function judgeCanvasStyle(cStyle) {
@@ -1992,20 +2139,6 @@ var ezpsy = (function () {
         //         && (c = !c); 
         //     return c; 
         // }
-    }
-
-    function createCanvas(dom, cStyle) {
-        let c = document.createElement('canvas');
-        cStyle = judgeCanvasStyle(cStyle);
-        // let cStyle: canvasStyle = {
-        //     width: 100,
-        //     height: 100
-        // }
-        c.width = cStyle.width;
-        c.height = cStyle.height;
-        let ctx = c.getContext('2d');
-        dom.append(c);
-        return ctx;
     }
 
     class time {
@@ -2818,29 +2951,53 @@ var ezpsy = (function () {
         id;
         dom;
         ctx;
+        ctxList;
         cStyle;
         // Rectangle: Rectangle
         constructor(id, dom, cStyle) {
             this.id = id;
             this.dom = dom;
+            cStyle = judgeCanvasStyle(cStyle);
             this.cStyle = cStyle;
-            this.ctx = createCanvas(dom, cStyle);
+            this.ctxList = [];
+            // this.ctx = ezCanvas.createCanvas(dom,cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
             // console.dir(this.ctx)
         }
-        setCanvasStyle(cStyle) {
-            let c = this.ctx.canvas;
-            cStyle = judgeCanvasStyle(cStyle);
-            c.width = cStyle.width;
-            c.height = cStyle.height;
-        }
+        // setCanvasStyle(cStyle: canvasStyle){
+        //     let c = this.ctx.canvas;
+        //     cStyle = ezJudge.judgeCanvasStyle(cStyle);
+        //     c.width = cStyle.width;
+        //     c.height = cStyle.height;
+        // }
         add(el) {
             // console.dir('success')
+            this.ctx = createCanvas(this.dom, this.cStyle); //此处创建canvas将创建多个canvas，但可仅清除单一图形，因此也无法使用ez.setCanvasStyle
+            this.ctxList.push(this.ctx);
             let ctx = this.ctx;
-            el.ctx = ctx;
-            judgeElement(el, ctx);
+            if (el instanceof Elements) {
+                el.ctx = ctx;
+                judgeElement(el, ctx);
+            }
+            else {
+                for (let i = 0; i < el.length; i++) {
+                    el[i].ctx = ctx;
+                    judgeElement(el[i], ctx);
+                }
+            }
         }
-        aliasing(style) {
-            this.ctx.globalCompositeOperation = style;
+        // aliasing(style: string){
+        //     this.ctx.globalCompositeOperation = style
+        // }
+        clear() {
+            let that = this;
+            return new Promise(function (resolve, reject) {
+                let child = that.dom.lastElementChild;
+                while (child) {
+                    that.dom.removeChild(child);
+                    child = that.dom.lastElementChild;
+                }
+                resolve(0);
+            });
         }
     }
     // export function pushEzpsyList(ez: Ezpsy){

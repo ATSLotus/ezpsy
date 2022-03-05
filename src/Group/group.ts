@@ -4,13 +4,17 @@ import { Elements } from '../Element'
 
 let groupId = 0;
 
-export class Group{
+export class Group extends Elements{
     id: number
     length: number
+    // ctx: CanvasRenderingContext2D
     groupList: Elements[]|Group[]|Group
     
     constructor(el: Elements[]|Group[]|Group){
 
+        super()
+
+        this.ctx = super.ctx
         this.id = groupId;
         if(el instanceof Group)
         {

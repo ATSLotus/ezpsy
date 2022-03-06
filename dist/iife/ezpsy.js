@@ -94,7 +94,19 @@ var ezpsy = (function () {
         shape;
         style;
         ctx;
+        scale;
+        translate;
+        rotate;
         constructor() {
+            this.translate = {
+                x: 0,
+                y: 0
+            };
+            this.scale = {
+                width: 1,
+                height: 1
+            };
+            this.rotate = 0;
         }
         noFill() {
             this.style.fill = 'none';
@@ -119,44 +131,14 @@ var ezpsy = (function () {
         remove() {
             let ctx = this.ctx;
             ctx.save();
-            ctx.beginPath();
+            // ctx.beginPath()
             ctx.fillStyle = "white";
             ctx.fillRect(0, 0, 1, 1);
             ctx.globalCompositeOperation = "destination-in";
             ctx.fillRect(0, 0, 1, 1);
-            ctx.closePath();
+            // ctx.closePath()	
             ctx.restore();
             // ctx.globalCompositeOperation='source-over'
-        }
-        scale(scaleWidth, scaleHeight) {
-            let ctx = this.ctx;
-            this.remove();
-            ctx.save();
-            ctx.beginPath();
-            ctx.scale(scaleWidth, scaleHeight);
-            judgeElement(this, ctx);
-            ctx.closePath();
-            ctx.restore();
-        }
-        rotate(ang) {
-            let ctx = this.ctx;
-            this.remove();
-            ctx.save();
-            ctx.beginPath();
-            ctx.rotate(ang);
-            judgeElement(this, ctx);
-            ctx.closePath();
-            ctx.restore();
-        }
-        translate(x, y) {
-            let ctx = this.ctx;
-            this.remove();
-            ctx.save();
-            ctx.beginPath();
-            ctx.translate(x, y);
-            judgeElement(this, ctx);
-            ctx.closePath();
-            ctx.restore();
         }
     }
 
@@ -2210,6 +2192,19 @@ var ezpsy = (function () {
         //     return c; 
         // }
     }
+    function judgeAnimate(el) {
+        let ctx = el.ctx;
+        // console.dir('a')
+        el.remove();
+        ctx.save();
+        ctx.beginPath();
+        ctx.translate(el.translate.x, el.translate.y);
+        ctx.rotate(el.rotate);
+        ctx.scale(el.scale.width, el.scale.height);
+        judgeElement(el, ctx);
+        ctx.closePath();
+        ctx.restore();
+    }
 
     function KbWait(key) {
         return new Promise((resolve, rejected) => {
@@ -2990,12 +2985,14 @@ var ezpsy = (function () {
         // aliasing(style: string){
         //     this.ctx.globalCompositeOperation = style
         // }
-        animate(func, delay) {
-            console.dir(func);
+        animate(el, func, delay) {
+            // let that = this;
             (async function () {
                 while (1) {
                     func();
-                    await WaitSecs(delay);
+                    await WaitSecs(delay / 2);
+                    judgeAnimate(el);
+                    await WaitSecs(delay / 2);
                 }
             })();
         }

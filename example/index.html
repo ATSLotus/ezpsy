@@ -41,14 +41,38 @@
         })
         ez.add(rect)
         let i = 0;
+        let t = 1;
+        let f = false
         let func = function(){
-          if(i >= 40){
-            i = 0
+          if(i >= 20){
+            f = true
           }
-          rect.translate(10*i,0);
-          i++
+          if(i <= 0)
+          {
+            f = false
+          }
+          // if(t >= 10)
+          // {
+          //   t = 1;
+          // }
+          // rect.translate.x = i * 10;
+          rect.translate.x = 200
+          rect.translate.y = 200
+          rect.scale = {
+            width: i * 0.1,
+            height: i * 0.1
+          }
+          rect.rotate = t * 10 * Math.PI/180
+          t++;
+          if(f){
+            i--
+          }
+          else{
+            i++
+          }
         }
-        ez.animate(func,10);
+        ez.animate(rect,func,40);
+        console.dir(rect)
 
         // let dlg = ezpsy.DlgInit(document.getElementById("test"))
         // // console.dir(dlg)

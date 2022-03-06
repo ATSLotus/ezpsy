@@ -640,3 +640,17 @@ export function judgeIsInElement([x,y]: [number,number],el: Elements): boolean{
     //     return c; 
     // }
 }
+
+export function judgeAnimate(el: Elements){
+    let ctx = el.ctx;
+    // console.dir('a')
+    el.remove()
+    ctx.save()
+    ctx.beginPath()
+    ctx.translate(el.translate.x,el.translate.y)
+    ctx.rotate(el.rotate)
+    ctx.scale(el.scale.width,el.scale.height)
+    judgeElement(el,ctx)
+    ctx.closePath()
+    ctx.restore()
+}

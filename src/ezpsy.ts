@@ -94,13 +94,15 @@ class Ezpsy {
     //     this.ctx.globalCompositeOperation = style
     // }
 
-    animate(func: Function,delay: number){
-        console.dir(func);
+    animate(el: Elements,func: Function,delay: number){
+        // let that = this;
         (async function(){
             while(1)
             {
                 func();
-                await ezTime.WaitSecs(delay)
+                await ezTime.WaitSecs(delay/2)
+                ezJudge.judgeAnimate(el);
+                await ezTime.WaitSecs(delay/2)
             }
         })()
     }

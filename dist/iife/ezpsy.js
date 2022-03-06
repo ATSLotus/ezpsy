@@ -20,6 +20,76 @@ var ezpsy = (function () {
         return ctx;
     }
 
+    class time {
+        hour;
+        minutes;
+        seconds;
+        milliseconds;
+        constructor() {
+            let date = new Date();
+            this.hour = date.getHours();
+            this.minutes = date.getMinutes();
+            this.seconds = date.getSeconds();
+            this.milliseconds = date.getMilliseconds();
+        }
+    }
+    class Time {
+        startTime;
+        instantTime;
+        transientTime;
+        timeValue;
+        constructor() {
+        }
+        start() {
+            this.startTime = new time();
+        }
+        record() {
+            this.instantTime = new time();
+        }
+    }
+    function Tic() {
+        let t = new Time();
+        t.start();
+        return t;
+    }
+    function Toc(time) {
+        let t = 0;
+        let ts = new Array();
+        time.record();
+        ts[0] = time.instantTime.hour - time.startTime.hour;
+        ts[1] = time.instantTime.minutes - time.startTime.minutes;
+        ts[2] = time.instantTime.seconds - time.startTime.seconds;
+        ts[3] = time.instantTime.milliseconds - time.startTime.milliseconds;
+        t = 60 * 60 * ts[0] + 60 * ts[1] + ts[2] + ts[3] / 1000;
+        time.timeValue = t;
+        return t;
+    }
+    function GetSecs(time) {
+        let t = Toc(time);
+        return t;
+    }
+    function WaitSecs(delay, message) {
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                // console.log(message);
+                resolve(0);
+            }, delay);
+        });
+    }
+    function delay_frame(num1) {
+        let time_num = 0;
+        return new Promise(function (resolve, reject) {
+            (function raf() {
+                time_num++;
+                let id = window.requestAnimationFrame(raf);
+                if (time_num == num1) {
+                    window.cancelAnimationFrame(id);
+                    resolve(0);
+                }
+            }());
+        });
+    }
+
     class Elements {
         shape;
         style;
@@ -40,12 +110,12 @@ var ezpsy = (function () {
             // }
             this.style.stroke = 'none';
         }
-        // setCanvasStyle(cStyle: canvasStyle){
-        //     let c = this.ctx.canvas;
-        //     cStyle = ezJudge.judgeCanvasStyle(cStyle);
-        //     c.width = cStyle.width;
-        //     c.height = cStyle.height;
-        // }
+        setCanvasStyle(cStyle) {
+            let c = this.ctx.canvas;
+            cStyle = judgeCanvasStyle(cStyle);
+            c.width = cStyle.width;
+            c.height = cStyle.height;
+        }
         remove() {
             let ctx = this.ctx;
             ctx.save();
@@ -1558,7 +1628,7 @@ var ezpsy = (function () {
             let that = this;
             (async function () {
                 for (let i = 0; i > -1; i++) {
-                    if (index * i >= that.shape.r) {
+                    if (index * i >= 2 * that.shape.r) {
                         i = 0;
                     }
                     updateGrat0(that, ctx, index * i);
@@ -2139,76 +2209,6 @@ var ezpsy = (function () {
         //         && (c = !c); 
         //     return c; 
         // }
-    }
-
-    class time {
-        hour;
-        minutes;
-        seconds;
-        milliseconds;
-        constructor() {
-            let date = new Date();
-            this.hour = date.getHours();
-            this.minutes = date.getMinutes();
-            this.seconds = date.getSeconds();
-            this.milliseconds = date.getMilliseconds();
-        }
-    }
-    class Time {
-        startTime;
-        instantTime;
-        transientTime;
-        timeValue;
-        constructor() {
-        }
-        start() {
-            this.startTime = new time();
-        }
-        record() {
-            this.instantTime = new time();
-        }
-    }
-    function Tic() {
-        let t = new Time();
-        t.start();
-        return t;
-    }
-    function Toc(time) {
-        let t = 0;
-        let ts = new Array();
-        time.record();
-        ts[0] = time.instantTime.hour - time.startTime.hour;
-        ts[1] = time.instantTime.minutes - time.startTime.minutes;
-        ts[2] = time.instantTime.seconds - time.startTime.seconds;
-        ts[3] = time.instantTime.milliseconds - time.startTime.milliseconds;
-        t = 60 * 60 * ts[0] + 60 * ts[1] + ts[2] + ts[3] / 1000;
-        time.timeValue = t;
-        return t;
-    }
-    function GetSecs(time) {
-        let t = Toc(time);
-        return t;
-    }
-    function WaitSecs(delay, message) {
-        return new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                // console.log(message);
-                resolve(0);
-            }, delay);
-        });
-    }
-    function delay_frame(num1) {
-        let time_num = 0;
-        return new Promise(function (resolve, reject) {
-            (function raf() {
-                time_num++;
-                let id = window.requestAnimationFrame(raf);
-                if (time_num == num1) {
-                    window.cancelAnimationFrame(id);
-                    resolve(0);
-                }
-            }());
-        });
     }
 
     function KbWait(key) {
@@ -2945,6 +2945,7 @@ var ezpsy = (function () {
     //     }
     // }
 
+    // export { animate } from './Animate/animate'
     // export { makeRectangle } from './Graphic/rectangle'
     // let EzpsyList = new Array();
     class Ezpsy {
@@ -2963,12 +2964,13 @@ var ezpsy = (function () {
             // this.ctx = ezCanvas.createCanvas(dom,cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
             // console.dir(this.ctx)
         }
-        // setCanvasStyle(cStyle: canvasStyle){
-        //     let c = this.ctx.canvas;
-        //     cStyle = ezJudge.judgeCanvasStyle(cStyle);
-        //     c.width = cStyle.width;
-        //     c.height = cStyle.height;
-        // }
+        setCanvasStyle(cStyle) {
+            for (let i = 0; i < this.ctxList.length; i++) {
+                let c = this.ctxList[i].canvas;
+                c.width = cStyle.width;
+                c.height = cStyle.height;
+            }
+        }
         add(el) {
             // console.dir('success')
             this.ctx = createCanvas(this.dom, this.cStyle); //此处创建canvas将创建多个canvas，但可仅清除单一图形，因此也无法使用ez.setCanvasStyle
@@ -2988,6 +2990,15 @@ var ezpsy = (function () {
         // aliasing(style: string){
         //     this.ctx.globalCompositeOperation = style
         // }
+        animate(func, delay) {
+            console.dir(func);
+            (async function () {
+                while (1) {
+                    func();
+                    await WaitSecs(delay);
+                }
+            })();
+        }
         clear() {
             let that = this;
             return new Promise(function (resolve, reject) {

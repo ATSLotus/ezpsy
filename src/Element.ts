@@ -24,12 +24,12 @@ export class Elements{
         // }
         this.style.stroke = 'none'
     }
-    // setCanvasStyle(cStyle: canvasStyle){
-    //     let c = this.ctx.canvas;
-    //     cStyle = ezJudge.judgeCanvasStyle(cStyle);
-    //     c.width = cStyle.width;
-    //     c.height = cStyle.height;
-    // }
+    setCanvasStyle(cStyle: canvasStyle){
+        let c = this.ctx.canvas;
+        cStyle = ezJudge.judgeCanvasStyle(cStyle);
+        c.width = cStyle.width;
+        c.height = cStyle.height;
+    }
     remove(){
         let ctx = this.ctx
         ctx.save()

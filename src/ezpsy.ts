@@ -1,5 +1,6 @@
 import * as ezUtils from './utils'
 import * as ezCanvas from './Canvas/canvas'
+import * as ezTime from './Time/time'
 import { canvasStyle } from './Canvas/canvas'
 import * as ezJudge from './Judge/judge'
 import * as ezRectangle from './Graphic/rectangle'
@@ -9,7 +10,7 @@ import { Elements } from './Element'
 import { Group } from './Group/group'
 
 
-export {Rectangle} from './Graphic/rectangle'
+
 // export { AdjoinRect,RectCenter } from './Graphic/rectangle'
 export * from './DataType/dataType'
 export * from './Graphic/rectangle'
@@ -24,6 +25,7 @@ export * from './Time/time'
 export * from './Keypress/keypress'
 export * from './Dialogue/dialogue'
 export * from './Graphic/grating'
+export { Rectangle } from './Graphic/rectangle'
 export { Group } from './Group/group'
 export { Circle } from './Graphic/circle'
 export { Line } from './Graphic/line'
@@ -35,6 +37,7 @@ export { Img } from './Graphic/image'
 export { Time } from './Time/time'
 export { Dialogue } from './Dialogue/dialogue'
 export { Grat } from './Graphic/grating'
+// export { animate } from './Animate/animate'
 // export { makeRectangle } from './Graphic/rectangle'
  
 // let EzpsyList = new Array();
@@ -58,12 +61,13 @@ class Ezpsy {
         // console.dir(this.ctx)
     }
 
-    // setCanvasStyle(cStyle: canvasStyle){
-    //     let c = this.ctx.canvas;
-    //     cStyle = ezJudge.judgeCanvasStyle(cStyle);
-    //     c.width = cStyle.width;
-    //     c.height = cStyle.height;
-    // }
+    setCanvasStyle(cStyle: canvasStyle){
+        for(let i = 0;i < this.ctxList.length;i++){
+            let c = this.ctxList[i].canvas;
+            c.width = cStyle.width
+            c.height = cStyle.height
+        }
+    }
 
     add(el: Elements|Elements[]){
         // console.dir('success')
@@ -89,6 +93,19 @@ class Ezpsy {
     // aliasing(style: string){
     //     this.ctx.globalCompositeOperation = style
     // }
+
+    animate(func: Function,delay: number){
+        console.dir(func);
+        (async function(){
+            while(1)
+            {
+                func();
+                await ezTime.WaitSecs(delay)
+            }
+        })()
+    }
+
+
 
     clear(){
         let that = this

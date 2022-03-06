@@ -87,7 +87,7 @@ export class Grat extends Elements{
         (async function(){
             for(let i = 0;i > -1;i++)
             {
-                if(index*i >= that.shape.r)
+                if(index*i >= 2*that.shape.r)
                 {
                     i = 0
                 }

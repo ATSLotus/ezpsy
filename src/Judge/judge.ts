@@ -202,7 +202,6 @@ export function judgeStyle(el: Elements,ctx: CanvasRenderingContext2D){
         st.lineWidth = 2;
     }
     if(st.fill !== 'none' && st.fill !== undefined){
-
         ctx.fillStyle = st.fill;
         ctx.fill();
         if(st.stroke !== 'none' && st.stroke !== undefined){
@@ -210,7 +209,6 @@ export function judgeStyle(el: Elements,ctx: CanvasRenderingContext2D){
             ctx.lineWidth = st.lineWidth;
             ctx.stroke();
         }
-        
     }
     else{
         if(st.stroke !== 'none' && st.stroke !== undefined){
@@ -419,7 +417,7 @@ export function judgeTextStyle(el: Elements,ctx: CanvasRenderingContext2D){
     }
     fontString = st.fontStyle + ' ' + st.fontVariant + ' ' + st.fontWeight + ' ' + st.fontSize + ' ' + st.fontFamily;
     ctx.font = fontString;
-    console.dir(fontString)
+    // console.dir(fontString)
 }
 
 export function judgeChangeType(el: number|string): number{

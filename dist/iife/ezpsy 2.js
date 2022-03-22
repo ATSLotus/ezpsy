@@ -135,16 +135,14 @@ var ezpsy = (function () {
         }
         remove() {
             let ctx = this.ctx;
-            let c = ctx.canvas;
-            c.remove();
-            // ctx.save()
-            // // ctx.beginPath()
-            // ctx.fillStyle="white"	
-            // ctx.fillRect(0,0,1,1)
-            // ctx.globalCompositeOperation="destination-in";
-            // ctx.fillRect(0,0,1,1);
-            // // ctx.closePath()	
-            // ctx.restore()
+            ctx.save();
+            // ctx.beginPath()
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, 1, 1);
+            ctx.globalCompositeOperation = "destination-in";
+            ctx.fillRect(0, 0, 1, 1);
+            // ctx.closePath()	
+            ctx.restore();
             // ctx.globalCompositeOperation='source-over'
         }
     }
@@ -2977,7 +2975,7 @@ var ezpsy = (function () {
         }
         add(el) {
             // console.dir('success')
-            this.ctx = createCanvas(this.dom, this.cStyle); //此处创建canvas将创建多个canvas
+            this.ctx = createCanvas(this.dom, this.cStyle); //此处创建canvas将创建多个canvas，但可仅清除单一图形，因此也无法使用ez.setCanvasStyle
             this.ctxList.push(this.ctx);
             let ctx = this.ctx;
             if (el instanceof Elements) {

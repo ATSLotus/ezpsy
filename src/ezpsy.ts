@@ -72,7 +72,7 @@ class Ezpsy {
     add(el: Elements|Elements[]){
         // console.dir('success')
         
-        this.ctx = ezCanvas.createCanvas(this.dom,this.cStyle); //此处创建canvas将创建多个canvas，但可仅清除单一图形，因此也无法使用ez.setCanvasStyle
+        this.ctx = ezCanvas.createCanvas(this.dom,this.cStyle); //此处创建canvas将创建多个canvas
         this.ctxList.push(this.ctx)
         let ctx = this.ctx
         if(el instanceof Elements)

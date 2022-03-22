@@ -25,7 +25,7 @@ export interface Shape{
  
 export interface Style {
     fill?: string|CanvasGradient   //graphic's fill color
-    stroke?: string //graphic's stroke color
+    stroke?: string|CanvasGradient //graphic's stroke color
     lineWidth?: number  //graphic stroke width
     fontSize?: number|string  //text's size
     fontStyle?: number|string //text's style

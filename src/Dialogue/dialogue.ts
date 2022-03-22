@@ -291,7 +291,7 @@ function createDlgImgDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str: s
     imgDiv.dom.style.top = top
     imgDiv.dom.style.display = 'flex'
     imgDiv.dom.style.justifyContent = 'center'
-    if(!conStyle.intStr||conStyle.noInt)
+    if(!conStyle.intStr || conStyle.noInt || conStyle.type !== "input")
     {
         dlg.dom.style.height = dlg.dStyle.height.toString() + 'px'
         if(!conStyle.selStr||conStyle.noSel)
@@ -315,6 +315,7 @@ function createDlgImgDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str: s
         }
     }
     else{
+        // console.dir(conStyle)
         imgDiv.dom.style.height = (imgDivStyle.height * conStyle.intStr.length).toString() + 'px'
         imgDiv.dom.style.flexDirection = 'column'
         dlg.dom.style.height = (parseInt(dlg.dom.style.height) + imgDivStyle.height * (conStyle.intStr.length-1)).toString() + 'px'

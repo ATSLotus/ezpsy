@@ -43,14 +43,16 @@ export class Elements{
     }
     remove(){
         let ctx = this.ctx
-        ctx.save()
-        // ctx.beginPath()
-        ctx.fillStyle="white"	
-        ctx.fillRect(0,0,1,1)
-        ctx.globalCompositeOperation="destination-in";
-        ctx.fillRect(0,0,1,1);
-        // ctx.closePath()	
-        ctx.restore()
+        let c = ctx.canvas;
+        c.remove();
+        // ctx.save()
+        // // ctx.beginPath()
+        // ctx.fillStyle="white"	
+        // ctx.fillRect(0,0,1,1)
+        // ctx.globalCompositeOperation="destination-in";
+        // ctx.fillRect(0,0,1,1);
+        // // ctx.closePath()	
+        // ctx.restore()
         // ctx.globalCompositeOperation='source-over'
     }
     // scale(scaleWidth: number,scaleHeight: number){

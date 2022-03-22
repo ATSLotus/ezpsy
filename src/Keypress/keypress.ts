@@ -1,12 +1,13 @@
 import { Elements } from "../Element";
 import { judgeIsInElement } from "../Judge/judge";
 
-export function KbWait(key: number): Promise<boolean>{
+export function KbWait(key: number,func: Function): Promise<boolean>{
     return new Promise((resolve,rejected)=>{
         document.onkeydown = event =>{
             let e = event || window.event || arguments.callee.caller.arguments[0];
             if(e && e.keyCode === key)
             {
+                func();
                 resolve(true)
             }
             rejected(false)

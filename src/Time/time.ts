@@ -57,7 +57,7 @@ export function WaitSecs(delay: number,message?: any){
     return new Promise(function(resolve,reject){
         setTimeout(function () {
             // console.log(message);
-            resolve(0);
+            resolve(1);
         }, delay);
     })
 }

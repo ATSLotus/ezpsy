@@ -5,7 +5,7 @@
   <body>
     <div id="test"></div>
     
-    <!-- <script>
+    <script>
 
         
 
@@ -44,6 +44,20 @@
                 maxWidth: 200
             },
             style: {
+                fill: 'red',
+                fontSize: '24px',
+                fontWeight: 'bold'
+            }
+        })
+
+        let text_t = new ezpsy.Text({
+            shape: {
+                text: '实验开始后您将有1秒的时间去记忆屏幕所出现的字母',
+                x: 0,
+                y: 100,
+                // maxWidth: 200
+            },
+            style: {
                 fill: 'black',
                 fontSize: '24px'
             }
@@ -66,7 +80,33 @@
 
 
         // console.dir(text)
+        ez.add(text_t)
         ez.add(text)
+
+        let removeRecur = function(t){
+            t = t.replace(/[^a-zA-Z]*/g, '')
+            let a = ''
+            let item = 0;
+            for(let i = 0;i < t.length;i++)
+            {
+                a = t[i]
+                while(1)
+                {
+                    item = t.lastIndexOf(a)
+                    if(item === -1 || item === i)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        t = Array.from(t);
+                        t.splice(item,1)
+                        t = t.join("");
+                    }
+                }
+            }
+            return t.toUpperCase();
+        }
 
         let test = function(){
             ezpsy.WaitSecs(100)
@@ -76,6 +116,7 @@
                     return new Promise((res,rej)=>{
                         // console.dir("success")
                         text.remove()
+                        text_t.remove()
                         ez.add(text1)
                         res(true)
                     })
@@ -144,7 +185,7 @@
                         content: '请输入所记住的字母',
                         intStr: ['字母'],
                         type: 'input'
-                    })
+                    }) 
                 }
             })
             .then(e=>{
@@ -153,15 +194,15 @@
                     let a = arr.toString();
                     let num = 0;
                     let t = dlg.intValue[1]
-                    if(e){
-                        for(let i = 0;i < t.length;i++)
-                        {
-                            for(let j = 0;j < a.length;j++){
-                                if(t[i]===a[j])
-                                {
-                                    num++
-                                    break;
-                                }
+                    t = removeRecur(t);
+                    console.dir(t)
+                    for(let i = 0;i < t.length;i++)
+                    {
+                        for(let j = 0;j < a.length;j++){
+                            if(t[i]===a[j])
+                            {
+                                num++
+                                break;
                             }
                         }
                     }
@@ -176,6 +217,7 @@
                 if(e){
                     return new Promise((res,rej)=>{
                         // console.dir("success")
+                        ez.add(text_t)
                         ez.add(text)
                     })
                 }
@@ -183,12 +225,14 @@
         }
         ezpsy.KbWait(32,test)
         
-
+        window.onresize = function(){
+            location.reload();
+        }
 
         
         
-    </script> -->
-    <script>
+    </script>
+    <!-- <script>
         let ez = ezpsy.init(document.getElementById("test"))
 
         let circle0 = new ezpsy.Circle({
@@ -212,6 +256,6 @@
         canvas{
             /* border: 1px solid black; */
         }
-    </style>
+    </style> -->
   </body>
 </html>

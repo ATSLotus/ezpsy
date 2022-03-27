@@ -1,13 +1,7 @@
-import ezpsy from "../../dist/esm/index.js"
-console.log(ezpsy);
-// let canvasStyle = {
-//     backgroundColor: "black",
-//     width: "60"
-// }
-// let test = ezPsy.hello
-// test()
-let dom1 = document.querySelector('#dom1')
-let dom2 = ezpsy.init(dom1)
-
-console.log(dom2);
-// // console.log(ezPsy.hello);
+// import ezpsy from "../../dist/esm/index.js"
+let dom = document.querySelector('#dom')
+let ez = ezpsy.init(dom)
+let dlg = ezpsy.DlgInit(dom)
+window.onresize = function(){
+    location.reload();
+}

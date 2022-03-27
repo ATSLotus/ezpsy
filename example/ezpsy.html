@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ezpsy在线实验</title>
+        <script src="../dist/iife/ezpsy.js"></script>
+        <!-- <script src="./moduleTest/app.js"></script> -->
+        <script src="./moduleTest/stroop.js"></script>
+        <script src="./moduleTest/remember.js"></script>
+        <script src="./moduleTest/simpleReaction.js"></script>
+    </head>
+    <body>
+        <div class="dom">
+            <div class="domChild">
+                <button id="dom_bt0">瞬时记忆</button>
+                <button id="dom_bt1">视觉干扰</button>
+                <button id="dom_bt2">简单反应时</button> 
+            </div>
+        </div>
+        
+        <div id="dom"></div>
+        <div id="dom1"></div>
+    </body>
+    <script>
+        let dom_0 = document.getElementById('dom')
+        let dom_1 = document.getElementById('dom1')
+        let ez = ezpsy.init(dom_0)
+        let dlg = ezpsy.DlgInit(dom_1)
+        document.getElementById('dom_bt0').addEventListener('mousedown',rememberFun);
+        document.getElementById('dom_bt1').addEventListener('mousedown',stroopFun);
+        document.getElementById('dom_bt2').addEventListener('mousedown',SReactionFun);
+
+        function deleteChild(e) { 
+            // debugger;
+            var child = e.lastElementChild;  
+            
+            while(child) { 
+                e.removeChild(child);  
+                child = e.lastElementChild;
+            } 
+        }
+        window.onresize = function(){
+            location.reload();
+        }
+    </script>
+    <style>
+        canvas{
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        .dom{
+            margin-top: 220px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .domChild{
+            width: 40%;
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .domChild button{
+            width: 80px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            background: #1e6de8;
+            color: aliceblue;
+        }
+        .domChild button:active{
+            background-color: cornflowerblue;
+        }
+        #dom_hidden{
+            display: none;
+        }   
+    </style>
+</html>

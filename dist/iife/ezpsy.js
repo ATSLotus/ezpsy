@@ -41,15 +41,24 @@ var ezpsy = (function () {
     class Time {
         startTime;
         instantTime;
-        transientTime;
+        timeStamp;
+        item;
         timeValue;
         constructor() {
+            this.item = 0;
+            this.startTime = new time();
+            this.instantTime = [];
+            this.instantTime.push(this.startTime);
+            this.timeValue = [];
+            this.timeStamp = [];
         }
         start() {
             this.startTime = new time();
         }
         record() {
-            this.instantTime = new time();
+            let t = new time();
+            this.instantTime.push(t);
+            this.item++;
         }
     }
     function Tic() {
@@ -61,13 +70,38 @@ var ezpsy = (function () {
         let t = 0;
         let ts = new Array();
         time.record();
-        ts[0] = time.instantTime.hour - time.startTime.hour;
-        ts[1] = time.instantTime.minutes - time.startTime.minutes;
-        ts[2] = time.instantTime.seconds - time.startTime.seconds;
-        ts[3] = time.instantTime.milliseconds - time.startTime.milliseconds;
+        ts[0] = time.instantTime[time.item].hour - time.instantTime[time.item - 1].hour;
+        ts[1] = time.instantTime[time.item].minutes - time.instantTime[time.item - 1].minutes;
+        ts[2] = time.instantTime[time.item].seconds - time.instantTime[time.item - 1].seconds;
+        ts[3] = time.instantTime[time.item].milliseconds - time.instantTime[time.item - 1].milliseconds;
         t = 60 * 60 * ts[0] + 60 * ts[1] + ts[2] + ts[3] / 1000;
-        time.timeValue = t;
+        t.toFixed(3);
+        time.timeValue.push(t);
         return t;
+    }
+    function setTimeTtamp(T) {
+        let t = new time();
+        T.timeStamp.push(t);
+    }
+    function getToc(time) {
+        let tA = new Array();
+        let ts = new Array();
+        let t = time.timeStamp;
+        for (let i = 0; i < Math.floor(t.length / 2); i++) {
+            if (t[2 * i + 1] === undefined) {
+                break;
+            }
+            else {
+                ts[0] = t[2 * i + 1].hour - t[2 * i].hour;
+                ts[1] = t[2 * i + 1].minutes - t[2 * i].minutes;
+                ts[2] = t[2 * i + 1].seconds - t[2 * i].seconds;
+                ts[3] = t[2 * i + 1].milliseconds - t[2 * i].milliseconds;
+                tA[i] = 60 * 60 * ts[0] + 60 * ts[1] + ts[2] + ts[3] / 1000;
+                tA[i] = Math.round(tA[i] * 1000) / 1000;
+                // console.dir(tA[i])
+            }
+        }
+        return tA;
     }
     function GetSecs(time) {
         let t = Toc(time);
@@ -1885,20 +1919,23 @@ var ezpsy = (function () {
                 fontStyle: 'normal'
             };
         }
+        if (el.shape.maxWidth === undefined) {
+            el.shape.maxWidth = ctx.canvas.width;
+        }
         let st = el.style;
         if (st.fill !== 'none' && st.fill !== undefined) {
             ctx.fillStyle = st.fill;
-            ctx.fillText(el.shape.text, el.shape.x, el.shape.y);
+            ctx.fillText(el.shape.text, el.shape.x, el.shape.y, el.shape.maxWidth);
         }
         else {
             if (st.stroke !== 'none' && st.stroke !== undefined) {
                 ctx.strokeStyle = st.stroke;
-                ctx.strokeText(el.shape.text, el.shape.x, el.shape.y);
+                ctx.strokeText(el.shape.text, el.shape.x, el.shape.y, el.shape.maxWidth);
             }
             else {
                 st.stroke = "#000";
                 ctx.strokeStyle = st.stroke;
-                ctx.strokeText(el.shape.text, el.shape.x, el.shape.y);
+                ctx.strokeText(el.shape.text, el.shape.x, el.shape.y, el.shape.maxWidth);
             }
         }
     }
@@ -2218,7 +2255,9 @@ var ezpsy = (function () {
             document.onkeydown = event => {
                 let e = event || window.event || arguments.callee.caller.arguments[0];
                 if (e && e.keyCode === key) {
-                    func();
+                    if (func) {
+                        func();
+                    }
                     resolve(true);
                 }
                 rejected(false);
@@ -2233,15 +2272,24 @@ var ezpsy = (function () {
         else {
             res = String.fromCharCode(key);
         }
-        console.dir(res);
+        // console.dir(res) 
         return res;
     }
     function KbPressWait(key) {
         return new Promise((resolve, rejected) => {
+            let keyC = new Array();
+            if (typeof key === 'number') {
+                keyC = [key];
+            }
+            else {
+                keyC = key;
+            }
             document.onkeydown = event => {
                 let e = event || window.event || arguments.callee.caller.arguments[0];
-                if (e && e.keyCode === key) {
-                    resolve(true);
+                for (let i = 0; i < keyC.length; i++) {
+                    if (e && e.keyCode === keyC[i]) {
+                        resolve(e.keyCode);
+                    }
                 }
                 rejected(false);
             };
@@ -2282,8 +2330,8 @@ var ezpsy = (function () {
     function createDiv(dom, dStyle) {
         let div = document.createElement('div');
         dStyle = judgeDivStyle(dStyle);
-        div.style.width = dStyle.width.toString();
-        div.style.height = dStyle.height.toString();
+        div.style.width = dStyle.width.toString() + 'px';
+        div.style.height = dStyle.height.toString() + 'px';
         div.style.border = dStyle.border;
         div.style.borderRadius = dStyle.borderRadius;
         div.style.visibility = 'hidden';
@@ -2483,8 +2531,8 @@ var ezpsy = (function () {
             }
             else {
                 this.dom = document.createElement('div');
-                this.dom.style.width = dStyle.width.toString();
-                this.dom.style.height = dStyle.height.toString();
+                this.dom.style.width = dStyle.width.toString() + 'px';
+                this.dom.style.height = dStyle.height.toString() + 'px';
                 this.dom.style.position = 'absolute';
                 this.dom.style.lineHeight = dStyle.height.toString() + 'px';
                 this.dom.style.textAlign = 'center';
@@ -3101,6 +3149,8 @@ var ezpsy = (function () {
         DrawTextures: DrawTextures,
         Tic: Tic,
         Toc: Toc,
+        setTimeTtamp: setTimeTtamp,
+        getToc: getToc,
         GetSecs: GetSecs,
         WaitSecs: WaitSecs,
         delay_frame: delay_frame,

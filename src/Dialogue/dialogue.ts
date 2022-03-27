@@ -220,8 +220,8 @@ class Content{
         }
         else{
             this.dom = document.createElement('div')
-            this.dom.style.width = dStyle.width.toString()
-            this.dom.style.height = dStyle.height.toString()
+            this.dom.style.width = dStyle.width.toString() + 'px'
+            this.dom.style.height = dStyle.height.toString() + 'px'
             this.dom.style.position = 'absolute'
             this.dom.style.lineHeight = dStyle.height.toString() + 'px'
             this.dom.style.textAlign = 'center'

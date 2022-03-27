@@ -262,21 +262,25 @@ export function judgeStyle_text(el: Elements,ctx: CanvasRenderingContext2D){
             fontStyle: 'normal'
         }
     }
+    if(el.shape.maxWidth === undefined)
+    {
+        el.shape.maxWidth = ctx.canvas.width;
+    }
     let st = el.style;
     if(st.fill !== 'none' && st.fill !== undefined){
 
         ctx.fillStyle = st.fill;
-        ctx.fillText(el.shape.text,el.shape.x,el.shape.y);
+        ctx.fillText(el.shape.text,el.shape.x,el.shape.y,el.shape.maxWidth);
     }
     else{
         if(st.stroke !== 'none' && st.stroke !== undefined){
             ctx.strokeStyle = st.stroke;
-            ctx.strokeText(el.shape.text,el.shape.x,el.shape.y);
+            ctx.strokeText(el.shape.text,el.shape.x,el.shape.y,el.shape.maxWidth);
         }
         else{
             st.stroke = "#000"
             ctx.strokeStyle = st.stroke;
-            ctx.strokeText(el.shape.text,el.shape.x,el.shape.y);
+            ctx.strokeText(el.shape.text,el.shape.x,el.shape.y,el.shape.maxWidth);
         }
     }
 }

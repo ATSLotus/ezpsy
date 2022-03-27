@@ -10,8 +10,8 @@ export interface DivStyle{
 export function createDiv(dom: HTMLElement,dStyle: DivStyle): [HTMLElement,DivStyle]{
     let div = document.createElement('div')
     dStyle = ezJudge.judgeDivStyle(dStyle);
-    div.style.width = dStyle.width.toString()
-    div.style.height = dStyle.height.toString()
+    div.style.width = dStyle.width.toString() + 'px'
+    div.style.height = dStyle.height.toString() + 'px'
     div.style.border = dStyle.border
     div.style.borderRadius = dStyle.borderRadius
     div.style.visibility = 'hidden'

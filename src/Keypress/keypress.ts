@@ -1,13 +1,16 @@
 import { Elements } from "../Element";
 import { judgeIsInElement } from "../Judge/judge";
 
-export function KbWait(key: number,func: Function): Promise<boolean>{
+export function KbWait(key: number,func?: Function): Promise<boolean>{
     return new Promise((resolve,rejected)=>{
         document.onkeydown = event =>{
             let e = event || window.event || arguments.callee.caller.arguments[0];
             if(e && e.keyCode === key)
             {
-                func();
+                if(func)
+                {
+                    func();
+                }   
                 resolve(true)
             }
             rejected(false)
@@ -25,16 +28,27 @@ export function KbName(key: string|number):number{
     else{
         res = String.fromCharCode(key)
     }
-    console.dir(res) 
+    // console.dir(res) 
     return res
 }
 
-export function KbPressWait(key: number): Promise<boolean>{
+export function KbPressWait(key: number|Array<number>): Promise<boolean>{
     return new Promise((resolve,rejected)=>{
+        let keyC = new Array();
+        if(typeof key === 'number')
+        {
+            keyC = [key];
+        }
+        else{
+            keyC = key;
+        }
         document.onkeydown = event =>{
             let e = event || window.event || arguments.callee.caller.arguments[0];
-            if(e && e.keyCode === key){
-                resolve(true)
+            for(let i = 0;i < keyC.length;i++)
+            {
+                if(e && e.keyCode === keyC[i]){
+                    resolve(e.keyCode)
+                }
             }
             rejected(false)
         }

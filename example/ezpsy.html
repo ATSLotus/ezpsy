@@ -7,6 +7,7 @@
         <script src="./moduleTest/stroop.js"></script>
         <script src="./moduleTest/remember.js"></script>
         <script src="./moduleTest/simpleReaction.js"></script>
+        <script src="./moduleTest/n-back.js"></script>
     </head>
     <body>
         <div class="dom">
@@ -14,6 +15,7 @@
                 <button id="dom_bt0">瞬时记忆</button>
                 <button id="dom_bt1">视觉干扰</button>
                 <button id="dom_bt2">简单反应时</button> 
+                <button id="dom_bt3">n-back</button>
             </div>
         </div>
         
@@ -28,6 +30,7 @@
         document.getElementById('dom_bt0').addEventListener('mousedown',rememberFun);
         document.getElementById('dom_bt1').addEventListener('mousedown',stroopFun);
         document.getElementById('dom_bt2').addEventListener('mousedown',SReactionFun);
+        document.getElementById('dom_bt3').addEventListener('mousedown',nBackFun);
 
         function deleteChild(e) { 
             // debugger;

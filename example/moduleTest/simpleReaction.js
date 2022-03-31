@@ -95,6 +95,7 @@ let SReactionFun = function(){
         let tA2 = new Array()
         let tA3 = new Array()
         let tx = new Array()
+        let ta = 0;
         for(let i = 0;i < tA.length;i++)
         {
             if(tA[i].color === 'red')
@@ -114,13 +115,21 @@ let SReactionFun = function(){
                 tA3.push(tA[i].time);
             }
         }
+        for(let i = 0;i < tA.length;i++)
+        {
+            ta += tA[i].time;
+        }
+        ta = (ta / tA.length).toFixed(3);
         tx[0] = avg(tA0)
         tx[1] = avg(tA1)
         tx[2] = avg(tA2)
         tx[3] = avg(tA3)
         console.dir(tA)
         console.dir(tx)
-
+        await dlg.show({
+            title: '实验结果',
+            content: '平均反应用时为'+ ta.toString() + 's',
+        })
         ezpsy.KbWait(13,press)
     })
 

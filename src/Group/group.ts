@@ -1,11 +1,15 @@
 import { Class } from 'estree';
 import { judgeElement } from '../Judge/judge'
 import { Elements } from '../Element'
+import { nameStyle } from '../DataType/dataType';
 
 let groupId = 0;
 
 export class Group extends Elements{
-    id: number
+    readonly name?: nameStyle = {
+        name: "group" + groupId.toString(),
+        graphicId: groupId
+    }
     length: number
     // ctx: CanvasRenderingContext2D
     groupList: Elements[]|Group[]|Group
@@ -15,7 +19,7 @@ export class Group extends Elements{
         super()
 
         this.ctx = super.ctx
-        this.id = groupId;
+        // this.id = groupId;
         if(el instanceof Group)
         {
             this.length = 1

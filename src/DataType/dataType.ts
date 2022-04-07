@@ -1,3 +1,4 @@
+import { Scale, Translate } from "../Element"
 
 export interface Shape{  
     x?: number     //position x
@@ -20,7 +21,7 @@ export interface Shape{
     sy?: number    //The y-coordinate position at which the cut began
     swidth?: number //The width of the image being clipped
     sheight?: number//The height of the image being clipped
-    desity?: number
+    desity?: number //密集度
 }
  
 export interface Style {

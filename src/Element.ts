@@ -1,12 +1,17 @@
 import { Rectangle } from './Graphic/rectangle'
 import { Shape,Style} from './DataType/dataType'
 import { canvasStyle } from './Canvas/canvas'
+import { nameStyle } from './DataType/dataType';
+import { Storage } from './Storage/storage';
+import * as ezTime from "./Time/time"
 import * as ezJudge from './Judge/judge'
 
 export class Elements{
+    name?: nameStyle
     shape?: Shape
     style?: Style 
     ctx?: CanvasRenderingContext2D
+    storage?: Storage
     scale?: Scale
     translate?: Translate
     rotate?: number
@@ -37,24 +42,68 @@ export class Elements{
     }
     setCanvasStyle(cStyle: canvasStyle){
         let c = this.ctx.canvas;
+        let ctx = this.ctx
         cStyle = ezJudge.judgeCanvasStyle(cStyle);
         c.width = cStyle.width;
         c.height = cStyle.height;
+        let w = window.innerWidth
+        let h = window.innerHeight
+        // console.dir(w)
+        c.style.top = ((h-cStyle.height)/2).toString() + 'px'
+        c.style.left = ((w-cStyle.width)/2).toString() + 'px'
+        let el = this;
+        ezJudge.judgeElement(el,ctx)
     }
     remove(){
+
         let ctx = this.ctx
-        let c = ctx.canvas;
-        c.remove();
-        // ctx.save()
-        // // ctx.beginPath()
-        // ctx.fillStyle="white"	
-        // ctx.fillRect(0,0,1,1)
-        // ctx.globalCompositeOperation="destination-in";
-        // ctx.fillRect(0,0,1,1);
-        // // ctx.closePath()	
-        // ctx.restore()
-        // ctx.globalCompositeOperation='source-over'
+        
+        ctx.save()
+        // ctx.beginPath()
+        ctx.fillStyle="white"	
+        ctx.fillRect(0,0,1,1)
+        ctx.globalCompositeOperation="destination-in";
+        ctx.fillRect(0,0,1,1);
+        // ctx.closePath()	
+        ctx.restore()
+        ctx.globalCompositeOperation='source-over'
+
+        this.storage.remove(this);
+        this.storage.reDraw(ctx);
+
+
+        // let ctx = this.ctx
+        // let c = ctx.canvas;
+        // c.width = c.width;
+        // c.height = c.height;
+
+
+        
     }
+
+    animate(func: Function,delay: number){
+        // el.ctx = this.ctx;
+        let that = this;
+        // el.remove();
+        let ctx = this.ctx;
+        // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
+        // this.ctxList.push(ctx);
+        (async function(){
+            while(1)
+            {
+                
+                func();
+                await ezTime.WaitSecs(delay/2)
+                that.remove()
+                that.storage.push(that)
+                that.storage.reDraw(ctx)
+                // ezJudge.judgeAnimate(that,ctx);
+                // await that.storage.reDraw(ctx);
+                await ezTime.WaitSecs(delay/2)
+            }
+        })()
+    }
+
     // scale(scaleWidth: number,scaleHeight: number){
     //     let ctx = this.ctx
     //     this.remove()
@@ -87,12 +136,12 @@ export class Elements{
     // }
 }
 
-interface Scale{
+export interface Scale{
     width: number,
     height: number
 }
 
-interface Translate{
+export interface Translate{
     x: number,
     y: number
 }

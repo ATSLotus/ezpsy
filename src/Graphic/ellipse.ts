@@ -1,6 +1,6 @@
 import { Shape,Style,nameStyle,Opts } from '../DataType/dataType'
 import { Elements } from '../Element'
-import { judgeStyle } from '../Judge/judge'
+import { judgeStyle, judgeTRS } from '../Judge/judge'
 
 interface EllipseShape extends Shape{
     x?: number,
@@ -18,7 +18,7 @@ interface EllipseOpts extends Opts{
 let nameId = 0;
 
 export class Ellipse extends Elements{
-    private name?: nameStyle = {
+    readonly name?: nameStyle = {
         name: "ellipse" + nameId.toString(),
         graphicId: nameId
     }
@@ -49,7 +49,9 @@ export function makeEllipse(ellipse: Ellipse,ctx: CanvasRenderingContext2D): Ell
     //这样可以使得每次循环所绘制的路径（弧线）接近1像素
     let sh = ellipse.shape
     let step = (sh.ra > sh.rb) ? 1 / sh.ra : 1 / sh.rb;
+    ctx.save()
     ctx.beginPath();
+    judgeTRS(ellipse);
     ctx.moveTo(sh.x + sh.ra, sh.y); //从椭圆的左端点开始绘制
     for (var i = 0; i < 2 * Math.PI; i += step)
     {
@@ -59,6 +61,7 @@ export function makeEllipse(ellipse: Ellipse,ctx: CanvasRenderingContext2D): Ell
     }
     judgeStyle(ellipse,ctx);
     ctx.closePath();
+    ctx.restore()
     return ellipse
 }
 

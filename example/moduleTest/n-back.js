@@ -102,13 +102,13 @@ let nBackFun = function(){
     })
 
     let text = new ezpsy.Group([text0,text1,text2,text3,text4,text5]);
-
+    console.dir(text)
     ez.add(text);
     ez.add(tip);
 
     let N = 0;
     let num = 0;
-    // let arrA = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    let arrA = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
     let char = '';
     let arr = new Array();
     let res = new Array();
@@ -120,8 +120,8 @@ let nBackFun = function(){
 
     let getChar = function(){
         num = Math.floor(Math.random() * 9);
-        // char = arrA[num];
-        char = num;
+        char = arrA[num];
+        // char = num;
         arr.push(char);
         let charText = new ezpsy.Text({
             shape: {
@@ -143,8 +143,8 @@ let nBackFun = function(){
             console.dir('aa')
             for(let i =0;i < arr.length;i++)
             {
-                // if(arr[i] === 'O')
-                if(arr[i] === 8)
+                if(arr[i] === 'O')
+                // if(arr[i] === 8)
                 {
                     if(res[i] === 'D')
                     {
@@ -202,7 +202,7 @@ let nBackFun = function(){
             }
         }
     }
-    N = 0;
+    N = 6;
     let press = (async function(){
         f = 1;
         text.remove()

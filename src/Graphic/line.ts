@@ -1,7 +1,7 @@
 import { Shape,Style,nameStyle,Opts } from '../DataType/dataType'
 import { Elements } from '../Element'
 import { Group } from '../Group/group';
-import { judgeStyle } from '../Judge/judge'
+import { judgeStyle, judgeTRS } from '../Judge/judge'
 
 interface LineShape extends Shape{
     x: number,
@@ -18,7 +18,7 @@ interface LineOpts extends Opts{
 let nameId = 0;
 
 export class Line extends Elements{
-    private name?: nameStyle = {
+    readonly name?: nameStyle = {
         name: "line" + nameId.toString(),
         graphicId: nameId
     }
@@ -52,12 +52,14 @@ export class Line extends Elements{
 
 export function makeLine(line: Line,ctx: CanvasRenderingContext2D): Line{
     let sh = line.shape;
+    ctx.save()
     ctx.beginPath()
+    judgeTRS(line)
     ctx.moveTo(sh.x,sh.y)
     ctx.lineTo(sh.xEnd,sh.yEnd)
     judgeStyle(line,ctx)
     ctx.closePath()
-
+    ctx.restore()
     return line
 }
 

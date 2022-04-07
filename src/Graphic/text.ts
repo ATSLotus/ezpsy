@@ -1,6 +1,6 @@
 import { Shape,Style,nameStyle,Opts } from '../DataType/dataType'
 import { Elements } from '../Element'
-import { judgeStyle_text, judgeTextStyle } from '../Judge/judge'
+import { judgeStyle_text, judgeTextStyle, judgeTRS } from '../Judge/judge'
 
 interface TextShape extends Shape{
     //顺时针填写坐标或顺绘制路线填写坐标
@@ -18,7 +18,7 @@ interface TextOpts extends Opts{
 let nameId = 0;
 
 export class Text extends Elements{
-    private name?: nameStyle = {
+    readonly name?: nameStyle = {
         name: "text" + nameId.toString(),
         graphicId: nameId
     }
@@ -46,14 +46,17 @@ export class Text extends Elements{
 
 export function makeText(text: Text,ctx: CanvasRenderingContext2D): Text{
 
+    ctx.save()
     ctx.beginPath()
+
+    // judgeTRS(text)
 
     judgeTextStyle(text,ctx)
 
     judgeStyle_text(text,ctx)
     
     ctx.closePath()
-
+    ctx.restore()
     return text
 }
 

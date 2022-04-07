@@ -1,5 +1,5 @@
 import { Shape,Style,nameStyle,Opts } from '../DataType/dataType'
-import { judgeChangeType,judgeSide,judgeStyle } from '../Judge/judge'
+import { judgeChangeType,judgeSide,judgeStyle, judgeTRS } from '../Judge/judge'
 import { Group } from '../Group/group'
 import { Elements } from '../Element'
 
@@ -64,7 +64,7 @@ let nameId = 0;
 // }
 
 export class Rectangle extends Elements{
-    private name?: nameStyle = {
+    readonly name?: nameStyle = {
         name: "rect" + nameId.toString(),
         graphicId: nameId
     }
@@ -150,10 +150,13 @@ class unionRect extends logicRect{
 
 export function makeRectangle(rect: Rectangle,ctx: CanvasRenderingContext2D): Rectangle{
     let sh = rect.shape;
+    ctx.save()
     ctx.beginPath();
+    judgeTRS(rect);
     ctx.rect(sh.x,sh.y,sh.width,sh.height);
     judgeStyle(rect,ctx);
     ctx.closePath();
+    ctx.restore()
     return rect;
 }
 

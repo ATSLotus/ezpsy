@@ -1,7 +1,7 @@
 import { Shape,Style,nameStyle,Opts } from '../DataType/dataType'
 import { Elements } from '../Element'
 import { Group } from '../Group/group';
-import { judgeImageShape, judgeStyle,judgeImageShape_true } from '../Judge/judge'
+import { judgeImageShape, judgeStyle,judgeImageShape_true, judgeTRS } from '../Judge/judge'
 
 interface ImgShape extends Shape{
     img: string
@@ -38,7 +38,7 @@ class RGBA_Array{
 }
 
 export class Img extends Elements{
-    private name?: nameStyle = {
+    readonly name?: nameStyle = {
         name: "img" + nameId.toString(),
         graphicId: nameId
     }
@@ -194,7 +194,9 @@ export class Img extends Elements{
 }
 
 export function makeImg(img: Img,ctx: CanvasRenderingContext2D): Img{
+    ctx.save()
     ctx.beginPath()
+    // judgeTRS(img)
     if(img.IsChange === false)
     {
         judgeImageShape(img,ctx);
@@ -204,6 +206,7 @@ export function makeImg(img: Img,ctx: CanvasRenderingContext2D): Img{
     }
     
     ctx.closePath()
+    ctx.restore()
     return img
 }
 

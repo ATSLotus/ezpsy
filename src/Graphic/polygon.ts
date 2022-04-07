@@ -1,6 +1,6 @@
 import { Shape,Style,nameStyle,Opts } from '../DataType/dataType'
 import { Elements } from '../Element'
-import { judgeStyle } from '../Judge/judge'
+import { judgeStyle, judgeTRS } from '../Judge/judge'
 
 interface PolygonShape extends Shape{
     //顺时针填写坐标或顺绘制路线填写坐标
@@ -16,7 +16,7 @@ interface PolygonOpts extends Opts{
 let nameId = 0;
 
 export class Polygon extends Elements{
-    private name?: nameStyle = {
+    readonly name?: nameStyle = {
         name: "polygon" + nameId.toString(),
         graphicId: nameId
     }
@@ -51,8 +51,9 @@ export function makePolygon(polygon: Polygon,ctx: CanvasRenderingContext2D): Pol
     else{
         num = sh.xA.length
     }
-
+    ctx.save()
     ctx.beginPath()
+    judgeTRS(polygon)
     ctx.moveTo(sh.xA[0],sh.yA[0])
     for(let i = 1;i < num;i++)
     {
@@ -61,7 +62,7 @@ export function makePolygon(polygon: Polygon,ctx: CanvasRenderingContext2D): Pol
     ctx.lineTo(sh.xA[0],sh.yA[0])
     judgeStyle(polygon,ctx)
     ctx.closePath()
-
+    ctx.restore()
     return polygon
 }
 

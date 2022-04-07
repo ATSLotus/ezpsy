@@ -130,9 +130,11 @@ var ezpsy = (function () {
     }
 
     class Elements {
+        name;
         shape;
         style;
         ctx;
+        storage;
         scale;
         translate;
         rotate;
@@ -163,36 +165,71 @@ var ezpsy = (function () {
         }
         setCanvasStyle(cStyle) {
             let c = this.ctx.canvas;
+            let ctx = this.ctx;
             cStyle = judgeCanvasStyle(cStyle);
             c.width = cStyle.width;
             c.height = cStyle.height;
+            let w = window.innerWidth;
+            let h = window.innerHeight;
+            // console.dir(w)
+            c.style.top = ((h - cStyle.height) / 2).toString() + 'px';
+            c.style.left = ((w - cStyle.width) / 2).toString() + 'px';
+            let el = this;
+            judgeElement(el, ctx);
         }
         remove() {
             let ctx = this.ctx;
-            let c = ctx.canvas;
-            c.remove();
-            // ctx.save()
-            // // ctx.beginPath()
-            // ctx.fillStyle="white"	
-            // ctx.fillRect(0,0,1,1)
-            // ctx.globalCompositeOperation="destination-in";
-            // ctx.fillRect(0,0,1,1);
-            // // ctx.closePath()	
-            // ctx.restore()
-            // ctx.globalCompositeOperation='source-over'
+            ctx.save();
+            // ctx.beginPath()
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, 1, 1);
+            ctx.globalCompositeOperation = "destination-in";
+            ctx.fillRect(0, 0, 1, 1);
+            // ctx.closePath()	
+            ctx.restore();
+            ctx.globalCompositeOperation = 'source-over';
+            this.storage.remove(this);
+            this.storage.reDraw(ctx);
+            // let ctx = this.ctx
+            // let c = ctx.canvas;
+            // c.width = c.width;
+            // c.height = c.height;
+        }
+        animate(func, delay) {
+            // el.ctx = this.ctx;
+            let that = this;
+            // el.remove();
+            let ctx = this.ctx;
+            // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
+            // this.ctxList.push(ctx);
+            (async function () {
+                while (1) {
+                    func();
+                    await WaitSecs(delay / 2);
+                    that.remove();
+                    that.storage.push(that);
+                    that.storage.reDraw(ctx);
+                    // ezJudge.judgeAnimate(that,ctx);
+                    // await that.storage.reDraw(ctx);
+                    await WaitSecs(delay / 2);
+                }
+            })();
         }
     }
 
     let groupId = 0;
     class Group extends Elements {
-        id;
+        name = {
+            name: "group" + groupId.toString(),
+            graphicId: groupId
+        };
         length;
         // ctx: CanvasRenderingContext2D
         groupList;
         constructor(el) {
             super();
             this.ctx = super.ctx;
-            this.id = groupId;
+            // this.id = groupId;
             if (el instanceof Group) {
                 this.length = 1;
             }
@@ -321,10 +358,13 @@ var ezpsy = (function () {
     // }
     function makeRectangle(rect, ctx) {
         let sh = rect.shape;
+        ctx.save();
         ctx.beginPath();
+        judgeTRS(rect);
         ctx.rect(sh.x, sh.y, sh.width, sh.height);
         judgeStyle(rect, ctx);
         ctx.closePath();
+        ctx.restore();
         return rect;
     }
     function AdjoinRect(fixedRect, rect, fixedStyle) {
@@ -813,10 +853,13 @@ var ezpsy = (function () {
     }
     function makeCircle(circle, ctx) {
         let sh = circle.shape;
+        ctx.save();
         ctx.beginPath();
+        judgeTRS(circle);
         ctx.arc(sh.x, sh.y, sh.r, 0, 2 * Math.PI);
         judgeStyle(circle, ctx);
         ctx.closePath();
+        ctx.restore();
         return circle;
     }
     function DrawDots([x, y, r], color) {
@@ -866,11 +909,14 @@ var ezpsy = (function () {
     // }
     function makeLine(line, ctx) {
         let sh = line.shape;
+        ctx.save();
         ctx.beginPath();
+        judgeTRS(line);
         ctx.moveTo(sh.x, sh.y);
         ctx.lineTo(sh.xEnd, sh.yEnd);
         judgeStyle(line, ctx);
         ctx.closePath();
+        ctx.restore();
         return line;
     }
     function DrawLines(el) {
@@ -1022,9 +1068,12 @@ var ezpsy = (function () {
     }
     function makeFrameArc(arc, ctx) {
         let sh = arc.shape;
+        ctx.save();
         ctx.beginPath();
+        judgeTRS(arc);
         ctx.arc(sh.x, sh.y, sh.r, sh.ang_f, sh.ang_e);
         judgeStyle(arc, ctx);
+        ctx.restore();
         ctx.closePath();
     }
     function makeFillArc(arc, ctx) {
@@ -1119,7 +1168,9 @@ var ezpsy = (function () {
         //这样可以使得每次循环所绘制的路径（弧线）接近1像素
         let sh = ellipse.shape;
         let step = (sh.ra > sh.rb) ? 1 / sh.ra : 1 / sh.rb;
+        ctx.save();
         ctx.beginPath();
+        judgeTRS(ellipse);
         ctx.moveTo(sh.x + sh.ra, sh.y); //从椭圆的左端点开始绘制
         for (var i = 0; i < 2 * Math.PI; i += step) {
             //参数方程为x = a * cos(i), y = b * sin(i)，
@@ -1128,6 +1179,7 @@ var ezpsy = (function () {
         }
         judgeStyle(ellipse, ctx);
         ctx.closePath();
+        ctx.restore();
         return ellipse;
     }
     function FillOval(ellipse, fill) {
@@ -1202,7 +1254,9 @@ var ezpsy = (function () {
         else {
             num = sh.xA.length;
         }
+        ctx.save();
         ctx.beginPath();
+        judgeTRS(polygon);
         ctx.moveTo(sh.xA[0], sh.yA[0]);
         for (let i = 1; i < num; i++) {
             ctx.lineTo(sh.xA[i], sh.yA[i]);
@@ -1210,6 +1264,7 @@ var ezpsy = (function () {
         ctx.lineTo(sh.xA[0], sh.yA[0]);
         judgeStyle(polygon, ctx);
         ctx.closePath();
+        ctx.restore();
         return polygon;
     }
     function FramePoly(polygon, lineWidth, stroke) {
@@ -1273,10 +1328,13 @@ var ezpsy = (function () {
         }
     }
     function makeText(text, ctx) {
+        ctx.save();
         ctx.beginPath();
+        // judgeTRS(text)
         judgeTextStyle(text, ctx);
         judgeStyle_text(text, ctx);
         ctx.closePath();
+        ctx.restore();
         return text;
     }
     function CatStr(strA) {
@@ -1456,7 +1514,9 @@ var ezpsy = (function () {
         }
     }
     function makeImg(img, ctx) {
+        ctx.save();
         ctx.beginPath();
+        // judgeTRS(img)
         if (img.IsChange === false) {
             judgeImageShape(img, ctx);
         }
@@ -1464,6 +1524,7 @@ var ezpsy = (function () {
             judgeImageShape_true(img, ctx);
         }
         ctx.closePath();
+        ctx.restore();
         return img;
     }
     function imRead(img) {
@@ -1599,72 +1660,53 @@ var ezpsy = (function () {
                 opts.shape.desity = 35;
             }
             this.shape = opts.shape;
-            if (opts.style) {
-                this.style = opts.style;
-            }
-            else {
-                this.style = {
-                    fill: "none",
-                    stroke: "none",
-                    lineWidth: 2
-                };
-            }
+            let sh = this.shape;
+            let c = document.createElement("canvas");
+            let ctx = c.getContext("2d");
+            this.style = {
+                fill: createGratLinearGradient(ctx, [sh.x - sh.r, sh.y - sh.r, sh.x - sh.r, sh.y + 3 * sh.r], sh.desity, 0),
+                stroke: 'none',
+                lineWidth: 2
+            };
+            // if(opts.style)
+            // {
+            //     this.style = opts.style;
+            // }
+            // else{
+            //     this.style = {
+            //         fill: "none",
+            //         stroke: "none",
+            //         lineWidth: 2
+            //     }
+            // }
             nameId++;
         }
-        // play(speed?: number,delay?: number){
-        //     if(!delay){
-        //         delay = 8
-        //         if(!speed)
-        //         {
-        //             speed = 8
-        //         }
-        //     }
-        //     let ctx = this.ctx
-        //     let [x0,y0,x1,y1] = [this.shape.x-this.shape.r,this.shape.y-this.shape.r,this.shape.x-this.shape.r,this.shape.y+3*this.shape.r]
-        //     let index = speed;
-        //     let that = this;
-        //     (async function(){
-        //         for(let i = 0;i > -1;i++)
-        //         {
-        //             let fill = createGratLinearGradient(ctx,[x0,y0,x1,y1],that.shape.desity,index*i);
-        //             if(index*i >= 2*that.shape.r)
-        //             {
-        //                 i = 0
-        //             }
-        //             updateGrat(that,ctx,fill)
-        //             // console.dir(i)
-        //             await delay_frame(delay)
-        //         }
-        //     })()
-        // }
         play(speed, delay) {
             if (!delay) {
-                delay = 8;
+                delay = 100;
                 if (!speed) {
                     speed = 8;
                 }
             }
             let ctx = this.ctx;
-            // console.dir('a')
-            // let [x0,y0,x1,y1] = [this.shape.x-this.shape.r,this.shape.y-this.shape.r,this.shape.x-this.shape.r,this.shape.y+3*this.shape.r]
+            let [x0, y0, x1, y1] = [this.shape.x - this.shape.r, this.shape.y - this.shape.r, this.shape.x - this.shape.r, this.shape.y + 3 * this.shape.r];
             let index = speed;
             let that = this;
-            (async function () {
-                for (let i = 0; i > -1; i++) {
-                    if (index * i >= 2 * that.shape.r) {
-                        i = 0;
-                    }
-                    updateGrat0(that, ctx, index * i);
-                    console.dir(i);
-                    await delay_frame(delay);
+            let i = 0;
+            this.animate(() => {
+                that.style.fill = createGratLinearGradient(ctx, [x0, y0, x1, y1], that.shape.desity, index * i);
+                if (index * i >= 2 * that.shape.r) {
+                    i = 0;
                 }
-            })();
+                // console.dir(that)
+                i++;
+            }, delay);
         }
     }
     function makeGrat(grat, ctx) {
         let sh = grat.shape;
         // console.dir(sh)
-        let num = sh.desity;
+        // let num = sh.desity;
         // let fill = ctx.createLinearGradient(sh.x-sh.r,sh.y-sh.r,sh.x-sh.r,sh.y+sh.r)
         // fill.addColorStop(0,'white')
         // for(let i = 1;i < num;i++){
@@ -1676,15 +1718,18 @@ var ezpsy = (function () {
         //     }
         // }
         // fill.addColorStop(1,'white')
-        let fill = createGratLinearGradient(ctx, [sh.x - sh.r, sh.y - sh.r, sh.x - sh.r, sh.y + 3 * sh.r], num, 0);
-        let c = ctx.canvas;
-        c.style.borderRadius = '50%';
-        grat.style.fill = fill;
+        // let fill = createGratLinearGradient(ctx,[sh.x-sh.r,sh.y-sh.r,sh.x-sh.r,sh.y+3*sh.r],num,0)
+        // let c = ctx.canvas
+        // c.style.borderRadius = '50%';
+        // grat.style.fill = fill
+        ctx.save();
         ctx.beginPath();
-        // ctx.arc(sh.x,sh.y,sh.r,0,2*Math.PI)
-        ctx.rect(sh.x - sh.r, sh.y - sh.r, sh.x + sh.r, sh.y + 3 * sh.r);
+        // ezJudge.judgeTRS(grat)
+        ctx.arc(sh.x, sh.y, sh.r, 0, 2 * Math.PI);
+        // ctx.rect(sh.x-sh.r,sh.y-sh.r,sh.x+sh.r,sh.y+3*sh.r)
         judgeStyle(grat, ctx);
         ctx.closePath();
+        ctx.restore();
         // ctx.save()
         // ctx.beginPath();
         // ctx.rect(sh.x-sh.r,sh.y-sh.r,sh.x+sh.r,sh.y+2*sh.r);
@@ -1698,16 +1743,6 @@ var ezpsy = (function () {
         // ctx.closePath();
         // ctx.restore()
         return grat;
-    }
-    function updateGrat0(grat, ctx, num) {
-        grat.remove();
-        ctx.save();
-        ctx.beginPath();
-        ctx.translate(0, -num);
-        ctx.rect(grat.shape.x - grat.shape.r, grat.shape.y - grat.shape.r, grat.shape.x + grat.shape.r, grat.shape.y + 3 * grat.shape.r);
-        judgeStyle(grat, ctx);
-        ctx.closePath();
-        ctx.restore();
     }
 
     function judgeCanvasStyle(cStyle) {
@@ -1852,6 +1887,7 @@ var ezpsy = (function () {
         }
     }
     function judgeStyle(el, ctx) {
+        // judgeAnimate(el);
         if (el.style === undefined) {
             el.style = {
                 fill: "none",
@@ -2236,18 +2272,85 @@ var ezpsy = (function () {
         //     return c; 
         // }
     }
-    function judgeAnimate(el) {
+    function judgeTRS(el) {
         let ctx = el.ctx;
-        // console.dir('a')
-        el.remove();
-        ctx.save();
-        ctx.beginPath();
+        // console.dir(el.translate)
         ctx.translate(el.translate.x, el.translate.y);
         ctx.rotate(el.rotate);
         ctx.scale(el.scale.width, el.scale.height);
-        judgeElement(el, ctx);
-        ctx.closePath();
-        ctx.restore();
+    }
+
+    class Storage {
+        ElementsList;
+        constructor() {
+            this.ElementsList = [];
+        }
+        push(el) {
+            if (el instanceof Elements || el instanceof Group) {
+                this.ElementsList.push(el);
+            }
+            else {
+                for (let i = 0; i < el.length; i++) {
+                    this.ElementsList.push(el[i]);
+                }
+            }
+        }
+        remove(el) {
+            let name = this.getElementsName(el);
+            let index = this.searchElementsName(name);
+            if (index instanceof Array) {
+                for (let i = 0; i < index.length; i++) {
+                    this.ElementsList.splice(index[i], 1);
+                }
+            }
+            else {
+                this.ElementsList.splice(index, 1);
+            }
+        }
+        getElementsName(el) {
+            if (el instanceof Elements || el instanceof Group) {
+                let name = el.name;
+                return name;
+            }
+            else {
+                let name = new Array();
+                for (let i = 0; i < el.length; i++) {
+                    name[i] = el[i].name;
+                }
+                return name;
+            }
+        }
+        searchElementsName(name) {
+            if (name instanceof Array) {
+                let index = new Array();
+                for (let i = 0; i < name.length; i++) {
+                    for (let t = 0; t < this.ElementsList.length; t++) {
+                        if (name[i].name === this.ElementsList[t].name.name) {
+                            index[i] = t;
+                            break;
+                        }
+                    }
+                }
+                return index;
+            }
+            else {
+                let index = 0;
+                for (let t = 0; t < this.ElementsList.length; t++) {
+                    if (name.name === this.ElementsList[t].name.name) {
+                        index = t;
+                        break;
+                    }
+                }
+                return index;
+            }
+        }
+        reDraw(ctx) {
+            let el = this.ElementsList;
+            for (let i = 0; i < el.length; i++) {
+                el[i].ctx = ctx;
+                judgeElement(el[i], ctx);
+            }
+        }
     }
 
     function KbWait(key, func) {
@@ -3004,51 +3107,102 @@ var ezpsy = (function () {
         id;
         dom;
         ctx;
-        ctxList;
+        // ctxList: Array<CanvasRenderingContext2D>
+        storage;
         cStyle;
         // Rectangle: Rectangle
         constructor(id, dom, cStyle) {
             this.id = id;
             this.dom = dom;
+            this.storage = new Storage();
             cStyle = judgeCanvasStyle(cStyle);
             this.cStyle = cStyle;
-            this.ctxList = [];
-            // this.ctx = ezCanvas.createCanvas(dom,cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
+            // this.ctxList = []
+            this.ctx = createCanvas(dom, cStyle); //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
+            // this.ctxList.push(this.ctx)
             // console.dir(this.ctx)
         }
         setCanvasStyle(cStyle) {
-            for (let i = 0; i < this.ctxList.length; i++) {
-                let c = this.ctxList[i].canvas;
-                c.width = cStyle.width;
-                c.height = cStyle.height;
-            }
+            // for(let i = 0;i < this.ctxList.length;i++){
+            //     let c = this.ctxList[i].canvas;
+            //     c.width = cStyle.width
+            //     c.height = cStyle.height
+            // }
+            this.storage.ElementsList;
+            let c = this.ctx.canvas;
+            let ctx = this.ctx;
+            cStyle = judgeCanvasStyle(cStyle);
+            c.width = cStyle.width;
+            c.height = cStyle.height;
+            let w = window.innerWidth;
+            let h = window.innerHeight;
+            // console.dir(w)
+            c.style.top = ((h - cStyle.height) / 2).toString() + 'px';
+            c.style.left = ((w - cStyle.width) / 2).toString() + 'px';
+            this.storage.reDraw(ctx);
         }
+        refresh() {
+            // console.dir(this.storage.ElementsList)
+            this.storage.ElementsList = new Array();
+            let c = this.ctx.canvas;
+            c.width = this.cStyle.width;
+            c.height = this.cStyle.height;
+        }
+        // setAnimateCanvasStyle(cStyle: canvasStyle){
+        //     for(let i = 1;i < this.ctxList.length;i++)
+        //     {
+        //         let c = this.ctxList[i].canvas;
+        //         c.width = cStyle.width
+        //         c.height = cStyle.height
+        //     }
+        // }
         add(el) {
             // console.dir('success')
-            this.ctx = createCanvas(this.dom, this.cStyle); //此处创建canvas将创建多个canvas
-            this.ctxList.push(this.ctx);
+            this.storage.push(el);
+            // this.ctx = ezCanvas.createCanvas(this.dom,this.cStyle); //此处创建canvas将创建多个canvas
+            // this.ctxList.push(this.ctx)
             let ctx = this.ctx;
-            if (el instanceof Elements) {
+            if (el instanceof Elements || el instanceof Group) {
                 el.ctx = ctx;
+                el.storage = this.storage;
                 judgeElement(el, ctx);
             }
             else {
                 for (let i = 0; i < el.length; i++) {
                     el[i].ctx = ctx;
+                    el[i].storage = this.storage;
                     judgeElement(el[i], ctx);
                 }
             }
+        }
+        remove(el) {
+            let ctx = this.ctx;
+            let c = ctx.canvas;
+            c.width = this.cStyle.width;
+            c.height = this.cStyle.height;
+            this.storage.remove(el);
+            this.storage.reDraw(ctx);
         }
         // aliasing(style: string){
         //     this.ctx.globalCompositeOperation = style
         // }
         animate(el, func, delay) {
-            // let that = this;
+            // el.ctx = this.ctx;
+            let that = this;
+            // el.remove();
+            this.ctx;
+            // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
+            // this.ctxList.push(ctx);
             (async function () {
                 while (1) {
                     func();
                     await WaitSecs(delay / 2);
-                    judgeAnimate(el);
+                    el.remove();
+                    that.add(el);
+                    // that.storage.push(el)
+                    // that.storage.reDraw(ctx)
+                    // ezJudge.judgeAnimate(el,ctx);
+                    // await that.storage.reDraw(ctx);
                     await WaitSecs(delay / 2);
                 }
             })();

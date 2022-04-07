@@ -12,6 +12,7 @@ import { makeText, Text } from '../Graphic/text'
 import { Img, makeImg } from '../Graphic/image'
 import { contentStyle } from '../Dialogue/dialogue'
 import { Grat, makeGrat } from '../Graphic/grating'
+import * as ezCanvas from '../Canvas/canvas'
 
 export function judgeCanvasStyle(cStyle: canvasStyle):canvasStyle{
     if(!cStyle) 
@@ -189,6 +190,7 @@ export function judgeElement(el: Elements|Group,ctx: CanvasRenderingContext2D){
 }
 
 export function judgeStyle(el: Elements,ctx: CanvasRenderingContext2D){
+    // judgeAnimate(el);
     if(el.style === undefined)
     {
         el.style = {
@@ -643,9 +645,9 @@ export function judgeIsInElement([x,y]: [number,number],el: Elements): boolean{
     // }
 }
 
-export function judgeAnimate(el: Elements){
-    let ctx = el.ctx;
+export function judgeAnimate(el: Elements,ctx: CanvasRenderingContext2D){
     // console.dir('a')
+
     el.remove()
     ctx.save()
     ctx.beginPath()
@@ -655,4 +657,13 @@ export function judgeAnimate(el: Elements){
     judgeElement(el,ctx)
     ctx.closePath()
     ctx.restore()
+}
+
+export function judgeTRS(el: Elements){
+    let ctx = el.ctx
+
+    // console.dir(el.translate)
+    ctx.translate(el.translate.x,el.translate.y)
+    ctx.rotate(el.rotate)
+    ctx.scale(el.scale.width,el.scale.height)
 }

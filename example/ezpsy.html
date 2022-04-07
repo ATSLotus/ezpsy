@@ -8,6 +8,7 @@
         <script src="./moduleTest/remember.js"></script>
         <script src="./moduleTest/simpleReaction.js"></script>
         <script src="./moduleTest/n-back.js"></script>
+        <script src="./moduleTest/eyeChart.js"></script>
     </head>
     <body>
         <div class="dom">
@@ -32,14 +33,12 @@
         document.getElementById('dom_bt2').addEventListener('mousedown',SReactionFun);
         document.getElementById('dom_bt3').addEventListener('mousedown',nBackFun);
 
+        console.dir(ez)
+
+        // eyeChartFun()
+
         function deleteChild(e) { 
-            // debugger;
-            var child = e.lastElementChild;  
-            
-            while(child) { 
-                e.removeChild(child);  
-                child = e.lastElementChild;
-            } 
+            ez.refresh()
         }
         window.onresize = function(){
             location.reload();
@@ -51,7 +50,7 @@
             border-radius: 10px;
         }
         .dom{
-            margin-top: 220px;
+            margin-top: 120px;
             width: 100%;
             display: flex;
             justify-content: center;

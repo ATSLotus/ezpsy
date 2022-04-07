@@ -1,7 +1,7 @@
 import { Shape,Style,nameStyle,Opts } from '../DataType/dataType'
 import { Elements } from '../Element'
 import { Group } from '../Group/group';
-import { judgeStyle } from '../Judge/judge'
+import { judgeStyle, judgeTRS } from '../Judge/judge'
 
 interface ArcShape extends Shape{
     x: number,
@@ -19,7 +19,7 @@ interface ArcOpts extends Opts{
 let nameId = 0;
 
 export class Arc extends Elements{
-    private name?: nameStyle = {
+    readonly name?: nameStyle = {
         name: "arc" + nameId.toString(),
         graphicId: nameId
     }
@@ -58,9 +58,12 @@ export function makeArc(arc: Arc,ctx: CanvasRenderingContext2D): Arc{
 
 function makeFrameArc(arc: Arc,ctx: CanvasRenderingContext2D){
     let sh = arc.shape
+    ctx.save()
     ctx.beginPath()
+    judgeTRS(arc)
     ctx.arc(sh.x,sh.y,sh.r,sh.ang_f,sh.ang_e);
     judgeStyle(arc,ctx);
+    ctx.restore()
     ctx.closePath()
 }
 

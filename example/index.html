@@ -11,7 +11,7 @@
     <script>
         
         let ez = ezpsy.init(document.getElementById("test"))
-        // console.log(ez);
+        console.log(ez);
         // ez.setCanvasStyle({
         //     width: 1000,
         //     height: 1000
@@ -39,39 +39,108 @@
             fill: "red"
           }
         })
-        ez.add(rect)
-        // let i = 0;
-        // let t = 1;
-        // let f = false
-        // let func = function(){
-        //   if(i >= 36){
+        let circle = new ezpsy.Circle({
+          shape: {
+            x: 200,
+            y: 100,
+            r: 50
+          }
+        })
+        let grat = new ezpsy.Grat({
+          shape:{  
+            x: 200,
+            y: 200,
+            r: 100
+          }
+        })
+        // console.dir(grat)
+        // grat.play()
+        // circle.translate = {
+        //   x: 200,
+        //   y: 200
+        // }
+        ez.add([rect,circle,grat])
+        // ez.add(grat)
+        // grat.play()
+        // rect.rotate = 90 * Math.PI/180
+        
+        // console.dir(circle);
+        // // ez.remove(circle)
+        // // circle.remove();
+        // // console.dir(rect)
+        ez.setCanvasStyle({
+          width: 600,
+          height: 400,
+        })
+        let i = 0;
+        let t = 1;
+        let f = false
+        let func = function(){
+          if(i >= 36){
+            f = true
+          }
+          if(i <= 0)
+          {
+            f = false
+          }
+          // if(t >= 10)
+          // {
+          //   t = 1;
+          // }
+          // rect.translate.x = i * 10;
+          rect.translate.x = 200
+          rect.translate.y = 200
+          // rect.scale = {
+          //   width: i * 1/18,
+          //   height: i * 1/18
+          // }
+          rect.scale.width = i * 1/18;
+          // rect.rotate = t * 10 * Math.PI/180
+          t++;
+          if(f){
+            i--
+          }
+          else{
+            i++
+          }
+        }
+        ez.animate(rect,func,80);
+        i = 0;
+        f = false;
+        // ez.animate(circle,()=>{
+        //   circle.scale.width = i * 0.1;
+        //   if(i >= 20){
         //     f = true
         //   }
         //   if(i <= 0)
         //   {
         //     f = false
         //   }
-        //   // if(t >= 10)
-        //   // {
-        //   //   t = 1;
-        //   // }
-        //   // rect.translate.x = i * 10;
-        //   rect.translate.x = 200
-        //   rect.translate.y = 200
-        //   rect.scale = {
-        //     width: i * 1/36,
-        //     height: i * 1/36
-        //   }
-        //   rect.rotate = t * 10 * Math.PI/180
-        //   t++;
         //   if(f){
         //     i--
         //   }
         //   else{
         //     i++
         //   }
-        // }
-        // ez.animate(rect,func,40);
+        // },80)
+
+        circle.animate(()=>{
+          circle.scale.width = i * 0.1;
+          if(i >= 20){
+            f = true
+          }
+          if(i <= 0)
+          {
+            f = false
+          }
+          if(f){
+            i--
+          }
+          else{
+            i++
+          }
+        },80)
+        
         // console.dir(rect)
 
         // let dlg = ezpsy.DlgInit(document.getElementById("test"))
@@ -176,7 +245,9 @@
         
         // console.dir(time)
         
-
+        window.onresize = function(){
+            location.reload();
+        }
         
     </script>
     <style>
@@ -186,6 +257,10 @@
       }
       .bt{
         left: 80px;
+      }
+      canvas{
+        border-radius: 10px;
+        border: 1px dashed red;
       }
     </style>
   </body>

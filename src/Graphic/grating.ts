@@ -19,7 +19,7 @@ interface GratOpts extends Opts{
 let nameId = 0
 
 export class Grat extends Elements{
-    private name?: nameStyle = {
+    readonly name?: nameStyle = {
         name: "grat" + nameId.toString(),
         graphicId: nameId
     }
@@ -30,19 +30,51 @@ export class Grat extends Elements{
             opts.shape.desity = 35
         }
         this.shape = opts.shape;
-        if(opts.style)
-        {
-            this.style = opts.style;
+        let sh = this.shape
+        let c = document.createElement("canvas");
+        let ctx = c.getContext("2d");
+        this.style = {
+            fill: createGratLinearGradient(ctx,[sh.x-sh.r,sh.y-sh.r,sh.x-sh.r,sh.y+3*sh.r],sh.desity,0),
+            stroke: 'none',
+            lineWidth: 2
         }
-        else{
-            this.style = {
-                fill: "none",
-                stroke: "none",
-                lineWidth: 2
-            }
-        }
+        // if(opts.style)
+        // {
+        //     this.style = opts.style;
+        // }
+        // else{
+        //     this.style = {
+        //         fill: "none",
+        //         stroke: "none",
+        //         lineWidth: 2
+        //     }
+        // }
 
         nameId++
+    }
+    play(speed?: number,delay?: number)
+    {
+        if(!delay){
+            delay = 100
+            if(!speed)
+            {
+                speed = 8
+            }
+        }
+        let ctx = this.ctx
+        let [x0,y0,x1,y1] = [this.shape.x-this.shape.r,this.shape.y-this.shape.r,this.shape.x-this.shape.r,this.shape.y+3*this.shape.r]
+        let index = speed;
+        let that = this;
+        let i = 0;
+        this.animate(()=>{
+            that.style.fill = createGratLinearGradient(ctx,[x0,y0,x1,y1],that.shape.desity,index*i);
+            if(index*i >= 2*that.shape.r)
+            {
+                i = 0
+            }
+            // console.dir(that)
+            i++;
+        },delay)
     }
     // play(speed?: number,delay?: number){
     //     if(!delay){
@@ -66,43 +98,44 @@ export class Grat extends Elements{
     //             }
     //             updateGrat(that,ctx,fill)
     //             // console.dir(i)
+    //             // that.storage.reDraw(ctx);
     //             await delay_frame(delay)
     //         }
     //     })()
         
     // }
-    play(speed?: number,delay?: number){
-        if(!delay){
-            delay = 8
-            if(!speed)
-            {
-                speed = 8
-            }
-        }
-        let ctx = this.ctx
-        // console.dir('a')
-        // let [x0,y0,x1,y1] = [this.shape.x-this.shape.r,this.shape.y-this.shape.r,this.shape.x-this.shape.r,this.shape.y+3*this.shape.r]
-        let index = speed;
-        let that = this;
-        (async function(){
-            for(let i = 0;i > -1;i++)
-            {
-                if(index*i >= 2*that.shape.r)
-                {
-                    i = 0
-                }
-                updateGrat0(that,ctx,index*i)
-                console.dir(i)
-                await delay_frame(delay)
-            }
-        })()
-    }
+    // play(speed?: number,delay?: number){
+    //     if(!delay){
+    //         delay = 8
+    //         if(!speed)
+    //         {
+    //             speed = 8
+    //         }
+    //     }
+    //     let ctx = this.ctx
+    //     // console.dir('a')
+    //     // let [x0,y0,x1,y1] = [this.shape.x-this.shape.r,this.shape.y-this.shape.r,this.shape.x-this.shape.r,this.shape.y+3*this.shape.r]
+    //     let index = speed;
+    //     let that = this;
+    //     (async function(){
+    //         for(let i = 0;i > -1;i++)
+    //         {
+    //             if(index*i >= 2*that.shape.r)
+    //             {
+    //                 i = 0
+    //             }
+    //             updateGrat0(that,ctx,index*i)
+    //             // console.dir(i)
+    //             await delay_frame(delay)
+    //         }
+    //     })()
+    // }
 }
 
 export function makeGrat(grat: Grat,ctx: CanvasRenderingContext2D): Grat{
     let sh = grat.shape;
     // console.dir(sh)
-    let num = sh.desity;
+    // let num = sh.desity;
     // let fill = ctx.createLinearGradient(sh.x-sh.r,sh.y-sh.r,sh.x-sh.r,sh.y+sh.r)
     // fill.addColorStop(0,'white')
     // for(let i = 1;i < num;i++){
@@ -114,15 +147,18 @@ export function makeGrat(grat: Grat,ctx: CanvasRenderingContext2D): Grat{
     //     }
     // }
     // fill.addColorStop(1,'white')
-    let fill = createGratLinearGradient(ctx,[sh.x-sh.r,sh.y-sh.r,sh.x-sh.r,sh.y+3*sh.r],num,0)
-    let c = ctx.canvas
-    c.style.borderRadius = '50%';
-    grat.style.fill = fill
+    // let fill = createGratLinearGradient(ctx,[sh.x-sh.r,sh.y-sh.r,sh.x-sh.r,sh.y+3*sh.r],num,0)
+    // let c = ctx.canvas
+    // c.style.borderRadius = '50%';
+    // grat.style.fill = fill
+    ctx.save()
     ctx.beginPath()
-    // ctx.arc(sh.x,sh.y,sh.r,0,2*Math.PI)
-    ctx.rect(sh.x-sh.r,sh.y-sh.r,sh.x+sh.r,sh.y+3*sh.r)
+    // ezJudge.judgeTRS(grat)
+    ctx.arc(sh.x,sh.y,sh.r,0,2*Math.PI)
+    // ctx.rect(sh.x-sh.r,sh.y-sh.r,sh.x+sh.r,sh.y+3*sh.r)
     judgeStyle(grat,ctx)
     ctx.closePath()
+    ctx.restore()
     // ctx.save()
     // ctx.beginPath();
     // ctx.rect(sh.x-sh.r,sh.y-sh.r,sh.x+sh.r,sh.y+2*sh.r);
@@ -149,6 +185,7 @@ function updateGrat(grat: Grat,ctx: CanvasRenderingContext2D,fill: CanvasGradien
 }
 
 function updateGrat0(grat: Grat,ctx: CanvasRenderingContext2D,num: number){
+    // console.dir(grat)
     grat.remove()
     ctx.save()
     ctx.beginPath()

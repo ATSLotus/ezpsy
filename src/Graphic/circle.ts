@@ -1,6 +1,6 @@
 import { Shape,Style,nameStyle,Opts } from '../DataType/dataType'
 import { Elements } from '../Element'
-import { judgeStyle } from '../Judge/judge'
+import { judgeStyle, judgeTRS } from '../Judge/judge'
 
 interface CircleShape extends Shape{
     x: number,
@@ -16,7 +16,7 @@ interface CircleOpts extends Opts{
 let nameId = 0;
 
 export class Circle extends Elements{
-    private name?: nameStyle = {
+    readonly name?: nameStyle = {
         name: "circle" + nameId.toString(),
         graphicId: nameId
     }
@@ -44,10 +44,13 @@ export class Circle extends Elements{
 
 export function makeCircle(circle: Circle,ctx: CanvasRenderingContext2D): Circle{
     let sh = circle.shape
+    ctx.save()
     ctx.beginPath()
+    judgeTRS(circle)
     ctx.arc(sh.x,sh.y,sh.r,0,2*Math.PI);
     judgeStyle(circle,ctx);
     ctx.closePath()
+    ctx.restore()
     return circle;
 } 
 

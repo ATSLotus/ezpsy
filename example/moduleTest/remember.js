@@ -32,7 +32,7 @@ let rememberFun = function()
 
     // let ez = ezpsy.init(document.getElementById("dom"))
 
-    let text = new ezpsy.Text({
+    let text = new ezpsy.Texts({
         shape: {
             text: '请按Enter键开始实验',
             x: 90,
@@ -46,7 +46,7 @@ let rememberFun = function()
         }
     })
 
-    let text_t = new ezpsy.Text({
+    let text_t = new ezpsy.Texts({
         shape: {
             text: '实验开始后您将有1秒的时间去记忆屏幕所出现的字母',
             x: 0,
@@ -59,7 +59,7 @@ let rememberFun = function()
         }
     })
 
-    let text1 = new ezpsy.Text({
+    let text1 = new ezpsy.Texts({
         shape: {
             text: '预备',
             x: 180,
@@ -143,7 +143,7 @@ let rememberFun = function()
                             t++;
                             k = 0;
                         }
-                        text0[i] = new ezpsy.Text({
+                        text0[i] = new ezpsy.Texts({
                             shape: {
                                 text: arr[i],
                                 x: 35+100*k,

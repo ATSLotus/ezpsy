@@ -4,7 +4,7 @@ let nBackFun = function(){
 
     deleteChild(dom_0)
 
-    let text0 = new ezpsy.Text({
+    let text0 = new ezpsy.Texts({
         shape: {
             text: '实验开始后系统将会显示一个数值N',
             x: 40,
@@ -16,7 +16,7 @@ let nBackFun = function(){
         }
     })
 
-    let text1 = new ezpsy.Text({
+    let text1 = new ezpsy.Texts({
         shape: {
             text: '请根据数值N来完成实验',
             x: 90,
@@ -28,7 +28,7 @@ let nBackFun = function(){
         }
     })
 
-    let text2 = new ezpsy.Text({
+    let text2 = new ezpsy.Texts({
         shape: {
             text: '看到的每一个字母',
             x: 120,
@@ -40,7 +40,7 @@ let nBackFun = function(){
         }
     })
 
-    let text3 = new ezpsy.Text({
+    let text3 = new ezpsy.Texts({
         shape: {
             text: '请回忆该字母前第N个字母是否与之相同',
             x: 20,
@@ -52,7 +52,7 @@ let nBackFun = function(){
         }
     })
 
-    let text4 = new ezpsy.Text({
+    let text4 = new ezpsy.Texts({
         shape: {
             // text: '若N为0，则与O比较',
             text: '若N为0，则与8比较',
@@ -65,7 +65,7 @@ let nBackFun = function(){
         }
     })
 
-    let text5 = new ezpsy.Text({
+    let text5 = new ezpsy.Texts({
         shape: {
             text: '若相同，则按D，否则按J',
             x: 80,
@@ -77,7 +77,7 @@ let nBackFun = function(){
         }
     })
 
-    let tip = new ezpsy.Text({
+    let tip = new ezpsy.Texts({
         shape: {
             text: '请按 Enter 键开始',
             x: 80,
@@ -89,7 +89,7 @@ let nBackFun = function(){
         }
     })
 
-    let tip1 = new ezpsy.Text({
+    let tip1 = new ezpsy.Texts({
         shape: {
             text: '请按 Enter 键提升难度',
             x: 60,
@@ -123,7 +123,7 @@ let nBackFun = function(){
         char = arrA[num];
         // char = num;
         arr.push(char);
-        let charText = new ezpsy.Text({
+        let charText = new ezpsy.Texts({
             shape: {
                 text: char,
                 x: 180,
@@ -210,7 +210,7 @@ let nBackFun = function(){
         console.dir(tip);
         // N = Math.floor(Math.random() * 6);
         
-        let tip0 = new ezpsy.Text({
+        let tip0 = new ezpsy.Texts({
             shape: {
                 text: 'N = ' + N.toString(),
                 x: 160,

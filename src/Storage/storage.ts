@@ -27,7 +27,8 @@ export class Storage{
         let index = this.searchElementsName(name);
         if(index instanceof Array)
         {
-            for(let i = 0;i < index.length;i++)
+            index.sort();
+            for(let i = index.length-1;i >= 0;i--)
             {
                 this.ElementsList.splice(index[i],1);
             }

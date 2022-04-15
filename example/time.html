@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Time</title>
+        <script src="../dist/iife/ezpsy.js"></script>
+    </head>
+    <body>
+        <div id="test"></div>
+    </body>
+    <script>
+        // console.dir(performance)
+
+        // let time = new ezpsy.Time();
+        // (async function(){
+        //     for(i = 0;i < 5;i++){   
+        //         await ezpsy.sleep(100).then(()=>{
+        //            time.record();
+        //         })
+        //     }
+        //     console.dir(time);
+        //     console.dir(time.getContinueValue());
+        //     console.dir(time.getIntervalValue());
+        // })()
+
+        window.onresize = function(){
+            location.reload()
+        }
+
+        let ez = ezpsy.init(document.getElementById("test"));
+        let w = 1000;let h = 1000;
+        ez.setCanvasStyle({
+            width: w,
+            height: h
+        })
+        let benchmark = new ezpsy.Line({
+            shape: {
+                x: 0,
+                y: 0,
+                xEnd: 1000,
+                yEnd: 0
+            },
+            style: {
+                stroke: '#ff0000',
+                lineWidth: '10'
+            }
+        })
+        ez.add(benchmark)
+        // let t0 = 0;let t1 = 0;let t = 0;let i = 0;
+        // let num = 100;let delay = 10;let time = new Array();
+        // let line = new Array();
+        // let linex = new ezpsy.Line({
+        //     shape: {
+        //         x: 0,
+        //         y: 0,
+        //         xEnd: (w/num)*num,
+        //         yEnd: 0
+        //     },
+        //     style: {
+        //         stroke: 'red'
+        //     }
+        // })
+        // let liney = new ezpsy.Line({
+        //     shape: {
+        //         x: 0,
+        //         y: 0,
+        //         xEnd: 0,
+        //         yEnd: (h/num)*num
+        //     },
+        //     style: {
+        //         stroke: 'red'
+        //     }
+        // })
+        // ez.add([linex,liney]);
+        // (async function(){
+        //     for(i = 0;i < num;i++){   
+        //         await ezpsy.sleep(delay).then(()=>{
+        //             time.push(performance.now())
+        //         })
+        //     }
+        //     console.dir(time);
+        //     for(i = 0;i < num;i++)
+        //     {
+        //         line[i] = new ezpsy.Line({
+        //             shape: {
+        //                 x: (w/num)*i,
+        //                 y: (time[i]-time[0]),
+        //                 xEnd: (w/num)*(i+1),
+        //                 yEnd: (time[i+1]-time[0])
+        //             },
+        //             style: {
+        //                 stroke: '#00ff00',
+        //                 lineWidth: 5
+        //             }
+        //         })
+        //     }
+        //     ez.add(line);
+        // })()
+
+        let t0 = 0;let t1 = 0;let t = new Array();let i = 0;
+        let num = 1000;let delay = 1;let line = new Array();
+        (async function(){
+            for(i = 0;i < num;i++){   
+                // console.dir('i = ' + i); 
+                t0 = performance.now()
+                await ezpsy.sleep(delay).then(()=>{
+                    t1 = performance.now()
+                    // t = t + t1 - t0 - delay;
+                    t.push(t1-t0-delay);
+                })
+            }
+            console.dir(t)
+            for(i = 0;i < num;i++)
+            {
+                line[i] = new ezpsy.Line({
+                    shape:{
+                        x: i,
+                        y: 0,
+                        xEnd: i+1,
+                        yEnd: t[i]
+                    },
+                    style: {
+                        stroke: '#00ff00',
+                        lineWidth: 4
+                    }
+                })
+            }
+            ez.add(line)
+            // console.dir("i = " + i);
+            // console.dir("时序精度为:" + t/num);
+        })()
+
+        // console.dir(d);
+        // for(let i = 0;i < 1000;i++)
+        // {
+        //     console.dir((new Date).getTime())
+        // }
+        // console.dir('2');
+        // ezpsy.sleep(1000).then(()=>{
+        //     console.dir('1');
+        // })
+    </script>
+</html>

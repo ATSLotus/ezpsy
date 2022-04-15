@@ -10,7 +10,7 @@ let SReactionFun = function(){
 
     let color = ['red','yellow','green','blue']
 
-    let tip0 = new ezpsy.Text({
+    let tip0 = new ezpsy.Texts({
         shape: {
             x: 170,
             y: 200,
@@ -22,7 +22,7 @@ let SReactionFun = function(){
         }
     })
 
-    let text = new ezpsy.Text({
+    let text = new ezpsy.Texts({
         shape: {
             text: '请按Enter键开始实验',
             x: 58,
@@ -34,7 +34,7 @@ let SReactionFun = function(){
             fontWeight: '800'
         }
     })
-    let text0 = new ezpsy.Text({
+    let text0 = new ezpsy.Texts({
         shape: {
             text: '请看到圆形后立即按下空格键',
             x: 40,

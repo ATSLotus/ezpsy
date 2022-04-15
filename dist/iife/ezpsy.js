@@ -38,7 +38,7 @@ var ezpsy = (function () {
             this.milliseconds = date.getMilliseconds();
         }
     }
-    class Time {
+    class Time0 {
         startTime;
         instantTime;
         timeStamp;
@@ -61,53 +61,54 @@ var ezpsy = (function () {
             this.item++;
         }
     }
-    function Tic() {
-        let t = new Time();
-        t.start();
-        return t;
-    }
-    function Toc(time) {
-        let t = 0;
-        let ts = new Array();
-        time.record();
-        ts[0] = time.instantTime[time.item].hour - time.instantTime[time.item - 1].hour;
-        ts[1] = time.instantTime[time.item].minutes - time.instantTime[time.item - 1].minutes;
-        ts[2] = time.instantTime[time.item].seconds - time.instantTime[time.item - 1].seconds;
-        ts[3] = time.instantTime[time.item].milliseconds - time.instantTime[time.item - 1].milliseconds;
-        t = 60 * 60 * ts[0] + 60 * ts[1] + ts[2] + ts[3] / 1000;
-        t.toFixed(3);
-        time.timeValue.push(t);
-        return t;
-    }
-    function setTimeTtamp(T) {
-        let t = new time();
-        T.timeStamp.push(t);
-    }
-    function getToc(time) {
-        let tA = new Array();
-        let ts = new Array();
-        let t = time.timeStamp;
-        for (let i = 0; i < Math.floor(t.length / 2); i++) {
-            if (t[2 * i + 1] === undefined) {
-                break;
-            }
-            else {
-                ts[0] = t[2 * i + 1].hour - t[2 * i].hour;
-                ts[1] = t[2 * i + 1].minutes - t[2 * i].minutes;
-                ts[2] = t[2 * i + 1].seconds - t[2 * i].seconds;
-                ts[3] = t[2 * i + 1].milliseconds - t[2 * i].milliseconds;
-                tA[i] = 60 * 60 * ts[0] + 60 * ts[1] + ts[2] + ts[3] / 1000;
-                tA[i] = Math.round(tA[i] * 1000) / 1000;
-                // console.dir(tA[i])
-            }
-        }
-        return tA;
-    }
-    function GetSecs(time) {
-        let t = Toc(time);
-        return t;
-    }
-    function WaitSecs(delay, message) {
+    // export function Tic(): Time0{
+    //     let t = new Time0()
+    //     t.start()
+    //     return t;
+    // }
+    // export function Toc(time: Time0): number{
+    //     let t = 0;
+    //     let ts = new Array()
+    //     time.record()
+    //     ts[0] = time.instantTime[time.item].hour - time.instantTime[time.item-1].hour
+    //     ts[1] = time.instantTime[time.item].minutes - time.instantTime[time.item-1].minutes
+    //     ts[2] = time.instantTime[time.item].seconds - time.instantTime[time.item-1].seconds
+    //     ts[3] = time.instantTime[time.item].milliseconds - time.instantTime[time.item-1].milliseconds
+    //     t = 60*60*ts[0] + 60*ts[1] + ts[2] + ts[3]/1000
+    //     // t.toFixed(3)
+    //     time.timeValue.push(t);
+    //     return t;
+    // }
+    // export function setTimeTtamp(T: Time0){
+    //     let t = new time();
+    //     T.timeStamp.push(t);
+    // } 
+    // export function getToc(time: Time0): Array<number>{
+    //     let tA = new Array();
+    //     let ts = new Array();
+    //     let t = time.timeStamp
+    //     for(let i = 0;i < Math.floor(t.length/2);i++){
+    //         if(t[2*i+1] === undefined)
+    //         {
+    //             break;
+    //         }
+    //         else{
+    //             ts[0] = t[2*i+1].hour - t[2*i].hour
+    //             ts[1] = t[2*i+1].minutes - t[2*i].minutes
+    //             ts[2] = t[2*i+1].seconds - t[2*i].seconds
+    //             ts[3] = t[2*i+1].milliseconds - t[2*i].milliseconds
+    //             tA[i] = 60*60*ts[0] + 60*ts[1] + ts[2] + ts[3]/1000
+    //             // tA[i] = Math.round(tA[i]*1000)/1000
+    //             // console.dir(tA[i])
+    //         }
+    //     }
+    //     return tA;
+    // }
+    // export function GetSecs(time: Time0): number{
+    //     let t = Toc(time)
+    //     return t
+    // }
+    function WaitSecs0(delay, message) {
         return new Promise(function (resolve, reject) {
             setTimeout(function () {
                 // console.log(message);
@@ -133,6 +134,7 @@ var ezpsy = (function () {
         name;
         shape;
         style;
+        textLine;
         ctx;
         storage;
         scale;
@@ -205,13 +207,13 @@ var ezpsy = (function () {
             (async function () {
                 while (1) {
                     func();
-                    await WaitSecs(delay / 2);
+                    await WaitSecs0(delay / 2);
                     that.remove();
                     that.storage.push(that);
                     that.storage.reDraw(ctx);
                     // ezJudge.judgeAnimate(that,ctx);
                     // await that.storage.reDraw(ctx);
-                    await WaitSecs(delay / 2);
+                    await WaitSecs0(delay / 2);
                 }
             })();
         }
@@ -1163,7 +1165,7 @@ var ezpsy = (function () {
         }
     }
     function makeEllipse(ellipse, ctx) {
-        //max是等于1除以长轴值a和b中的较大者
+        //max是等于1除以长轴值，即a和b中的较大者
         //i每次循环增加1/max，表示度数的增加
         //这样可以使得每次循环所绘制的路径（弧线）接近1像素
         let sh = ellipse.shape;
@@ -1303,7 +1305,7 @@ var ezpsy = (function () {
     }
 
     let nameId$2 = 0;
-    class Text extends Elements {
+    class Texts extends Elements {
         name = {
             name: "text" + nameId$2.toString(),
             graphicId: nameId$2
@@ -1324,13 +1326,34 @@ var ezpsy = (function () {
                     fontStyle: 'normal'
                 };
             }
+            if (opts.textLine) {
+                this.textLine = opts.textLine;
+            }
+            else {
+                this.textLine = {
+                    textA: 'start',
+                    textB: 'alphabetic'
+                };
+            }
             nameId$2++;
+        }
+        setTextLine(textLine) {
+            if (textLine) {
+                if (textLine.textA) {
+                    this.textLine.textA = textLine.textA;
+                }
+                if (textLine.textB) {
+                    this.textLine.textB = textLine.textB;
+                }
+            }
         }
     }
     function makeText(text, ctx) {
         ctx.save();
         ctx.beginPath();
         // judgeTRS(text)
+        ctx.textAlign = text.textLine.textA;
+        ctx.textBaseline = text.textLine.textB;
         judgeTextStyle(text, ctx);
         judgeStyle_text(text, ctx);
         ctx.closePath();
@@ -1868,7 +1891,7 @@ var ezpsy = (function () {
         else if (el instanceof Polygon) {
             makePolygon(el, ctx);
         }
-        else if (el instanceof Text) {
+        else if (el instanceof Texts) {
             makeText(el, ctx);
         }
         else if (el instanceof Grat) {
@@ -1882,9 +1905,17 @@ var ezpsy = (function () {
             let list = el.groupList;
             // console.dir(list[0])
             for (let i = 0; i < el.length; i++) {
+                list[i].ctx = ctx;
                 judgeElement(list[i], ctx);
             }
         }
+        // else if(el instanceof Array){
+        //     let list = el;
+        //     for(let i = 0;i < el.length;i++)
+        //     {
+        //         judgeElement(list[i],ctx);
+        //     }
+        // }
     }
     function judgeStyle(el, ctx) {
         // judgeAnimate(el);
@@ -2274,10 +2305,13 @@ var ezpsy = (function () {
     }
     function judgeTRS(el) {
         let ctx = el.ctx;
-        // console.dir(el.translate)
         ctx.translate(el.translate.x, el.translate.y);
         ctx.rotate(el.rotate);
         ctx.scale(el.scale.width, el.scale.height);
+    }
+    function judgeKey(keyCode, keyCodeDictionary) {
+        let key = keyCodeDictionary[keyCode];
+        return key;
     }
 
     class Storage {
@@ -2299,7 +2333,8 @@ var ezpsy = (function () {
             let name = this.getElementsName(el);
             let index = this.searchElementsName(name);
             if (index instanceof Array) {
-                for (let i = 0; i < index.length; i++) {
+                index.sort();
+                for (let i = index.length - 1; i >= 0; i--) {
                     this.ElementsList.splice(index[i], 1);
                 }
             }
@@ -2491,6 +2526,8 @@ var ezpsy = (function () {
                 }
             }
             createDlg(this, conStyle, topStr, char, color, conStyle.btnStr);
+            let h = window.innerHeight;
+            this.dom.style.top = ((h - this.dom.scrollHeight) / 2).toString() + 'px';
             // let btn = that.conT.child[that.conT.child.length - 1].child[0]
             let l = that.conT.child[that.conT.child.length - 1].child.length;
             let int = new Array();
@@ -2503,50 +2540,53 @@ var ezpsy = (function () {
                 let file = document.getElementById('file');
                 for (let i = 0; i < l; i++) {
                     let btn = that.conT.child[that.conT.child.length - 1].child[i];
-                    btn.dom.onmousedown = function () {
-                        (async function () {
-                            btn.dom.style.background = '#ffffff';
-                            btn.dom.style.boxShadow = '2px 2px 20px #008800';
-                            btn.dom.style.color = 'blue';
-                            await delay_frame(10);
-                            if (i === conStyle.confirmPosition || conStyle.btnStr.length === 1) {
-                                if (conStyle.intStr) {
-                                    for (let t = 0; t < conStyle.intStr.length; t++) {
-                                        that.intValue.push(conStyle.intStr[t]);
-                                        that.intValue.push(int[t].value);
-                                    }
+                    KeypressInit();
+                    let func = (async function () {
+                        btn.dom.style.background = '#ffffff';
+                        btn.dom.style.boxShadow = '2px 2px 20px #008800';
+                        btn.dom.style.color = 'blue';
+                        await delay_frame(10);
+                        if (i === conStyle.confirmPosition || conStyle.btnStr.length === 1) {
+                            if (conStyle.intStr) {
+                                for (let t = 0; t < conStyle.intStr.length; t++) {
+                                    that.intValue.push(conStyle.intStr[t]);
+                                    that.intValue.push(int[t].value);
                                 }
-                                else {
-                                    if (conStyle.seledStr) {
-                                        for (let t = 0; t < conStyle.seledStr.length; t++) {
-                                            if (conStyle.seledStr[t] !== undefined && conStyle.seledStr[t] !== '') {
-                                                that.selectValue.push(conStyle.seledStr[t]);
-                                            }
+                            }
+                            else {
+                                if (conStyle.seledStr) {
+                                    for (let t = 0; t < conStyle.seledStr.length; t++) {
+                                        if (conStyle.seledStr[t] !== undefined && conStyle.seledStr[t] !== '') {
+                                            that.selectValue.push(conStyle.seledStr[t]);
                                         }
                                     }
                                 }
-                                if (conStyle.type === 'file') {
-                                    // let f = file
-                                    new Promise((resolve, reject) => {
-                                        let file_Reader = new FileReader();
-                                        file_Reader.onload = result => {
-                                            let fc = file_Reader.result;
-                                            console.dir(fc);
-                                            resolve(fc);
-                                        };
-                                        // file_Reader.readAsDataURL((<HTMLInputElement>file).files[0])
-                                        // file_Reader.readAsText((<HTMLInputElement>file).files[0])
-                                        file_Reader.readAsArrayBuffer(file.files[0]);
-                                        that.files = file_Reader;
-                                    });
-                                }
-                                that.statusValue = true;
                             }
-                            await delay_frame(10);
-                            that.remove();
-                            await delay_frame(10);
-                            resolve(that.statusValue);
-                        })();
+                            if (conStyle.type === 'file') {
+                                // let f = file
+                                new Promise((resolve, reject) => {
+                                    let file_Reader = new FileReader();
+                                    file_Reader.onload = result => {
+                                        let fc = file_Reader.result;
+                                        console.dir(fc);
+                                        resolve(fc);
+                                    };
+                                    // file_Reader.readAsDataURL((<HTMLInputElement>file).files[0])
+                                    // file_Reader.readAsText((<HTMLInputElement>file).files[0])
+                                    file_Reader.readAsArrayBuffer(file.files[0]);
+                                    that.files = file_Reader;
+                                });
+                            }
+                            that.statusValue = true;
+                        }
+                        await delay_frame(10);
+                        await that.remove();
+                        await delay_frame(10);
+                        resolve(that.statusValue);
+                    });
+                    // keypres.listen(13,func)
+                    btn.dom.onmousedown = function () {
+                        func();
                     };
                 }
             });
@@ -3100,6 +3140,275 @@ var ezpsy = (function () {
     //     }
     // }
 
+    class Time {
+        startTime;
+        timeStamp;
+        timeContinueValue;
+        timeIntervalValue;
+        constructor() {
+            this.startTime = performance.now();
+            this.timeStamp = [];
+            this.timeContinueValue = [];
+            this.timeIntervalValue = [];
+        }
+        record() {
+            this.timeStamp.push(performance.now());
+        }
+        getStamp() {
+            return this.timeStamp;
+        }
+        getContinueValue() {
+            for (let i = 1; i < this.timeStamp.length; i++) {
+                this.timeContinueValue.push(this.timeStamp[i] - this.timeStamp[i - 1]);
+            }
+            return this.timeContinueValue;
+        }
+        getIntervalValue() {
+            for (let i = 1; i < this.timeStamp.length; i += 2) {
+                if (this.timeStamp)
+                    this.timeIntervalValue.push(this.timeStamp[i] - this.timeStamp[i - 1]);
+            }
+            return this.timeIntervalValue;
+        }
+    }
+    function sleep(delay) {
+        return new Promise((res, rej) => {
+            var startTime = performance.now() + delay;
+            while (performance.now() < startTime) { }
+            res(1);
+        });
+    }
+    function WaitSecs(delay) {
+        return new Promise((res, rej) => {
+            var startTime = performance.now() + delay;
+            while (performance.now() < startTime) { }
+            res(1);
+        });
+    }
+
+    class Keypress {
+        keyType;
+        keyEvent;
+        key;
+        keyCombination;
+        constructor(keyType) {
+            if (keyType) {
+                if (keyType === 'keydown' || keyType === 'keyup' || keyType === 'keypress') {
+                    this.keyType = keyType;
+                }
+                else {
+                    this.keyType = 'keydown';
+                }
+            }
+            else {
+                this.keyType = 'keydown';
+            }
+            this.key = [];
+            this.keyEvent = new KeyboardEvent(this.keyType);
+        }
+        listen(key, fun, IsDestroy) {
+            // console.dir(param);
+            let func = {
+                funcList: []
+            };
+            if (IsDestroy === undefined) {
+                IsDestroy = true;
+            }
+            return new Promise((res, rej) => {
+                this.key = new Array();
+                if (key) {
+                    if (fun instanceof Function) {
+                        func.funcList = [fun];
+                    }
+                    else {
+                        func = fun;
+                    }
+                    if (key instanceof Array) {
+                        this.key = key;
+                    }
+                    else {
+                        this.key.push(key);
+                    }
+                    for (let i = 0; i < this.key.length; i++) {
+                        if (typeof this.key[i] === 'number')
+                            this.key[i] = judgeKey(this.key[i], keyCodeDictionary);
+                    }
+                    // console.dir(func);
+                    listen(this.key, this.keyType, func, IsDestroy)
+                        .then(e => {
+                        // console.dir(e)
+                        // if(e.index >= 0)
+                        // {
+                        //     if(func.complete)
+                        //         func.complete()
+                        // }
+                        // if(func)
+                        // {
+                        //     if(func.funcList[e.index])
+                        //         func.funcList[e.index]()
+                        //     else
+                        //         console.dir(e.key)
+                        //         // console.error('func['+e+'] is undefined !');
+                        // }
+                        // else
+                        //     console.dir(e.key)
+                        //     // console.error("func is undefinde");
+                        res(e);
+                    });
+                }
+                else {
+                    console.error("You shouldn't use this function without Parametric key !!!");
+                }
+            });
+        }
+    }
+    function KeypressInit(keyType) {
+        let keypress = new Keypress();
+        return keypress;
+    }
+    function listen(key, keyType, func, IsDestroy) {
+        let res = {
+            index: -1,
+            key: 'null'
+        };
+        return new Promise((resolve, reject) => {
+            document.addEventListener(keyType, linstenner);
+            // debugger;
+            function linstenner(e) {
+                // console.dir((<KeyboardEvent>e).key)
+                for (let i = 0; i < key.length; i++) {
+                    if (key[i] === e.key) {
+                        res = {
+                            index: i,
+                            key: e.key
+                        };
+                        if (res.index >= 0) {
+                            if (func.complete)
+                                func.complete();
+                        }
+                        if (func) {
+                            if (func.funcList[res.index])
+                                func.funcList[res.index]();
+                            else
+                                console.dir(res.key);
+                            // console.error('func['+e+'] is undefined !');
+                        }
+                        else
+                            console.dir(res.key);
+                        // console.error("func is undefinde");
+                        // res(e);
+                        if (IsDestroy)
+                            document.removeEventListener(keyType, linstenner);
+                        resolve(res);
+                    }
+                }
+            }
+        });
+    }
+    let keyCodeDictionary = {
+        8: 'Backspace',
+        9: 'Tab',
+        12: 'Clear',
+        13: 'Enter',
+        16: 'Shift',
+        17: 'Control',
+        18: 'Alt',
+        19: 'Pause',
+        20: 'CapsLock',
+        27: 'Escape',
+        32: ' ',
+        33: 'Prior',
+        34: 'Next',
+        35: 'End',
+        36: 'Home',
+        37: 'Left',
+        38: 'Up',
+        39: 'Right',
+        40: 'Down',
+        41: 'Select',
+        42: 'Print',
+        43: 'Execute',
+        45: 'Insert',
+        46: 'Delete',
+        47: 'Help',
+        48: '0',
+        49: '1',
+        50: '2',
+        51: '3',
+        52: '4',
+        53: '5',
+        54: '6',
+        55: '7',
+        56: '8',
+        57: '9',
+        65: 'a',
+        66: 'b',
+        67: 'c',
+        68: 'd',
+        69: 'e',
+        70: 'f',
+        71: 'g',
+        72: 'h',
+        73: 'i',
+        74: 'j',
+        75: 'k',
+        76: 'l',
+        77: 'm',
+        78: 'n',
+        79: 'o',
+        80: 'p',
+        81: 'q',
+        82: 'r',
+        83: 's',
+        84: 't',
+        85: 'u',
+        86: 'v',
+        87: 'w',
+        88: 'x',
+        89: 'y',
+        90: 'z',
+        96: 'KP_0',
+        97: 'KP_1',
+        98: 'KP_2',
+        99: 'KP_3',
+        100: 'KP_4',
+        101: 'KP_5',
+        102: 'KP_6',
+        103: 'KP_7',
+        104: 'KP_8',
+        105: 'KP_9',
+        106: 'KP_Multiply',
+        107: 'KP_Add',
+        108: 'KP_Separator',
+        109: 'KP_Subtract',
+        110: 'KP_Decimal',
+        111: 'KP_Divide',
+        112: 'F1',
+        113: 'F2',
+        114: 'F3',
+        115: 'F4',
+        116: 'F5',
+        117: 'F6',
+        118: 'F7',
+        119: 'F8',
+        120: 'F9',
+        121: 'F10',
+        122: 'F11',
+        123: 'F12',
+        124: 'F13',
+        125: 'F14',
+        126: 'F15',
+        127: 'F16',
+        128: 'F17',
+        129: 'F18',
+        130: 'F19',
+        131: 'F20',
+        132: 'F21',
+        133: 'F22',
+        134: 'F23',
+        135: 'F24',
+    };
+
     // export { animate } from './Animate/animate'
     // export { makeRectangle } from './Graphic/rectangle'
     // let EzpsyList = new Array();
@@ -3128,7 +3437,7 @@ var ezpsy = (function () {
             //     c.width = cStyle.width
             //     c.height = cStyle.height
             // }
-            this.storage.ElementsList;
+            // let el = this.storage.ElementsList
             let c = this.ctx.canvas;
             let ctx = this.ctx;
             cStyle = judgeCanvasStyle(cStyle);
@@ -3157,21 +3466,20 @@ var ezpsy = (function () {
         //     }
         // }
         add(el) {
-            // console.dir('success')
-            this.storage.push(el);
-            // this.ctx = ezCanvas.createCanvas(this.dom,this.cStyle); //此处创建canvas将创建多个canvas
-            // this.ctxList.push(this.ctx)
             let ctx = this.ctx;
             if (el instanceof Elements || el instanceof Group) {
+                this.storage.push(el);
                 el.ctx = ctx;
                 el.storage = this.storage;
                 judgeElement(el, ctx);
             }
             else {
                 for (let i = 0; i < el.length; i++) {
-                    el[i].ctx = ctx;
-                    el[i].storage = this.storage;
-                    judgeElement(el[i], ctx);
+                    let e = el[i];
+                    this.add(e);
+                    // el[i].ctx = ctx
+                    // el[i].storage = this.storage
+                    // ezJudge.judgeElement(el[i],ctx)
                 }
             }
         }
@@ -3196,27 +3504,66 @@ var ezpsy = (function () {
             (async function () {
                 while (1) {
                     func();
-                    await WaitSecs(delay / 2);
+                    await WaitSecs0(delay / 2);
                     el.remove();
                     that.add(el);
                     // that.storage.push(el)
                     // that.storage.reDraw(ctx)
                     // ezJudge.judgeAnimate(el,ctx);
                     // await that.storage.reDraw(ctx);
-                    await WaitSecs(delay / 2);
+                    await WaitSecs0(delay / 2);
                 }
             })();
         }
-        clear() {
-            let that = this;
-            return new Promise(function (resolve, reject) {
-                let child = that.dom.lastElementChild;
-                while (child) {
-                    that.dom.removeChild(child);
-                    child = that.dom.lastElementChild;
+        setTextLine(textLine) {
+            this.clear();
+            let st = this.storage;
+            if (textLine) {
+                if (textLine.textA) {
+                    // this.textLine.textA = textLine.textA
+                    for (let i = 0; i < st.ElementsList.length; i++) {
+                        if (st.ElementsList[i] instanceof Texts)
+                            st.ElementsList[i].textLine.textA = textLine.textA;
+                        else if (st.ElementsList[i] instanceof Group) {
+                            for (let t = 0; t < st.ElementsList[i].groupList.length; t++) {
+                                if (st.ElementsList[i].groupList[t] instanceof Texts) {
+                                    st.ElementsList[i].groupList[t].textLine.textA = textLine.textA;
+                                }
+                            }
+                        }
+                    }
                 }
-                resolve(0);
-            });
+                if (textLine.textB) {
+                    // this.textLine.textB = textLine.textB
+                    for (let i = 0; i < st.ElementsList.length; i++) {
+                        if (st.ElementsList[i] instanceof Texts)
+                            st.ElementsList[i].textLine.textB = textLine.textB;
+                        else if (st.ElementsList[i] instanceof Group) {
+                            for (let t = 0; t < st.ElementsList[i].groupList.length; t++) {
+                                if (st.ElementsList[i].groupList[t] instanceof Texts) {
+                                    st.ElementsList[i].groupList[t].textLine.textB = textLine.textB;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            st.reDraw(this.ctx);
+        }
+        clear() {
+            // let that = this;
+            // this.storage.ElementsList = new Array();
+            // return new Promise(function(resolve,reject){
+            //     let child = that.dom.lastElementChild
+            //     while(child){
+            //         that.dom.removeChild(child)
+            //         child = that.dom.lastElementChild
+            //     }
+            //     resolve(0)
+            // })
+            let c = this.ctx.canvas;
+            c.width = this.cStyle.width;
+            c.height = this.cStyle.height;
         }
     }
     // export function pushEzpsyList(ez: Ezpsy){
@@ -3240,11 +3587,12 @@ var ezpsy = (function () {
         Arc: Arc,
         Ellipse: Ellipse,
         Polygon: Polygon,
-        Text: Text,
+        Texts: Texts,
         Img: Img,
-        Time: Time,
+        Keypress: Keypress,
         Dialogue: Dialogue,
         Grat: Grat,
+        Time: Time,
         RectGroup: RectGroup,
         makeRectangle: makeRectangle,
         AdjoinRect: AdjoinRect,
@@ -3301,12 +3649,8 @@ var ezpsy = (function () {
         PreloadTextures: PreloadTextures,
         DrawTexture: DrawTexture,
         DrawTextures: DrawTextures,
-        Tic: Tic,
-        Toc: Toc,
-        setTimeTtamp: setTimeTtamp,
-        getToc: getToc,
-        GetSecs: GetSecs,
-        WaitSecs: WaitSecs,
+        Time0: Time0,
+        WaitSecs0: WaitSecs0,
         delay_frame: delay_frame,
         KbWait: KbWait,
         KbName: KbName,
@@ -3314,7 +3658,10 @@ var ezpsy = (function () {
         KbReleaseWait: KbReleaseWait,
         GetClick: GetClick,
         DlgInit: DlgInit,
-        makeGrat: makeGrat
+        makeGrat: makeGrat,
+        sleep: sleep,
+        WaitSecs: WaitSecs,
+        KeypressInit: KeypressInit
     });
 
     return EZPSY;

@@ -8,6 +8,7 @@ import { Rectangle } from './Graphic/rectangle'
 import { Elements } from './Element'
 import { Group } from './Group/group'
 import { Storage } from './Storage/storage'
+import { TextLine,Texts } from './Graphic/text'
 
 
 
@@ -25,6 +26,8 @@ export * from './Time/time'
 export * from './Keypress/keypress'
 export * from './Dialogue/dialogue'
 export * from './Graphic/grating'
+export * from './Time/timePerformance'
+export * from './Keypress/keypress0'
 export { Rectangle } from './Graphic/rectangle'
 export { Group } from './Group/group'
 export { Circle } from './Graphic/circle'
@@ -32,11 +35,14 @@ export { Line } from './Graphic/line'
 export { Arc } from './Graphic/arc'
 export { Ellipse } from './Graphic/ellipse'
 export { Polygon } from './Graphic/polygon'
-export { Text } from './Graphic/text'
+export { Texts } from './Graphic/text'
 export { Img } from './Graphic/image'
-export { Time } from './Time/time'
+export { Keypress } from './Keypress/keypress0'
+// export { Time } from './Time/time'
 export { Dialogue } from './Dialogue/dialogue'
 export { Grat } from './Graphic/grating'
+export { Time } from './Time/timePerformance'
+
 // export { animate } from './Animate/animate'
 // export { makeRectangle } from './Graphic/rectangle'
  
@@ -70,7 +76,7 @@ class Ezpsy {
         //     c.width = cStyle.width
         //     c.height = cStyle.height
         // }
-        let el = this.storage.ElementsList
+        // let el = this.storage.ElementsList
         let c = this.ctx.canvas;
         let ctx = this.ctx
         cStyle = ezJudge.judgeCanvasStyle(cStyle);
@@ -102,15 +108,10 @@ class Ezpsy {
     // }
 
     add(el: Elements|Elements[]|Group){
-        // console.dir('success')
-
-        this.storage.push(el)
-        
-        // this.ctx = ezCanvas.createCanvas(this.dom,this.cStyle); //此处创建canvas将创建多个canvas
-        // this.ctxList.push(this.ctx)
         let ctx = this.ctx
         if(el instanceof Elements||el instanceof Group)
         {
+            this.storage.push(el)
             el.ctx = ctx;
             el.storage = this.storage
             ezJudge.judgeElement(el,ctx)
@@ -118,12 +119,13 @@ class Ezpsy {
         else{
             for(let i = 0;i < el.length;i++)
             {
-                el[i].ctx = ctx
-                el[i].storage = this.storage
-                ezJudge.judgeElement(el[i],ctx)
+                let e = el[i]
+                this.add(e)
+                // el[i].ctx = ctx
+                // el[i].storage = this.storage
+                // ezJudge.judgeElement(el[i],ctx)
             }
         }
-        
     }
 
     remove(el: Elements|Elements[]|Group)
@@ -152,30 +154,80 @@ class Ezpsy {
             {
                 
                 func();
-                await ezTime.WaitSecs(delay/2)
+                await ezTime.WaitSecs0(delay/2)
                 el.remove()
                 that.add(el);
                 // that.storage.push(el)
                 // that.storage.reDraw(ctx)
                 // ezJudge.judgeAnimate(el,ctx);
                 // await that.storage.reDraw(ctx);
-                await ezTime.WaitSecs(delay/2)
+                await ezTime.WaitSecs0(delay/2)
             }
         })()
     }
 
-
+    setTextLine(textLine: TextLine)
+    {
+        this.clear();
+        let st = this.storage
+        if(textLine)
+        {
+            if(textLine.textA)
+            {
+                // this.textLine.textA = textLine.textA
+                for(let i = 0;i < st.ElementsList.length;i++)
+                {
+                    if(st.ElementsList[i] instanceof Texts)
+                        st.ElementsList[i].textLine.textA = textLine.textA
+                    else if(st.ElementsList[i] instanceof Group)
+                    {
+                        for(let t = 0;t < (<Group>st.ElementsList[i]).groupList.length;t++)
+                        {
+                            if((<Group>st.ElementsList[i]).groupList[t] instanceof Texts)
+                            {
+                                (<Group>st.ElementsList[i]).groupList[t].textLine.textA = textLine.textA
+                            }
+                        }
+                    }
+                }
+            }
+            if(textLine.textB)
+            {
+                // this.textLine.textB = textLine.textB
+                for(let i = 0;i < st.ElementsList.length;i++)
+                {
+                    if(st.ElementsList[i] instanceof Texts)
+                        st.ElementsList[i].textLine.textB = textLine.textB
+                    else if(st.ElementsList[i] instanceof Group)
+                    {
+                        for(let t = 0;t < (<Group>st.ElementsList[i]).groupList.length;t++)
+                        {
+                            if((<Group>st.ElementsList[i]).groupList[t] instanceof Texts)
+                            {
+                                (<Group>st.ElementsList[i]).groupList[t].textLine.textB = textLine.textB
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        st.reDraw(this.ctx);
+    }
 
     clear(){
-        let that = this
-        return new Promise(function(resolve,reject){
-            let child = that.dom.lastElementChild
-            while(child){
-                that.dom.removeChild(child)
-                child = that.dom.lastElementChild
-            }
-            resolve(0)
-        })
+        // let that = this;
+        // this.storage.ElementsList = new Array();
+        // return new Promise(function(resolve,reject){
+        //     let child = that.dom.lastElementChild
+        //     while(child){
+        //         that.dom.removeChild(child)
+        //         child = that.dom.lastElementChild
+        //     }
+        //     resolve(0)
+        // })
+        let c = this.ctx.canvas;
+        c.width = this.cStyle.width
+        c.height = this.cStyle.height
     }
 
 }

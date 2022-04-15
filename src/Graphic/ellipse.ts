@@ -7,7 +7,7 @@ interface EllipseShape extends Shape{
     y?: number,
     ra?: number,
     rb?: number
-    //ra为横轴长 rb为纵轴长
+    //ra为横半轴长 rb为纵半轴长
 }
 
 interface EllipseOpts extends Opts{
@@ -44,7 +44,7 @@ export class Ellipse extends Elements{
 }
 
 export function makeEllipse(ellipse: Ellipse,ctx: CanvasRenderingContext2D): Ellipse{
-    //max是等于1除以长轴值a和b中的较大者
+    //max是等于1除以长轴值，即a和b中的较大者
     //i每次循环增加1/max，表示度数的增加
     //这样可以使得每次循环所绘制的路径（弧线）接近1像素
     let sh = ellipse.shape

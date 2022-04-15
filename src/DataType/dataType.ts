@@ -3,8 +3,8 @@ import { Scale, Translate } from "../Element"
 export interface Shape{  
     x?: number     //position x
     y?: number     //position y
-    xEnd?: number  //line's position x
-    yEnd?: number  //line's position y
+    xEnd?: number  //line's final position x
+    yEnd?: number  //line's final position y
     width?: number 
     height?: number
     r?: number     //arc's radius
@@ -21,7 +21,7 @@ export interface Shape{
     sy?: number    //The y-coordinate position at which the cut began
     swidth?: number //The width of the image being clipped
     sheight?: number//The height of the image being clipped
-    desity?: number //密集度
+    desity?: number //The Grating‘s desity
 }
  
 export interface Style {

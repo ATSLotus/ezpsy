@@ -4,7 +4,7 @@ let eyeChartFun = function(){
     
     let text = new Array();
 
-    text[0] = new ezpsy.Text({
+    text[0] = new ezpsy.Texts({
         shape: {
             text: 'E',
             x: 168,

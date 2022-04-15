@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Time</title>
+        <script src="../dist/iife/ezpsy.js"></script>
+    </head>
+    <body>
+        
+    </body>
+    <script>
+        
+        let wait = function(delay){
+            return new Promise((res,rej)=>{
+                setTimeout(()=>{
+                    res(0);
+                },delay)
+            })
+        }
+        let t0 = 0;let t1 = 0;let t = 0;
+        let i = 0;let num = 100000;let delay = 1;
+        (async function(){
+            for(i = 0;i < num;i++){   
+                console.dir("i = " + i);
+                t0 = performance.now() 
+                await wait(delay).then(()=>{
+                    t1 = performance.now()
+                    t = t + t1 - t0 - delay;
+                })
+            }
+            console.dir("i = " + i);
+            console.dir("时序精度为:" + t/num);
+        })()
+
+        // console.dir(d);
+        // for(let i = 0;i < 1000;i++)
+        // {
+        //     console.dir((new Date).getTime())
+        // }
+    </script>
+</html>

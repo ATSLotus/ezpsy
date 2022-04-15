@@ -3,15 +3,128 @@
     <script src="../dist/iife/ezpsy.js"></script>
   </head>
   <body>
-    <div id="test"></div>
+    <div id="test" onkeydown="func()"></div>
+
+    <!-- <input id="test"></input> -->
+
     <!-- <button onclick="tic()">开始</button>
     <button class="bt" onclick="toc()">计时</button> -->
     <!-- <img src="../img/OIP.png"> -->
     
     <script>
+
+        // console.dir(new KeyboardEvent(document.getElementById("test")))
+
+        // document.addEventListener('keypress',(e)=>{
+        //     console.dir(e.key)
+        //     if(e.ctrlKey === true && e.key==='a')
+        //     {
+        //       console.dir('success');
+        //     }
+        // })
+
+        // document.addEventListener('keydown',MyScript,true/false)
+
+        // Keypress.listen([键值],{
+        //   funcList: {
+        //     0: func,
+        //     1: func,
+        //     /*...*/
+        //   },
+        //   complete: func
+        // })
+
+        let keypress = ezpsy.KeypressInit('keyup');
+        keypress.listen(['a',' ',13,'Backspace'],{
+          funcList: {
+            0: ()=>{
+              console.dir('A');
+            },
+            1: ()=>{
+              console.dir('空格');
+            },
+            2: ()=>{
+              console.dir('Enter');
+            },
+            3: ()=>{
+              console.dir('Backspace');
+            }
+          },
+          complete: ()=>{
+            console.dir('complete')
+          }
+        },false).then(e=>{
+          console.dir(e);
+        })
         
-        let ez = ezpsy.init(document.getElementById("test"))
-        console.log(ez);
+        // let a = 1;
+        // func0 =  function(e){
+        //   e = 3
+        //   console.dir(a)
+        // }
+        // func1 = function(e){
+        //   console.dir(e)
+        // }
+        // keypress.listen('a',()=>{
+        //   console.dir('aaa')
+        // })
+        
+        // keypress.listen(['a',66],{
+        //   funcList: [()=>{
+        //     a+=2;
+        //     console.dir(a)
+        //   },
+        //   ()=>{
+        //     console.dir('bbbb')
+        //   }],
+        //   completeFunc: ()=>{
+        //     console.dir('suc')
+        //   }
+        // });
+
+        let test = document.getElementById("test")
+
+        
+        // test.focus()
+        // let key = new KeyboardEvent('keydown');
+        // test.dispatchEvent(key)
+        
+        test.addEventListener("keydown",e=>{
+          console.dir(e);
+        })
+
+              
+        // let ez = ezpsy.init(document.getElementById("test"))
+        // let dlg = ezpsy.DlgInit(document.getElementById("test"));
+        // dlg.inputdlg({
+        //   intStr: ['sex','hand',"name",'sda','sadsa']
+        // }).then(e=>{
+        //   console.dir(e)
+        // })
+
+        // let rectangle = new ezpsy.Rectangle({
+        //   shape: {
+        //     x: 0,
+        //     y: 0,
+        //     width: 100,
+        //     height: 100
+        //   },
+        //   style: {
+        //     fill: "#0000ff"
+        //   }
+        // })
+        // ez.add(rectangle);
+        // rectangle.translate = {
+        //   x: 200,
+        //   y: 200
+        // }
+        // let i = 0;
+        // rectangle.animate(()=>{
+        //   rectangle.rotate = 10 * i * Math.PI/180;
+        //   i++;
+        // },100)
+
+
         // ez.setCanvasStyle({
         //     width: 1000,
         //     height: 1000
@@ -30,8 +143,8 @@
 
         let rect = new ezpsy.Rectangle({
           shape:{
-            x: 0,
-            y: 0,
+            x: 100,
+            y: 100,
             width: 100,
             height: 100
           },
@@ -39,6 +152,11 @@
             fill: "red"
           }
         })
+
+        // ez.add(rect);
+
+        // console.dir(rect)
+        
         let circle = new ezpsy.Circle({
           shape: {
             x: 200,
@@ -46,6 +164,81 @@
             r: 50
           }
         })
+        
+        // ez.add(circle)
+
+        let line = new ezpsy.Line({
+          shape: {
+            x: 40,
+            y: 40,
+            xEnd: 100,
+            yEnd: 200
+          },
+          style: {
+            stroke: '#0000ff',
+            lineWidth: 5
+          }
+        })
+
+        // ez.add(line);
+
+        let ellipse = new ezpsy.Ellipse({
+          shape: {
+            x: 200,
+            y: 200,
+            ra: 100,
+            rb: 50
+          },
+          style:{
+            fill: "rgb(255,165,0)",
+            stroke: '#ff0000'
+          }
+        })
+
+        // ez.add(ellipse)
+
+        // console.dir(ellipse)
+
+        let line0 = new ezpsy.Line({
+          shape: {
+            x: 200,
+            y: 0,
+            xEnd: 200,
+            yEnd: 400
+          },
+          style: {
+            stroke: 'blue'
+          }
+        })
+
+        let text0 = new ezpsy.Texts({
+          shape: {
+            text: 'ezpsy',
+            x: 145,
+            y: 100
+          },
+          style: {
+            fontSize: '40px',
+            stroke: "#ff00ff"
+          }
+        })
+        
+        let text1 = new ezpsy.Texts({
+          shape: {
+            text: 'ezpsy',
+            x: 145,
+            y: 200
+          },
+          style: {
+            fontSize: '40px',
+            fill: "#ff00ff"
+          }
+        })
+
+        let group = new ezpsy.Group([text0,text1]);
+
+        // ez.add(group);
+
         let grat = new ezpsy.Grat({
           shape:{  
             x: 200,
@@ -59,7 +252,7 @@
         //   x: 200,
         //   y: 200
         // }
-        ez.add([rect,circle,grat])
+        // ez.add([rect,circle,grat])
         // ez.add(grat)
         // grat.play()
         // rect.rotate = 90 * Math.PI/180
@@ -68,45 +261,45 @@
         // // ez.remove(circle)
         // // circle.remove();
         // // console.dir(rect)
-        ez.setCanvasStyle({
-          width: 600,
-          height: 400,
-        })
-        let i = 0;
-        let t = 1;
-        let f = false
-        let func = function(){
-          if(i >= 36){
-            f = true
-          }
-          if(i <= 0)
-          {
-            f = false
-          }
-          // if(t >= 10)
-          // {
-          //   t = 1;
-          // }
-          // rect.translate.x = i * 10;
-          rect.translate.x = 200
-          rect.translate.y = 200
-          // rect.scale = {
-          //   width: i * 1/18,
-          //   height: i * 1/18
-          // }
-          rect.scale.width = i * 1/18;
-          // rect.rotate = t * 10 * Math.PI/180
-          t++;
-          if(f){
-            i--
-          }
-          else{
-            i++
-          }
-        }
-        ez.animate(rect,func,80);
-        i = 0;
-        f = false;
+        // ez.setCanvasStyle({
+        //   width: 600,
+        //   height: 400,
+        // })
+        // let i = 0;
+        // let t = 1;
+        // let f = false
+        // let func = function(){
+        //   if(i >= 36){
+        //     f = true
+        //   }
+        //   if(i <= 0)
+        //   {
+        //     f = false
+        //   }
+        //   // if(t >= 10)
+        //   // {
+        //   //   t = 1;
+        //   // }
+        //   // rect.translate.x = i * 10;
+        //   rect.translate.x = 200
+        //   rect.translate.y = 200
+        //   // rect.scale = {
+        //   //   width: i * 1/18,
+        //   //   height: i * 1/18
+        //   // }
+        //   rect.scale.width = i * 1/18;
+        //   // rect.rotate = t * 10 * Math.PI/180
+        //   t++;
+        //   if(f){
+        //     i--
+        //   }
+        //   else{
+        //     i++
+        //   }
+        // }
+        // ez.animate(rect,func,80);
+        // i = 0;
+        // f = false;
         // ez.animate(circle,()=>{
         //   circle.scale.width = i * 0.1;
         //   if(i >= 20){
@@ -124,22 +317,22 @@
         //   }
         // },80)
 
-        circle.animate(()=>{
-          circle.scale.width = i * 0.1;
-          if(i >= 20){
-            f = true
-          }
-          if(i <= 0)
-          {
-            f = false
-          }
-          if(f){
-            i--
-          }
-          else{
-            i++
-          }
-        },80)
+        // circle.animate(()=>{
+        //   circle.scale.width = i * 0.1;
+        //   if(i >= 20){
+        //     f = true
+        //   }
+        //   if(i <= 0)
+        //   {
+        //     f = false
+        //   }
+        //   if(f){
+        //     i--
+        //   }
+        //   else{
+        //     i++
+        //   }
+        // },80)
         
         // console.dir(rect)
 

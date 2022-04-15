@@ -2,6 +2,7 @@ import { DivStyle } from '../Div/div'
 import * as ezDiv from '../Div/div'
 import * as ezJudge from '../Judge/judge'
 import { delay_frame } from '../Time/time'
+import { KbWait, KeypressInit } from '../ezpsy'
 
 let id = 0
 
@@ -46,6 +47,10 @@ export class Dialogue{
             }
         }
         createDlg(this,conStyle,topStr,char,color,conStyle.btnStr)
+        
+        let h = window.innerHeight;
+        this.dom.style.top = ((h-this.dom.scrollHeight)/2).toString() + 'px'
+
         // let btn = that.conT.child[that.conT.child.length - 1].child[0]
         let l = that.conT.child[that.conT.child.length - 1].child.length;
         let int = new Array()
@@ -61,58 +66,60 @@ export class Dialogue{
             for(let i = 0;i < l;i++)
             { 
                 let btn = that.conT.child[that.conT.child.length - 1].child[i]
-                btn.dom.onmousedown = function(){
-                    (async function (){
-                        btn.dom.style.background = '#ffffff'
-                        btn.dom.style.boxShadow = '2px 2px 20px #008800'
-                        btn.dom.style.color = 'blue'
-                        await delay_frame(10)
-                        if(i === conStyle.confirmPosition||conStyle.btnStr.length === 1)
+                let keypres = KeypressInit()
+                let func = (async function (){
+                    btn.dom.style.background = '#ffffff'
+                    btn.dom.style.boxShadow = '2px 2px 20px #008800'
+                    btn.dom.style.color = 'blue'
+                    await delay_frame(10)
+                    if(i === conStyle.confirmPosition||conStyle.btnStr.length === 1)
+                    {
+                        if(conStyle.intStr)
                         {
-                            if(conStyle.intStr)
+                            for(let t = 0;t < conStyle.intStr.length;t++)
                             {
-                                for(let t = 0;t < conStyle.intStr.length;t++)
-                                {
-                                    that.intValue.push(conStyle.intStr[t])
-                                    that.intValue.push(int[t].value)
-                                }
+                                that.intValue.push(conStyle.intStr[t])
+                                that.intValue.push(int[t].value)
                             }
-                            else{
-                                if(conStyle.seledStr)
-                                {
-                                    for(let t = 0;t < conStyle.seledStr.length;t++)
-                                    {
-                                        if(conStyle.seledStr[t] !== undefined && conStyle.seledStr[t] !== '')
-                                        {
-                                            that.selectValue.push(conStyle.seledStr[t])
-                                        }
-                                    }
-                                }
-                            }
-                            if(conStyle.type === 'file')
-                            {
-                                // let f = file
-                                new Promise((resolve,reject)=>{
-                                    let file_Reader = new FileReader()
-                                    file_Reader.onload = result =>{
-                                        let fc = file_Reader.result;
-                                        console.dir(fc)
-                                        resolve(fc)
-                                    }
-                                    // file_Reader.readAsDataURL((<HTMLInputElement>file).files[0])
-                                    // file_Reader.readAsText((<HTMLInputElement>file).files[0])
-                                    file_Reader.readAsArrayBuffer((<HTMLInputElement>file).files[0])
-                                    that.files = file_Reader
-                                })
-                            }
-                            that.statusValue = true
                         }
-                        await delay_frame(10)
-                        that.remove()
-                        await delay_frame(10)
-                        resolve(that.statusValue)
-                    })()
-                    
+                        else{
+                            if(conStyle.seledStr)
+                            {
+                                for(let t = 0;t < conStyle.seledStr.length;t++)
+                                {
+                                    if(conStyle.seledStr[t] !== undefined && conStyle.seledStr[t] !== '')
+                                    {
+                                        that.selectValue.push(conStyle.seledStr[t])
+                                    }
+                                }
+                            }
+                        }
+                        if(conStyle.type === 'file')
+                        {
+                            // let f = file
+                            new Promise((resolve,reject)=>{
+                                let file_Reader = new FileReader()
+                                file_Reader.onload = result =>{
+                                    let fc = file_Reader.result;
+                                    console.dir(fc)
+                                    resolve(fc)
+                                }
+                                // file_Reader.readAsDataURL((<HTMLInputElement>file).files[0])
+                                // file_Reader.readAsText((<HTMLInputElement>file).files[0])
+                                file_Reader.readAsArrayBuffer((<HTMLInputElement>file).files[0])
+                                that.files = file_Reader
+                            })
+                        }
+                        that.statusValue = true
+                    }
+                    await delay_frame(10)
+                    await that.remove()
+                    await delay_frame(10)
+                    resolve(that.statusValue)
+                })
+                // keypres.listen(13,func)
+                btn.dom.onmousedown = function(){
+                    func();
                 }  
             }
         })

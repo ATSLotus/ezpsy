@@ -13,11 +13,17 @@ interface TextShape extends Shape{
 interface TextOpts extends Opts{
     shape: TextShape
     style?: Style
+    textLine?: TextLine
+}
+
+export interface TextLine{
+    textA: CanvasTextAlign
+    textB: CanvasTextBaseline
 }
 
 let nameId = 0;
 
-export class Text extends Elements{
+export class Texts extends Elements{
     readonly name?: nameStyle = {
         name: "text" + nameId.toString(),
         graphicId: nameId
@@ -40,16 +46,42 @@ export class Text extends Elements{
             }
         }
 
+        if(opts.textLine)
+        {
+            this.textLine = opts.textLine;
+        }
+        else{
+            this.textLine = {
+                textA: 'start',
+                textB: 'alphabetic'
+            }
+        }
+
         nameId++
+    }
+    setTextLine(textLine: TextLine){
+        if(textLine)
+        {
+            if(textLine.textA)
+            {
+                this.textLine.textA = textLine.textA
+            }
+            if(textLine.textB)
+            {
+                this.textLine.textB = textLine.textB
+            }
+        }
     }
 }
 
-export function makeText(text: Text,ctx: CanvasRenderingContext2D): Text{
+export function makeText(text: Texts,ctx: CanvasRenderingContext2D): Texts{
 
     ctx.save()
     ctx.beginPath()
 
     // judgeTRS(text)
+    ctx.textAlign = text.textLine.textA
+    ctx.textBaseline = text.textLine.textB
 
     judgeTextStyle(text,ctx)
 

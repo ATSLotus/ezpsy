@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>text</title>
+        <script src="../dist/iife/ezpsy.js"></script>
+    </head>
+    <body>
+        <div id="text"></div>
+    </body>
+    <script>
+        let ez = ezpsy.init(document.getElementById("text"));
+        let text0 = new ezpsy.Texts({
+            shape: {
+                x: 200,
+                y: 40,
+                text: "text"
+            },
+            style:{
+                fill: 'red',
+                fontSize: '30px'
+            },
+            textLine: {
+                textA: 'center'
+            }
+        })
+        let rect = new ezpsy.Rectangle({
+            shape: {
+                x: 100,
+                y: 100,
+                width: 200,
+                height: 200,
+            },
+            style: {
+                fill: 'red'
+            }
+        })
+        ez.add([text0,rect])
+        rect.remove()
+        
+        window.onresize = ()=>{
+            location.reload()
+        }
+    </script>
+    <style>
+        canvas{
+            border: 1px dashed red;
+            border-radius: 5px;
+        }
+    </style>
+</html>

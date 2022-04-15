@@ -92,4 +92,3 @@ export function GetClick(el: Elements): Promise<boolean>{
     })
     
 }
-

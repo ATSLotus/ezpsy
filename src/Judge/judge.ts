@@ -8,7 +8,7 @@ import { Line, makeLine} from '../Graphic/line'
 import { Arc, makeArc } from '../Graphic/arc'
 import { Ellipse, makeEllipse } from '../Graphic/ellipse'
 import { makePolygon, Polygon } from '../Graphic/polygon'
-import { makeText, Text } from '../Graphic/text'
+import { makeText, Texts } from '../Graphic/text'
 import { Img, makeImg } from '../Graphic/image'
 import { contentStyle } from '../Dialogue/dialogue'
 import { Grat, makeGrat } from '../Graphic/grating'
@@ -139,7 +139,7 @@ export function judgeModel(model: string): [string,string,string,string]{
 //     if(!style)
 // }
 
-export function judgeElement(el: Elements|Group,ctx: CanvasRenderingContext2D){
+export function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRenderingContext2D){
     // console.dir(el)
     // console.dir(Rectangle)
     // console.dir(el instanceof Rectangle)
@@ -166,7 +166,7 @@ export function judgeElement(el: Elements|Group,ctx: CanvasRenderingContext2D){
     {
         makePolygon(el,ctx)
     }
-    else if(el instanceof Text)
+    else if(el instanceof Texts)
     {
         makeText(el,ctx);
     }
@@ -184,9 +184,17 @@ export function judgeElement(el: Elements|Group,ctx: CanvasRenderingContext2D){
         // console.dir(list[0])
         for(let i = 0;i < el.length;i++)
         {
+            list[i].ctx = ctx
             judgeElement(list[i],ctx);
         }
     }
+    // else if(el instanceof Array){
+    //     let list = el;
+    //     for(let i = 0;i < el.length;i++)
+    //     {
+    //         judgeElement(list[i],ctx);
+    //     }
+    // }
 }
 
 export function judgeStyle(el: Elements,ctx: CanvasRenderingContext2D){
@@ -661,9 +669,12 @@ export function judgeAnimate(el: Elements,ctx: CanvasRenderingContext2D){
 
 export function judgeTRS(el: Elements){
     let ctx = el.ctx
-
-    // console.dir(el.translate)
     ctx.translate(el.translate.x,el.translate.y)
     ctx.rotate(el.rotate)
     ctx.scale(el.scale.width,el.scale.height)
+}
+
+export function judgeKey(keyCode: number,keyCodeDictionary: Object): string{
+    let key = keyCodeDictionary[keyCode];
+    return key;
 }

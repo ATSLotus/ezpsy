@@ -20,7 +20,7 @@ module.exports = [
       typescript(),  // 默认从 tsconfig加载数据
       babel({
         exclude: 'node_modules/**' // 只编译我们的源代码
-    })
+      })
     ],
   },
 ]

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>js_excise</title>   
+        <script src="../dist/iife/ezpsy.js"></script> 
+    </head>
+        <!-- <style type="text/css">
+            div{
+                width: 100px;
+                height: 100px;
+                background-color: aqua;
+            }
+        </style> -->
+        <style>
+            canvas{
+                border: 1px dashed red;
+            }
+            button{
+                width: 80px;
+                height: 48px;
+                border: 1px dashed red;
+                background: white;
+                border-radius: 5px;
+            }
+            button:active{
+                background: rgb(56,113,224);
+            }
+        </style>
+    <body>
+        <div id="test"></div>
+        <button onclick="ck()">download</button>
+        <script type="text/javascript">
+            
+            let test = document.getElementById('test')
+            let ez = ezpsy.init(test)
+            ez.setCanvasStyle({
+                width: 1920,
+                height: 1080
+            })
+            let x = 180;
+            let y = 45;
+            let x0 = [480+x,1440-x];
+            let y0 = [270+y,810-y];
+            let r0 = 100;
+            let rect = new ezpsy.Rectangle({
+                shape: {
+                    x: 0,
+                    y: 0,
+                    width: 1920,
+                    height: 1080
+                },
+                style:{
+                    fill: 'balck'
+                }
+            })
+            let circleA = new Array();
+            for(let i = 0;i < 2;i++)
+            {
+                for(let j = 0;j < 2;j++)
+                {
+                    circleA[2*i+j] = new ezpsy.Circle({
+                        shape:{
+                            x: x0[i],
+                            y: y0[j],
+                            r: r0
+                        },
+                        style: {
+                            fill: 'white'
+                        }
+                    })
+                }
+            }
+            // console.dir(circleA)
+            let circle = new ezpsy.Group(circleA);
+            ez.add([rect,circle]);
+            console.dir(ez)
+
+            
+            
+            
+            
+            let ck = function(){
+                var link = document.createElement("a");
+                let canvas = document.getElementsByTagName('canvas')[0]
+                console.dir(canvas)
+                var imgData =canvas.toDataURL({format: 'png', quality:1, width:20000, height:4000});
+                var strDataURI = imgData.substr(22, imgData.length);
+                var blob = dataURLtoBlob(imgData);
+                var objurl = URL.createObjectURL(blob);
+                link.download = "grid1.png";
+                link.href = objurl;
+                link.click();
+            }
+            
+            function  dataURLtoBlob(dataurl) {
+                var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+                while(n--){
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                return new Blob([u8arr], {type:mime});
+            }
+
+            
+            
+            // //所有键盘按下触发
+            // document.addEventListener('keydown',function(e){
+            //     var event = e || window.event // e:非IE浏览器使用，window.event是IE浏览器使用
+            //     console.log(event.shiftKey,event.altKey,event.ctrlKey,event.key,event.keyCode)
+            // },false)
+            
+            // //所有键盘抬起触发
+            // document.addEventListener('keyup',function(e){
+            //     var event = e || window.event // e:非IE浏览器使用，window.event是IE浏览器使用
+            //     console.log(event.shiftKey,event.altKey,event.ctrlKey,event.key,event.keyCode)
+            // },false)
+            
+            // //非功能按键按下触发
+            // document.addEventListener('keypress',function(e){
+            //     var event = e || window.event // e:非IE浏览器使用，window.event是IE浏览器使用
+            //     console.log(event.shiftKey,event.altKey,event.ctrlKey,event.key,event.keyCode)
+            // },false)
+        </script>
+    </body>
+</html>

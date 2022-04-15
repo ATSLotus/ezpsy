@@ -5,11 +5,13 @@ import { nameStyle } from './DataType/dataType';
 import { Storage } from './Storage/storage';
 import * as ezTime from "./Time/time"
 import * as ezJudge from './Judge/judge'
+import { TextLine } from './Graphic/text';
 
 export class Elements{
     name?: nameStyle
     shape?: Shape
     style?: Style 
+    textLine?: TextLine
     ctx?: CanvasRenderingContext2D
     storage?: Storage
     scale?: Scale
@@ -93,13 +95,13 @@ export class Elements{
             {
                 
                 func();
-                await ezTime.WaitSecs(delay/2)
+                await ezTime.WaitSecs0(delay/2)
                 that.remove()
                 that.storage.push(that)
                 that.storage.reDraw(ctx)
                 // ezJudge.judgeAnimate(that,ctx);
                 // await that.storage.reDraw(ctx);
-                await ezTime.WaitSecs(delay/2)
+                await ezTime.WaitSecs0(delay/2)
             }
         })()
     }

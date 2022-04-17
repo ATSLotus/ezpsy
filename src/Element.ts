@@ -115,7 +115,7 @@ export class Elements{
                     that.storage.reDraw(ctx)
                 })
                 
-            })
+            },0)
         })()
     }
 

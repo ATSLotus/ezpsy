@@ -151,7 +151,7 @@ class Ezpsy {
         let ctx = this.ctx;
         // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
         // this.ctxList.push(ctx);
-        setInterval(()=>{
+        window.setInterval(()=>{
             func();
             // ezTime.WaitSecs0(delay/2)
             ezTimer.sleep(delay).then(()=>{
@@ -159,7 +159,7 @@ class Ezpsy {
                 that.add(el);
             })
             
-        })
+        },0)
         // (async function(){
         //     for(let i = 0;i < 10;i++)
         //     {

@@ -168,7 +168,7 @@ var ezpsy = (function () {
                         that.storage.push(that);
                         that.storage.reDraw(ctx);
                     });
-                });
+                }, 0);
             })();
         }
     }
@@ -6764,14 +6764,14 @@ var ezpsy = (function () {
             this.ctx;
             // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
             // this.ctxList.push(ctx);
-            setInterval(() => {
+            window.setInterval(() => {
                 func();
                 // ezTime.WaitSecs0(delay/2)
                 sleep(delay).then(() => {
                     el.remove();
                     that.add(el);
                 });
-            });
+            }, 0);
             // (async function(){
             //     for(let i = 0;i < 10;i++)
             //     {

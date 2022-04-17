@@ -13,6 +13,7 @@ import { Img, makeImg } from '../Graphic/image'
 import { contentStyle } from '../Dialogue/dialogue'
 import { Grat, makeGrat } from '../Graphic/grating'
 import * as ezCanvas from '../Canvas/canvas'
+import { DlgContent } from '../ezpsy'
 
 export function judgeCanvasStyle(cStyle: canvasStyle):canvasStyle{
     if(!cStyle) 
@@ -677,4 +678,44 @@ export function judgeTRS(el: Elements){
 export function judgeKey(keyCode: number,keyCodeDictionary: Object): string{
     let key = keyCodeDictionary[keyCode];
     return key;
+}
+
+export function judgeDlgContent(dlgContent: DlgContent,title: string,content?: string,ok?: string,cancel?: string): DlgContent{
+    if(ok === undefined){
+        ok = 'OK'
+    }
+    if(cancel === undefined)
+    {
+        cancel = 'Cancel'
+    }
+    if(dlgContent === undefined)
+    {
+        return dlgContent = {
+            title: title,
+            content: content,
+            confirm: ok,
+            cancel: cancel
+        }
+    }
+    else{
+        if(dlgContent.title === undefined)
+        {
+            dlgContent.title = title;
+        }
+        if(content !== undefined)
+        {
+            if(dlgContent.content === undefined)
+            {
+                dlgContent.content = content;
+            }
+        }
+        if(dlgContent.confirm === undefined)
+        {
+            dlgContent.confirm = ok
+        }
+        if(dlgContent.cancel === undefined){
+            dlgContent.cancel = cancel;
+        }
+        return dlgContent;
+    }
 }

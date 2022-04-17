@@ -1,6 +1,8 @@
 <html>
   <head>
     <script src="../dist/iife/ezpsy.js"></script>
+    <link rel="stylesheet" href="../dist/iife/ezpsy.css" />
+    <!-- <link rel="stylesheet" href="../testCss/sweetalert2.css" /> -->
   </head>
   <body>
     <div id="test" onkeydown="func()"></div>
@@ -12,6 +14,90 @@
     <!-- <img src="../img/OIP.png"> -->
     
     <script>
+
+      let ez = ezpsy.init(document.getElementById('test'));
+      let time = new ezpsy.Time();
+      let rectangle = new ezpsy.Rectangle({
+        shape: {
+          x: 0,
+          y: 0,
+          width: 200,
+          height:200
+        },
+        style: {
+          fill: 'black'
+        }
+      })
+      ez.add(rectangle)
+      let i = 0;
+      rectangle.animate(()=>{
+        console.dir(performance.now())
+        if(i%2 === 0)
+        {
+          rectangle.style.fill = 'white'
+        }
+        else{
+          rectangle.style.fill = 'black'
+        }
+        i++
+      },100)
+
+        // ezpsy.test()
+        // let dlg = ezpsy.DlgInit()
+        // dlg.inputDlg({
+        //   title: '被试信息',
+        //   input: ["name","sex","age"],
+        //   value: ['MH','0','22']
+        // }).then(e=>{
+        //   console.dir(e)
+        // })
+
+        // dlg.listDlg({
+        //   list: {
+        //     Sex: {
+        //       0: '女',
+        //       1: '男'
+        //     },
+        //     Age: {
+        //       20: '20',
+        //       21: '21',
+        //       22: '22'
+        //     },
+        //     // MH: "MH"
+        //     Name: {
+        //       MH:"MH"
+        //     }
+        //   },
+        //   IsMulti: true
+        // }).then(e=>{
+        //   console.dir(e)
+        // })
+
+        // dlg.questDlg().then(e=>{
+        //   console.dir(e)
+        // })
+
+        // let list = {
+        //     Sex: {
+        //       0: '女',
+        //       1: '男'
+        //     },
+        //     Age: {
+        //       20: '20',
+        //       21: '21',
+        //       22: '22'
+        //     },
+        //     Name: "MH"
+        //   }
+        // let l = Object.keys(list)
+        // let a = Object.values(list);
+        // console.dir(list)
+        // console.dir(Object.keys(a[0]))
+        // console.dir(Object.keys(a))
+
+        // dlg.helpDlg()
+
+        // console.dir(dlg)
 
         // console.dir(new KeyboardEvent(document.getElementById("test")))
 
@@ -34,29 +120,29 @@
         //   complete: func
         // })
 
-        let keypress = ezpsy.KeypressInit('keyup');
-        keypress.listen(['a',' ',13,'Backspace'],{
-          funcList: {
-            0: ()=>{
-              console.dir('A');
-            },
-            1: ()=>{
-              console.dir('空格');
-            },
-            2: ()=>{
-              console.dir('Enter');
-            },
-            3: ()=>{
-              console.dir('Backspace');
-            }
-          },
-          complete: ()=>{
-            console.dir('complete')
-          }
-        },false).then(e=>{
-          console.dir(e);
-        })
-        
+        // let keypress = ezpsy.KeypressInit('keyup');
+        // keypress.listen(['a',' ',13,'Backspace'],{
+        //   funcList: {
+        //     0: ()=>{
+        //       console.dir('A');
+        //     },
+        //     1: ()=>{
+        //       console.dir('空格');
+        //     },
+        //     2: ()=>{
+        //       console.dir('Enter');
+        //     },
+        //     3: ()=>{
+        //       console.dir('Backspace');
+        //     }
+        //   },
+        //   complete: ()=>{
+        //     console.dir('complete')
+        //   }
+        // },false).then(e=>{
+        //   console.dir(e);
+        // })
+
         // let a = 1;
         // func0 =  function(e){
         //   e = 3
@@ -82,16 +168,16 @@
         //   }
         // });
 
-        let test = document.getElementById("test")
+        // let test = document.getElementById("test")
 
         
         // test.focus()
         // let key = new KeyboardEvent('keydown');
         // test.dispatchEvent(key)
         
-        test.addEventListener("keydown",e=>{
-          console.dir(e);
-        })
+        // test.addEventListener("keydown",e=>{
+        //   console.dir(e);
+        // })
 
               
         // let ez = ezpsy.init(document.getElementById("test"))
@@ -438,23 +524,28 @@
         
         // console.dir(time)
         
-        window.onresize = function(){
-            location.reload();
-        }
+        // window.onresize = function(){
+        //     location.reload();
+        // }
         
     </script>
     <style>
-      button{
+      /* button{
         position: absolute;
         top: 0px;
-      }
+      } */
       .bt{
         left: 80px;
       }
-      canvas{
+      #test{
+        width: 100%;
+        height: 1800px;
+        /* background-color: aqua; */
+      }
+      /* canvas{
         border-radius: 10px;
         border: 1px dashed red;
-      }
+      } */
     </style>
   </body>
 </html>

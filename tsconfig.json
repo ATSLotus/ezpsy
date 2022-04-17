@@ -3,7 +3,13 @@
         "module": "esnext",
         "target": "esnext",
         "jsx": "preserve",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
         // "strictFunctionTypes": true
+        "typeRoots": [
+            "node_modules/@types",
+            "@types"
+        ]
     },
     "exclude": [
         "node_modules",

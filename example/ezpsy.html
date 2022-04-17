@@ -9,14 +9,15 @@
         <script src="./moduleTest/simpleReaction.js"></script>
         <script src="./moduleTest/n-back.js"></script>
         <script src="./moduleTest/eyeChart.js"></script>
+        <link rel="stylesheet" href="../dist/iife/ezpsy.css">
     </head>
     <body>
         <div class="dom">
             <div class="domChild">
-                <button id="dom_bt0">瞬时记忆</button>
-                <button id="dom_bt1">视觉干扰</button>
-                <button id="dom_bt2">简单反应时</button> 
-                <button id="dom_bt3">n-back</button>
+                <button class="bt" id="dom_bt0">瞬时记忆</button>
+                <button class="bt" id="dom_bt1">视觉干扰</button>
+                <button class="bt" id="dom_bt2">简单反应时</button> 
+                <button class="bt" id="dom_bt3">n-back</button>
             </div>
         </div>
         
@@ -60,7 +61,7 @@
             display: flex;
             justify-content: space-evenly;
         }
-        .domChild button{
+        .domChild .bt{
             width: 80px;
             height: 40px;
             border-radius: 10px;

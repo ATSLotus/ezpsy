@@ -1,0 +1,107 @@
+$dlhInputTFS: 1.5em;$dlginputTW: 100%;$dlgInputTH: 50px;$dlgInputTLH: $dlgInputTH;
+$dlgInputTColor: rgb(86,136,247);
+$dlgInputW: 80%;$dlgInputH: 40px;
+$dlgInputBorder: 2px dashed rgb(192,231,241);$dlgInputBR: 8px;$dlgInputFS: 0.9em;
+$dlgInputBorderH: 2px dashed rgb(56,113,224);
+
+$BTNW: 6em;
+
+$MultiSelectW: 80%;$MultiSelectH: auto;
+$MultiSelectSH: 40px;$MultiSelectSMT: 10px;$MultiSelectScrollC: rgb(192,231,241);
+
+$MultiDivC: #ff0000aa;$MultiDivMB: 10px;
+
+
+.ezpsy-dlg-input-title{
+    font-size: $dlhInputTFS;
+    width: $dlginputTW;
+    height: $dlgInputTH;
+    line-height: $dlgInputTLH;
+    color: $dlgInputTColor;
+}
+.ezpsy-dlg-input{
+    width: $dlgInputW;
+    height: $dlgInputH;
+    border: $dlgInputBorder;
+    border-radius: $dlgInputBR;
+    text-align: center;
+    font-size: $dlgInputFS;
+}
+
+.ezpsy-dlg-input:hover{
+    border: $dlgInputBorderH;
+}
+.ezpsy-dlg-input:focus-visible{
+    outline: none;
+    border: $dlgInputBorderH;
+}
+
+.ezpsy-dlg-select{
+    width: $dlgInputW;
+    height: $dlgInputH;
+    border: $dlgInputBorder;
+    border-radius: $dlgInputBR;
+    text-align: center;
+    font-size: $dlgInputFS;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ezpsy-dlg-select:hover{
+    border: $dlgInputBorderH;
+}
+.ezpsy-dlg-select:focus-visible{
+    outline: none;
+    // border: $dlgInputBorderH;
+}
+
+.ezpsy-dlg-btn{
+    width: $BTNW;
+}
+
+.ezpsy-dlg-MultiDiv{
+    color: $MultiDivC;
+    margin-bottom: $MultiDivMB;
+}
+
+.ezpsy-dlg-multiSelect{
+    width: $MultiSelectW;
+    height: $MultiSelectH;
+    border: $dlgInputBorder;
+    border-radius: $dlgInputBR;
+    text-align: center;
+    font-size: $dlgInputFS;
+    margin: auto;
+}
+
+.ezpsy-dlg-multiSelect::-webkit-scrollbar{
+    display: none;
+}
+
+.ezpsy-dlg-multiSelect:hover{
+    border: $dlgInputBorderH;
+}
+.ezpsy-dlg-multiSelect:focus-visible{
+    outline: none;
+    // border: $dlgInputBorderH;
+}
+
+// .ezpsy-dlg-multiSelect{
+//     flex-direction: column;
+//     width: $MultiSelectW;
+//     height: $MultiSelectH;
+//     margin: auto;
+//     select{
+//         border: $dlgInputBorder;
+//         border-radius: $dlgInputBR;
+//         text-align: center;
+//         font-size: $dlgInputFS;
+//     }
+//     select:hover{
+//         border: $dlgInputBorderH;
+//     }
+//     select:focus-visible{
+//         outline: none;
+//         // border: $dlgInputBorderH;
+//     }
+// }

@@ -4,6 +4,7 @@ import { canvasStyle } from './Canvas/canvas'
 import { nameStyle } from './DataType/dataType';
 import { Storage } from './Storage/storage';
 import * as ezTime from "./Time/time"
+import * as ezTimer from "./Time/timePerformance"
 import * as ezJudge from './Judge/judge'
 import { TextLine } from './Graphic/text';
 
@@ -88,21 +89,33 @@ export class Elements{
         let that = this;
         // el.remove();
         let ctx = this.ctx;
+        let start = performance.now();
         // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
         // this.ctxList.push(ctx);
         (async function(){
-            while(1)
-            {
+            // while(performance.now() > start)
+            // {
                 
+            //     func();
+            //     // await ezTime.WaitSecs0(delay/2)
+            //     await ezTimer.sleep(delay)
+            //     that.remove()
+            //     that.storage.push(that)
+            //     that.storage.reDraw(ctx)
+            //     // ezJudge.judgeAnimate(that,ctx);
+            //     // await that.storage.reDraw(ctx);
+            //     // await ezTime.WaitSecs0(delay/2)
+            // }
+            window.setInterval(()=>{
                 func();
-                await ezTime.WaitSecs0(delay/2)
-                that.remove()
-                that.storage.push(that)
-                that.storage.reDraw(ctx)
-                // ezJudge.judgeAnimate(that,ctx);
-                // await that.storage.reDraw(ctx);
-                await ezTime.WaitSecs0(delay/2)
-            }
+                // await ezTime.WaitSecs0(delay/2)
+                ezTimer.sleep(delay).then(()=>{
+                    that.remove()
+                    that.storage.push(that)
+                    that.storage.reDraw(ctx)
+                })
+                
+            })
         })()
     }
 

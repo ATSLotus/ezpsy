@@ -36,7 +36,8 @@ export function sleep(delay: number): Promise<number>{
     return new Promise((res,rej)=>{
         var startTime = performance.now() + delay;
         while(performance.now() < startTime) {}
-        res(1)
+        if(performance.now() >= startTime)
+            res(1)
     })
 }
 

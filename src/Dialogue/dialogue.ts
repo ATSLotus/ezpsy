@@ -6,7 +6,7 @@ import { KbWait, KeypressInit } from '../ezpsy'
 
 let id = 0
 
-export class Dialogue{
+export class Dialogue_0{
     id: number
     dom: HTMLElement
     domParent: HTMLElement
@@ -243,11 +243,11 @@ class Content{
 }
 
 export function DlgInit(dom: HTMLElement,dStyle?: DivStyle) {
-    let dlg = new Dialogue(dom,dStyle);
+    let dlg = new Dialogue_0(dom,dStyle);
     return dlg;
 }
 
-function createDlg(dlg: Dialogue,conStyle: contentStyle,top: Array<string>,imgStr?: string,imgColor?: string,str?: Array<string>){
+function createDlg(dlg: Dialogue_0,conStyle: contentStyle,top: Array<string>,imgStr?: string,imgColor?: string,str?: Array<string>){
     // console.dir(dlg)
     dlg.dom.style.visibility = 'visible'
     createDlgTitle(dlg,conStyle,top[0])
@@ -264,7 +264,7 @@ function createDlg(dlg: Dialogue,conStyle: contentStyle,top: Array<string>,imgSt
     
 }
 
-function createDlgTitle(dlg: Dialogue,conStyle: contentStyle,top: string){
+function createDlgTitle(dlg: Dialogue_0,conStyle: contentStyle,top: string){
     let titleStyle = {
         width: dlg.dStyle.width,
         height: 50
@@ -277,7 +277,7 @@ function createDlgTitle(dlg: Dialogue,conStyle: contentStyle,top: string){
     title.dom.style.top = top
 }
 
-function createDlgContent(dlg: Dialogue,conStyle: contentStyle,top: string){
+function createDlgContent(dlg: Dialogue_0,conStyle: contentStyle,top: string){
     let contentStyle = {
         width: dlg.dStyle.width,
         height: 50
@@ -288,7 +288,7 @@ function createDlgContent(dlg: Dialogue,conStyle: contentStyle,top: string){
     content.dom.style.top = top
 }
 
-function createDlgImgDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str: string,color: string)
+function createDlgImgDiv(dlg: Dialogue_0,conStyle: contentStyle,top: string,str: string,color: string)
 {
     let imgDivStyle = {
         width: dlg.dStyle.width,
@@ -389,7 +389,7 @@ function createDlgInt(imgDiv: Content,intStr: string)
     imgDiv.dom.append(int)
 }
 
-function createDlgFile(imgDiv: Content,dlg: Dialogue){
+function createDlgFile(imgDiv: Content,dlg: Dialogue_0){
     let file = document.createElement('input')
     // file.disabled = true
     file.type = 'file'
@@ -618,7 +618,7 @@ function createDlgSelect(imgDiv: Content,conStyle: contentStyle){
     }
 }
 
-function createDlgBtnDiv(dlg: Dialogue,conStyle: contentStyle,top: string,str?: Array<string>){
+function createDlgBtnDiv(dlg: Dialogue_0,conStyle: contentStyle,top: string,str?: Array<string>){
     let BtnDivStyle = {
         width: dlg.dStyle.width,
         height: 35

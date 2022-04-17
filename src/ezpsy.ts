@@ -1,6 +1,7 @@
 import * as ezUtils from './utils'
 import * as ezCanvas from './Canvas/canvas'
-import * as ezTime from './Time/time'
+// import * as ezTime from './Time/time'
+import * as ezTimer from './Time/timePerformance'
 import { canvasStyle } from './Canvas/canvas'
 import * as ezJudge from './Judge/judge'
 import * as ezRectangle from './Graphic/rectangle'
@@ -24,10 +25,11 @@ export * from './Graphic/text'
 export * from './Graphic/image'
 export * from './Time/time'
 export * from './Keypress/keypress'
-export * from './Dialogue/dialogue'
+// export * from './Dialogue/dialogue'
 export * from './Graphic/grating'
 export * from './Time/timePerformance'
 export * from './Keypress/keypress0'
+export * from './Dialogue/dialogue0'
 export { Rectangle } from './Graphic/rectangle'
 export { Group } from './Group/group'
 export { Circle } from './Graphic/circle'
@@ -39,7 +41,7 @@ export { Texts } from './Graphic/text'
 export { Img } from './Graphic/image'
 export { Keypress } from './Keypress/keypress0'
 // export { Time } from './Time/time'
-export { Dialogue } from './Dialogue/dialogue'
+// export { Dialogue_0} from './Dialogue/dialogue'
 export { Grat } from './Graphic/grating'
 export { Time } from './Time/timePerformance'
 
@@ -149,21 +151,31 @@ class Ezpsy {
         let ctx = this.ctx;
         // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
         // this.ctxList.push(ctx);
-        (async function(){
-            while(1)
-            {
-                
-                func();
-                await ezTime.WaitSecs0(delay/2)
+        setInterval(()=>{
+            func();
+            // ezTime.WaitSecs0(delay/2)
+            ezTimer.sleep(delay).then(()=>{
                 el.remove()
                 that.add(el);
-                // that.storage.push(el)
-                // that.storage.reDraw(ctx)
-                // ezJudge.judgeAnimate(el,ctx);
-                // await that.storage.reDraw(ctx);
-                await ezTime.WaitSecs0(delay/2)
-            }
-        })()
+            })
+            
+        })
+        // (async function(){
+        //     for(let i = 0;i < 10;i++)
+        //     {
+                
+        //         await func();
+        //         // await ezTime.WaitSecs0(delay/2)
+        //         await ezTimer.sleep(delay)
+        //         await el.remove()
+        //         await that.add(el);
+        //         // that.storage.push(el)
+        //         // that.storage.reDraw(ctx)
+        //         // ezJudge.judgeAnimate(el,ctx);
+        //         // await that.storage.reDraw(ctx);
+        //         // await ezTime.WaitSecs0(delay/2)
+        //     }
+        // })()
     }
 
     setTextLine(textLine: TextLine)

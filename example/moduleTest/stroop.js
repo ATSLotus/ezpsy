@@ -6,7 +6,7 @@ stroopFun = function()
     deleteChild(dom_0)
     // let dom_0 = document.getElementById('dom')
     // let ez = ezpsy.init(dom_0)
-    // let dlg = ezpsy.DlgInit(dom_0)
+    let dlg = ezpsy.DlgInit()
 
     let stroop = {
         str: ['红','黄','蓝','绿'],
@@ -179,23 +179,23 @@ stroopFun = function()
             await keypress.listen([A,S,D,F,32],{
                 funcList: {
                     4:()=>{
-                        f = 0;
-                        text_l.remove()
-                        let cent = (count/count_total * 100).toFixed(2);
-                        dlg.show({
-                            title: '实验结果',
-                            content: '准确率为'+ cent.toString() + '%',
-                        }).then(res=>{
-                            if(res)
-                            {
-                                text0.remove();
-                                ez.add(g1);
-                                count_total = 0;
-                                count = 0;
-                                time.getIntervalValue()
-                                console.dir(time)
-                            }
-                        })
+                        // f = 0;
+                        // text_l.remove()
+                        // let cent = (count/count_total * 100).toFixed(2);
+                        // dlg.show({
+                        //     title: '实验结果',
+                        //     content: '准确率为'+ cent.toString() + '%',
+                        // }).then(res=>{
+                        //     if(res)
+                        //     {
+                        //         text0.remove();
+                        //         ez.add(g1);
+                        //         count_total = 0;
+                        //         count = 0;
+                        //         time.getIntervalValue()
+                        //         console.dir(time)
+                        //     }
+                        // })
                     }
                 },
                 complete: ()=>{

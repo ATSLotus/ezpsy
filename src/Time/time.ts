@@ -104,7 +104,7 @@ export function delay_frame(num1){
         (function raf(){
             time_num++;
             let id =window.requestAnimationFrame(raf);
-        if( time_num==num1){
+        if( time_num>num1){
             window.cancelAnimationFrame(id);
             resolve(0);
         }

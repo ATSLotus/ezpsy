@@ -25,50 +25,108 @@ var ezpsy = (function () {
         return ctx;
     }
 
-    class Time {
-        startTime;
-        timeStamp;
-        timeContinueValue;
-        timeIntervalValue;
+    class time {
+        hour;
+        minutes;
+        seconds;
+        milliseconds;
         constructor() {
-            this.startTime = performance.now();
+            let date = new Date();
+            this.hour = date.getHours();
+            this.minutes = date.getMinutes();
+            this.seconds = date.getSeconds();
+            this.milliseconds = date.getMilliseconds();
+        }
+    }
+    class Time0 {
+        startTime;
+        instantTime;
+        timeStamp;
+        item;
+        timeValue;
+        constructor() {
+            this.item = 0;
+            this.startTime = new time();
+            this.instantTime = [];
+            this.instantTime.push(this.startTime);
+            this.timeValue = [];
             this.timeStamp = [];
-            this.timeContinueValue = [];
-            this.timeIntervalValue = [];
+        }
+        start() {
+            this.startTime = new time();
         }
         record() {
-            this.timeStamp.push(performance.now());
-        }
-        getStamp() {
-            return this.timeStamp;
-        }
-        getContinueValue() {
-            for (let i = 1; i < this.timeStamp.length; i++) {
-                this.timeContinueValue.push(this.timeStamp[i] - this.timeStamp[i - 1]);
-            }
-            return this.timeContinueValue;
-        }
-        getIntervalValue() {
-            for (let i = 1; i < this.timeStamp.length; i += 2) {
-                if (this.timeStamp)
-                    this.timeIntervalValue.push(this.timeStamp[i] - this.timeStamp[i - 1]);
-            }
-            return this.timeIntervalValue;
+            let t = new time();
+            this.instantTime.push(t);
+            this.item++;
         }
     }
-    function sleep(delay) {
-        return new Promise((res, rej) => {
-            var startTime = performance.now() + delay;
-            while (performance.now() < startTime) { }
-            if (performance.now() >= startTime)
-                res(1);
+    // export function Tic(): Time0{
+    //     let t = new Time0()
+    //     t.start()
+    //     return t;
+    // }
+    // export function Toc(time: Time0): number{
+    //     let t = 0;
+    //     let ts = new Array()
+    //     time.record()
+    //     ts[0] = time.instantTime[time.item].hour - time.instantTime[time.item-1].hour
+    //     ts[1] = time.instantTime[time.item].minutes - time.instantTime[time.item-1].minutes
+    //     ts[2] = time.instantTime[time.item].seconds - time.instantTime[time.item-1].seconds
+    //     ts[3] = time.instantTime[time.item].milliseconds - time.instantTime[time.item-1].milliseconds
+    //     t = 60*60*ts[0] + 60*ts[1] + ts[2] + ts[3]/1000
+    //     // t.toFixed(3)
+    //     time.timeValue.push(t);
+    //     return t;
+    // }
+    // export function setTimeTtamp(T: Time0){
+    //     let t = new time();
+    //     T.timeStamp.push(t);
+    // } 
+    // export function getToc(time: Time0): Array<number>{
+    //     let tA = new Array();
+    //     let ts = new Array();
+    //     let t = time.timeStamp
+    //     for(let i = 0;i < Math.floor(t.length/2);i++){
+    //         if(t[2*i+1] === undefined)
+    //         {
+    //             break;
+    //         }
+    //         else{
+    //             ts[0] = t[2*i+1].hour - t[2*i].hour
+    //             ts[1] = t[2*i+1].minutes - t[2*i].minutes
+    //             ts[2] = t[2*i+1].seconds - t[2*i].seconds
+    //             ts[3] = t[2*i+1].milliseconds - t[2*i].milliseconds
+    //             tA[i] = 60*60*ts[0] + 60*ts[1] + ts[2] + ts[3]/1000
+    //             // tA[i] = Math.round(tA[i]*1000)/1000
+    //             // console.dir(tA[i])
+    //         }
+    //     }
+    //     return tA;
+    // }
+    // export function GetSecs(time: Time0): number{
+    //     let t = Toc(time)
+    //     return t
+    // }
+    function WaitSecs0(delay, message) {
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                // console.log(message);
+                resolve(1);
+            }, delay);
         });
     }
-    function WaitSecs(delay) {
-        return new Promise((res, rej) => {
-            var startTime = performance.now() + delay;
-            while (performance.now() < startTime) { }
-            res(1);
+    function delay_frame(num1) {
+        let time_num = 0;
+        return new Promise(function (resolve, reject) {
+            (function raf() {
+                time_num++;
+                let id = window.requestAnimationFrame(raf);
+                if (time_num > num1) {
+                    window.cancelAnimationFrame(id);
+                    resolve(0);
+                }
+            }());
         });
     }
 
@@ -150,6 +208,14 @@ var ezpsy = (function () {
             (async function () {
                 // while(performance.now() > start)
                 // {
+                while (1) {
+                    console.dir(performance.now());
+                    func();
+                    await delay_frame(delay);
+                    that.remove();
+                    that.storage.push(that);
+                    that.storage.reDraw(ctx);
+                }
                 //     func();
                 //     // await ezTime.WaitSecs0(delay/2)
                 //     await ezTimer.sleep(delay)
@@ -160,15 +226,15 @@ var ezpsy = (function () {
                 //     // await that.storage.reDraw(ctx);
                 //     // await ezTime.WaitSecs0(delay/2)
                 // }
-                window.setInterval(() => {
-                    func();
-                    // await ezTime.WaitSecs0(delay/2)
-                    sleep(delay).then(() => {
-                        that.remove();
-                        that.storage.push(that);
-                        that.storage.reDraw(ctx);
-                    });
-                }, 0);
+                // window.setInterval(()=>{
+                //     func();
+                //     // await ezTime.WaitSecs0(delay/2)
+                //     ezTimer.sleep(delay).then(()=>{
+                //         that.remove()
+                //         that.storage.push(that)
+                //         that.storage.reDraw(ctx)
+                //     })
+                // },0)
             })();
         }
     }
@@ -1660,7 +1726,7 @@ var ezpsy = (function () {
         }
         play(speed, delay) {
             if (!delay) {
-                delay = 100;
+                delay = 6;
                 if (!speed) {
                     speed = 8;
                 }
@@ -2292,111 +2358,6 @@ var ezpsy = (function () {
         }
     }
 
-    class time {
-        hour;
-        minutes;
-        seconds;
-        milliseconds;
-        constructor() {
-            let date = new Date();
-            this.hour = date.getHours();
-            this.minutes = date.getMinutes();
-            this.seconds = date.getSeconds();
-            this.milliseconds = date.getMilliseconds();
-        }
-    }
-    class Time0 {
-        startTime;
-        instantTime;
-        timeStamp;
-        item;
-        timeValue;
-        constructor() {
-            this.item = 0;
-            this.startTime = new time();
-            this.instantTime = [];
-            this.instantTime.push(this.startTime);
-            this.timeValue = [];
-            this.timeStamp = [];
-        }
-        start() {
-            this.startTime = new time();
-        }
-        record() {
-            let t = new time();
-            this.instantTime.push(t);
-            this.item++;
-        }
-    }
-    // export function Tic(): Time0{
-    //     let t = new Time0()
-    //     t.start()
-    //     return t;
-    // }
-    // export function Toc(time: Time0): number{
-    //     let t = 0;
-    //     let ts = new Array()
-    //     time.record()
-    //     ts[0] = time.instantTime[time.item].hour - time.instantTime[time.item-1].hour
-    //     ts[1] = time.instantTime[time.item].minutes - time.instantTime[time.item-1].minutes
-    //     ts[2] = time.instantTime[time.item].seconds - time.instantTime[time.item-1].seconds
-    //     ts[3] = time.instantTime[time.item].milliseconds - time.instantTime[time.item-1].milliseconds
-    //     t = 60*60*ts[0] + 60*ts[1] + ts[2] + ts[3]/1000
-    //     // t.toFixed(3)
-    //     time.timeValue.push(t);
-    //     return t;
-    // }
-    // export function setTimeTtamp(T: Time0){
-    //     let t = new time();
-    //     T.timeStamp.push(t);
-    // } 
-    // export function getToc(time: Time0): Array<number>{
-    //     let tA = new Array();
-    //     let ts = new Array();
-    //     let t = time.timeStamp
-    //     for(let i = 0;i < Math.floor(t.length/2);i++){
-    //         if(t[2*i+1] === undefined)
-    //         {
-    //             break;
-    //         }
-    //         else{
-    //             ts[0] = t[2*i+1].hour - t[2*i].hour
-    //             ts[1] = t[2*i+1].minutes - t[2*i].minutes
-    //             ts[2] = t[2*i+1].seconds - t[2*i].seconds
-    //             ts[3] = t[2*i+1].milliseconds - t[2*i].milliseconds
-    //             tA[i] = 60*60*ts[0] + 60*ts[1] + ts[2] + ts[3]/1000
-    //             // tA[i] = Math.round(tA[i]*1000)/1000
-    //             // console.dir(tA[i])
-    //         }
-    //     }
-    //     return tA;
-    // }
-    // export function GetSecs(time: Time0): number{
-    //     let t = Toc(time)
-    //     return t
-    // }
-    function WaitSecs0(delay, message) {
-        return new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                // console.log(message);
-                resolve(1);
-            }, delay);
-        });
-    }
-    function delay_frame(num1) {
-        let time_num = 0;
-        return new Promise(function (resolve, reject) {
-            (function raf() {
-                time_num++;
-                let id = window.requestAnimationFrame(raf);
-                if (time_num == num1) {
-                    window.cancelAnimationFrame(id);
-                    resolve(0);
-                }
-            }());
-        });
-    }
-
     function KbWait(key, func) {
         return new Promise((resolve, rejected) => {
             document.onkeydown = event => {
@@ -2471,6 +2432,53 @@ var ezpsy = (function () {
                 }
                 rejected(false);
             };
+        });
+    }
+
+    class Time {
+        startTime;
+        timeStamp;
+        timeContinueValue;
+        timeIntervalValue;
+        constructor() {
+            this.startTime = performance.now();
+            this.timeStamp = [];
+            this.timeContinueValue = [];
+            this.timeIntervalValue = [];
+        }
+        record() {
+            this.timeStamp.push(performance.now());
+        }
+        getStamp() {
+            return this.timeStamp;
+        }
+        getContinueValue() {
+            for (let i = 1; i < this.timeStamp.length; i++) {
+                this.timeContinueValue.push(this.timeStamp[i] - this.timeStamp[i - 1]);
+            }
+            return this.timeContinueValue;
+        }
+        getIntervalValue() {
+            for (let i = 1; i < this.timeStamp.length; i += 2) {
+                if (this.timeStamp)
+                    this.timeIntervalValue.push(this.timeStamp[i] - this.timeStamp[i - 1]);
+            }
+            return this.timeIntervalValue;
+        }
+    }
+    function sleep(delay) {
+        return new Promise((res, rej) => {
+            var startTime = performance.now() + delay;
+            while (performance.now() < startTime) { }
+            if (performance.now() >= startTime)
+                res(1);
+        });
+    }
+    function WaitSecs(delay) {
+        return new Promise((res, rej) => {
+            var startTime = performance.now() + delay;
+            while (performance.now() < startTime) { }
+            res(1);
         });
     }
 
@@ -6764,14 +6772,24 @@ var ezpsy = (function () {
             this.ctx;
             // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
             // this.ctxList.push(ctx);
-            window.setInterval(() => {
-                func();
-                // ezTime.WaitSecs0(delay/2)
-                sleep(delay).then(() => {
+            (async function () {
+                while (1) {
+                    func();
+                    await delay_frame(delay);
                     el.remove();
                     that.add(el);
-                });
-            }, 0);
+                }
+            })();
+            // window.setInterval(()=>{
+            //     // let a = performance.now()
+            //     func();
+            //     // ezTime.WaitSecs0(delay/2)
+            //     ezTimer.sleep(delay).then(()=>{
+            //         el.remove()
+            //         that.add(el);
+            //         // console.dir(performance.now() - a - 100)
+            //     })
+            // },0)
             // (async function(){
             //     for(let i = 0;i < 10;i++)
             //     {

@@ -96,6 +96,15 @@ export class Elements{
             // while(performance.now() > start)
             // {
                 
+            while(1){
+                console.dir(performance.now())
+                func();
+                await ezTime.delay_frame(delay);
+                that.remove()
+                that.storage.push(that)
+                that.storage.reDraw(ctx)
+            }
+                
             //     func();
             //     // await ezTime.WaitSecs0(delay/2)
             //     await ezTimer.sleep(delay)
@@ -106,16 +115,16 @@ export class Elements{
             //     // await that.storage.reDraw(ctx);
             //     // await ezTime.WaitSecs0(delay/2)
             // }
-            window.setInterval(()=>{
-                func();
-                // await ezTime.WaitSecs0(delay/2)
-                ezTimer.sleep(delay).then(()=>{
-                    that.remove()
-                    that.storage.push(that)
-                    that.storage.reDraw(ctx)
-                })
+            // window.setInterval(()=>{
+            //     func();
+            //     // await ezTime.WaitSecs0(delay/2)
+            //     ezTimer.sleep(delay).then(()=>{
+            //         that.remove()
+            //         that.storage.push(that)
+            //         that.storage.reDraw(ctx)
+            //     })
                 
-            },0)
+            // },0)
         })()
     }
 

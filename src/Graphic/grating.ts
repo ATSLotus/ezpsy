@@ -55,7 +55,7 @@ export class Grat extends Elements{
     play(speed?: number,delay?: number)
     {
         if(!delay){
-            delay = 100
+            delay = 6
             if(!speed)
             {
                 speed = 8

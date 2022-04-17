@@ -1,6 +1,6 @@
 import * as ezUtils from './utils'
 import * as ezCanvas from './Canvas/canvas'
-// import * as ezTime from './Time/time'
+import * as ezTime from './Time/time'
 import * as ezTimer from './Time/timePerformance'
 import { canvasStyle } from './Canvas/canvas'
 import * as ezJudge from './Judge/judge'
@@ -151,15 +151,29 @@ class Ezpsy {
         let ctx = this.ctx;
         // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
         // this.ctxList.push(ctx);
-        window.setInterval(()=>{
-            func();
-            // ezTime.WaitSecs0(delay/2)
-            ezTimer.sleep(delay).then(()=>{
+
+        (async function () {
+            while(1){
+                func();
+                await ezTime.delay_frame(delay);
                 el.remove()
                 that.add(el);
-            })
+            }
+        })()
+
+        // window.setInterval(()=>{
+        //     // let a = performance.now()
+        //     func();
+        //     // ezTime.WaitSecs0(delay/2)
+        //     ezTimer.sleep(delay).then(()=>{
+        //         el.remove()
+        //         that.add(el);
+        //         // console.dir(performance.now() - a - 100)
+        //     })
             
-        },0)
+        // },0)
+
+
         // (async function(){
         //     for(let i = 0;i < 10;i++)
         //     {

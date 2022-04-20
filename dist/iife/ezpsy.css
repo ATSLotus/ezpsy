@@ -1190,7 +1190,8 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown
 }
 
 .ezpsy-dlg-btn {
-  width: 6em;
+  min-width: 6em;
+  min-height: 3.2em;
 }
 
 .ezpsy-dlg-MultiDiv {

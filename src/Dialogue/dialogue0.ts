@@ -330,7 +330,6 @@ export class Dialogue{
             text: dlgContent.content,
             confirmButtonColor: '#4983d0',
             showCancelButton: true,
-            cancelButtonText: dlgContent.cancel,
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn',
                 cancelButton: 'ezpsy-dlg-btn'
@@ -368,6 +367,34 @@ export class Dialogue{
             icon: 'warning'
         })
     }
+    msgDlg(dlgContent: DlgContent){
+        if(dlgContent.imgUrl === undefined)
+            dlgContent.imgUrl = 'https://unsplash.it/400/200'
+        if(dlgContent.imgWidth === undefined)
+            dlgContent.imgWidth = 400
+        if(dlgContent.imgHeight === undefined)
+            dlgContent.imgHeight = 200
+        return Swal.fire({
+            text: dlgContent.content,
+            width: 1.2 * dlgContent.imgWidth,
+            heightAuto: true,
+            confirmButtonColor: '#4983d0',
+            confirmButtonText: dlgContent.confirm,
+            imageUrl: dlgContent.imgUrl,
+            imageWidth: dlgContent.imgWidth,
+            imageHeight: dlgContent.imgHeight,
+            customClass: {
+                confirmButton: 'ezpsy-dlg-btn'
+            }
+        }).then(e=>{
+            return new Promise((res,rej)=>{
+                if(e.isConfirmed)
+                {
+                    res(e.value)
+                }
+            })
+        })
+    }
 }
 
 interface Data{
@@ -378,6 +405,9 @@ interface Data{
 export interface DlgContent{
     title: string
     content?: string
+    imgUrl?: string
+    imgWidth?: number
+    imgHeight?: number
     confirm?: string
     cancel?: string
     input?: Array<string> | string

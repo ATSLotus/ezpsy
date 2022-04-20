@@ -51,11 +51,11 @@ export { Time } from './Time/timePerformance'
 // let EzpsyList = new Array();
 
 class Ezpsy {
-    id: number
+    readonly id: number
     dom: HTMLElement
-    ctx: CanvasRenderingContext2D
+    readonly ctx: CanvasRenderingContext2D
     // ctxList: Array<CanvasRenderingContext2D>
-    storage: Storage
+    private storage: Storage
     cStyle?: canvasStyle
 
     // Rectangle: Rectangle
@@ -89,15 +89,20 @@ class Ezpsy {
         // console.dir(w)
         c.style.top = ((h-cStyle.height)/2).toString() + 'px'
         c.style.left = ((w-cStyle.width)/2).toString() + 'px'
+        this.cStyle = {
+            width: cStyle.width,
+            height: cStyle.height
+        }
         this.storage.reDraw(ctx);
     }
 
     refresh(){
         // console.dir(this.storage.ElementsList)
-        this.storage.ElementsList = new Array();
+        // this.storage.ElementsList = new Array();
         let c = this.ctx.canvas;
         c.width = this.cStyle.width
         c.height = this.cStyle.height
+        this.storage.reDraw(this.ctx)
     }
 
     // setAnimateCanvasStyle(cStyle: canvasStyle){
@@ -111,12 +116,25 @@ class Ezpsy {
 
     add(el: Elements|Elements[]|Group){
         let ctx = this.ctx
+        let st = this.storage
+        let name = st.getElementsName(el)
+        let index = st.searchElementsName(name)
+        
         if(el instanceof Elements||el instanceof Group)
         {
-            this.storage.push(el)
-            el.ctx = ctx;
-            el.storage = this.storage
-            ezJudge.judgeElement(el,ctx)
+            if(index !== -1)
+            {
+                el.remove()
+                this.add(el)
+                this.refresh()
+            }
+            else{
+                this.storage.push(el)
+                el.ctx = ctx;
+                el.storage = this.storage
+                ezJudge.judgeElement(el,ctx)
+            }
+            
         }
         else{
             for(let i = 0;i < el.length;i++)
@@ -194,8 +212,11 @@ class Ezpsy {
 
     setTextLine(textLine: TextLine)
     {
-        this.clear();
+        let c = this.ctx.canvas;
+        c.width = this.cStyle.width
+        c.height = this.cStyle.height
         let st = this.storage
+        st.textLine = textLine
         if(textLine)
         {
             if(textLine.textA)
@@ -251,6 +272,7 @@ class Ezpsy {
         //     }
         //     resolve(0)
         // })
+        this.storage = new Storage();
         let c = this.ctx.canvas;
         c.width = this.cStyle.width
         c.height = this.cStyle.height

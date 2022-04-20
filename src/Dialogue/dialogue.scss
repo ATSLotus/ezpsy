@@ -4,7 +4,7 @@ $dlgInputW: 80%;$dlgInputH: 40px;
 $dlgInputBorder: 2px dashed rgb(192,231,241);$dlgInputBR: 8px;$dlgInputFS: 0.9em;
 $dlgInputBorderH: 2px dashed rgb(56,113,224);
 
-$BTNW: 6em;
+$BTNW: 6em;$BTNH: 3.2em;
 
 $MultiSelectW: 80%;$MultiSelectH: auto;
 $MultiSelectSH: 40px;$MultiSelectSMT: 10px;$MultiSelectScrollC: rgb(192,231,241);
@@ -56,7 +56,9 @@ $MultiDivC: #ff0000aa;$MultiDivMB: 10px;
 }
 
 .ezpsy-dlg-btn{
-    width: $BTNW;
+    min-width: $BTNW;
+    min-height: $BTNH;
+    // width: auto;
 }
 
 .ezpsy-dlg-MultiDiv{

@@ -109,4 +109,5 @@ export function delay_frame(num1){
             resolve(0);
         }
     }())
-})};
+    })
+};

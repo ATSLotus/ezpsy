@@ -53,6 +53,7 @@ export class Img extends Elements{
         {
             let I = new Image()
             I.src = opts.shape.img
+            I.crossOrigin = ''; 
             this.Img = I;
         }
         else{
@@ -110,10 +111,12 @@ export class Img extends Elements{
         let sh = this.shape
         let c = document.createElement('canvas')
         let ctx = c.getContext('2d')
+        let that = this;
         c.width = screen.availWidth;
         c.height = screen.availHeight;
-        ctx.drawImage(this.Img,sh.x,sh.y)
-        this.ImgData = ctx.getImageData(sh.x,sh.y,this.Img.width,this.Img.height);
+        ctx.drawImage(that.Img,sh.x,sh.y)
+        that.ImgData = ctx.getImageData(sh.x,sh.y,that.Img.width,that.Img.height);
+        
         // this.makeTextures()
     }
     toGray(){

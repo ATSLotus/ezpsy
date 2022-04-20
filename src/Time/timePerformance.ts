@@ -32,12 +32,26 @@ export class Time{
     }
 }
 
-export function sleep(delay: number): Promise<number>{
-    return new Promise((res,rej)=>{
-        var startTime = performance.now() + delay;
-        while(performance.now() < startTime) {}
-        if(performance.now() >= startTime)
-            res(1)
+// export function sleep(delay: number): Promise<number>{
+//     return new Promise((res,rej)=>{
+//         var startTime = performance.now() + delay;
+//         while(performance.now() < startTime) {}
+//         res(1)
+//     })
+// }
+
+export function sleep(delay: number){
+    let time_num=0;     
+    delay = Math.floor(delay/1000 * 60);
+    return new Promise(function (resolve, reject) {
+        (function raf(){
+            time_num++;
+            let id =window.requestAnimationFrame(raf);
+        if( time_num>delay){
+            window.cancelAnimationFrame(id);
+            resolve(0);
+        }
+        }())    
     })
 }
 

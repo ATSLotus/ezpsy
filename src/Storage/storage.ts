@@ -1,11 +1,12 @@
 import { Elements } from "../Element";
-import { nameStyle } from "../ezpsy";
+import { nameStyle, TextLine } from "../ezpsy";
 import { Group } from "../Group/group";
 import * as ezJudge from '../Judge/judge'
 
 
 export class Storage{
     ElementsList: Array<Elements>
+    textLine: TextLine
     constructor(){
         this.ElementsList = [];
     }
@@ -25,16 +26,19 @@ export class Storage{
     remove(el: Elements | Array<Elements> | Group){
         let name = this.getElementsName(el);
         let index = this.searchElementsName(name);
-        if(index instanceof Array)
+        if(index !== undefined)
         {
-            index.sort();
-            for(let i = index.length-1;i >= 0;i--)
+            if(index instanceof Array)
             {
-                this.ElementsList.splice(index[i],1);
+                index.sort();
+                for(let i = index.length-1;i >= 0;i--)
+                {
+                    this.ElementsList.splice(index[i],1);
+                }
             }
-        }
-        else{
-            this.ElementsList.splice(index,1);
+            else{
+                this.ElementsList.splice(index,1);
+            }
         }
     }
     getElementsName(el: Elements | Array<Elements> | Group){
@@ -71,7 +75,7 @@ export class Storage{
             return index
         }
         else{
-            let index = 0;
+            let index = -1;
             for(let t = 0;t < this.ElementsList.length;t++)
             {
                 if(name.name === this.ElementsList[t].name.name)

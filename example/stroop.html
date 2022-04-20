@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>stroop干扰实验</title>
+        <script src="../dist/iife/ezpsy.js"></script>
+        <link rel="stylesheet" href="../dist/iife/ezpsy.css" />
+    </head>
+    <body>
+        <div id="stroop"></div>
+    </body>
+    <script>
+
+        
+        let ez = ezpsy.init(document.getElementById("stroop"));
+        let keypress = ezpsy.KeypressInit();
+        let dlg = ezpsy.DlgInit();
+        let time = new ezpsy.Time();
+        ez.setCanvasStyle({width: 1200,height: 800})
+        let centerX = 600;
+        let centerY = 400;
+        dlg.msgDlg({
+            imgUrl: '../img/experimentB.png',
+            imgWidth: 1020,
+            imgHeight: 800,
+            content: '请仔细阅读用户指引',
+            confirm: '开始实验'
+        }).then(e=>{
+            if(e)
+                stroop1();
+        })
+        let circle = new ezpsy.Circle({
+            shape: {
+                x: centerX,
+                y: centerY,
+                r: 200
+            },
+            style: {
+                fill: '#ffa500'
+            }
+        })
+        let text = new ezpsy.Texts({
+            shape: {
+                x: centerX,
+                y: centerY,
+                text: '字'
+            },
+            style: {
+                fill: 'black',
+                fontSize: '100px'
+            },
+            textLine: {
+                textA: 'center',
+                textB: 'middle'
+            }
+        });
+        let number = 20;
+        let num = 0;
+        let getText = function(char,fill){
+            text.shape.text = char
+            text.style.fill = fill;
+            ez.add(text)
+        }
+        let stroop1 = (async function(){
+            ez.add(circle)
+            await ezpsy.sleep(2000)
+            await circle.remove()
+            for(let index = 0;index  < number;index++)
+            {
+                let item = Math.floor(Math.random() * 2)
+                time.record();
+                if(item)
+                    getText('红','blue');
+                else
+                    getText('蓝','red');
+                await keypress.listen(['f','j'],
+                {
+                    funcList: {
+                        0: ()=>{
+                            if(item === 0)
+                                num++;
+                        },
+                        1: ()=>{
+                            if(item === 1)
+                                num++;
+                        }
+                    },
+                    complete: ()=>{
+                        time.record();
+                        text.remove();
+                    }
+                })
+                await ezpsy.sleep(100)
+            }
+            console.dir('正确率: ' + (100*num/number).toFixed(2) + '%');
+            console.dir('用时: ')
+            console.log(time.getIntervalValue().toString().replace(/,/g,'\n'))
+        })
+
+
+    </script>
+    <style>
+        /* #stroop canvas{
+            border: 2px dashed red;
+            border-radius: 5px;
+        } */
+    </style>
+</html>

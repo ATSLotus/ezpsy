@@ -9,7 +9,7 @@ import * as ezJudge from './Judge/judge'
 import { TextLine } from './Graphic/text';
 
 export class Elements{
-    name?: nameStyle
+    readonly name?: nameStyle
     shape?: Shape
     style?: Style 
     textLine?: TextLine
@@ -89,7 +89,7 @@ export class Elements{
         let that = this;
         // el.remove();
         let ctx = this.ctx;
-        let start = performance.now();
+        // let start = performance.now();
         // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
         // this.ctxList.push(ctx);
         (async function(){

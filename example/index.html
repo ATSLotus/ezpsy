@@ -16,40 +16,75 @@
     <script>
 
       let ez = ezpsy.init(document.getElementById('test'));
-      let time = new ezpsy.Time();
-      let rectangle = new ezpsy.Rectangle({
-        shape: {
-          x: 0,
-          y: 0,
-          width: 200,
-          height:200
-        },
-        style: {
-          fill: 'black'
-        }
-      })
-      ez.add(rectangle)
-      let i = 0;
-      rectangle.animate(()=>{
-        if(i%2 === 0)
-        {
-          rectangle.style.fill = 'white'
-        }
-        else{
-          rectangle.style.fill = 'black'
-        }
-        i++
-      },6)
 
-        // ezpsy.test()
-        // let dlg = ezpsy.DlgInit()
-        // dlg.inputDlg({
-        //   title: '被试信息',
-        //   input: ["name","sex","age"],
-        //   value: ['MH','0','22']
-        // }).then(e=>{
-        //   console.dir(e)
-        // })
+      let dlg = ezpsy.DlgInit()
+
+      // dlg.msgDlg({
+      //   imgWidth: 1000,
+      //   imgHeight: 800,
+      // })
+
+
+      dlg.questDlg({
+        tille: '文件删除',
+        content: '是否删除该文件'
+      }).then(e=>{
+        console.dir(e)
+      })
+
+      // dlg.errorDlg({
+      //   title: '操作错误',
+      //   content: '这是一个错误信息'
+      // });
+      // dlg.inputDlg({
+      //   title: '被试信息',
+      //   input: ["name","sex","age"]
+      // }).then(e=>{
+      //   console.dir(e)
+      // })
+
+      // let img = new ezpsy.Img({
+      //   shape: 
+      //   {
+      //     img: "https://tse1-mm.cn.bing.net/th/id/R-C.6e2a7d7ecb7202c7145e9966794b3248?rik=5DRSyuQWDE8Weg&riu=http%3a%2f%2fup.36992.com%2fpic%2f9b%2f55%2f28%2f9b55289650cbc404d43c6e9bcc508588.jpg&ehk=fv6Eh69nmHC3wh9CJlGEJUJv53qxB4BLKiExF5ItWI0%3d&risl=&pid=ImgRaw&r=0",
+      //     x: 0,
+      //     y: 0
+      //   }
+      // })
+      // window.onload = function(){
+      //   ez.add(img)
+      //   console.dir(img)
+      // }
+      
+      // let time = new ezpsy.Time();
+
+      // let rectangle = new ezpsy.Rectangle({
+      //   shape: {
+      //     x: 0,
+      //     y: 0,
+      //     width: 200,
+      //     height:200
+      //   },
+      //   style: {
+      //     fill: 'black'
+      //   }
+      // })
+      // ez.add(rectangle)
+      // rectangle.rotate = 90 * Math.PI/180
+      // ez.add(rectangle)
+      // console.dir(rectangle)
+      // rectangle.remove()
+      // let i = 0;
+      // rectangle.animate(()=>{
+      //   if(i%2 === 0)
+      //   {
+      //     rectangle.style.fill = 'white'
+      //   }
+      //   else{
+      //     rectangle.style.fill = 'black'
+      //   }
+      //   i++
+      // },6)
 
         // dlg.listDlg({
         //   list: {
@@ -204,10 +239,12 @@
         //   y: 200
         // }
         // let i = 0;
+        // rectangle.rotate = 90 * Math.PI/180
+        // ez.add(rectangle)
         // rectangle.animate(()=>{
         //   rectangle.rotate = 10 * i * Math.PI/180;
         //   i++;
-        // },100)
+        // },6)
 
 
         // ez.setCanvasStyle({
@@ -324,14 +361,14 @@
 
         // ez.add(group);
 
-        let grat = new ezpsy.Grat({
-          shape:{  
-            x: 200,
-            y: 200,
-            r: 100
-          }
-        })
-        // console.dir(grat)
+        // let grat = new ezpsy.Grat({
+        //   shape:{  
+        //     x: 200,
+        //     y: 200,
+        //     r: 100
+        //   }
+        // })
+        // ez.add(grat)
         // grat.play()
         // circle.translate = {
         //   x: 200,

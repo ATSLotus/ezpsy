@@ -202,7 +202,7 @@ var ezpsy = (function () {
             let that = this;
             // el.remove();
             let ctx = this.ctx;
-            performance.now();
+            // let start = performance.now();
             // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
             // this.ctxList.push(ctx);
             (async function () {
@@ -1436,6 +1436,7 @@ var ezpsy = (function () {
             if (opts.Img === undefined) {
                 let I = new Image();
                 I.src = opts.shape.img;
+                I.crossOrigin = '';
                 this.Img = I;
             }
             else {
@@ -1483,10 +1484,11 @@ var ezpsy = (function () {
             let sh = this.shape;
             let c = document.createElement('canvas');
             let ctx = c.getContext('2d');
+            let that = this;
             c.width = screen.availWidth;
             c.height = screen.availHeight;
-            ctx.drawImage(this.Img, sh.x, sh.y);
-            this.ImgData = ctx.getImageData(sh.x, sh.y, this.Img.width, this.Img.height);
+            ctx.drawImage(that.Img, sh.x, sh.y);
+            that.ImgData = ctx.getImageData(sh.x, sh.y, that.Img.width, that.Img.height);
             // this.makeTextures()
         }
         toGray() {
@@ -2286,6 +2288,7 @@ var ezpsy = (function () {
 
     class Storage {
         ElementsList;
+        textLine;
         constructor() {
             this.ElementsList = [];
         }
@@ -2302,14 +2305,16 @@ var ezpsy = (function () {
         remove(el) {
             let name = this.getElementsName(el);
             let index = this.searchElementsName(name);
-            if (index instanceof Array) {
-                index.sort();
-                for (let i = index.length - 1; i >= 0; i--) {
-                    this.ElementsList.splice(index[i], 1);
+            if (index !== undefined) {
+                if (index instanceof Array) {
+                    index.sort();
+                    for (let i = index.length - 1; i >= 0; i--) {
+                        this.ElementsList.splice(index[i], 1);
+                    }
                 }
-            }
-            else {
-                this.ElementsList.splice(index, 1);
+                else {
+                    this.ElementsList.splice(index, 1);
+                }
             }
         }
         getElementsName(el) {
@@ -2339,7 +2344,7 @@ var ezpsy = (function () {
                 return index;
             }
             else {
-                let index = 0;
+                let index = -1;
                 for (let t = 0; t < this.ElementsList.length; t++) {
                     if (name.name === this.ElementsList[t].name.name) {
                         index = t;
@@ -2466,12 +2471,25 @@ var ezpsy = (function () {
             return this.timeIntervalValue;
         }
     }
+    // export function sleep(delay: number): Promise<number>{
+    //     return new Promise((res,rej)=>{
+    //         var startTime = performance.now() + delay;
+    //         while(performance.now() < startTime) {}
+    //         res(1)
+    //     })
+    // }
     function sleep(delay) {
-        return new Promise((res, rej) => {
-            var startTime = performance.now() + delay;
-            while (performance.now() < startTime) { }
-            if (performance.now() >= startTime)
-                res(1);
+        let time_num = 0;
+        delay = Math.floor(delay / 1000 * 60);
+        return new Promise(function (resolve, reject) {
+            (function raf() {
+                time_num++;
+                let id = window.requestAnimationFrame(raf);
+                if (time_num > delay) {
+                    window.cancelAnimationFrame(id);
+                    resolve(0);
+                }
+            }());
         });
     }
     function WaitSecs(delay) {
@@ -6637,7 +6655,6 @@ var ezpsy = (function () {
                 text: dlgContent.content,
                 confirmButtonColor: '#4983d0',
                 showCancelButton: true,
-                cancelButtonText: dlgContent.cancel,
                 customClass: {
                     confirmButton: 'ezpsy-dlg-btn',
                     cancelButton: 'ezpsy-dlg-btn'
@@ -6672,6 +6689,33 @@ var ezpsy = (function () {
                     confirmButton: 'ezpsy-dlg-btn'
                 },
                 icon: 'warning'
+            });
+        }
+        msgDlg(dlgContent) {
+            if (dlgContent.imgUrl === undefined)
+                dlgContent.imgUrl = 'https://unsplash.it/400/200';
+            if (dlgContent.imgWidth === undefined)
+                dlgContent.imgWidth = 400;
+            if (dlgContent.imgHeight === undefined)
+                dlgContent.imgHeight = 200;
+            return Swal.fire({
+                text: dlgContent.content,
+                width: 1.2 * dlgContent.imgWidth,
+                heightAuto: true,
+                confirmButtonColor: '#4983d0',
+                confirmButtonText: dlgContent.confirm,
+                imageUrl: dlgContent.imgUrl,
+                imageWidth: dlgContent.imgWidth,
+                imageHeight: dlgContent.imgHeight,
+                customClass: {
+                    confirmButton: 'ezpsy-dlg-btn'
+                }
+            }).then(e => {
+                return new Promise((res, rej) => {
+                    if (e.isConfirmed) {
+                        res(e.value);
+                    }
+                });
             });
         }
     }
@@ -6719,14 +6763,19 @@ var ezpsy = (function () {
             // console.dir(w)
             c.style.top = ((h - cStyle.height) / 2).toString() + 'px';
             c.style.left = ((w - cStyle.width) / 2).toString() + 'px';
+            this.cStyle = {
+                width: cStyle.width,
+                height: cStyle.height
+            };
             this.storage.reDraw(ctx);
         }
         refresh() {
             // console.dir(this.storage.ElementsList)
-            this.storage.ElementsList = new Array();
+            // this.storage.ElementsList = new Array();
             let c = this.ctx.canvas;
             c.width = this.cStyle.width;
             c.height = this.cStyle.height;
+            this.storage.reDraw(this.ctx);
         }
         // setAnimateCanvasStyle(cStyle: canvasStyle){
         //     for(let i = 1;i < this.ctxList.length;i++)
@@ -6738,11 +6787,21 @@ var ezpsy = (function () {
         // }
         add(el) {
             let ctx = this.ctx;
+            let st = this.storage;
+            let name = st.getElementsName(el);
+            let index = st.searchElementsName(name);
             if (el instanceof Elements || el instanceof Group) {
-                this.storage.push(el);
-                el.ctx = ctx;
-                el.storage = this.storage;
-                judgeElement(el, ctx);
+                if (index !== -1) {
+                    el.remove();
+                    this.add(el);
+                    this.refresh();
+                }
+                else {
+                    this.storage.push(el);
+                    el.ctx = ctx;
+                    el.storage = this.storage;
+                    judgeElement(el, ctx);
+                }
             }
             else {
                 for (let i = 0; i < el.length; i++) {
@@ -6807,8 +6866,11 @@ var ezpsy = (function () {
             // })()
         }
         setTextLine(textLine) {
-            this.clear();
+            let c = this.ctx.canvas;
+            c.width = this.cStyle.width;
+            c.height = this.cStyle.height;
             let st = this.storage;
+            st.textLine = textLine;
             if (textLine) {
                 if (textLine.textA) {
                     // this.textLine.textA = textLine.textA
@@ -6852,6 +6914,7 @@ var ezpsy = (function () {
             //     }
             //     resolve(0)
             // })
+            this.storage = new Storage();
             let c = this.ctx.canvas;
             c.width = this.cStyle.width;
             c.height = this.cStyle.height;

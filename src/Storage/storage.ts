@@ -88,7 +88,7 @@ export class Storage{
         }
     }
     reDraw(ctx: CanvasRenderingContext2D){
-        let el = this.ElementsList
+        let el = this.ElementsList 
         for(let i = 0;i < el.length;i++)
         {
             el[i].ctx = ctx

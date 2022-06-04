@@ -11,28 +11,47 @@
         // console.dir(performance)
         let ez = ezpsy.init(document.getElementById('test'));
 
-        let time = new ezpsy.Time();
-        let rect = new ezpsy.Rectangle({
-            shape: {
-            x: 0,
-            y: 0,
-            width: 200,
-            height:200
-            },
-            style: {
-            fill: 'black'
-            }
-        });
-        (async function(){
-            for(let i = 0;i < 5;i++){   
-                await ezpsy.sleep(100).then(()=>{
-                   time.record();
-                })
-            }
-            console.dir(time);
-            console.dir(time.getContinueValue());
-            console.dir(time.getIntervalValue());
-        })()
+        // let time = new ezpsy.Time();
+        // let rect = new ezpsy.Rectangle({
+        //     shape: {
+        //     x: 0,
+        //     y: 0,
+        //     width: 200,
+        //     height:200
+        //     },
+        //     style: {
+        //     fill: 'black'
+        //     }
+        // });
+        // (async function(){
+        //     for(let i = 0;i < 5;i++){   
+        //         await ezpsy.sleep(100).then(()=>{
+        //            time.record();
+        //         })
+        //     }
+        //     console.dir(time);
+        //     console.dir(time.getContinueValue());
+        //     console.dir(time.getIntervalValue());
+        // })()
+
+        // setInterval(()=>{
+        //     console.dir(performance.now())
+        // },1000)
+        //     console.dir(performance.now())
+
+
+        // let t0 = 0;let t1 = 0;let t = 0;let i = 0;;let num = 100000;
+        // (async function(){
+        //     for(let i = 0;i < num;i++)
+        //     {
+        //         t0 = /*获取时间戳*/
+        //         t1 = /*获取时间戳*/
+        //         t = t + t1 -t0
+        //     }
+        //     console.dir(`i = ${i}`);
+        //     console.dir(`时间精度为: ${t/num}`)
+        // })
+
 
         // window.onresize = function(){
         //     location.reload()

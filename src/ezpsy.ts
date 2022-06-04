@@ -10,6 +10,7 @@ import { Elements } from './Element'
 import { Group } from './Group/group'
 import { Storage } from './Storage/storage'
 import { TextLine,Texts } from './Graphic/text'
+// import { GratOpts,sinGrat } from './Graphic/sinGrat'
 
 
 
@@ -27,6 +28,7 @@ export * from './Time/time'
 export * from './Keypress/keypress'
 // export * from './Dialogue/dialogue'
 export * from './Graphic/grating'
+export * from './Graphic/sinGrat'
 export * from './Time/timePerformance'
 export * from './Keypress/keypress0'
 export * from './Dialogue/dialogue0'
@@ -54,7 +56,6 @@ class Ezpsy {
     readonly id: number
     dom: HTMLElement
     readonly ctx: CanvasRenderingContext2D
-    // ctxList: Array<CanvasRenderingContext2D>
     private storage: Storage
     cStyle?: canvasStyle
 
@@ -66,10 +67,8 @@ class Ezpsy {
         this.storage = new Storage()
         cStyle = ezJudge.judgeCanvasStyle(cStyle);
         this.cStyle = cStyle;
-        // this.ctxList = []
         this.ctx = ezCanvas.createCanvas(dom,cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
-        // this.ctxList.push(this.ctx)
-        // console.dir(this.ctx)
+        
     }
 
     setCanvasStyle(cStyle: canvasStyle){
@@ -209,6 +208,40 @@ class Ezpsy {
         //     }
         // })()
     }
+
+    // sinGratPlay(opts: GratOpts){
+    //     let sinGratList = new Array();
+    //     let sh = opts.shape;
+    //     for(let i = 0;i < Math.floor(60*sh.cycle);i++)
+    //     {
+            
+    //         let singrat = new sinGrat({
+    //             shape: {
+    //                 x: sh.x,
+    //                 y: sh.y,
+    //                 r: sh.r,
+    //                 pixelsPerDegree: sh.pixelsPerDegree, 
+    //                 spatialFrequency: sh.spatialFrequency,
+    //                 angle: sh.angle, 
+    //                 contrast: sh.contrast, 
+    //                 phase: sh.phase + 2*i*Math.PI/60,
+    //                 cycle: sh.cycle,
+    //                 speed: sh.speed
+    //             }
+    //         });
+    //         sinGratList.push(singrat);
+    //     }
+    //     console.dir(sinGratList);
+    //     (async ()=>{
+    //         for(let i = 0;i < sinGratList.length;i+=sh.speed)
+    //         {
+    //             this.add(sinGratList[i])
+    //             await ezTime.delay_frame(1);
+    //             if(i!==sinGratList.length-sh.speed)
+    //                 sinGratList[i].remove();
+    //         }
+    //     })()
+    // }
 
     setTextLine(textLine: TextLine)
     {

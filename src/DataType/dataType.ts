@@ -22,6 +22,12 @@ export interface Shape{
     swidth?: number //The width of the image being clipped
     sheight?: number//The height of the image being clipped
     desity?: number //The Grating‘s desity
+    pixelsPerDegree?: number, 
+    spatialFrequency?: number,
+    angle?: number, 
+    contrast?: number, 
+    phase?: number,
+    level?: number
 }
  
 export interface Style {

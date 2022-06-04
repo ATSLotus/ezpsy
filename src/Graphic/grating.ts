@@ -12,7 +12,7 @@ interface GratShape extends Shape{
 }
 
 interface GratOpts extends Opts{
-    shpae: GratShape,
+    shape: GratShape,
     style?: Style
 }
 
@@ -153,7 +153,7 @@ export function makeGrat(grat: Grat,ctx: CanvasRenderingContext2D): Grat{
     // grat.style.fill = fill
     ctx.save()
     ctx.beginPath()
-    // ezJudge.judgeTRS(grat)
+    ezJudge.judgeTRS(grat)
     ctx.arc(sh.x,sh.y,sh.r,0,2*Math.PI)
     // ctx.rect(sh.x-sh.r,sh.y-sh.r,sh.x+sh.r,sh.y+3*sh.r)
     judgeStyle(grat,ctx)

@@ -12,6 +12,8 @@ import { makeText, Texts } from '../Graphic/text'
 import { Img, makeImg } from '../Graphic/image'
 import { contentStyle } from '../Dialogue/dialogue'
 import { Grat, makeGrat } from '../Graphic/grating'
+
+import * as ezSinGrat from '../Graphic/sinGrat'
 import * as ezCanvas from '../Canvas/canvas'
 import { DlgContent } from '../ezpsy'
 
@@ -178,6 +180,10 @@ export function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRenderingC
     else if(el instanceof Img)
     {
         makeImg(el,ctx)
+    }
+    else if(el instanceof ezSinGrat.sinGrat)
+    {
+        (<ezSinGrat.sinGrat>el).draw();
     }
     else if(el instanceof Group){
         // console.dir(el)
@@ -670,9 +676,20 @@ export function judgeAnimate(el: Elements,ctx: CanvasRenderingContext2D){
 
 export function judgeTRS(el: Elements){
     let ctx = el.ctx
-    ctx.translate(el.translate.x,el.translate.y)
-    ctx.rotate(el.rotate)
+
+    let [x,y] = judgeElementsCenter(el);
+    
+    if(el.rotate)
+    {
+        ctx.translate(x,y)
+        ctx.rotate(el.rotate*Math.PI/180)
+        ctx.translate(-x,-y)
+    }
+    ctx.translate(x,y)
     ctx.scale(el.scale.width,el.scale.height)
+    ctx.translate(-x,-y)
+
+    ctx.translate(el.translate.x,el.translate.y)
 }
 
 export function judgeKey(keyCode: number,keyCodeDictionary: Object): string{
@@ -718,4 +735,30 @@ export function judgeDlgContent(dlgContent: DlgContent,title: string,content?: s
         }
         return dlgContent;
     }
+}
+
+export function judgeElementsCenter(el: Elements): [number,number]{
+    let x,y;
+    if(el instanceof Rectangle)
+    {
+        x = el.shape.x + el.shape.width/2
+        y = el.shape.y + el.shape.height/2
+    }
+    else if(el instanceof Circle || el instanceof Arc || el instanceof Grat || el instanceof Ellipse)
+    {
+        x = el.shape.x
+        y = el.shape.y
+    }
+    else if(el instanceof Line)
+    {
+        x = Math.abs(el.shape.x - el.shape.xEnd)/2
+        y = Math.abs(el.shape.y - el.shape.yEnd)/2
+    }
+    else if(el instanceof ezSinGrat.sinGrat)
+    {
+        x = Math.ceil((2*el.shape.r+1)/2)
+        y = Math.ceil((2*el.shape.r+1)/2)
+    }
+
+    return [x,y]
 }

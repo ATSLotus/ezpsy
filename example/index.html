@@ -17,25 +17,36 @@
 
       let ez = ezpsy.init(document.getElementById('test'));
 
-      let dlg = ezpsy.DlgInit()
+      // let dlg = ezpsy.DlgInit()
 
       // dlg.msgDlg({
       //   imgWidth: 1000,
       //   imgHeight: 800,
       // })
 
-
-      dlg.questDlg({
-        tille: '文件删除',
-        content: '是否删除该文件'
-      }).then(e=>{
-        console.dir(e)
-      })
-
+      // let dlg = ezpsy.DlgInit()
+      // dlg.questDlg({
+      //   tille: '文件删除',
+      //   content: '是否删除该文件'
+      // }).then(e=>{
+      //   console.dir(e)
+      // })
+      
+      // dlg.listDlg({
+      //   list: {
+      //     Age: {
+      //       20: '20',
+      //       21: '21'
+      //     }
+      //   }
+      // }).then(e=>{
+      //   console.dir(e)
+      // })
       // dlg.errorDlg({
       //   title: '操作错误',
       //   content: '这是一个错误信息'
       // });
+      
       // dlg.inputDlg({
       //   title: '被试信息',
       //   input: ["name","sex","age"]
@@ -72,17 +83,13 @@
       // ez.add(rectangle)
       // rectangle.rotate = 90 * Math.PI/180
       // ez.add(rectangle)
-      // console.dir(rectangle)
       // rectangle.remove()
       // let i = 0;
       // rectangle.animate(()=>{
       //   if(i%2 === 0)
-      //   {
       //     rectangle.style.fill = 'white'
-      //   }
-      //   else{
+      //   else
       //     rectangle.style.fill = 'black'
-      //   }
       //   i++
       // },6)
 
@@ -274,8 +281,23 @@
             fill: "red"
           }
         })
-
-        // ez.add(rect);
+        let rect0 = new ezpsy.Rectangle({
+          shape:{
+            x: 100,
+            y: 100,
+            width: 100,
+            height: 100
+          },
+          style:{
+            fill: "blue"
+          }
+        })
+        rect.rotate = 45;
+        rect.scale = {
+          width: 1.5,
+          height: 1.5
+        }
+        ez.add([rect,rect0]);
 
         // console.dir(rect)
         
@@ -578,10 +600,10 @@
         height: 1800px;
         /* background-color: aqua; */
       }
-      /* canvas{
+      canvas{
         border-radius: 10px;
         border: 1px dashed red;
-      } */
+      }
     </style>
   </body>
 </html>

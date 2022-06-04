@@ -209,7 +209,7 @@ var ezpsy = (function () {
                 // while(performance.now() > start)
                 // {
                 while (1) {
-                    console.dir(performance.now());
+                    // console.dir(performance.now())
                     func();
                     await delay_frame(delay);
                     that.remove();
@@ -296,7 +296,7 @@ var ezpsy = (function () {
             this.ParentsRect = rect;
         }
     }
-    let nameId$8 = 0;
+    let nameId$9 = 0;
     // class TypeTest implements RectangleShape{
     //     x: number
     //     y: number
@@ -305,8 +305,8 @@ var ezpsy = (function () {
     // }
     class Rectangle extends Elements {
         name = {
-            name: "rect" + nameId$8.toString(),
-            graphicId: nameId$8
+            name: "rect" + nameId$9.toString(),
+            graphicId: nameId$9
         };
         constructor(opts) {
             super();
@@ -322,7 +322,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$8++;
+            nameId$9++;
         }
     }
     class logicRect extends Rectangle {
@@ -849,11 +849,11 @@ var ezpsy = (function () {
         return rect0;
     }
 
-    let nameId$7 = 0;
+    let nameId$8 = 0;
     class Circle extends Elements {
         name = {
-            name: "circle" + nameId$7.toString(),
-            graphicId: nameId$7
+            name: "circle" + nameId$8.toString(),
+            graphicId: nameId$8
         };
         constructor(opts) {
             super();
@@ -870,7 +870,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$7++;
+            nameId$8++;
         }
     }
     function makeCircle(circle, ctx) {
@@ -899,11 +899,11 @@ var ezpsy = (function () {
         return circle;
     }
 
-    let nameId$6 = 0;
+    let nameId$7 = 0;
     class Line extends Elements {
         name = {
-            name: "line" + nameId$6.toString(),
-            graphicId: nameId$6
+            name: "line" + nameId$7.toString(),
+            graphicId: nameId$7
         };
         constructor(opts) {
             super();
@@ -920,7 +920,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$6++;
+            nameId$7++;
         }
     }
     // export class line{
@@ -1054,11 +1054,11 @@ var ezpsy = (function () {
     //     }
     // }
 
-    let nameId$5 = 0;
+    let nameId$6 = 0;
     class Arc extends Elements {
         name = {
-            name: "arc" + nameId$5.toString(),
-            graphicId: nameId$5
+            name: "arc" + nameId$6.toString(),
+            graphicId: nameId$6
         };
         constructor(opts) {
             super();
@@ -1075,7 +1075,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$5++;
+            nameId$6++;
         }
     }
     function makeArc(arc, ctx) {
@@ -1160,11 +1160,11 @@ var ezpsy = (function () {
         return arc0;
     }
 
-    let nameId$4 = 0;
+    let nameId$5 = 0;
     class Ellipse extends Elements {
         name = {
-            name: "ellipse" + nameId$4.toString(),
-            graphicId: nameId$4
+            name: "ellipse" + nameId$5.toString(),
+            graphicId: nameId$5
         };
         constructor(opts) {
             super();
@@ -1181,7 +1181,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$4++;
+            nameId$5++;
         }
     }
     function makeEllipse(ellipse, ctx) {
@@ -1243,11 +1243,11 @@ var ezpsy = (function () {
         return ellipse0;
     }
 
-    let nameId$3 = 0;
+    let nameId$4 = 0;
     class Polygon extends Elements {
         name = {
-            name: "polygon" + nameId$3.toString(),
-            graphicId: nameId$3
+            name: "polygon" + nameId$4.toString(),
+            graphicId: nameId$4
         };
         constructor(opts) {
             super();
@@ -1264,7 +1264,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$3++;
+            nameId$4++;
         }
     }
     function makePolygon(polygon, ctx) {
@@ -1278,7 +1278,7 @@ var ezpsy = (function () {
         }
         ctx.save();
         ctx.beginPath();
-        judgeTRS(polygon);
+        // judgeTRS(polygon) 
         ctx.moveTo(sh.xA[0], sh.yA[0]);
         for (let i = 1; i < num; i++) {
             ctx.lineTo(sh.xA[i], sh.yA[i]);
@@ -1324,11 +1324,11 @@ var ezpsy = (function () {
         return polygon0;
     }
 
-    let nameId$2 = 0;
+    let nameId$3 = 0;
     class Texts extends Elements {
         name = {
-            name: "text" + nameId$2.toString(),
-            graphicId: nameId$2
+            name: "text" + nameId$3.toString(),
+            graphicId: nameId$3
         };
         constructor(opts) {
             super();
@@ -1355,7 +1355,7 @@ var ezpsy = (function () {
                     textB: 'alphabetic'
                 };
             }
-            nameId$2++;
+            nameId$3++;
         }
         setTextLine(textLine) {
             if (textLine) {
@@ -1409,7 +1409,7 @@ var ezpsy = (function () {
         return result;
     }
 
-    let nameId$1 = 0;
+    let nameId$2 = 0;
     class RGBA {
         R;
         G;
@@ -1423,8 +1423,8 @@ var ezpsy = (function () {
     }
     class Img extends Elements {
         name = {
-            name: "img" + nameId$1.toString(),
-            graphicId: nameId$1
+            name: "img" + nameId$2.toString(),
+            graphicId: nameId$2
         };
         Img;
         ImgData;
@@ -1478,7 +1478,7 @@ var ezpsy = (function () {
             // {
             //     this.style = opts.style;
             // }
-            nameId$1++;
+            nameId$2++;
         }
         init() {
             let sh = this.shape;
@@ -1693,11 +1693,11 @@ var ezpsy = (function () {
         return fill;
     }
 
-    let nameId = 0;
+    let nameId$1 = 0;
     class Grat extends Elements {
         name = {
-            name: "grat" + nameId.toString(),
-            graphicId: nameId
+            name: "grat" + nameId$1.toString(),
+            graphicId: nameId$1
         };
         constructor(opts) {
             super();
@@ -1724,7 +1724,7 @@ var ezpsy = (function () {
             //         lineWidth: 2
             //     }
             // }
-            nameId++;
+            nameId$1++;
         }
         play(speed, delay) {
             if (!delay) {
@@ -1769,7 +1769,7 @@ var ezpsy = (function () {
         // grat.style.fill = fill
         ctx.save();
         ctx.beginPath();
-        // ezJudge.judgeTRS(grat)
+        judgeTRS(grat);
         ctx.arc(sh.x, sh.y, sh.r, 0, 2 * Math.PI);
         // ctx.rect(sh.x-sh.r,sh.y-sh.r,sh.x+sh.r,sh.y+3*sh.r)
         judgeStyle(grat, ctx);
@@ -1788,6 +1788,230 @@ var ezpsy = (function () {
         // ctx.closePath();
         // ctx.restore()
         return grat;
+    }
+
+    let nameId = 0;
+    //光栅
+    //pixelsPerDegree=57, spatialFrequency=1 对应一度视角
+    class sinGrat extends Elements {
+        name = {
+            name: "singrat" + nameId.toString(),
+            graphicId: nameId
+        };
+        sinGrat; //光栅图片数据
+        imgDataList; //用于储存参与动画的图片
+        isNoise;
+        // singratParam;   //用于储存 左上角坐标, 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位等信息
+        // level;          //噪声等级(此类型默认为0)
+        constructor(opts) {
+            //x,y为光栅的左上角坐标, 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
+            super();
+            this.shape = opts.shape;
+            let sh = this.shape;
+            if (!opts.isNoise)
+                this.isNoise = false;
+            else
+                this.isNoise = opts.isNoise;
+            if (!this.isNoise)
+                this.sinGrat = getSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase);
+            else {
+                if (!sh.level)
+                    sh.level = 1;
+                this.sinGrat = getNoiseSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level);
+            }
+            this.imgDataList = new Array();
+        }
+        //绘制方法, 参数ctx为canvas.getContext('2d')
+        draw() {
+            this.ctx.putImageData(this.sinGrat, this.shape.x, this.shape.y);
+        }
+        //给原有光栅加上噪声, 参数level为噪声等级
+        imNoise(level) {
+            let th = this.shape;
+            this.isNoise = true;
+            this.sinGrat = getNoiseSingrat(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase, level);
+            th.level = level;
+        }
+        //运动方法, 参数ctx为canvas.getContext('2d') 参数cycle为每秒运行光栅的周期数(默认为1)
+        play(cycle) {
+            if (!cycle)
+                cycle = 1;
+            let that = this;
+            let ctx = this.ctx;
+            let num = Math.floor(60 / cycle);
+            let th = this.shape;
+            for (let i = 0; i < num; i++) {
+                if (this.isNoise)
+                    this.imgDataList.push(getNoiseSingrat(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase + 2 * i * Math.PI / num, this.shape.level));
+                else
+                    this.imgDataList.push(getSingrat(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase + 2 * i * Math.PI / num));
+            }
+            //异步函数
+            (async function () {
+                for (let i = 0; i > -1; i++) {
+                    i = i % num;
+                    ctx.putImageData(that.imgDataList[i], that.shape.x, that.shape.y);
+                    // console.dir(that.storage)
+                    await delay_frame(1);
+                    that.clear(ctx);
+                }
+            })();
+        }
+        //清除光栅所在位置的矩形区域
+        clear(ctx) {
+            let width = 2 * this.shape.r + 1;
+            let height = 2 * this.shape.r + 1;
+            ctx.clearRect(this.shape.x, this.shape.y, width, height);
+        }
+    }
+    //生成噪声光栅, 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位, 噪声等级
+    //返回imageData图片信息
+    function getNoiseSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, phase, level) {
+        if (level === undefined)
+            level = 1;
+        let maskBand = 1.5 * radius;
+        let imagesize = radius + maskBand;
+        let [x, y] = meshgrid(imagesize);
+        let mask = new Array();
+        for (let i = 0; i < x.length; i++) {
+            let m = Math.pow(x[i], 2) + Math.pow(y[i], 2);
+            let n = Math.pow(radius, 2);
+            mask.push(Math.exp(-m / n));
+            mask[i] *= Math.E;
+            if (mask[i] >= 1)
+                mask[i] = 1;
+        }
+        let w = 2 * Math.PI * spatialFrequency / pixelsPerDegree;
+        let a = Math.cos(angle * Math.PI / 180) * w;
+        let b = Math.sin(angle * Math.PI / 180) * w;
+        let param = new Array();
+        for (let i = 0; i < x.length; i++) {
+            param[i] = 0.5 + 0.5 * mask[i] * contrast * Math.sin(a * x[i] + b * y[i] + phase);
+        }
+        let noise = getNoise(radius);
+        let noiseSinGrat = GratAddNoise(param, noise, radius, level);
+        return noiseSinGrat;
+    }
+    //光栅加噪声, 参数: 光栅灰度信息, 噪声灰度信息, 半径, 噪声等级
+    //返回imageData图片信息
+    function GratAddNoise(param, noise, radius, level) {
+        let c = document.createElement('canvas');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        let ctx = c.getContext('2d');
+        let NoiseGratDegree = new Array();
+        let i = 0;
+        let maskBand = 1.5 * radius;
+        let imagesize = radius + maskBand;
+        let M = 2 * imagesize + 1;
+        let NoiseGrat = ctx.createImageData(M, M);
+        let [x, y] = meshgrid(imagesize);
+        let mask = new Array();
+        for (let i = 0; i < x.length; i++) {
+            let m = Math.pow(x[i], 2) + Math.pow(y[i], 2);
+            let n = Math.pow(radius, 2);
+            mask.push(Math.exp(-m / n));
+            mask[i] *= Math.E;
+            if (mask[i] >= 1)
+                mask[i] = 1;
+        }
+        //相加
+        for (i = 0; i < M * M; i++) {
+            if (param[i] > 0.5)
+                NoiseGratDegree[i] = 0.5 + level * noise[i];
+            else
+                NoiseGratDegree[i] = (param[i] + level * noise[i]);
+            // NoiseGratDegree[i] = NoiseGratDegree[i]+0.5*mask[i] 
+        }
+        for (let i = 0, j = 0; i < NoiseGrat.data.length; i += 4, j++) {
+            NoiseGrat.data[i + 0] = NoiseGratDegree[j] * 255;
+            NoiseGrat.data[i + 1] = NoiseGratDegree[j] * 255;
+            NoiseGrat.data[i + 2] = NoiseGratDegree[j] * 255;
+            NoiseGrat.data[i + 3] = 255;
+        }
+        // NoiseGrat = ToCircle(NoiseGrat,radius)
+        return NoiseGrat;
+    }
+    //生成噪声图片, 参数: 半径
+    //返回噪声灰度数组
+    function getNoise(radius) {
+        let noise = new Array();
+        let mask = new Array();
+        let maskBand = 1.5 * radius;
+        let imagesize = radius + maskBand;
+        let [x, y] = meshgrid(imagesize);
+        for (let i = 0; i < x.length; i++) {
+            let m = Math.pow(x[i], 2) + Math.pow(y[i], 2);
+            let n = Math.pow(radius, 2);
+            mask.push(Math.exp(-m / n));
+            mask[i] *= Math.E;
+            if (mask[i] >= 1)
+                mask[i] = 1;
+        }
+        for (let i = 0; i < mask.length; i++) {
+            let greyDegree = mask[i] * Math.floor(Math.random() * 256) / 255;
+            noise.push(greyDegree);
+        }
+        // for (let i=0;i < 4*(imagesize*2+1)*(imagesize*2+1);i+=4)
+        // {
+        //     let greyDegree = Math.floor(Math.random()* 256); 
+        //     noise.push(greyDegree/255);
+        // }
+        // console.dir(noise)
+        return noise;
+    }
+    //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
+    //返回imageData图片信息
+    function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, phase) {
+        let c = document.createElement('canvas');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        let ctx = c.getContext('2d');
+        let maskBand = 1.5 * radius;
+        let imagesize = radius + maskBand;
+        let [x, y] = meshgrid(imagesize);
+        let w = 2 * Math.PI * spatialFrequency / pixelsPerDegree;
+        let a = Math.cos(angle * Math.PI / 180) * w;
+        let b = Math.sin(angle * Math.PI / 180) * w;
+        let param = new Array();
+        let mask = new Array();
+        for (let i = 0; i < x.length; i++) {
+            let m = Math.pow(x[i], 2) + Math.pow(y[i], 2);
+            let n = Math.pow(radius, 2);
+            mask.push(Math.exp(-m / n));
+            mask[i] *= Math.E;
+            if (mask[i] >= 1)
+                mask[i] = 1;
+        }
+        // let maskShadow = mask(radius);
+        // console.dir(maskShadow)
+        for (let i = 0; i < x.length; i++) {
+            param[i] = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
+        }
+        // let maskShadow = mask(radius)
+        // for(let )
+        let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
+        for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
+            imgData.data[i + 0] = param[j] * 255;
+            imgData.data[i + 1] = param[j] * 255;
+            imgData.data[i + 2] = param[j] * 255;
+            imgData.data[i + 3] = 255;
+        }
+        // imgData = ToCircle(imgData,radius/2)
+        return imgData;
+    }
+    //生成网格采样点 参数: 半径
+    //返回x, y两个采样数组
+    function meshgrid(radius) {
+        let x = new Array();
+        let y = new Array();
+        for (let i = -radius; i <= radius; i++) {
+            for (let j = -radius; j <= radius; j++) {
+                x.push(i);
+                y.push(j);
+            }
+        }
+        return [x, y];
     }
 
     function judgeCanvasStyle(cStyle) {
@@ -1838,6 +2062,9 @@ var ezpsy = (function () {
         }
         else if (el instanceof Img) {
             makeImg(el, ctx);
+        }
+        else if (el instanceof sinGrat) {
+            el.draw();
         }
         else if (el instanceof Group) {
             // console.dir(el)
@@ -2244,9 +2471,16 @@ var ezpsy = (function () {
     }
     function judgeTRS(el) {
         let ctx = el.ctx;
-        ctx.translate(el.translate.x, el.translate.y);
-        ctx.rotate(el.rotate);
+        let [x, y] = judgeElementsCenter(el);
+        if (el.rotate) {
+            ctx.translate(x, y);
+            ctx.rotate(el.rotate * Math.PI / 180);
+            ctx.translate(-x, -y);
+        }
+        ctx.translate(x, y);
         ctx.scale(el.scale.width, el.scale.height);
+        ctx.translate(-x, -y);
+        ctx.translate(el.translate.x, el.translate.y);
     }
     function judgeKey(keyCode, keyCodeDictionary) {
         let key = keyCodeDictionary[keyCode];
@@ -2284,6 +2518,26 @@ var ezpsy = (function () {
             }
             return dlgContent;
         }
+    }
+    function judgeElementsCenter(el) {
+        let x, y;
+        if (el instanceof Rectangle) {
+            x = el.shape.x + el.shape.width / 2;
+            y = el.shape.y + el.shape.height / 2;
+        }
+        else if (el instanceof Circle || el instanceof Arc || el instanceof Grat || el instanceof Ellipse) {
+            x = el.shape.x;
+            y = el.shape.y;
+        }
+        else if (el instanceof Line) {
+            x = Math.abs(el.shape.x - el.shape.xEnd) / 2;
+            y = Math.abs(el.shape.y - el.shape.yEnd) / 2;
+        }
+        else if (el instanceof sinGrat) {
+            x = Math.ceil((2 * el.shape.r + 1) / 2);
+            y = Math.ceil((2 * el.shape.r + 1) / 2);
+        }
+        return [x, y];
     }
 
     class Storage {
@@ -6865,6 +7119,38 @@ var ezpsy = (function () {
             //     }
             // })()
         }
+        // sinGratPlay(opts: GratOpts){
+        //     let sinGratList = new Array();
+        //     let sh = opts.shape;
+        //     for(let i = 0;i < Math.floor(60*sh.cycle);i++)
+        //     {
+        //         let singrat = new sinGrat({
+        //             shape: {
+        //                 x: sh.x,
+        //                 y: sh.y,
+        //                 r: sh.r,
+        //                 pixelsPerDegree: sh.pixelsPerDegree, 
+        //                 spatialFrequency: sh.spatialFrequency,
+        //                 angle: sh.angle, 
+        //                 contrast: sh.contrast, 
+        //                 phase: sh.phase + 2*i*Math.PI/60,
+        //                 cycle: sh.cycle,
+        //                 speed: sh.speed
+        //             }
+        //         });
+        //         sinGratList.push(singrat);
+        //     }
+        //     console.dir(sinGratList);
+        //     (async ()=>{
+        //         for(let i = 0;i < sinGratList.length;i+=sh.speed)
+        //         {
+        //             this.add(sinGratList[i])
+        //             await ezTime.delay_frame(1);
+        //             if(i!==sinGratList.length-sh.speed)
+        //                 sinGratList[i].remove();
+        //         }
+        //     })()
+        // }
         setTextLine(textLine) {
             let c = this.ctx.canvas;
             c.width = this.cStyle.width;
@@ -7011,6 +7297,7 @@ var ezpsy = (function () {
         KbReleaseWait: KbReleaseWait,
         GetClick: GetClick,
         makeGrat: makeGrat,
+        sinGrat: sinGrat,
         sleep: sleep,
         WaitSecs: WaitSecs,
         KeypressInit: KeypressInit,

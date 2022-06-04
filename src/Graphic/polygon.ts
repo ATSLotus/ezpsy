@@ -53,7 +53,7 @@ export function makePolygon(polygon: Polygon,ctx: CanvasRenderingContext2D): Pol
     }
     ctx.save()
     ctx.beginPath()
-    judgeTRS(polygon)
+    // judgeTRS(polygon) 
     ctx.moveTo(sh.xA[0],sh.yA[0])
     for(let i = 1;i < num;i++)
     {

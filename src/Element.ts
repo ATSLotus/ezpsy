@@ -97,7 +97,7 @@ export class Elements{
             // {
                 
             while(1){
-                console.dir(performance.now())
+                // console.dir(performance.now())
                 func();
                 await ezTime.delay_frame(delay);
                 that.remove()
@@ -127,6 +127,17 @@ export class Elements{
             // },0)
         })()
     }
+
+    // rotate(angle: number){
+    //     let ctx = this.ctx
+    //     let x = this.shape.x
+    //     let y = this.shape.y
+    //     this.shape.x = 0;
+    //     this.shape.y = 0;
+    //     ctx.translate(x,y);
+    //     ctx.rotate(angle)
+    //     this.storage.reDraw(ctx)
+    // }
 
     // scale(scaleWidth: number,scaleHeight: number){
     //     let ctx = this.ctx

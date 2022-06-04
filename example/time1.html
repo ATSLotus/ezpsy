@@ -8,6 +8,19 @@
         
     </body>
     <script>
+
+        let time = new ezpsy.Time()
+        (async function(){
+            for(let i = 0;i < 5;i++)
+            {
+                await ezpsy.sleep(100).then(()=>{
+                    time.record()
+                })
+            }
+            console.dir(time)
+        })()
+
+        console.dir(time.getIntervalValue)
         
         let wait = function(delay){
             return new Promise((res,rej)=>{

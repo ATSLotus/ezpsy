@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>sinGrat</title>
+        <script src="../dist/iife/ezpsy.js"></script>
+    </head>
+    <body>
+        <div id="sinGrat"></div>
+    </body>
+    <style>
+        body{
+            background-color: #808080;
+            /* transform: rotate(45deg); */
+        }
+    </style>
+    <script>
+        let ez = ezpsy.init(document.getElementById("sinGrat"));
+        // console.dir(ez)
+        let keypress = ezpsy.KeypressInit('keyup');
+        let ctx = ez.ctx
+       
+        ez.setCanvasStyle({
+            width: window.innerWidth,
+            height: window.innerHeight
+        })
+
+        // let a = new ezpsy.Rectangle({
+        //     shape: {
+        //         x: 100,
+        //         y: 100,
+        //         width: 100,
+        //         height: 100
+        //     }
+        // })
+        // let b = new ezpsy.Rectangle({
+        //     shape: {
+        //         x: 100,
+        //         y: 100,
+        //         width: 100,
+        //         height: 100
+        //     }
+        // })
+        // a.scale = {
+        //     width: 1.2,
+        //     height: 0.8
+        // }
+        // ez.add([a,b]);
+
+        let a = new ezpsy.sinGrat({
+            shape: {
+                x: 0,                 
+                y: 0,                 
+                r: 100,    
+                pixelsPerDegree: 57, 
+                spatialFrequency: 1,
+                angle: 0, 
+                contrast: 1, 
+                phase: 0,
+                level: 0
+            },
+            // isNoise: true
+        })
+        ez.add(a)
+        a.play()
+        // let b = new ezpsy.Noise({
+        //     shape: {
+        //         x: 756,                 
+        //         y: 560,                 
+        //         r: 100,             
+        //     }
+        // })
+        // let c = new ezpsy.noiseSinGrat({
+        //     shape: {
+        //         x: 456,                 
+        //         y: 280,                 
+        //         r: 100, 
+        //         angle: 0
+        //     }
+        // })
+        // console.dir(a.gratMatrix)
+        // console.dir(b.noise)
+        // let x = ezpsy.GratMultiplyNoise(a,b)
+        // console.dir(x)
+        
+        
+        // ez.add([b,a,c])
+        // console.dir(a)
+        // ctx.putImageData(x,0,0)
+        // ez.add(a)
+        // ctx.globalCompositeOperation="destination-atop";
+        // ctx.arc(256,256,100,0,2*Math.PI);
+        // ctx.fillStyle = 'white'
+        // ctx.fill();
+
+        // let imgData = ctx.getImageData(256-100,256-100,256,256);
+        // ctx.putImageData(imgData,0,0)
+        // console.dir(a)
+        // a.play(2)
+        // keypress.listen('Enter',{
+        //     funcList: {
+        //         0: ()=>{
+        //             console.dir('complete')
+        //             a.play(0.5)
+        //         }
+        //     }
+        // })
+        
+        // c.play(4)
+        
+        // let ctx = ez.ctx;
+        // let x = ezpsy.getNoise(100,ctx)
+        
+
+        // let a = new ezpsy.sinGrat({
+        //     shape: {
+        //         x: 255,                 
+        //         y: 255,                 
+        //         r: 2,                 
+        //         pixelsPerDegree: 57,   
+        //         spatialFrequency: 1,  
+        //         angle: 0,               
+        //         contrast: 1,           
+        //         phase: 0,               //起始相位
+        //         cycle: 20,              //运动周期数
+        //         speed: 0                //速率
+        //     }
+        // })
+        // let b = ezpsy.getNoise(2);
+        // let x = ezpsy.GratMultiplyNoise(a,b)
+        // console.dir(x)
+        
+        // console.dir(singrat);
+        // singrat.play();
+        // console.dir(singrat)
+        // ez.add(singrat)
+        // let pi = 2*Math.PI;
+        // let i = 0;
+        // singrat.play(0.5,6)
+        // singrat.animate(()=>{
+        //     singrat.shape.phase = i*pi/10;
+        //     // ez.add(singrat)
+        //     i++
+        // },1)
+
+
+
+
+        // let radius = 255;
+        // let param = ezpsy.singrat(radius,57,1,0,1,0);
+        // console.dir(param)
+        // var imgData=ctx.createImageData(radius*2+1,radius*2+1);
+        // let ctx = ez.ctx
+        // for (var i=0,j=0;i<imgData.data.length;i+=4,j++)
+        // {
+        //     imgData.data[i+0]=param[j]*255;
+        //     imgData.data[i+1]=param[j]*255;
+        //     imgData.data[i+2]=param[j]*255;
+        //     imgData.data[i+3]=255;
+        // }
+        // console.dir(imgData)
+        // ctx.putImageData(imgData,10,10);
+        // let [x,y] = ezpsy.sinGrat();
+        // console.dir(ezpsy.getGratFill(ezpsy.singrat(10,57,1,0,1,0)))
+        // let radius = 10;
+        // let fill = ezpsy.getGratFill(ezpsy.singrat(radius,57,1,0,1,0))
+        // console.dir(fill)
+        // let ctx = ez.ctx;
+
+        
+
+        // for(let i = 0;i < 2*radius+1;i++)
+        // {
+        //     for(let j = 0;j < 2*radius+1;j++)
+        //     {
+        //         ctx.fillStyle = fill[(2*radius+1)*j+i]
+        //         ctx.fillRect(0+1*j,0+1*i,1+1*j,1+1*i)
+        //     }
+        // }
+    </script>
+</html>

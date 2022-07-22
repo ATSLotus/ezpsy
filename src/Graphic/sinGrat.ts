@@ -1,10 +1,6 @@
 import { Elements } from "../Element";
-import { delay_frame, nameStyle, Opts, Shape, Style } from "../ezpsy";
-import { judgeElement, judgeStyle } from "../Judge/judge";
-import * as ezJudge from '../Judge/judge'
-import { createGratLinearGradient } from "../Gradient/gradient";
-import { Group } from "zrender";
-import { createElement } from "zrender/lib/svg/core";
+import { delay_frame } from "../Time/time";
+import { Shape,Opts,nameStyle,Style } from "../DataType/dataType";
 
 
 interface GratShape extends Shape{
@@ -61,7 +57,7 @@ export class sinGrat extends Elements{
     }
     //绘制方法, 参数ctx为canvas.getContext('2d')
     draw(){
-        this.ctx.putImageData(this.sinGrat,this.shape.x,this.shape.y)
+        this.ctx.putImageData(this.sinGrat,this.shape.x - 2.5 * this.shape.r,this.shape.y - 2.5 * this.shape.r)
     }
     //给原有光栅加上噪声, 参数level为噪声等级
     imNoise(level){
@@ -71,26 +67,32 @@ export class sinGrat extends Elements{
         th.level = level;
     }
     //运动方法, 参数ctx为canvas.getContext('2d') 参数cycle为每秒运行光栅的周期数(默认为1)
-    play(cycle){
-        if(!cycle)
-            cycle = 1;
+    play(timeFrequency,time){
+        if(!timeFrequency)
+            timeFrequency = 1;
+        if(!time)
+            time = 1000;
+        let fps = 60;
+        let fpsnum = Math.floor(time/1000 * fps);
+        let interval = 2*Math.PI*timeFrequency/fps;
         let that = this;
         let ctx = this.ctx;
-        let num = Math.floor(60/cycle);
+        // let num = Math.floor(60/timeFrequency);
         let th = this.shape
-        for(let i = 0;i < num;i++)
+        for(let i = 0;i < fps;i++)
         {
             if(this.isNoise)
-                this.imgDataList.push(getNoiseSingrat(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase+2*i*Math.PI/num, this.shape.level))
+                this.imgDataList.push(getNoiseSingrat(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase+i*interval, this.shape.level))
             else
-                this.imgDataList.push(getSingrat(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase+2*i*Math.PI/num))
+                this.imgDataList.push(getSingrat(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase+i*interval))
         }
         //异步函数
         (async function(){
-            for(let i = 0;i > -1;i++)
+            for(let i = 0;i < fpsnum;i++)
             {
-                i = i%num;
-                ctx.putImageData(that.imgDataList[i],that.shape.x,that.shape.y)
+                // i = i%fps;
+                let index = i%fps;
+                ctx.putImageData(that.imgDataList[index],that.shape.x - 2.5 * that.shape.r,that.shape.y - 2.5 * that.shape.r)
                 // console.dir(that.storage)
                 await delay_frame(1);
                 that.clear(ctx)
@@ -100,9 +102,9 @@ export class sinGrat extends Elements{
     //清除光栅所在位置的矩形区域
     clear(ctx)
     {
-        let width = 2*this.shape.r+1
-        let height = 2*this.shape.r+1
-        ctx.clearRect(this.shape.x,this.shape.y,width,height);
+        let width = 2*(2.5*this.shape.r)+1
+        let height = 2*(2.5*this.shape.r)+1
+        ctx.clearRect(this.shape.x - 2.5 * this.shape.r,this.shape.y - 2.5 * this.shape.r,width,height);
     }
 }
 

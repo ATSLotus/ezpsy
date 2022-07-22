@@ -296,7 +296,7 @@ var ezpsy = (function () {
             this.ParentsRect = rect;
         }
     }
-    let nameId$9 = 0;
+    let nameId$a = 0;
     // class TypeTest implements RectangleShape{
     //     x: number
     //     y: number
@@ -305,8 +305,8 @@ var ezpsy = (function () {
     // }
     class Rectangle extends Elements {
         name = {
-            name: "rect" + nameId$9.toString(),
-            graphicId: nameId$9
+            name: "rect" + nameId$a.toString(),
+            graphicId: nameId$a
         };
         constructor(opts) {
             super();
@@ -322,7 +322,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$9++;
+            nameId$a++;
         }
     }
     class logicRect extends Rectangle {
@@ -849,11 +849,11 @@ var ezpsy = (function () {
         return rect0;
     }
 
-    let nameId$8 = 0;
+    let nameId$9 = 0;
     class Circle extends Elements {
         name = {
-            name: "circle" + nameId$8.toString(),
-            graphicId: nameId$8
+            name: "circle" + nameId$9.toString(),
+            graphicId: nameId$9
         };
         constructor(opts) {
             super();
@@ -870,7 +870,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$8++;
+            nameId$9++;
         }
     }
     function makeCircle(circle, ctx) {
@@ -899,11 +899,11 @@ var ezpsy = (function () {
         return circle;
     }
 
-    let nameId$7 = 0;
+    let nameId$8 = 0;
     class Line extends Elements {
         name = {
-            name: "line" + nameId$7.toString(),
-            graphicId: nameId$7
+            name: "line" + nameId$8.toString(),
+            graphicId: nameId$8
         };
         constructor(opts) {
             super();
@@ -920,7 +920,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$7++;
+            nameId$8++;
         }
     }
     // export class line{
@@ -1054,11 +1054,11 @@ var ezpsy = (function () {
     //     }
     // }
 
-    let nameId$6 = 0;
+    let nameId$7 = 0;
     class Arc extends Elements {
         name = {
-            name: "arc" + nameId$6.toString(),
-            graphicId: nameId$6
+            name: "arc" + nameId$7.toString(),
+            graphicId: nameId$7
         };
         constructor(opts) {
             super();
@@ -1075,7 +1075,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$6++;
+            nameId$7++;
         }
     }
     function makeArc(arc, ctx) {
@@ -1160,11 +1160,11 @@ var ezpsy = (function () {
         return arc0;
     }
 
-    let nameId$5 = 0;
+    let nameId$6 = 0;
     class Ellipse extends Elements {
         name = {
-            name: "ellipse" + nameId$5.toString(),
-            graphicId: nameId$5
+            name: "ellipse" + nameId$6.toString(),
+            graphicId: nameId$6
         };
         constructor(opts) {
             super();
@@ -1181,7 +1181,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$5++;
+            nameId$6++;
         }
     }
     function makeEllipse(ellipse, ctx) {
@@ -1243,11 +1243,11 @@ var ezpsy = (function () {
         return ellipse0;
     }
 
-    let nameId$4 = 0;
+    let nameId$5 = 0;
     class Polygon extends Elements {
         name = {
-            name: "polygon" + nameId$4.toString(),
-            graphicId: nameId$4
+            name: "polygon" + nameId$5.toString(),
+            graphicId: nameId$5
         };
         constructor(opts) {
             super();
@@ -1264,7 +1264,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$4++;
+            nameId$5++;
         }
     }
     function makePolygon(polygon, ctx) {
@@ -1324,11 +1324,11 @@ var ezpsy = (function () {
         return polygon0;
     }
 
-    let nameId$3 = 0;
+    let nameId$4 = 0;
     class Texts extends Elements {
         name = {
-            name: "text" + nameId$3.toString(),
-            graphicId: nameId$3
+            name: "text" + nameId$4.toString(),
+            graphicId: nameId$4
         };
         constructor(opts) {
             super();
@@ -1355,7 +1355,7 @@ var ezpsy = (function () {
                     textB: 'alphabetic'
                 };
             }
-            nameId$3++;
+            nameId$4++;
         }
         setTextLine(textLine) {
             if (textLine) {
@@ -1409,7 +1409,7 @@ var ezpsy = (function () {
         return result;
     }
 
-    let nameId$2 = 0;
+    let nameId$3 = 0;
     class RGBA {
         R;
         G;
@@ -1423,8 +1423,8 @@ var ezpsy = (function () {
     }
     class Img extends Elements {
         name = {
-            name: "img" + nameId$2.toString(),
-            graphicId: nameId$2
+            name: "img" + nameId$3.toString(),
+            graphicId: nameId$3
         };
         Img;
         ImgData;
@@ -1436,8 +1436,9 @@ var ezpsy = (function () {
             if (opts.Img === undefined) {
                 let I = new Image();
                 I.src = opts.shape.img;
-                I.crossOrigin = '';
+                I.crossOrigin = 'Anonymous';
                 this.Img = I;
+                console.dir(this.Img);
             }
             else {
                 this.Img = opts.Img;
@@ -1478,17 +1479,21 @@ var ezpsy = (function () {
             // {
             //     this.style = opts.style;
             // }
-            nameId$2++;
+            nameId$3++;
         }
         init() {
-            let sh = this.shape;
+            this.shape;
             let c = document.createElement('canvas');
             let ctx = c.getContext('2d');
             let that = this;
             c.width = screen.availWidth;
             c.height = screen.availHeight;
-            ctx.drawImage(that.Img, sh.x, sh.y);
-            that.ImgData = ctx.getImageData(sh.x, sh.y, that.Img.width, that.Img.height);
+            console.dir(that.Img);
+            // that.Img.onload = ()=>{
+            ctx.drawImage(that.Img, 0, 0);
+            that.ImgData = ctx.getImageData(0, 0, that.Img.width, that.Img.height);
+            // console.dir(that.ImgData)
+            // }
             // this.makeTextures()
         }
         toGray() {
@@ -1693,11 +1698,11 @@ var ezpsy = (function () {
         return fill;
     }
 
-    let nameId$1 = 0;
+    let nameId$2 = 0;
     class Grat extends Elements {
         name = {
-            name: "grat" + nameId$1.toString(),
-            graphicId: nameId$1
+            name: "grat" + nameId$2.toString(),
+            graphicId: nameId$2
         };
         constructor(opts) {
             super();
@@ -1724,7 +1729,7 @@ var ezpsy = (function () {
             //         lineWidth: 2
             //     }
             // }
-            nameId$1++;
+            nameId$2++;
         }
         play(speed, delay) {
             if (!delay) {
@@ -1790,6 +1795,273 @@ var ezpsy = (function () {
         return grat;
     }
 
+    let wasm;
+    let cachegetInt32Memory0 = null;
+
+    function getInt32Memory0() {
+      if (cachegetInt32Memory0 === null || cachegetInt32Memory0.buffer !== wasm.memory.buffer) {
+        cachegetInt32Memory0 = new Int32Array(wasm.memory.buffer);
+      }
+
+      return cachegetInt32Memory0;
+    }
+
+    let cachegetUint8Memory0 = null;
+
+    function getUint8Memory0() {
+      if (cachegetUint8Memory0 === null || cachegetUint8Memory0.buffer !== wasm.memory.buffer) {
+        cachegetUint8Memory0 = new Uint8Array(wasm.memory.buffer);
+      }
+
+      return cachegetUint8Memory0;
+    }
+
+    function getArrayU8FromWasm0(ptr, len) {
+      return getUint8Memory0().subarray(ptr / 1, ptr / 1 + len);
+    }
+    /**
+    * @param {number} radius
+    * @param {number} pixels_per_degree
+    * @param {number} spatial_frequency
+    * @param {number} angle
+    * @param {number} contrast
+    * @param {number} phase
+    * @param {number} gamma
+    * @returns {Uint8Array}
+    */
+
+
+    function pre_singrat(radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, gamma) {
+      try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+
+        wasm.pre_singrat(retptr, radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, gamma);
+        var r0 = getInt32Memory0()[retptr / 4 + 0];
+        var r1 = getInt32Memory0()[retptr / 4 + 1];
+        var v0 = getArrayU8FromWasm0(r0, r1).slice();
+
+        wasm.__wbindgen_free(r0, r1 * 1);
+
+        return v0;
+      } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+      }
+    }
+    /**
+    * @param {number} radius
+    * @param {number} pixels_per_degree
+    * @param {number} spatial_frequency
+    * @param {number} angle
+    * @param {number} contrast
+    * @param {number} phase
+    * @param {number} level
+    * @param {number} gamma
+    * @returns {Uint8Array}
+    */
+
+    function pre_noise_singrat(radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, level, gamma) {
+      try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+
+        wasm.pre_noise_singrat(retptr, radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, level, gamma);
+        var r0 = getInt32Memory0()[retptr / 4 + 0];
+        var r1 = getInt32Memory0()[retptr / 4 + 1];
+        var v0 = getArrayU8FromWasm0(r0, r1).slice();
+
+        wasm.__wbindgen_free(r0, r1 * 1);
+
+        return v0;
+      } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+      }
+    }
+
+    async function load(module, imports) {
+      if (typeof Response === 'function' && module instanceof Response) {
+        if (typeof WebAssembly.instantiateStreaming === 'function') {
+          try {
+            return await WebAssembly.instantiateStreaming(module, imports);
+          } catch (e) {
+            if (module.headers.get('Content-Type') != 'application/wasm') {
+              console.warn("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", e);
+            } else {
+              throw e;
+            }
+          }
+        }
+
+        const bytes = await module.arrayBuffer();
+        return await WebAssembly.instantiate(bytes, imports);
+      } else {
+        const instance = await WebAssembly.instantiate(module, imports);
+
+        if (instance instanceof WebAssembly.Instance) {
+          return {
+            instance,
+            module
+          };
+        } else {
+          return instance;
+        }
+      }
+    }
+
+    async function init$2(input) {
+      if (typeof input === 'undefined') {
+        input = new URL('singrat_bg.wasm', (document.currentScript && document.currentScript.src || new URL('ezpsy.js', document.baseURI).href));
+      }
+
+      const imports = {};
+
+      if (typeof input === 'string' || typeof Request === 'function' && input instanceof Request || typeof URL === 'function' && input instanceof URL) {
+        input = fetch(input);
+      }
+
+      const {
+        instance,
+        module
+      } = await load(await input, imports);
+      wasm = instance.exports;
+      init$2.__wbindgen_wasm_module = module;
+      return wasm;
+    }
+
+    let nameId$1 = 0;
+    class sinGrating extends Elements {
+        name = {
+            name: "singrating" + nameId$1.toString(),
+            graphicId: nameId$1
+        };
+        wasm;
+        param;
+        width;
+        sinGrat; //光栅图片数据
+        imgDataList; //用于储存参与动画的图片
+        isNoise;
+        constructor(opts) {
+            super();
+            this.ctx = super.ctx;
+            this.wasm = opts.wasm;
+            this.shape = opts.shape;
+            let sh = this.shape;
+            this.width = 2 * (sh.r / 2 + sh.r) + 1;
+            this.sinGrat = new ImageData(this.width, this.width);
+            this.imgDataList = new Array();
+            this.isNoise = opts.isNoise;
+            // console.dir(this.isNoise)
+            nameId$1++;
+        }
+        draw() {
+            let sh = this.shape;
+            // readWasm(this.wasm).then(wasm => {
+            //     console.dir(wasm);
+            //     const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            //     wasm.pre_singrat(retptr, sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma);
+            //     var r0 = getInt32Memory0(wasm)[retptr / 4 + 0];
+            //     var r1 = getInt32Memory0(wasm)[retptr / 4 + 1];
+            //     var v0 = getArrayU8FromWasm0(r0, r1, wasm).slice();
+            //     console.dir(v0)
+            //     wasm.__wbindgen_free(r0, r1 * 1);
+            //     this.param = v0;
+            //     // if(this.isNoise)
+            //     //     this.param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
+            //     // else
+            //     //     this.param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
+            //     this.sinGrat.data.set(this.param);
+            //     this.ctx.putImageData(this.sinGrat,sh.x-1.5*sh.r,sh.y-1.5*sh.r)
+            // });
+            init$2(this.wasm)
+                .then(() => {
+                // let t0 = performance.now()
+                // console.dir(t0)
+                if (this.isNoise)
+                    this.param = pre_noise_singrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma);
+                else
+                    this.param = pre_singrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma);
+                this.sinGrat.data.set(this.param);
+                this.ctx.putImageData(this.sinGrat, sh.x - 1.5 * sh.r, sh.y - 1.5 * sh.r);
+                console.dir("success");
+                // let t1 = performance.now();
+                // console.dir(t1);
+                // console.dir(t1-t0);
+            });
+        }
+        play(timeFrequency, time, fps) {
+            if (!timeFrequency)
+                timeFrequency = 1;
+            if (!time)
+                time = 1000;
+            if (!fps)
+                fps = 60;
+            let interval = 2 * Math.PI * timeFrequency / fps;
+            let fpsNum = Math.floor(time / 1000 * fps);
+            let index = 0;
+            let sh = this.shape;
+            let that = this;
+            init$2(this.wasm)
+                .then(() => {
+                // let t0 = performance.now()
+                // console.dir(t0)
+                if (this.isNoise) {
+                    for (let i = 0; i < fps; i++) {
+                        let img = pre_noise_singrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase + i * interval, sh.level, sh.gamma);
+                        let imgData = new ImageData(new Uint8ClampedArray(img), this.width, this.width);
+                        this.imgDataList.push(imgData);
+                    }
+                }
+                else {
+                    for (let i = 0; i < fps; i++) {
+                        let img = pre_singrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase + i * interval, sh.gamma);
+                        let imgData = new ImageData(new Uint8ClampedArray(img), this.width, this.width);
+                        this.imgDataList.push(imgData);
+                    }
+                }
+                // let t1 = performance.now();
+                // console.dir(t1);
+                // console.dir(t1-t0);
+                (async () => {
+                    for (let i = 0; i < fpsNum; i++) {
+                        index = i % fps;
+                        that.ctx.putImageData(that.imgDataList[index], sh.x - 1.5 * sh.r, sh.y - 1.5 * sh.r);
+                        await delay_frame(1);
+                        that.remove();
+                    }
+                })();
+            });
+        }
+    }
+    // function readWasm(wasm){
+    //     console.dir('suceess!');
+    //     return new Promise((res,rej)=>{
+    //         fetch(wasm).then(res =>
+    //             res.arrayBuffer()
+    //         ).then(bytes => 
+    //             WebAssembly.instantiate(bytes, {})
+    //         ).then(result =>{
+    //             console.dir(result);
+    //             let wasm = result.instance.exports;
+    //             res(wasm);
+    //         })
+    //     })
+    // }
+    // let cachegetInt32Memory0 = null;
+    // function getInt32Memory0(wasm) {
+    //     if (cachegetInt32Memory0 === null || cachegetInt32Memory0.buffer !== wasm.memory.buffer) {
+    //         cachegetInt32Memory0 = new Int32Array(wasm.memory.buffer);
+    //     }
+    //     return cachegetInt32Memory0;
+    // }
+    // let cachegetUint8Memory0 = null;
+    // function getUint8Memory0(wasm) {
+    //     if (cachegetUint8Memory0 === null || cachegetUint8Memory0.buffer !== wasm.memory.buffer) {
+    //         cachegetUint8Memory0 = new Uint8Array(wasm.memory.buffer);
+    //     }
+    //     return cachegetUint8Memory0;
+    // }
+    // function getArrayU8FromWasm0(ptr, len, wasm) {
+    //     return getUint8Memory0(wasm).subarray(ptr / 1, ptr / 1 + len);
+    // }
+
     let nameId = 0;
     //光栅
     //pixelsPerDegree=57, spatialFrequency=1 对应一度视角
@@ -1820,10 +2092,11 @@ var ezpsy = (function () {
                 this.sinGrat = getNoiseSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level);
             }
             this.imgDataList = new Array();
+            nameId++;
         }
         //绘制方法, 参数ctx为canvas.getContext('2d')
         draw() {
-            this.ctx.putImageData(this.sinGrat, this.shape.x, this.shape.y);
+            this.ctx.putImageData(this.sinGrat, this.shape.x - 2.5 * this.shape.r, this.shape.y - 2.5 * this.shape.r);
         }
         //给原有光栅加上噪声, 参数level为噪声等级
         imNoise(level) {
@@ -1833,24 +2106,30 @@ var ezpsy = (function () {
             th.level = level;
         }
         //运动方法, 参数ctx为canvas.getContext('2d') 参数cycle为每秒运行光栅的周期数(默认为1)
-        play(cycle) {
-            if (!cycle)
-                cycle = 1;
+        play(timeFrequency, time) {
+            if (!timeFrequency)
+                timeFrequency = 1;
+            if (!time)
+                time = 1000;
+            let fps = 60;
+            let fpsnum = Math.floor(time / 1000 * fps);
+            let interval = 2 * Math.PI * timeFrequency / fps;
             let that = this;
             let ctx = this.ctx;
-            let num = Math.floor(60 / cycle);
+            // let num = Math.floor(60/timeFrequency);
             let th = this.shape;
-            for (let i = 0; i < num; i++) {
+            for (let i = 0; i < fps; i++) {
                 if (this.isNoise)
-                    this.imgDataList.push(getNoiseSingrat(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase + 2 * i * Math.PI / num, this.shape.level));
+                    this.imgDataList.push(getNoiseSingrat(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase + i * interval, this.shape.level));
                 else
-                    this.imgDataList.push(getSingrat(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase + 2 * i * Math.PI / num));
+                    this.imgDataList.push(getSingrat(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase + i * interval));
             }
             //异步函数
             (async function () {
-                for (let i = 0; i > -1; i++) {
-                    i = i % num;
-                    ctx.putImageData(that.imgDataList[i], that.shape.x, that.shape.y);
+                for (let i = 0; i < fpsnum; i++) {
+                    // i = i%fps;
+                    let index = i % fps;
+                    ctx.putImageData(that.imgDataList[index], that.shape.x - 2.5 * that.shape.r, that.shape.y - 2.5 * that.shape.r);
                     // console.dir(that.storage)
                     await delay_frame(1);
                     that.clear(ctx);
@@ -1859,9 +2138,9 @@ var ezpsy = (function () {
         }
         //清除光栅所在位置的矩形区域
         clear(ctx) {
-            let width = 2 * this.shape.r + 1;
-            let height = 2 * this.shape.r + 1;
-            ctx.clearRect(this.shape.x, this.shape.y, width, height);
+            let width = 2 * (2.5 * this.shape.r) + 1;
+            let height = 2 * (2.5 * this.shape.r) + 1;
+            ctx.clearRect(this.shape.x - 2.5 * this.shape.r, this.shape.y - 2.5 * this.shape.r, width, height);
         }
     }
     //生成噪声光栅, 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位, 噪声等级
@@ -2065,6 +2344,10 @@ var ezpsy = (function () {
         }
         else if (el instanceof sinGrat) {
             el.draw();
+        }
+        else if (el instanceof sinGrating) {
+            console.dir("Add Success!");
+            // (<sinGrating>el).draw();
         }
         else if (el instanceof Group) {
             // console.dir(el)
@@ -6700,11 +6983,9 @@ var ezpsy = (function () {
                     if (e.isConfirmed) {
                         Swal.fire({
                             title: 'Success',
-                            confirmButtonColor: '#4983d0',
                             icon: 'success',
-                            customClass: {
-                                confirmButton: 'ezpsy-dlg-btn'
-                            },
+                            showConfirmButton: false,
+                            timer: 200
                         });
                         res(e.value);
                     }
@@ -6826,21 +7107,21 @@ var ezpsy = (function () {
                         that.inputValue = dom;
                         return dom;
                     }
-                }).then(e => {
-                    return new Promise((res, rej) => {
-                        if (e.isConfirmed) {
-                            Swal.fire({
-                                title: 'Success',
-                                confirmButtonColor: '#4983d0',
-                                icon: 'success',
-                                customClass: {
-                                    confirmButton: 'ezpsy-dlg-btn'
-                                },
-                            });
-                        }
-                        res(e.value);
-                    });
                 });
+                // .then(e=>{
+                //     return new Promise((res,rej)=>{
+                //         if(e.isConfirmed)
+                //         {
+                //             Swal.fire({
+                //                 title: 'Success',
+                //                 icon: 'success',
+                //                 showConfirmButton: false,
+                //                 timer: 200
+                //             });
+                //         }
+                //         res(e.value);
+                //     })
+                // })
             }
             else {
                 return Swal.fire({
@@ -6882,24 +7163,24 @@ var ezpsy = (function () {
                         that.inputValue = dom;
                         return dom;
                     }
-                }).then(e => {
-                    return new Promise((res, rej) => {
-                        if (e.isConfirmed) {
-                            Swal.fire({
-                                title: 'Success',
-                                confirmButtonColor: '#4983d0',
-                                icon: 'success',
-                                customClass: {
-                                    confirmButton: 'ezpsy-dlg-btn'
-                                },
-                            });
-                            res(e.value);
-                        }
-                        else {
-                            res("null");
-                        }
-                    });
                 });
+                // .then(e=>{
+                //     return new Promise((res,rej)=>{
+                //         if(e.isConfirmed)
+                //         {
+                //             Swal.fire({
+                //                 title: 'Success',
+                //                 icon: 'success',
+                //                 showConfirmButton: false,
+                //                 timer: 200
+                //             });
+                //             res(e.value);
+                //         }
+                //         else{
+                //             res("null");
+                //         }
+                //     })
+                // })
             }
         }
         questDlg(dlgContent) {
@@ -6919,11 +7200,9 @@ var ezpsy = (function () {
                     if (e.isConfirmed) {
                         Swal.fire({
                             title: 'Success',
-                            confirmButtonColor: '#4983d0',
                             icon: 'success',
-                            customClass: {
-                                confirmButton: 'ezpsy-dlg-btn'
-                            },
+                            showConfirmButton: false,
+                            timer: 200
                         });
                         res(e.value);
                     }
@@ -6985,7 +7264,6 @@ var ezpsy = (function () {
         id;
         dom;
         ctx;
-        // ctxList: Array<CanvasRenderingContext2D>
         storage;
         cStyle;
         // Rectangle: Rectangle
@@ -6995,10 +7273,7 @@ var ezpsy = (function () {
             this.storage = new Storage();
             cStyle = judgeCanvasStyle(cStyle);
             this.cStyle = cStyle;
-            // this.ctxList = []
             this.ctx = createCanvas(dom, cStyle); //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
-            // this.ctxList.push(this.ctx)
-            // console.dir(this.ctx)
         }
         setCanvasStyle(cStyle) {
             // for(let i = 0;i < this.ctxList.length;i++){
@@ -7230,6 +7505,7 @@ var ezpsy = (function () {
         Texts: Texts,
         Img: Img,
         Keypress: Keypress,
+        sinGrating: sinGrating,
         Grat: Grat,
         Time: Time,
         RectGroup: RectGroup,

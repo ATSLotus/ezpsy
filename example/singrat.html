@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
     <head>
         <title>sinGrat</title>
@@ -16,13 +16,58 @@
     <script>
         let ez = ezpsy.init(document.getElementById("sinGrat"));
         // console.dir(ez)
-        let keypress = ezpsy.KeypressInit('keyup');
-        let ctx = ez.ctx
-       
+        // let keypress = ezpsy.KeypressInit('keyup');
+        // let ctx = ez.ctx
         ez.setCanvasStyle({
             width: window.innerWidth,
             height: window.innerHeight
         })
+
+        // var str=window.location.search; //location.search是从当前URL的?号开始的字符串
+        // arr=str.split("?");
+        // key = arr[1];
+        // console.log(sessionStorage.getItem(key));
+        // eval(sessionStorage.getItem(key));
+        
+        let a = new ezpsy.sinGrating({
+            wasm : '/dist/singrat_bg.wasm',
+            shape: {
+                x: window.innerWidth/2,                 
+                y: window.innerHeight/2,                 
+                r: 120,    
+                pixelsPerDegree: 57, 
+                spatialFrequency: 2,
+                angle: 90, 
+                contrast: 1, 
+                phase: 0,
+                level: 0.5,
+                gamma: 1
+            },
+            isNoise: false
+        })
+        ez.add(a)
+        a.draw()
+        // a.play()
+        // // a.draw();
+        // // console.dir(a)
+        // // setTimeout(()=>{ez.add(a)},10)
+        
+        // ez.add(a)
+        
+        
+        // a.play(4,333);
+        // console.dir(navigator)
+
+        // (async ()=>{
+        //     let t0 = performance.now()
+        //     await ezpsy.delay_frame(1)
+        //     let t1 = performance.now()
+        //     console.dir(t1-t0);
+        // })()
+        
+        // ez.add(a)
+        // let ctx = ez.ctx;
+        // ctx.putImageData(a.sinGrat,0,0)
 
         // let a = new ezpsy.Rectangle({
         //     shape: {
@@ -46,22 +91,22 @@
         // }
         // ez.add([a,b]);
 
-        let a = new ezpsy.sinGrat({
-            shape: {
-                x: 0,                 
-                y: 0,                 
-                r: 100,    
-                pixelsPerDegree: 57, 
-                spatialFrequency: 1,
-                angle: 0, 
-                contrast: 1, 
-                phase: 0,
-                level: 0
-            },
-            // isNoise: true
-        })
-        ez.add(a)
-        a.play()
+        // let a = new ezpsy.sinGrat({
+        //     shape: {
+        //         x: 0,                 
+        //         y: 0,                 
+        //         r: 100,    
+        //         pixelsPerDegree: 57, 
+        //         spatialFrequency: 1,
+        //         angle: 0, 
+        //         contrast: 1, 
+        //         phase: 0,
+        //         level: 0
+        //     },
+        //     // isNoise: true
+        // })
+        // ez.add(a)
+        // a.play()
         // let b = new ezpsy.Noise({
         //     shape: {
         //         x: 756,                 

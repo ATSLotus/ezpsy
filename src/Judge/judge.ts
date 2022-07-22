@@ -12,7 +12,7 @@ import { makeText, Texts } from '../Graphic/text'
 import { Img, makeImg } from '../Graphic/image'
 import { contentStyle } from '../Dialogue/dialogue'
 import { Grat, makeGrat } from '../Graphic/grating'
-
+import { sinGrating } from '../Graphic/sinGrating'
 import * as ezSinGrat from '../Graphic/sinGrat'
 import * as ezCanvas from '../Canvas/canvas'
 import { DlgContent } from '../ezpsy'
@@ -184,6 +184,10 @@ export function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRenderingC
     else if(el instanceof ezSinGrat.sinGrat)
     {
         (<ezSinGrat.sinGrat>el).draw();
+    }
+    else if(el instanceof sinGrating){
+        console.dir("Add Success!");
+        // (<sinGrating>el).draw();
     }
     else if(el instanceof Group){
         // console.dir(el)

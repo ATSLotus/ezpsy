@@ -53,8 +53,9 @@ export class Img extends Elements{
         {
             let I = new Image()
             I.src = opts.shape.img
-            I.crossOrigin = ''; 
+            I.crossOrigin = 'Anonymous'; 
             this.Img = I;
+            console.dir(this.Img)
         }
         else{
             this.Img = opts.Img
@@ -114,8 +115,17 @@ export class Img extends Elements{
         let that = this;
         c.width = screen.availWidth;
         c.height = screen.availHeight;
-        ctx.drawImage(that.Img,sh.x,sh.y)
-        that.ImgData = ctx.getImageData(sh.x,sh.y,that.Img.width,that.Img.height);
+        console.dir(that.Img)
+        // that.Img.onload = ()=>{
+            ctx.drawImage(that.Img,0,0)
+            that.ImgData = ctx.getImageData(0,0,that.Img.width,that.Img.height);
+            // console.dir(that.ImgData)
+        // }
+        
+        
+        
+        
+        
         
         // this.makeTextures()
     }

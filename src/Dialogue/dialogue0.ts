@@ -107,11 +107,9 @@ export class Dialogue{
                 {
                     Swal.fire({
                         title: 'Success',
-                        confirmButtonColor: '#4983d0',
                         icon: 'success',
-                        customClass: {
-                            confirmButton: 'ezpsy-dlg-btn'
-                        },
+                        showConfirmButton: false,
+                        timer: 200
                     });
                     res(e.value);
                 }
@@ -242,22 +240,21 @@ export class Dialogue{
                     that.inputValue = dom;
                     return dom
                 }
-            }).then(e=>{
-                return new Promise((res,rej)=>{
-                    if(e.isConfirmed)
-                    {
-                        Swal.fire({
-                            title: 'Success',
-                            confirmButtonColor: '#4983d0',
-                            icon: 'success',
-                            customClass: {
-                                confirmButton: 'ezpsy-dlg-btn'
-                            },
-                        });
-                    }
-                    res(e.value);
-                })
             })
+            // .then(e=>{
+            //     return new Promise((res,rej)=>{
+            //         if(e.isConfirmed)
+            //         {
+            //             Swal.fire({
+            //                 title: 'Success',
+            //                 icon: 'success',
+            //                 showConfirmButton: false,
+            //                 timer: 200
+            //             });
+            //         }
+            //         res(e.value);
+            //     })
+            // })
 
         }
         else{
@@ -301,25 +298,24 @@ export class Dialogue{
                     that.inputValue = dom;
                     return dom
                 }
-            }).then(e=>{
-                return new Promise((res,rej)=>{
-                    if(e.isConfirmed)
-                    {
-                        Swal.fire({
-                            title: 'Success',
-                            confirmButtonColor: '#4983d0',
-                            icon: 'success',
-                            customClass: {
-                                confirmButton: 'ezpsy-dlg-btn'
-                            },
-                        });
-                        res(e.value);
-                    }
-                    else{
-                        res("null");
-                    }
-                })
             })
+            // .then(e=>{
+            //     return new Promise((res,rej)=>{
+            //         if(e.isConfirmed)
+            //         {
+            //             Swal.fire({
+            //                 title: 'Success',
+            //                 icon: 'success',
+            //                 showConfirmButton: false,
+            //                 timer: 200
+            //             });
+            //             res(e.value);
+            //         }
+            //         else{
+            //             res("null");
+            //         }
+            //     })
+            // })
         }
         
     }
@@ -341,11 +337,9 @@ export class Dialogue{
                 {
                     Swal.fire({
                         title: 'Success',
-                        confirmButtonColor: '#4983d0',
                         icon: 'success',
-                        customClass: {
-                            confirmButton: 'ezpsy-dlg-btn'
-                        },
+                        showConfirmButton: false,
+                        timer: 200
                     });
                     res(e.value);
                 }

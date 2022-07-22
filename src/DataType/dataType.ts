@@ -27,7 +27,8 @@ export interface Shape{
     angle?: number, 
     contrast?: number, 
     phase?: number,
-    level?: number
+    level?: number,
+    gamma?: number
 }
  
 export interface Style {

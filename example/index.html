@@ -17,6 +17,18 @@
 
       let ez = ezpsy.init(document.getElementById('test'));
 
+      let img = new ezpsy.Img({
+        shape: {
+          img: '../img/1.jpg',
+          x: 0,
+          y: 0,
+          width: 100,
+          height: 100
+        }
+      })
+      ez.add(img)
+      // ez.add(img)
+
       // let dlg = ezpsy.DlgInit()
 
       // dlg.msgDlg({
@@ -270,116 +282,116 @@
         // ez.add(grat)
         // grat.play()
 
-        let rect = new ezpsy.Rectangle({
-          shape:{
-            x: 100,
-            y: 100,
-            width: 100,
-            height: 100
-          },
-          style:{
-            fill: "red"
-          }
-        })
-        let rect0 = new ezpsy.Rectangle({
-          shape:{
-            x: 100,
-            y: 100,
-            width: 100,
-            height: 100
-          },
-          style:{
-            fill: "blue"
-          }
-        })
-        rect.rotate = 45;
-        rect.scale = {
-          width: 1.5,
-          height: 1.5
-        }
-        ez.add([rect,rect0]);
+        // let rect = new ezpsy.Rectangle({
+        //   shape:{
+        //     x: 100,
+        //     y: 100,
+        //     width: 100,
+        //     height: 100
+        //   },
+        //   style:{
+        //     fill: "red"
+        //   }
+        // })
+        // let rect0 = new ezpsy.Rectangle({
+        //   shape:{
+        //     x: 100,
+        //     y: 100,
+        //     width: 100,
+        //     height: 100
+        //   },
+        //   style:{
+        //     fill: "blue"
+        //   }
+        // })
+        // rect.rotate = 45;
+        // rect.scale = {
+        //   width: 1.5,
+        //   height: 1.5
+        // }
+        // ez.add([rect,rect0]);
 
-        // console.dir(rect)
+        // // console.dir(rect)
         
-        let circle = new ezpsy.Circle({
-          shape: {
-            x: 200,
-            y: 100,
-            r: 50
-          }
-        })
+        // let circle = new ezpsy.Circle({
+        //   shape: {
+        //     x: 200,
+        //     y: 100,
+        //     r: 50
+        //   }
+        // })
         
-        // ez.add(circle)
+        // // ez.add(circle)
 
-        let line = new ezpsy.Line({
-          shape: {
-            x: 40,
-            y: 40,
-            xEnd: 100,
-            yEnd: 200
-          },
-          style: {
-            stroke: '#0000ff',
-            lineWidth: 5
-          }
-        })
+        // let line = new ezpsy.Line({
+        //   shape: {
+        //     x: 40,
+        //     y: 40,
+        //     xEnd: 100,
+        //     yEnd: 200
+        //   },
+        //   style: {
+        //     stroke: '#0000ff',
+        //     lineWidth: 5
+        //   }
+        // })
 
-        // ez.add(line);
+        // // ez.add(line);
 
-        let ellipse = new ezpsy.Ellipse({
-          shape: {
-            x: 200,
-            y: 200,
-            ra: 100,
-            rb: 50
-          },
-          style:{
-            fill: "rgb(255,165,0)",
-            stroke: '#ff0000'
-          }
-        })
+        // let ellipse = new ezpsy.Ellipse({
+        //   shape: {
+        //     x: 200,
+        //     y: 200,
+        //     ra: 100,
+        //     rb: 50
+        //   },
+        //   style:{
+        //     fill: "rgb(255,165,0)",
+        //     stroke: '#ff0000'
+        //   }
+        // })
 
-        // ez.add(ellipse)
+        // // ez.add(ellipse)
 
-        // console.dir(ellipse)
+        // // console.dir(ellipse)
 
-        let line0 = new ezpsy.Line({
-          shape: {
-            x: 200,
-            y: 0,
-            xEnd: 200,
-            yEnd: 400
-          },
-          style: {
-            stroke: 'blue'
-          }
-        })
+        // let line0 = new ezpsy.Line({
+        //   shape: {
+        //     x: 200,
+        //     y: 0,
+        //     xEnd: 200,
+        //     yEnd: 400
+        //   },
+        //   style: {
+        //     stroke: 'blue'
+        //   }
+        // })
 
-        let text0 = new ezpsy.Texts({
-          shape: {
-            text: 'ezpsy',
-            x: 145,
-            y: 100
-          },
-          style: {
-            fontSize: '40px',
-            stroke: "#ff00ff"
-          }
-        })
+        // let text0 = new ezpsy.Texts({
+        //   shape: {
+        //     text: 'ezpsy',
+        //     x: 145,
+        //     y: 100
+        //   },
+        //   style: {
+        //     fontSize: '40px',
+        //     stroke: "#ff00ff"
+        //   }
+        // })
         
-        let text1 = new ezpsy.Texts({
-          shape: {
-            text: 'ezpsy',
-            x: 145,
-            y: 200
-          },
-          style: {
-            fontSize: '40px',
-            fill: "#ff00ff"
-          }
-        })
+        // let text1 = new ezpsy.Texts({
+        //   shape: {
+        //     text: 'ezpsy',
+        //     x: 145,
+        //     y: 200
+        //   },
+        //   style: {
+        //     fontSize: '40px',
+        //     fill: "#ff00ff"
+        //   }
+        // })
 
-        let group = new ezpsy.Group([text0,text1]);
+        // let group = new ezpsy.Group([text0,text1]);
 
         // ez.add(group);
 

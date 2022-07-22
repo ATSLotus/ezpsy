@@ -3,7 +3,9 @@ import babel from '@rollup/plugin-babel';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import css from 'rollup-plugin-css-porter';
-import scss from 'rollup-plugin-scss'
+import scss from 'rollup-plugin-scss';
+// import wasm from 'rollup-plugin-wasm';
+import wasm from '@rollup/plugin-wasm';
 module.exports = [
   {
     input: 'index.ts',   //输入文件
@@ -27,6 +29,11 @@ module.exports = [
       commonjs(),
       css(),
       scss(),
+      wasm({
+        sync: [
+          'static/pkg/singrat_bg.wasm'
+        ]
+      }),
       babel({
         exclude: 'node_modules/**' // 只编译我们的源代码
       })

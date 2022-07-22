@@ -1,38 +1,38 @@
-{ 
+{
     "name": "ezpsy",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "directories": {
-      "example": "example"
+        "example": "example"
     },
     "scripts": {
-      "build": "rm -rf dist/* && rollup -c",
-      "watch": "rm -rf dist/* && rollup -c -w",
-      "dev": "rm -rf dist/* && rollup -c -w"
+        "build": "rm -rf dist/* && rollup -c",
+        "watch": "rm -rf dist/* && rollup -c -w",
+        "dev": "rm -rf dist/* && cp static/pkg/singrat_bg.wasm dist && rollup -c -w"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
-      "@rollup/plugin-buble": "^0.21.3",
-      "@rollup/plugin-typescript": "^8.3.0",
-      "babel-plugin-external-helpers": "^6.22.0",
-      "rollup-plugin-css-porter":"^1.0.2",
-      "babel-preset-latest": "^6.24.1",
-      "rollup-plugin-scss":"^3.0.0",
-      "sass":"^1.50.0",
-      "rollup": "^2.63.0",
-      "rollup-plugin-node-resolve":"^5.2.0",
-      "rollup-plugin-commonjs":"^10.1.0",
-      "typescript": "^4.5.4"
+        "@rollup/plugin-buble": "^0.21.3",
+        "@rollup/plugin-typescript": "^8.3.0",
+        "@rollup/plugin-wasm": "^5.2.0",
+        "babel-plugin-external-helpers": "^6.22.0",
+        "babel-preset-latest": "^6.24.1",
+        "rollup": "^2.63.0",
+        "rollup-plugin-commonjs": "^10.1.0",
+        "rollup-plugin-css-porter": "^1.0.2",
+        "rollup-plugin-node-resolve": "^5.2.0",
+        "rollup-plugin-scss": "^3.0.0",
+        "rollup-plugin-wasm": "^3.0.0",
+        "sass": "^1.50.0",
+        "typescript": "^4.5.4"
     },
     "dependencies": {
-      "@rollup/plugin-babel": "^5.3.0",
-      "react-bootstrap-sweetalert":"^5.2.0",
-      "noty":"^3.2.0-beta-deprecated",
-      "sweetalert2": "^11.4.8",
-      "tslib": "^2.3.1"
+        "@rollup/plugin-babel": "^5.3.0",
+        "noty": "^3.2.0-beta-deprecated",
+        "react-bootstrap-sweetalert": "^5.2.0",
+        "sweetalert2": "^11.4.8",
+        "tslib": "^2.3.1"
     }
-  }
-  
-  
+}

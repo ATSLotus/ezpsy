@@ -1,5 +1,7 @@
 import { Elements } from "../Element";
-import { nameStyle, TextLine } from "../ezpsy";
+import { nameStyle } from "../DataType/dataType";
+import { TextLine } from "../Graphic/text";
+import { RandomDot } from "../Graphic/randomDot";
 import { Group } from "../Group/group";
 import * as ezJudge from '../Judge/judge'
 
@@ -30,7 +32,15 @@ export class Storage{
         {
             if(index instanceof Array)
             {
-                index.sort();
+                // index.sort();
+                index.sort((a,b)=>{
+                    if(a>b)
+                      return 1;
+                    else if (a<b)
+                      return -1;
+                    else 
+                      return 0;
+                })
                 for(let i = index.length-1;i >= 0;i--)
                 {
                     this.ElementsList.splice(index[i],1);
@@ -92,7 +102,22 @@ export class Storage{
         for(let i = 0;i < el.length;i++)
         {
             el[i].ctx = ctx
-            ezJudge.judgeElement(el[i],ctx)
+            if(el[i] instanceof RandomDot)
+            {
+                let randomDot:RandomDot = <RandomDot>el[i];
+                randomDot.maskBand[0].ctx = ctx;
+                randomDot.maskBand[1].ctx = ctx;
+                ezJudge.judgeElement(randomDot.maskBand[0],ctx);
+                ezJudge.judgeElement(randomDot.maskBand[1],ctx);
+                for(let index = 0;index < randomDot.RandomDotArray.length;index++)
+                {
+                    randomDot.RandomDotArray[index].ctx = ctx;
+                    ezJudge.judgeElement(randomDot.RandomDotArray[index],ctx)
+                }
+            }
+            else{
+                ezJudge.judgeElement(el[i],ctx)
+            }
         }
     }
 }

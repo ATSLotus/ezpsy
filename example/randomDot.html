@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RandomDot</title>
+    <script src="../dist/iife/ezpsy.js"></script>
+</head>
+<body>
+    <div id="randomDot"></div>
+</body>
+<script>
+    let ez = ezpsy.init(document.getElementById("randomDot"));
+    console.dir(ez)
+
+    let width = 400;
+    let number = 100;
+    let maskBand = 8;
+    let radius = width/2;
+
+    ez.setCanvasStyle({
+        width: width,
+        height: width
+    })
+
+    let randomDot = new ezpsy.RandomDot({
+        shape: {
+            x: radius,
+            y: radius,
+            r: radius,
+            number: 100
+        }
+    })
+
+    ez.add(randomDot);
+
+</script>
+<style>
+    canvas{
+        background-color: #808080;
+    }
+</style>
+</html>

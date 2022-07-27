@@ -296,7 +296,7 @@ var ezpsy = (function () {
             this.ParentsRect = rect;
         }
     }
-    let nameId$a = 0;
+    let nameId$b = 0;
     // class TypeTest implements RectangleShape{
     //     x: number
     //     y: number
@@ -305,8 +305,8 @@ var ezpsy = (function () {
     // }
     class Rectangle extends Elements {
         name = {
-            name: "rect" + nameId$a.toString(),
-            graphicId: nameId$a
+            name: "rect" + nameId$b.toString(),
+            graphicId: nameId$b
         };
         constructor(opts) {
             super();
@@ -322,7 +322,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$a++;
+            nameId$b++;
         }
     }
     class logicRect extends Rectangle {
@@ -849,11 +849,11 @@ var ezpsy = (function () {
         return rect0;
     }
 
-    let nameId$9 = 0;
+    let nameId$a = 0;
     class Circle extends Elements {
         name = {
-            name: "circle" + nameId$9.toString(),
-            graphicId: nameId$9
+            name: "circle" + nameId$a.toString(),
+            graphicId: nameId$a
         };
         constructor(opts) {
             super();
@@ -870,7 +870,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$9++;
+            nameId$a++;
         }
     }
     function makeCircle(circle, ctx) {
@@ -899,11 +899,11 @@ var ezpsy = (function () {
         return circle;
     }
 
-    let nameId$8 = 0;
+    let nameId$9 = 0;
     class Line extends Elements {
         name = {
-            name: "line" + nameId$8.toString(),
-            graphicId: nameId$8
+            name: "line" + nameId$9.toString(),
+            graphicId: nameId$9
         };
         constructor(opts) {
             super();
@@ -920,7 +920,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$8++;
+            nameId$9++;
         }
     }
     // export class line{
@@ -1054,11 +1054,11 @@ var ezpsy = (function () {
     //     }
     // }
 
-    let nameId$7 = 0;
+    let nameId$8 = 0;
     class Arc extends Elements {
         name = {
-            name: "arc" + nameId$7.toString(),
-            graphicId: nameId$7
+            name: "arc" + nameId$8.toString(),
+            graphicId: nameId$8
         };
         constructor(opts) {
             super();
@@ -1075,7 +1075,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$7++;
+            nameId$8++;
         }
     }
     function makeArc(arc, ctx) {
@@ -1160,11 +1160,11 @@ var ezpsy = (function () {
         return arc0;
     }
 
-    let nameId$6 = 0;
+    let nameId$7 = 0;
     class Ellipse extends Elements {
         name = {
-            name: "ellipse" + nameId$6.toString(),
-            graphicId: nameId$6
+            name: "ellipse" + nameId$7.toString(),
+            graphicId: nameId$7
         };
         constructor(opts) {
             super();
@@ -1181,7 +1181,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$6++;
+            nameId$7++;
         }
     }
     function makeEllipse(ellipse, ctx) {
@@ -1243,11 +1243,11 @@ var ezpsy = (function () {
         return ellipse0;
     }
 
-    let nameId$5 = 0;
+    let nameId$6 = 0;
     class Polygon extends Elements {
         name = {
-            name: "polygon" + nameId$5.toString(),
-            graphicId: nameId$5
+            name: "polygon" + nameId$6.toString(),
+            graphicId: nameId$6
         };
         constructor(opts) {
             super();
@@ -1264,7 +1264,7 @@ var ezpsy = (function () {
                     lineWidth: 2
                 };
             }
-            nameId$5++;
+            nameId$6++;
         }
     }
     function makePolygon(polygon, ctx) {
@@ -1324,11 +1324,11 @@ var ezpsy = (function () {
         return polygon0;
     }
 
-    let nameId$4 = 0;
+    let nameId$5 = 0;
     class Texts extends Elements {
         name = {
-            name: "text" + nameId$4.toString(),
-            graphicId: nameId$4
+            name: "text" + nameId$5.toString(),
+            graphicId: nameId$5
         };
         constructor(opts) {
             super();
@@ -1355,7 +1355,7 @@ var ezpsy = (function () {
                     textB: 'alphabetic'
                 };
             }
-            nameId$4++;
+            nameId$5++;
         }
         setTextLine(textLine) {
             if (textLine) {
@@ -1409,7 +1409,7 @@ var ezpsy = (function () {
         return result;
     }
 
-    let nameId$3 = 0;
+    let nameId$4 = 0;
     class RGBA {
         R;
         G;
@@ -1423,8 +1423,8 @@ var ezpsy = (function () {
     }
     class Img extends Elements {
         name = {
-            name: "img" + nameId$3.toString(),
-            graphicId: nameId$3
+            name: "img" + nameId$4.toString(),
+            graphicId: nameId$4
         };
         Img;
         ImgData;
@@ -1479,7 +1479,7 @@ var ezpsy = (function () {
             // {
             //     this.style = opts.style;
             // }
-            nameId$3++;
+            nameId$4++;
         }
         init() {
             this.shape;
@@ -1698,11 +1698,11 @@ var ezpsy = (function () {
         return fill;
     }
 
-    let nameId$2 = 0;
+    let nameId$3 = 0;
     class Grat extends Elements {
         name = {
-            name: "grat" + nameId$2.toString(),
-            graphicId: nameId$2
+            name: "grat" + nameId$3.toString(),
+            graphicId: nameId$3
         };
         constructor(opts) {
             super();
@@ -1729,7 +1729,7 @@ var ezpsy = (function () {
             //         lineWidth: 2
             //     }
             // }
-            nameId$2++;
+            nameId$3++;
         }
         play(speed, delay) {
             if (!delay) {
@@ -1926,11 +1926,11 @@ var ezpsy = (function () {
       return wasm;
     }
 
-    let nameId$1 = 0;
+    let nameId$2 = 0;
     class sinGrating extends Elements {
         name = {
-            name: "singrating" + nameId$1.toString(),
-            graphicId: nameId$1
+            name: "singrating" + nameId$2.toString(),
+            graphicId: nameId$2
         };
         wasm;
         param;
@@ -1949,7 +1949,7 @@ var ezpsy = (function () {
             this.imgDataList = new Array();
             this.isNoise = opts.isNoise;
             // console.dir(this.isNoise)
-            nameId$1++;
+            nameId$2++;
         }
         draw() {
             let sh = this.shape;
@@ -2061,6 +2061,140 @@ var ezpsy = (function () {
     // function getArrayU8FromWasm0(ptr, len, wasm) {
     //     return getUint8Memory0(wasm).subarray(ptr / 1, ptr / 1 + len);
     // }
+
+    let nameId$1 = 0;
+    class RandomDot extends Elements {
+        name = {
+            name: "randomDot" + nameId$1.toString(),
+            graphicId: nameId$1
+        };
+        RandomDotArray;
+        maskBand;
+        translation;
+        constructor(opts) {
+            super();
+            this.shape = opts.shape;
+            this.ctx = super.ctx;
+            if (!this.shape.maskBand)
+                this.shape.maskBand = 8;
+            if (!this.shape.number)
+                this.shape.number = 10;
+            if (!this.shape.maxSpeed)
+                this.shape.maxSpeed = 5;
+            if (!this.shape.minSpeed)
+                this.shape.minSpeed = 0;
+            this.maskBand = new Array();
+            this.RandomDotArray = randomisedPoint(this.shape.r, this.shape.maskBand, this.shape.number);
+            this.maskBand[0] = new Circle({
+                shape: {
+                    x: this.shape.x,
+                    y: this.shape.y,
+                    r: this.shape.r
+                },
+                style: {
+                    fill: 'white'
+                }
+            });
+            this.maskBand[1] = new Circle({
+                shape: {
+                    x: this.shape.x,
+                    y: this.shape.y,
+                    r: this.shape.r + this.shape.maskBand / 2
+                },
+                style: {
+                    stroke: "#888888",
+                    lineWidth: this.shape.maskBand
+                }
+            });
+            this.translation = getRandom(this.shape.maxSpeed, this.shape.minSpeed, this.shape.number);
+            nameId$1++;
+        }
+    }
+    function playRandomDot(randomDot, ctx) {
+        randomDot.ctx = ctx;
+        let sh = randomDot.shape;
+        // makeCircle(randomDot.maskBand[0],ctx);
+        // makeCircle(randomDot.maskBand[1],ctx);
+        let f = new Array();
+        let trans = new Array();
+        for (let i = 0; i < sh.number; i++) {
+            f.push(1);
+            trans.push({ x: randomDot.translation[i].x, y: randomDot.translation[i].y });
+        }
+        randomDot.animate(() => {
+            for (let i = 0; i < sh.number; i++) {
+                let x = randomDot.RandomDotArray[i].shape.x + trans[i].x;
+                let y = randomDot.RandomDotArray[i].shape.y + trans[i].y;
+                if ((Math.pow(x - sh.x, 2) + Math.pow(y - sh.y, 2)) >= Math.pow(sh.r - sh.maskBand, 2))
+                    f[i] *= (-1);
+                randomDot.RandomDotArray[i].translate = {
+                    x: trans[i].x,
+                    y: trans[i].y
+                };
+                trans[i].x = trans[i].x + f[i] * randomDot.translation[i].x;
+                trans[i].y = trans[i].y + f[i] * randomDot.translation[i].y;
+            }
+        }, 1);
+    }
+    function randomisedPoint(radius, maskBand, number) {
+        let arr = getNonRepetitiveRandom(radius - maskBand, radius, number);
+        let dot = new Array();
+        for (let i = 0; i < number; i++) {
+            dot[i] = new Circle({
+                shape: {
+                    x: arr[i].x,
+                    y: arr[i].y,
+                    r: 2
+                },
+                style: {
+                    fill: "#000000"
+                }
+            });
+        }
+        return dot;
+    }
+    function dotArea(r, radius) {
+        let arr = new Array();
+        for (let i = 0; i < 2 * r; i++) {
+            for (let j = 0; j < 2 * r; j++) {
+                let r2 = Math.pow(i - radius, 2) + Math.pow(j - radius, 2);
+                if (r2 <= Math.pow(r, 2)) {
+                    arr.push({ x: i, y: j });
+                }
+            }
+        }
+        return arr;
+    }
+    function getNonRepetitiveRandom(r, radius, number) {
+        let arr = new Array();
+        let template = dotArea(r, radius);
+        for (let i = 0; i < number; i++) {
+            let index = Math.floor(Math.random() * template.length);
+            arr.push(template[index]);
+            template.splice(index, 1);
+        }
+        return arr;
+    }
+    function getRandom(maxSpeed, minSpeed, number) {
+        let arr = new Array();
+        for (let i = 0; i < number; i++) {
+            let x = setRandom(maxSpeed, minSpeed);
+            let y = setRandom(maxSpeed, minSpeed);
+            arr.push({ x: x, y: y });
+        }
+        return arr;
+    }
+    function setRandom(maxSpeed, minSpeed) {
+        let num = Math.random() * (maxSpeed - minSpeed) + minSpeed;
+        let signF = Math.round(Math.random());
+        let sign = 0;
+        if (signF)
+            sign = 1;
+        else
+            sign = -1;
+        num *= sign;
+        return num;
+    }
 
     let nameId = 0;
     //光栅
@@ -2348,6 +2482,9 @@ var ezpsy = (function () {
         else if (el instanceof sinGrating) {
             console.dir("Add Success!");
             // (<sinGrating>el).draw();
+        }
+        else if (el instanceof RandomDot) {
+            playRandomDot(el, ctx);
         }
         else if (el instanceof Group) {
             // console.dir(el)
@@ -2844,7 +2981,15 @@ var ezpsy = (function () {
             let index = this.searchElementsName(name);
             if (index !== undefined) {
                 if (index instanceof Array) {
-                    index.sort();
+                    // index.sort();
+                    index.sort((a, b) => {
+                        if (a > b)
+                            return 1;
+                        else if (a < b)
+                            return -1;
+                        else
+                            return 0;
+                    });
                     for (let i = index.length - 1; i >= 0; i--) {
                         this.ElementsList.splice(index[i], 1);
                     }
@@ -2895,7 +3040,20 @@ var ezpsy = (function () {
             let el = this.ElementsList;
             for (let i = 0; i < el.length; i++) {
                 el[i].ctx = ctx;
-                judgeElement(el[i], ctx);
+                if (el[i] instanceof RandomDot) {
+                    let randomDot = el[i];
+                    randomDot.maskBand[0].ctx = ctx;
+                    randomDot.maskBand[1].ctx = ctx;
+                    judgeElement(randomDot.maskBand[0], ctx);
+                    judgeElement(randomDot.maskBand[1], ctx);
+                    for (let index = 0; index < randomDot.RandomDotArray.length; index++) {
+                        randomDot.RandomDotArray[index].ctx = ctx;
+                        judgeElement(randomDot.RandomDotArray[index], ctx);
+                    }
+                }
+                else {
+                    judgeElement(el[i], ctx);
+                }
             }
         }
     }
@@ -7364,7 +7522,7 @@ var ezpsy = (function () {
                 while (1) {
                     func();
                     await delay_frame(delay);
-                    el.remove();
+                    that.remove(el);
                     that.add(el);
                 }
             })();
@@ -7508,6 +7666,7 @@ var ezpsy = (function () {
         sinGrating: sinGrating,
         Grat: Grat,
         Time: Time,
+        RandomDot: RandomDot,
         RectGroup: RectGroup,
         makeRectangle: makeRectangle,
         AdjoinRect: AdjoinRect,

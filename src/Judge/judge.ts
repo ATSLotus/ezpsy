@@ -13,9 +13,10 @@ import { Img, makeImg } from '../Graphic/image'
 import { contentStyle } from '../Dialogue/dialogue'
 import { Grat, makeGrat } from '../Graphic/grating'
 import { sinGrating } from '../Graphic/sinGrating'
+import { playRandomDot, RandomDot } from '../Graphic/randomDot'
 import * as ezSinGrat from '../Graphic/sinGrat'
 import * as ezCanvas from '../Canvas/canvas'
-import { DlgContent } from '../ezpsy'
+import { DlgContent } from '../Dialogue/dialogue0'
 
 export function judgeCanvasStyle(cStyle: canvasStyle):canvasStyle{
     if(!cStyle) 
@@ -188,6 +189,10 @@ export function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRenderingC
     else if(el instanceof sinGrating){
         console.dir("Add Success!");
         // (<sinGrating>el).draw();
+    }
+    else if(el instanceof RandomDot)
+    {
+        playRandomDot(el,ctx);
     }
     else if(el instanceof Group){
         // console.dir(el)

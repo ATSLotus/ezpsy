@@ -45,6 +45,7 @@ export { Keypress } from './Keypress/keypress0'
 export { sinGrating } from './Graphic/sinGrating'
 export { Grat } from './Graphic/grating'
 export { Time } from './Time/timePerformance'
+export { RandomDot } from './Graphic/randomDot'
 
 // export { animate } from './Animate/animate'
 // export { makeRectangle } from './Graphic/rectangle'
@@ -160,7 +161,7 @@ class Ezpsy {
     //     this.ctx.globalCompositeOperation = style
     // }
 
-    animate(el: Elements,func: Function,delay: number){
+    animate(el: Elements|Elements[],func: Function,delay: number){
         // el.ctx = this.ctx;
         let that = this;
         // el.remove();
@@ -172,10 +173,11 @@ class Ezpsy {
             while(1){
                 func();
                 await ezTime.delay_frame(delay);
-                el.remove()
+                that.remove(el)
                 that.add(el);
             }
         })()
+        
 
         // window.setInterval(()=>{
         //     // let a = performance.now()

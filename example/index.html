@@ -17,16 +17,25 @@
 
       let ez = ezpsy.init(document.getElementById('test'));
 
-      let img = new ezpsy.Img({
+      let a = new ezpsy.Circle({
         shape: {
-          img: '../img/1.jpg',
           x: 0,
           y: 0,
-          width: 100,
-          height: 100
+          r: 100
         }
       })
-      ez.add(img)
+      ez.add(a)
+
+      // let img = new ezpsy.Img({
+      //   shape: {
+      //     img: '../img/1.jpg',
+      //     x: 0,
+      //     y: 0,
+      //     width: 100,
+      //     height: 100
+      //   }
+      // })
+      // ez.add(img)
       // ez.add(img)
 
       // let dlg = ezpsy.DlgInit()

@@ -102,22 +102,20 @@ export class Storage{
         for(let i = 0;i < el.length;i++)
         {
             el[i].ctx = ctx
-            if(el[i] instanceof RandomDot)
-            {
-                let randomDot:RandomDot = <RandomDot>el[i];
-                randomDot.maskBand[0].ctx = ctx;
-                randomDot.maskBand[1].ctx = ctx;
-                ezJudge.judgeElement(randomDot.maskBand[0],ctx);
-                ezJudge.judgeElement(randomDot.maskBand[1],ctx);
-                for(let index = 0;index < randomDot.RandomDotArray.length;index++)
-                {
-                    randomDot.RandomDotArray[index].ctx = ctx;
-                    ezJudge.judgeElement(randomDot.RandomDotArray[index],ctx)
-                }
-            }
-            else{
+            // if(el[i] instanceof RandomDot)
+            // {
+            //     let randomDot:RandomDot = <RandomDot>el[i];
+            //     randomDot.maskBand.ctx = ctx;
+            //     ezJudge.judgeElement(randomDot.maskBand,ctx);
+            //     for(let index = 0;index < randomDot.RandomDotArray.length;index++)
+            //     {
+            //         randomDot.RandomDotArray[index].ctx = ctx;
+            //         ezJudge.judgeElement(randomDot.RandomDotArray[index],ctx)
+            //     }
+            // }
+            // else{
                 ezJudge.judgeElement(el[i],ctx)
-            }
+            // }
         }
     }
 }

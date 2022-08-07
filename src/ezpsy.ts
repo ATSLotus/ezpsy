@@ -162,19 +162,44 @@ class Ezpsy {
     // }
 
     animate(el: Elements|Elements[],func: Function,delay: number){
+
+        if(el instanceof Array)
+        {
+            for(let i = 0;i < el.length;i++){
+                el[i].IsAnimation = true;
+                el[i].IsPause = true
+            }
+        }
+        else{
+            el.IsAnimation = true;
+        }
+
         // el.ctx = this.ctx;
         let that = this;
         // el.remove();
         let ctx = this.ctx;
+
+        let pause = false;
         // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
         // this.ctxList.push(ctx);
 
         (async function () {
-            while(1){
-                func();
-                await ezTime.delay_frame(delay);
-                that.remove(el)
-                that.add(el);
+            while((<Elements>el).IsAnimation || (<Array<Elements>>el)[0].IsAnimation){
+                if(el instanceof Elements)
+                    pause = el.IsPause
+                else
+                    pause = el[0].IsPause
+                if(pause)
+                {
+                    console.dir("The animation has paused !");
+                    await ezTime.delay_frame(delay);
+                }
+                else{
+                    func();
+                    await ezTime.delay_frame(delay);
+                    that.remove(el)
+                    that.add(el);
+                }
             }
         })()
         

@@ -18,6 +18,8 @@ export class Elements{
     scale?: Scale
     translate?: Translate
     rotate?: number
+    IsAnimation?: boolean
+    IsPause?: boolean
     constructor(){
         this.translate = {
             x: 0,
@@ -28,6 +30,8 @@ export class Elements{
             height: 1
         }
         this.rotate = 0
+        this.IsAnimation = false
+        this.IsPause = false
     }
     noFill(){
         this.style.fill = 'none';
@@ -85,6 +89,9 @@ export class Elements{
     }
 
     animate(func: Function,delay: number){
+
+        this.IsAnimation = true
+
         // el.ctx = this.ctx;
         let that = this;
         // el.remove();
@@ -96,13 +103,19 @@ export class Elements{
             // while(performance.now() > start)
             // {
                 
-            while(1){
+            while(that.IsAnimation){
                 // console.dir(performance.now())
-                func();
-                await ezTime.delay_frame(delay);
-                that.remove()
-                that.storage.push(that)
-                that.storage.reDraw(ctx)
+                if(that.IsPause){
+                    console.dir("The animation has paused !");
+                    await ezTime.delay_frame(delay);
+                }
+                else{
+                    func();
+                    await ezTime.delay_frame(delay);
+                    that.remove();
+                    that.storage.push(that);
+                    that.storage.reDraw(ctx);
+                }
             }
                 
             //     func();

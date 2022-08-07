@@ -110,9 +110,9 @@ function listen(key: Array<string>,keyType: string,func: Func,IsDestroy: boolean
                     if(res.index >= 0)
                     {
                         if(func.complete)
-                            func.complete()
+                            func.complete();
                     }
-                    if(func)
+                    if(func.funcList)
                     {
                         if(func.funcList[res.index])
                             func.funcList[res.index]()
@@ -134,7 +134,7 @@ function listen(key: Array<string>,keyType: string,func: Func,IsDestroy: boolean
 }
 
 interface Func{
-    funcList: Array<Function>
+    funcList?: Array<Function>
     complete?: Function
 }
 interface RES{

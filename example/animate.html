@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/iife/ezpsy.js"></script>
+</head>
+<body>
+    <div id="test"></div>
+</body>
+<script>
+    let ez = ezpsy.init(document.getElementById("test"));
+    let keypress = ezpsy.KeypressInit('keyup');
+
+    let rect = new ezpsy.Rectangle({
+        shape:{
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 100
+        }
+    })
+    let rect0 = new ezpsy.Rectangle({
+        shape:{
+            x: 0,
+            y: 0,
+            width: 50,
+            height: 200
+        }
+    })
+
+    // let el = [rect,rect0]
+
+    ez.add([rect,rect0])
+
+    let i = 0;
+    let f = true;
+
+    // ez.animate(rect,()=>{
+    //     rect.translate.x = 10 * i;
+    //     // if(i > 20)
+    //     //     rect.IsPause = true
+    // },5)
+    ez.animate(rect,()=>{
+        rect.translate.x = 10 * i;
+        if(f)
+            i++
+        else
+            i--
+        if(i>20||i<0)
+            f = !f;
+    },2)
+    
+    let f0 = true;
+    keypress.listen(' ',()=>{
+        rect.IsPause = f0
+        f0 = !f0;
+        console.dir(f0)
+    },false)
+
+</script>
+</html>

@@ -12,6 +12,7 @@
 </body>
 <script>
     let ez = ezpsy.init(document.getElementById("randomDot"));
+    let keypress = ezpsy.KeypressInit('keyup');
     console.dir(ez)
 
     let width = 400;
@@ -29,11 +30,26 @@
             x: radius,
             y: radius,
             r: radius,
-            number: 100
+            number: 100,
         }
     })
 
     ez.add(randomDot);
+
+    // randomDot.IsAnimation = false
+
+    let f = true;
+
+    keypress.listen(' ',{
+        complete: ()=>{
+            if(f)
+                randomDot.IsAnimation = false
+            else
+                randomDot.IsAnimation = true
+            f = !f;
+        }
+    },false)
+
 
 </script>
 <style>

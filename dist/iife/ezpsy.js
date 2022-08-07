@@ -140,6 +140,8 @@ var ezpsy = (function () {
         scale;
         translate;
         rotate;
+        IsAnimation;
+        IsPause;
         constructor() {
             this.translate = {
                 x: 0,
@@ -150,6 +152,8 @@ var ezpsy = (function () {
                 height: 1
             };
             this.rotate = 0;
+            this.IsAnimation = false;
+            this.IsPause = false;
         }
         noFill() {
             this.style.fill = 'none';
@@ -198,6 +202,7 @@ var ezpsy = (function () {
             // c.height = c.height;
         }
         animate(func, delay) {
+            this.IsAnimation = true;
             // el.ctx = this.ctx;
             let that = this;
             // el.remove();
@@ -208,13 +213,19 @@ var ezpsy = (function () {
             (async function () {
                 // while(performance.now() > start)
                 // {
-                while (1) {
+                while (that.IsAnimation) {
                     // console.dir(performance.now())
-                    func();
-                    await delay_frame(delay);
-                    that.remove();
-                    that.storage.push(that);
-                    that.storage.reDraw(ctx);
+                    if (that.IsPause) {
+                        console.dir("The animation has paused !");
+                        await delay_frame(delay);
+                    }
+                    else {
+                        func();
+                        await delay_frame(delay);
+                        that.remove();
+                        that.storage.push(that);
+                        that.storage.reDraw(ctx);
+                    }
                 }
                 //     func();
                 //     // await ezTime.WaitSecs0(delay/2)
@@ -2083,30 +2094,33 @@ var ezpsy = (function () {
                 this.shape.maxSpeed = 5;
             if (!this.shape.minSpeed)
                 this.shape.minSpeed = 0;
-            this.maskBand = new Array();
+            // this.maskBand = new Array();
             this.RandomDotArray = randomisedPoint(this.shape.r, this.shape.maskBand, this.shape.number);
-            this.maskBand[0] = new Circle({
+            this.maskBand = new Circle({
                 shape: {
                     x: this.shape.x,
                     y: this.shape.y,
                     r: this.shape.r
                 },
                 style: {
-                    fill: 'white'
-                }
-            });
-            this.maskBand[1] = new Circle({
-                shape: {
-                    x: this.shape.x,
-                    y: this.shape.y,
-                    r: this.shape.r + this.shape.maskBand / 2
-                },
-                style: {
+                    fill: '#ffffff',
                     stroke: "#888888",
                     lineWidth: this.shape.maskBand
                 }
             });
+            // this.maskBand[1] = new Circle({
+            //     shape: {
+            //         x: this.shape.x,
+            //         y: this.shape.y,
+            //         r: this.shape.r+this.shape.maskBand/2
+            //     },
+            //     style: {
+            //         stroke: "#888888",
+            //         lineWidth: this.shape.maskBand
+            //     }
+            // })
             this.translation = getRandom(this.shape.maxSpeed, this.shape.minSpeed, this.shape.number);
+            this.IsAnimation = true;
             nameId$1++;
         }
     }
@@ -2121,21 +2135,76 @@ var ezpsy = (function () {
             f.push(1);
             trans.push({ x: randomDot.translation[i].x, y: randomDot.translation[i].y });
         }
-        randomDot.animate(() => {
-            for (let i = 0; i < sh.number; i++) {
-                let x = randomDot.RandomDotArray[i].shape.x + trans[i].x;
-                let y = randomDot.RandomDotArray[i].shape.y + trans[i].y;
-                if ((Math.pow(x - sh.x, 2) + Math.pow(y - sh.y, 2)) >= Math.pow(sh.r - sh.maskBand, 2))
-                    f[i] *= (-1);
-                randomDot.RandomDotArray[i].translate = {
-                    x: trans[i].x,
-                    y: trans[i].y
-                };
-                trans[i].x = trans[i].x + f[i] * randomDot.translation[i].x;
-                trans[i].y = trans[i].y + f[i] * randomDot.translation[i].y;
+        randomDot.maskBand.ctx = ctx;
+        for (let i = 0; i < randomDot.RandomDotArray.length; i++)
+            randomDot.RandomDotArray[i].ctx = ctx;
+        (async () => {
+            while (randomDot.IsAnimation) {
+                randomAninmation(randomDot, sh, trans, f);
+                await delay_frame(1);
+                randomDot.remove();
+                randomDot.storage.push(randomDot);
+                judgeElement(randomDot.maskBand, ctx);
+                for (let index = 0; index < randomDot.RandomDotArray.length; index++) {
+                    randomDot.RandomDotArray[index].ctx = ctx;
+                    judgeElement(randomDot.RandomDotArray[index], ctx);
+                }
             }
-        }, 1);
+        })();
+        // randomDot.animate(()=>{
+        //     for(let i = 0;i < sh.number;i++)
+        //     {
+        //         let x = randomDot.RandomDotArray[i].shape.x+trans[i].x;
+        //         let y = randomDot.RandomDotArray[i].shape.y+trans[i].y;
+        //         if((Math.pow(x-sh.x,2)+Math.pow(y-sh.y,2)) >= Math.pow(sh.r-sh.maskBand,2))
+        //             f[i] *= (-1);
+        //         randomDot.RandomDotArray[i].translate = {
+        //             x: trans[i].x,
+        //             y: trans[i].y
+        //         }
+        //         trans[i].x = trans[i].x + f[i]*randomDot.translation[i].x;
+        //         trans[i].y = trans[i].y + f[i]*randomDot.translation[i].y;
+        //     }
+        // },1);
     }
+    let randomAninmation = (randomDot, sh, trans, f) => {
+        for (let i = 0; i < sh.number; i++) {
+            let x = randomDot.RandomDotArray[i].shape.x + trans[i].x;
+            let y = randomDot.RandomDotArray[i].shape.y + trans[i].y;
+            if ((Math.pow(x - sh.x, 2) + Math.pow(y - sh.y, 2)) >= Math.pow(sh.r - sh.maskBand, 2))
+                f[i] *= (-1);
+            randomDot.RandomDotArray[i].translate = {
+                x: trans[i].x,
+                y: trans[i].y
+            };
+            trans[i].x = trans[i].x + f[i] * randomDot.translation[i].x;
+            trans[i].y = trans[i].y + f[i] * randomDot.translation[i].y;
+        }
+    };
+    // function randomAnimation(randomDot: RandomDot){
+    //     let sh = randomDot.shape;
+    //     let f = new Array();
+    //     let trans = new Array();
+    //     for(let i = 0;i < sh.number;i++)
+    //     {
+    //         f.push(1);
+    //         trans.push({x:randomDot.translation[i].x,y:randomDot.translation[i].y});
+    //     }
+    //     for(let i = 0;i < sh.number;i++)
+    //     {
+    //         let x = randomDot.RandomDotArray[i].shape.x+trans[i].x;
+    //         let y = randomDot.RandomDotArray[i].shape.y+trans[i].y;
+    //         if((Math.pow(x-sh.x,2)+Math.pow(y-sh.y,2)) >= Math.pow(sh.r-sh.maskBand,2))
+    //             f[i] *= (-1);
+    //         randomDot.RandomDotArray[i].translate = {
+    //             x: trans[i].x,
+    //             y: trans[i].y
+    //         }
+    //         // console.dir(f[i]*translateX[i])
+    //         trans[i].x = trans[i].x + f[i]*randomDot.translation[i].x;
+    //         trans[i].y = trans[i].y + f[i]*randomDot.translation[i].y;
+    //     }
+    // }
     function randomisedPoint(radius, maskBand, number) {
         let arr = getNonRepetitiveRandom(radius - maskBand, radius, number);
         let dot = new Array();
@@ -3040,20 +3109,20 @@ var ezpsy = (function () {
             let el = this.ElementsList;
             for (let i = 0; i < el.length; i++) {
                 el[i].ctx = ctx;
-                if (el[i] instanceof RandomDot) {
-                    let randomDot = el[i];
-                    randomDot.maskBand[0].ctx = ctx;
-                    randomDot.maskBand[1].ctx = ctx;
-                    judgeElement(randomDot.maskBand[0], ctx);
-                    judgeElement(randomDot.maskBand[1], ctx);
-                    for (let index = 0; index < randomDot.RandomDotArray.length; index++) {
-                        randomDot.RandomDotArray[index].ctx = ctx;
-                        judgeElement(randomDot.RandomDotArray[index], ctx);
-                    }
-                }
-                else {
-                    judgeElement(el[i], ctx);
-                }
+                // if(el[i] instanceof RandomDot)
+                // {
+                //     let randomDot:RandomDot = <RandomDot>el[i];
+                //     randomDot.maskBand.ctx = ctx;
+                //     ezJudge.judgeElement(randomDot.maskBand,ctx);
+                //     for(let index = 0;index < randomDot.RandomDotArray.length;index++)
+                //     {
+                //         randomDot.RandomDotArray[index].ctx = ctx;
+                //         ezJudge.judgeElement(randomDot.RandomDotArray[index],ctx)
+                //     }
+                // }
+                // else{
+                judgeElement(el[i], ctx);
+                // }
             }
         }
     }
@@ -3295,7 +3364,7 @@ var ezpsy = (function () {
                             if (func.complete)
                                 func.complete();
                         }
-                        if (func) {
+                        if (func.funcList) {
                             if (func.funcList[res.index])
                                 func.funcList[res.index]();
                             else
@@ -7512,18 +7581,38 @@ var ezpsy = (function () {
         //     this.ctx.globalCompositeOperation = style
         // }
         animate(el, func, delay) {
+            if (el instanceof Array) {
+                for (let i = 0; i < el.length; i++) {
+                    el[i].IsAnimation = true;
+                    el[i].IsPause = true;
+                }
+            }
+            else {
+                el.IsAnimation = true;
+            }
             // el.ctx = this.ctx;
             let that = this;
             // el.remove();
             this.ctx;
+            let pause = false;
             // let ctx = ezCanvas.createCanvas(this.dom,this.cStyle); 
             // this.ctxList.push(ctx);
             (async function () {
-                while (1) {
-                    func();
-                    await delay_frame(delay);
-                    that.remove(el);
-                    that.add(el);
+                while (el.IsAnimation || el[0].IsAnimation) {
+                    if (el instanceof Elements)
+                        pause = el.IsPause;
+                    else
+                        pause = el[0].IsPause;
+                    if (pause) {
+                        console.dir("The animation has paused !");
+                        await delay_frame(delay);
+                    }
+                    else {
+                        func();
+                        await delay_frame(delay);
+                        that.remove(el);
+                        that.add(el);
+                    }
                 }
             })();
             // window.setInterval(()=>{

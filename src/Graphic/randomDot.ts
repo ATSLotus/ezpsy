@@ -1,6 +1,8 @@
 import { Circle, makeCircle } from '../Graphic/circle'
 import { Shape,Style,nameStyle,Opts } from '../DataType/dataType'
 import { Elements } from '../Element'
+import { delay_frame } from '../Time/time'
+import * as ezJudge from "../Judge/judge"
 
 interface RandomDotShape extends Shape{
     x: number,
@@ -31,7 +33,7 @@ export class RandomDot extends Elements{
     }
     declare shape?: RandomDotShape
     RandomDotArray: Array<Circle>
-    maskBand: Array<Circle>
+    maskBand: Circle
     translation: Array<Point>
     constructor(opts: RandomDotOpts){
         super();
@@ -46,33 +48,37 @@ export class RandomDot extends Elements{
         if(!this.shape.minSpeed)
             this.shape.minSpeed = 0;
 
-        this.maskBand = new Array();
+        // this.maskBand = new Array();
 
         this.RandomDotArray = randomisedPoint(this.shape.r,this.shape.maskBand,this.shape.number);
 
-        this.maskBand[0] = new Circle({
+        this.maskBand = new Circle({
             shape: {
                 x: this.shape.x,
                 y: this.shape.y,
                 r: this.shape.r
             },
             style: {
-                fill: 'white'
-            }
-        })
-        this.maskBand[1] = new Circle({
-            shape: {
-                x: this.shape.x,
-                y: this.shape.y,
-                r: this.shape.r+this.shape.maskBand/2
-            },
-            style: {
+                fill: '#ffffff',
                 stroke: "#888888",
                 lineWidth: this.shape.maskBand
             }
         })
+        // this.maskBand[1] = new Circle({
+        //     shape: {
+        //         x: this.shape.x,
+        //         y: this.shape.y,
+        //         r: this.shape.r+this.shape.maskBand/2
+        //     },
+        //     style: {
+        //         stroke: "#888888",
+        //         lineWidth: this.shape.maskBand
+        //     }
+        // })
 
         this.translation = getRandom(this.shape.maxSpeed,this.shape.minSpeed,this.shape.number);
+
+        this.IsAnimation = true;
 
         nameId++;
     }
@@ -86,8 +92,8 @@ export function playRandomDot(randomDot: RandomDot,ctx: CanvasRenderingContext2D
     // makeCircle(randomDot.maskBand[0],ctx);
     // makeCircle(randomDot.maskBand[1],ctx);
 
-    let f = new Array();
-    let trans = new Array();
+    let f:Array<number> = new Array();
+    let trans:Array<Point> = new Array();
 
     for(let i = 0;i < sh.number;i++)
     {
@@ -95,40 +101,49 @@ export function playRandomDot(randomDot: RandomDot,ctx: CanvasRenderingContext2D
         trans.push({x:randomDot.translation[i].x,y:randomDot.translation[i].y});
     }
 
-    randomDot.animate(()=>{
-        for(let i = 0;i < sh.number;i++)
-        {
-            let x = randomDot.RandomDotArray[i].shape.x+trans[i].x;
-            let y = randomDot.RandomDotArray[i].shape.y+trans[i].y;
+    randomDot.maskBand.ctx = ctx;
 
-            if((Math.pow(x-sh.x,2)+Math.pow(y-sh.y,2)) >= Math.pow(sh.r-sh.maskBand,2))
-                f[i] *= (-1);
+    for(let i = 0;i < randomDot.RandomDotArray.length;i++)
+        randomDot.RandomDotArray[i].ctx = ctx;
 
-            randomDot.RandomDotArray[i].translate = {
-                x: trans[i].x,
-                y: trans[i].y
+    (async ()=>{
+        while(randomDot.IsAnimation){
+            randomAninmation(randomDot,sh,trans,f);
+            await delay_frame(1);
+            randomDot.remove();
+            randomDot.storage.push(randomDot);
+            ezJudge.judgeElement(randomDot.maskBand,ctx);
+            for(let index = 0;index < randomDot.RandomDotArray.length;index++)
+            {
+                randomDot.RandomDotArray[index].ctx = ctx;
+                ezJudge.judgeElement(randomDot.RandomDotArray[index],ctx)
             }
-
-            trans[i].x = trans[i].x + f[i]*randomDot.translation[i].x;
-            trans[i].y = trans[i].y + f[i]*randomDot.translation[i].y;
-
         }
-    },1);
+    })()
+
+    // randomDot.animate(()=>{
+    //     for(let i = 0;i < sh.number;i++)
+    //     {
+    //         let x = randomDot.RandomDotArray[i].shape.x+trans[i].x;
+    //         let y = randomDot.RandomDotArray[i].shape.y+trans[i].y;
+
+    //         if((Math.pow(x-sh.x,2)+Math.pow(y-sh.y,2)) >= Math.pow(sh.r-sh.maskBand,2))
+    //             f[i] *= (-1);
+
+    //         randomDot.RandomDotArray[i].translate = {
+    //             x: trans[i].x,
+    //             y: trans[i].y
+    //         }
+
+    //         trans[i].x = trans[i].x + f[i]*randomDot.translation[i].x;
+    //         trans[i].y = trans[i].y + f[i]*randomDot.translation[i].y;
+
+    //     }
+    // },1);
     
 }
 
-function randomAnimation(randomDot: RandomDot){
-    let sh = randomDot.shape;
-
-    let f = new Array();
-    let trans = new Array();
-
-    for(let i = 0;i < sh.number;i++)
-    {
-        f.push(1);
-        trans.push({x:randomDot.translation[i].x,y:randomDot.translation[i].y});
-    }
-    
+let randomAninmation = (randomDot: RandomDot,sh: RandomDotShape,trans: Array<Point>,f:Array<number>) =>{
     for(let i = 0;i < sh.number;i++)
     {
         let x = randomDot.RandomDotArray[i].shape.x+trans[i].x;
@@ -142,13 +157,44 @@ function randomAnimation(randomDot: RandomDot){
             y: trans[i].y
         }
 
-        // console.dir(f[i]*translateX[i])
-
         trans[i].x = trans[i].x + f[i]*randomDot.translation[i].x;
         trans[i].y = trans[i].y + f[i]*randomDot.translation[i].y;
 
     }
 }
+
+// function randomAnimation(randomDot: RandomDot){
+//     let sh = randomDot.shape;
+
+//     let f = new Array();
+//     let trans = new Array();
+
+//     for(let i = 0;i < sh.number;i++)
+//     {
+//         f.push(1);
+//         trans.push({x:randomDot.translation[i].x,y:randomDot.translation[i].y});
+//     }
+    
+//     for(let i = 0;i < sh.number;i++)
+//     {
+//         let x = randomDot.RandomDotArray[i].shape.x+trans[i].x;
+//         let y = randomDot.RandomDotArray[i].shape.y+trans[i].y;
+
+//         if((Math.pow(x-sh.x,2)+Math.pow(y-sh.y,2)) >= Math.pow(sh.r-sh.maskBand,2))
+//             f[i] *= (-1);
+
+//         randomDot.RandomDotArray[i].translate = {
+//             x: trans[i].x,
+//             y: trans[i].y
+//         }
+
+//         // console.dir(f[i]*translateX[i])
+
+//         trans[i].x = trans[i].x + f[i]*randomDot.translation[i].x;
+//         trans[i].y = trans[i].y + f[i]*randomDot.translation[i].y;
+
+//     }
+// }
 
 function randomisedPoint(radius:number,maskBand:number,number:number):Array<Circle>{
     let arr = getNonRepetitiveRandom(radius-maskBand,radius,number);

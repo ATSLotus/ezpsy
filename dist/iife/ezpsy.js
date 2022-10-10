@@ -1382,10 +1382,10 @@ var ezpsy = (function () {
     function makeText(text, ctx) {
         ctx.save();
         ctx.beginPath();
-        // judgeTRS(text)
         ctx.textAlign = text.textLine.textA;
         ctx.textBaseline = text.textLine.textB;
         judgeTextStyle(text, ctx);
+        judgeTRS(text);
         judgeStyle_text(text, ctx);
         ctx.closePath();
         ctx.restore();
@@ -1440,6 +1440,7 @@ var ezpsy = (function () {
         Img;
         ImgData;
         IsChange;
+        greyImgData;
         constructor(opts) {
             super();
             this.shape = opts.shape;
@@ -1482,96 +1483,63 @@ var ezpsy = (function () {
             if (opts.shape.height === undefined) {
                 this.shape.height = this.Img.height;
             }
-            this.init();
-            // this.ImgData = opts.ImgData
-            // console.dir(this.ImgData)
-            // console.dir(opts.style)
-            // if(opts.style)
-            // {
-            //     this.style = opts.style;
-            // }
+            let that = this;
+            this.init().then(async (imageData) => {
+                console.dir(imageData);
+                that.ImgData = imageData;
+            });
             nameId$4++;
         }
         init() {
-            this.shape;
-            let c = document.createElement('canvas');
-            let ctx = c.getContext('2d');
             let that = this;
-            c.width = screen.availWidth;
-            c.height = screen.availHeight;
-            console.dir(that.Img);
-            // that.Img.onload = ()=>{
-            ctx.drawImage(that.Img, 0, 0);
-            that.ImgData = ctx.getImageData(0, 0, that.Img.width, that.Img.height);
-            // console.dir(that.ImgData)
-            // }
-            // this.makeTextures()
+            return new Promise(function (resolve, reject) {
+                if (that.Img.src == null)
+                    return reject();
+                let canvas = document.createElement('canvas'), context = canvas.getContext('2d'), image = new Image();
+                image.addEventListener('load', function () {
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    context.drawImage(image, 0, 0, that.Img.width, that.Img.height);
+                    resolve(context.getImageData(0, 0, that.Img.width, that.Img.height));
+                }, false);
+                image.crossOrigin = "Anonymous";
+                image.src = that.Img.src;
+            });
         }
         toGray() {
-            let img = new Img({
-                shape: {
-                    img: this.shape.img,
-                    x: this.shape.x,
-                    y: this.shape.y,
-                    width: this.shape.width,
-                    height: this.shape.height,
-                    sx: this.shape.sx,
-                    sy: this.shape.sy,
-                    swidth: this.shape.swidth,
-                    sheight: this.shape.sheight,
-                }
-            });
+            // let img = new Img({
+            //     shape: {
+            //         img: this.shape.img,
+            //         x: this.shape.x,
+            //         y: this.shape.y,
+            //         width: this.shape.width,
+            //         height: this.shape.height,
+            //         sx: this.shape.sx,
+            //         sy: this.shape.sy,
+            //         swidth: this.shape.swidth,
+            //         sheight: this.shape.sheight,
+            //     }
+            // })
             // this.IsChange = true
-            img.IsChange = true;
+            this.IsChange = true;
             let g = 0;
+            this.greyImgData = new ImageData(this.Img.width, this.Img.height);
             for (let i = 0; i < this.ImgData.data.length / 4; i++) {
                 g = Math.floor(this.ImgData.data[4 * i + 0] * 0.299 + this.ImgData.data[4 * i + 1] * 0.587 + this.ImgData.data[4 * i + 2] * 0.114);
-                img.ImgData.data[4 * i + 0] = g;
-                img.ImgData.data[4 * i + 1] = g;
-                img.ImgData.data[4 * i + 2] = g;
-                img.ImgData.data[4 * i + 3] = this.ImgData.data[4 * i + 3];
+                // img.ImgData.data[4*i+0] = g
+                // img.ImgData.data[4*i+1] = g
+                // img.ImgData.data[4*i+2] = g
+                // img.ImgData.data[4*i+3] = this.ImgData.data[4*i+3]
+                this.greyImgData.data[4 * i + 0] = g;
+                this.greyImgData.data[4 * i + 1] = g;
+                this.greyImgData.data[4 * i + 2] = g;
+                this.greyImgData.data[4 * i + 3] = this.ImgData.data[4 * i + 3];
             }
-            return img;
+            // return img;
         }
         replace() {
             this.IsChange = false;
             this.init();
-        }
-        makeTextures() {
-            // this.textures = new Textures(this);
-            let img = this.toGray();
-            let data0 = img.ImgData.data;
-            let a = new Array();
-            let arr = '';
-            let numArr = [];
-            // let data = this.ImgData.data
-            let w = this.ImgData.width;
-            // console.dir(w)
-            // console.dir(data)
-            for (let i = 0; i < data0.length / 4; i++) {
-                for (let t = 0; t < 3; t++) {
-                    for (let k = 0; k < 3; k++) {
-                        if (data0[4 * i] <= data0[4 * (i + (t - 1) * w + k - 1)] || data0[4 * (i + (t - 1) * w + k - 1)] === undefined) {
-                            a[3 * t + k] = 0;
-                        }
-                        else {
-                            a[3 * t + k] = 1;
-                        }
-                        if (3 * t + k !== 4) {
-                            arr += a[3 * t + k].toString();
-                        }
-                        // console.dir((i+(t-1)*w+k-1))
-                    }
-                }
-                numArr[i] = parseInt(arr, 2);
-                arr = '';
-            }
-            for (let i = 0; i < numArr.length; i++) {
-                img.ImgData.data[4 * i + 0] = numArr[i];
-                img.ImgData.data[4 * i + 1] = numArr[i];
-                img.ImgData.data[4 * i + 2] = numArr[i];
-            }
-            return img;
         }
     }
     function makeImg(img, ctx) {
@@ -1669,30 +1637,32 @@ var ezpsy = (function () {
             I.groupList[i].init();
         }
     }
-    function PreloadTextures(img) {
-        let newImg = img.makeTextures();
-        return newImg;
-    }
-    function DrawTexture(img) {
-        let newImg = img.makeTextures();
-        return newImg;
-    }
-    function DrawTextures(img) {
-        let I;
-        let texture = [];
-        let T;
-        if (img[0] instanceof Img) {
-            I = new Group(img);
-        }
-        else {
-            I = img;
-        }
-        for (let i = 0; i < I.groupList.length; i++) {
-            texture[i] = DrawTexture(I.groupList[i]);
-        }
-        T = new Group(texture);
-        return T;
-    }
+    // export function PreloadTextures(img: Img): Img{
+    //     let newImg = img.makeTextures();
+    //     return newImg
+    // }
+    // export function DrawTexture(img: Img): Img{
+    //     let newImg = img.makeTextures();
+    //     return newImg
+    // }
+    // export function DrawTextures(img: Img[]|Group): Group{
+    //     let I;
+    //     let texture: Img[] = []
+    //     let T;
+    //     if(img[0] instanceof Img)
+    //     {
+    //         I = new Group(img)
+    //     }
+    //     else{
+    //         I = img
+    //     }
+    //     for(let i = 0;i < I.groupList.length;i++)
+    //     {
+    //         texture[i] = DrawTexture(I.groupList[i])
+    //     }
+    //     T = new Group(texture)
+    //     return T;
+    // }
 
     function createGratLinearGradient(ctx, [x0, y0, x1, y1], num, s) {
         let fill = ctx.createLinearGradient(x0, y0 - s, x1, y1 - s);
@@ -2095,7 +2065,7 @@ var ezpsy = (function () {
             if (!this.shape.minSpeed)
                 this.shape.minSpeed = 0;
             // this.maskBand = new Array();
-            this.RandomDotArray = randomisedPoint(this.shape.r, this.shape.maskBand, this.shape.number);
+            this.RandomDotArray = randomisedPoint(this.shape.x, this.shape.y, this.shape.r, this.shape.maskBand, this.shape.number);
             this.maskBand = new Circle({
                 shape: {
                     x: this.shape.x,
@@ -2205,14 +2175,14 @@ var ezpsy = (function () {
     //         trans[i].y = trans[i].y + f[i]*randomDot.translation[i].y;
     //     }
     // }
-    function randomisedPoint(radius, maskBand, number) {
+    function randomisedPoint(x, y, radius, maskBand, number) {
         let arr = getNonRepetitiveRandom(radius - maskBand, radius, number);
         let dot = new Array();
         for (let i = 0; i < number; i++) {
             dot[i] = new Circle({
                 shape: {
-                    x: arr[i].x,
-                    y: arr[i].y,
+                    x: x - radius + arr[i].x,
+                    y: y - radius + arr[i].y,
                     r: 2
                 },
                 style: {
@@ -2831,31 +2801,46 @@ var ezpsy = (function () {
         return [f0, f1];
     }
     function judgeImageShape(img, ctx) {
+        // let sh = img.shape
+        console.dir(img.ImgData);
+        // if(sh.sx === undefined || sh.sy === undefined || sh.swidth === undefined)
+        // {
+        //     if(sh.width === undefined || sh.height === undefined)
+        //     {
+        //         ctx.drawImage(img.Img,sh.x,sh.y)
+        //     }
+        //     else{
+        //         ctx.drawImage(img.Img,sh.x,sh.y,sh.width,sh.height)
+        //     }
+        // }
+        // else{
+        //     if(sh.width === undefined || sh.height === undefined)
+        //     {
+        //         ctx.drawImage(img.Img,sh.sx,sh.sy,sh.swidth,sh.sheight,sh.x,sh.y,img.Img.width,img.Img.height)
+        //     }
+        //     else{
+        //         ctx.drawImage(img.Img,sh.sx,sh.sy,sh.swidth,sh.sheight,sh.x,sh.y,sh.width,sh.height)
+        //     }
+        // }
         let sh = img.shape;
-        if (sh.sx === undefined || sh.sy === undefined || sh.swidth === undefined) {
-            if (sh.width === undefined || sh.height === undefined) {
-                ctx.drawImage(img.Img, sh.x, sh.y);
-            }
-            else {
-                ctx.drawImage(img.Img, sh.x, sh.y, sh.width, sh.height);
-            }
+        if (sh.sx === undefined || sh.sy === undefined || sh.swidth === undefined || sh.sheight === undefined) {
+            // console.dir(777)
+            ctx.putImageData(img.ImgData, sh.x, sh.y);
         }
         else {
-            if (sh.width === undefined || sh.height === undefined) {
-                ctx.drawImage(img.Img, sh.sx, sh.sy, sh.swidth, sh.sheight, sh.x, sh.y, img.Img.width, img.Img.height);
-            }
-            else {
-                ctx.drawImage(img.Img, sh.sx, sh.sy, sh.swidth, sh.sheight, sh.x, sh.y, sh.width, sh.height);
-            }
+            // console.dir(77)
+            ctx.putImageData(img.ImgData, sh.x, sh.y, sh.sx, sh.sy, sh.swidth, sh.sheight);
         }
     }
     function judgeImageShape_true(img, ctx) {
         let sh = img.shape;
         if (sh.sx === undefined || sh.sy === undefined || sh.swidth === undefined || sh.sheight === undefined) {
-            ctx.putImageData(img.ImgData, sh.x, sh.y);
+            // ctx.putImageData(img.ImgData,sh.x,sh.y)
+            ctx.putImageData(img.greyImgData, sh.x, sh.y);
         }
         else {
-            ctx.putImageData(img.ImgData, sh.x, sh.y, sh.sx, sh.sy, sh.swidth, sh.sheight);
+            // ctx.putImageData(img.ImgData,sh.x,sh.y,sh.sx,sh.sy,sh.swidth,sh.sheight)
+            ctx.putImageData(img.greyImgData, sh.x, sh.y, sh.sx, sh.sy, sh.swidth, sh.sheight);
         }
     }
     function judgeIsInElement([x, y], el) {
@@ -3025,6 +3010,10 @@ var ezpsy = (function () {
         else if (el instanceof sinGrat) {
             x = Math.ceil((2 * el.shape.r + 1) / 2);
             y = Math.ceil((2 * el.shape.r + 1) / 2);
+        }
+        else if (el instanceof Texts) {
+            x = el.shape.x;
+            y = el.shape.y;
         }
         return [x, y];
     }
@@ -7809,9 +7798,6 @@ var ezpsy = (function () {
         MaskImageIn: MaskImageIn,
         MaskImageOut: MaskImageOut,
         ImgInit: ImgInit,
-        PreloadTextures: PreloadTextures,
-        DrawTexture: DrawTexture,
-        DrawTextures: DrawTextures,
         Time0: Time0,
         WaitSecs0: WaitSecs0,
         delay_frame: delay_frame,

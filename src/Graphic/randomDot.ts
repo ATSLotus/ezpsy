@@ -50,7 +50,7 @@ export class RandomDot extends Elements{
 
         // this.maskBand = new Array();
 
-        this.RandomDotArray = randomisedPoint(this.shape.r,this.shape.maskBand,this.shape.number);
+        this.RandomDotArray = randomisedPoint(this.shape.x,this.shape.y,this.shape.r,this.shape.maskBand,this.shape.number);
 
         this.maskBand = new Circle({
             shape: {
@@ -196,15 +196,15 @@ let randomAninmation = (randomDot: RandomDot,sh: RandomDotShape,trans: Array<Poi
 //     }
 // }
 
-function randomisedPoint(radius:number,maskBand:number,number:number):Array<Circle>{
+function randomisedPoint(x:number,y:number,radius:number,maskBand:number,number:number):Array<Circle>{
     let arr = getNonRepetitiveRandom(radius-maskBand,radius,number);
     let dot = new Array();
     for(let i = 0;i < number;i++)
     {
         dot[i] = new Circle({
             shape: {
-                x: arr[i].x,
-                y: arr[i].y,
+                x: x-radius+arr[i].x,
+                y: y-radius+arr[i].y,
                 r: 2
             },
             style: {

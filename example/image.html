@@ -1,0 +1,63 @@
+<!--
+ * @Author: ATSLotus/时桐
+ * @Date: 2022-10-10 15:47:58
+ * @LastEditors: ATSLotus/时桐
+ * @LastEditTime: 2022-10-10 20:53:55
+ * @Description: 
+ * @FilePath: /ezpsy/example/image.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/iife/ezpsy.js"></script>
+</head>
+<body>
+    <div id="test"></div>
+</body>
+<script>
+    let test = document.getElementById('test')
+    let keypress = ezpsy.KeypressInit('keyup');
+    let ez = ezpsy.init(test)
+    ez.setCanvasStyle({
+        width: 1920,
+        height: 1080
+    })
+    let img = new ezpsy.Img({
+        shape: {
+            img: "https://tse1-mm.cn.bing.net/th/id/R-C.6e2a7d7ecb7202c7145e9966794b3248?rik=5DRSyuQWDE8Weg&riu=http%3a%2f%2fup.36992.com%2fpic%2f9b%2f55%2f28%2f9b55289650cbc404d43c6e9bcc508588.jpg&ehk=fv6Eh69nmHC3wh9CJlGEJUJv53qxB4BLKiExF5ItWI0%3d&risl=&pid=ImgRaw&r=0",
+            // img: "../img/OIP.png",
+            x: 100,
+            y: 100,
+            sx: 200,
+            sy: 200,
+            width: 200,
+            height: 200
+        }
+    })
+    let img0 = new ezpsy.Img({
+        shape: {
+            img: "https://tse1-mm.cn.bing.net/th/id/R-C.6e2a7d7ecb7202c7145e9966794b3248?rik=5DRSyuQWDE8Weg&riu=http%3a%2f%2fup.36992.com%2fpic%2f9b%2f55%2f28%2f9b55289650cbc404d43c6e9bcc508588.jpg&ehk=fv6Eh69nmHC3wh9CJlGEJUJv53qxB4BLKiExF5ItWI0%3d&risl=&pid=ImgRaw&r=0",
+            // img: "../img/OIP.png",
+            x: 100,
+            y: 100,
+            width: 200,
+            height: 200
+        }
+    })
+    keypress.listen('a',()=>{
+        // rect.IsPause = f0
+        // f0 = !f0;
+        // console.dir(f0)
+        img.toGray()
+
+        ez.add([img0,img])
+    },true)
+    // window.onload = function(){
+        // 
+    // }
+</script>
+</html>

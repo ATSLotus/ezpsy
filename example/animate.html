@@ -14,51 +14,93 @@
     let ez = ezpsy.init(document.getElementById("test"));
     let keypress = ezpsy.KeypressInit('keyup');
 
-    let rect = new ezpsy.Rectangle({
+    let line = new ezpsy.Line({
         shape:{
             x: 0,
-            y: 0,
-            width: 100,
-            height: 100
+            y: 200,
+            xEnd: 400,
+            yEnd: 200
         }
     })
-    let rect0 = new ezpsy.Rectangle({
+
+    let line0 = new ezpsy.Line({
         shape:{
-            x: 0,
-            y: 0,
-            width: 50,
-            height: 200
+            x: 200,
+            y: 00,
+            xEnd: 200,
+            yEnd: 400
         }
     })
+
+    let R = new ezpsy.Texts({
+        shape: {
+            x: 200,
+            y: 200,
+            text: "R"
+        },
+        style: {
+            fontSize: 100
+        },
+        textLine:{
+            textA: 'center',
+            textB: 'middle'
+        }
+    })
+
+    R.rotate = 90;
+
+    ez.add([R,line,line0]);
+
+    // let rect = new ezpsy.Rectangle({
+    //     shape:{
+    //         x: 0,
+    //         y: 0,
+    //         width: 100,
+    //         height: 100
+    //     }
+    // })
+    // let rect0 = new ezpsy.Rectangle({
+    //     shape:{
+    //         x: 0,
+    //         y: 0,
+    //         width: 50,
+    //         height: 200
+    //     }
+    // })
 
     // let el = [rect,rect0]
 
-    ez.add([rect,rect0])
+    // ez.add([rect,rect0])
 
-    let i = 0;
-    let f = true;
+    // let i = 0;
+    // let f = true;
 
     // ez.animate(rect,()=>{
     //     rect.translate.x = 10 * i;
     //     // if(i > 20)
     //     //     rect.IsPause = true
     // },5)
-    ez.animate(rect,()=>{
-        rect.translate.x = 10 * i;
-        if(f)
-            i++
-        else
-            i--
-        if(i>20||i<0)
-            f = !f;
-    },2)
+    // ez.animate(rect,()=>{
+    //     rect.translate.x = 10 * i;
+    //     if(f)
+    //         i++
+    //     else
+    //         i--
+    //     if(i>20||i<0)
+    //         f = !f;
+    // },2)
     
-    let f0 = true;
-    keypress.listen(' ',()=>{
-        rect.IsPause = f0
-        f0 = !f0;
-        console.dir(f0)
-    },false)
+    // let f0 = true;
+    // keypress.listen(' ',()=>{
+    //     rect.IsPause = f0
+    //     f0 = !f0;
+    //     console.dir(f0)
+    // },false)
 
 </script>
+<style>
+    canvas{
+        border: 1px solid black;
+    }
+</style>
 </html>

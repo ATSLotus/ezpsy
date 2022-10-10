@@ -517,25 +517,36 @@ export function judgeSide(side0: number|string,side1: number|string): [number,nu
 }   
 
 export function judgeImageShape(img: Img,ctx: CanvasRenderingContext2D){
+    // let sh = img.shape
+    console.dir(img.ImgData)
+    // if(sh.sx === undefined || sh.sy === undefined || sh.swidth === undefined)
+    // {
+    //     if(sh.width === undefined || sh.height === undefined)
+    //     {
+    //         ctx.drawImage(img.Img,sh.x,sh.y)
+    //     }
+    //     else{
+    //         ctx.drawImage(img.Img,sh.x,sh.y,sh.width,sh.height)
+    //     }
+    // }
+    // else{
+    //     if(sh.width === undefined || sh.height === undefined)
+    //     {
+    //         ctx.drawImage(img.Img,sh.sx,sh.sy,sh.swidth,sh.sheight,sh.x,sh.y,img.Img.width,img.Img.height)
+    //     }
+    //     else{
+    //         ctx.drawImage(img.Img,sh.sx,sh.sy,sh.swidth,sh.sheight,sh.x,sh.y,sh.width,sh.height)
+    //     }
+    // }
     let sh = img.shape
-    if(sh.sx === undefined || sh.sy === undefined || sh.swidth === undefined)
+    if(sh.sx === undefined || sh.sy === undefined || sh.swidth === undefined || sh.sheight === undefined)
     {
-        if(sh.width === undefined || sh.height === undefined)
-        {
-            ctx.drawImage(img.Img,sh.x,sh.y)
-        }
-        else{
-            ctx.drawImage(img.Img,sh.x,sh.y,sh.width,sh.height)
-        }
+        // console.dir(777)
+        ctx.putImageData(img.ImgData,sh.x,sh.y)
     }
     else{
-        if(sh.width === undefined || sh.height === undefined)
-        {
-            ctx.drawImage(img.Img,sh.sx,sh.sy,sh.swidth,sh.sheight,sh.x,sh.y,img.Img.width,img.Img.height)
-        }
-        else{
-            ctx.drawImage(img.Img,sh.sx,sh.sy,sh.swidth,sh.sheight,sh.x,sh.y,sh.width,sh.height)
-        }
+        // console.dir(77)
+        ctx.putImageData(img.ImgData,sh.x,sh.y,sh.sx,sh.sy,sh.swidth,sh.sheight)
     }
 }
 
@@ -543,10 +554,12 @@ export function judgeImageShape_true(img: Img,ctx: CanvasRenderingContext2D){
     let sh = img.shape
     if(sh.sx === undefined || sh.sy === undefined || sh.swidth === undefined || sh.sheight === undefined)
     {
-        ctx.putImageData(img.ImgData,sh.x,sh.y)
+        // ctx.putImageData(img.ImgData,sh.x,sh.y)
+        ctx.putImageData(img.greyImgData,sh.x,sh.y)
     }
     else{
-        ctx.putImageData(img.ImgData,sh.x,sh.y,sh.sx,sh.sy,sh.swidth,sh.sheight)
+        // ctx.putImageData(img.ImgData,sh.x,sh.y,sh.sx,sh.sy,sh.swidth,sh.sheight)
+        ctx.putImageData(img.greyImgData,sh.x,sh.y,sh.sx,sh.sy,sh.swidth,sh.sheight)
     }
 }
 
@@ -768,6 +781,12 @@ export function judgeElementsCenter(el: Elements): [number,number]{
         x = Math.ceil((2*el.shape.r+1)/2)
         y = Math.ceil((2*el.shape.r+1)/2)
     }
+    else if(el instanceof Texts)
+    {
+        x = el.shape.x;
+        y = el.shape.y;
+    }
+    
 
     return [x,y]
 }

@@ -79,13 +79,16 @@ export function makeText(text: Texts,ctx: CanvasRenderingContext2D): Texts{
     ctx.save()
     ctx.beginPath()
 
-    // judgeTRS(text)
     ctx.textAlign = text.textLine.textA
     ctx.textBaseline = text.textLine.textB
 
     judgeTextStyle(text,ctx)
 
+    judgeTRS(text)
+
     judgeStyle_text(text,ctx)
+
+    
     
     ctx.closePath()
     ctx.restore()

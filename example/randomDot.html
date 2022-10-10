@@ -20,10 +20,10 @@
     let maskBand = 8;
     let radius = width/2;
 
-    ez.setCanvasStyle({
-        width: width,
-        height: width
-    })
+    // ez.setCanvasStyle({
+    //     width: width,
+    //     height: width
+    // })
 
     let randomDot = new ezpsy.RandomDot({
         shape: {
@@ -31,6 +31,8 @@
             y: radius,
             r: radius,
             number: 100,
+            minSpeed: 2,
+            maxSpeed: 5
         }
     })
 

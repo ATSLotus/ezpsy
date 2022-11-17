@@ -1,0 +1,52 @@
+<!--
+ * @Author: ATSLotus/时桐
+ * @Date: 2022-10-11 20:23:18
+ * @LastEditors: ATSLotus/时桐
+ * @LastEditTime: 2022-10-11 21:32:13
+ * @Description: 
+ * @FilePath: /ezpsy/example/function.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/iife/ezpsy.js"></script>
+</head>
+<body>
+    <div id="test"></div>
+</body>
+<script>
+    let test = document.getElementById('test')
+    let keypress = ezpsy.KeypressInit('keyup');
+    let ez = ezpsy.init(test)
+    let c0 = new ezpsy.Circle({
+        shape: {
+            x: 200,
+            y: 200,
+            r: 100
+        },
+        style: {
+            fill: 'blue'
+        }
+    })
+    let c1 = new ezpsy.Circle({
+        shape: {
+            x: 200,
+            y: 200,
+            r: 100
+        },
+        style: {
+            fill: 'orange'
+        }
+    })
+    let f = new ezpsy.RandomFunctions({
+        els: ['c0','c1']
+    })
+    console.dir(f);
+    let x = f.run()
+    console.dir(x);
+</script>
+</html>

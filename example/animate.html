@@ -14,42 +14,114 @@
     let ez = ezpsy.init(document.getElementById("test"));
     let keypress = ezpsy.KeypressInit('keyup');
 
-    let line = new ezpsy.Line({
-        shape:{
-            x: 0,
-            y: 200,
-            xEnd: 400,
-            yEnd: 200
-        }
+    ez.setCanvasStyle({
+        width: window.innerWidth,
+        height: window.innerHeight
     })
 
-    let line0 = new ezpsy.Line({
-        shape:{
-            x: 200,
-            y: 00,
-            xEnd: 200,
-            yEnd: 400
-        }
-    })
-
-    let R = new ezpsy.Texts({
+    let rect = new ezpsy.Rectangle({
         shape: {
-            x: 200,
-            y: 200,
-            text: "R"
+            x: 0,
+            y: 0,
+            width: 200,
+            height: 200,
         },
         style: {
-            fontSize: 100
-        },
-        textLine:{
-            textA: 'center',
-            textB: 'middle'
+            fill: "black"
         }
     })
 
-    R.rotate = 90;
+    ez.add(rect);
 
-    ez.add([R,line,line0]);
+    // let i = true;
+    // rect.animate(()=>{
+    //     console.dir(performance.now())
+    //     if(i)
+    //         rect.style.fill = "white";
+    //     else
+    //         rect.style.fill = "black";
+    //     i = !i;
+    // },20)
+    let i = true;
+    let n = 0;
+    let arr = new Array();
+    rect.animate(()=>{
+        console.dir(`${n}: ${performance.now()}`)
+        arr.push(performance.now());
+        if(i)
+            rect.style.fill = "white";
+        else    
+            rect.style.fill = "black";
+        i = !i;
+        n++
+        if(n>=10)
+        {
+            rect.IsAnimation = false;
+            let r = [];
+            for(let t = 1;t < arr.length;t++){
+                r.push(arr[t]-arr[t-1]);
+            }
+            console.table(r);
+            let num = 0;
+            for(let t = 0;t < r.length;t++)
+            {
+                num += r[t];
+            }
+            console.dir(num/r.length);
+        }
+    },20)
+
+
+    keypress.listen(' ',()=>{
+        document.documentElement.requestFullscreen();
+    },false)
+
+    // keypress.listen('a',()=>{
+    //     console.dir(777)
+    //     if(i)
+    //         rect.style.fill = "white";
+    //     else
+    //         rect.style.fill = "black";
+    //     ez.add(rect);
+    //     i = !i;
+    // },false)
+
+    // let line = new ezpsy.Line({
+    //     shape:{
+    //         x: 0,
+    //         y: 200,
+    //         xEnd: 400,
+    //         yEnd: 200
+    //     }
+    // })
+
+    // let line0 = new ezpsy.Line({
+    //     shape:{
+    //         x: 200,
+    //         y: 00,
+    //         xEnd: 200,
+    //         yEnd: 400
+    //     }
+    // })
+
+    // let R = new ezpsy.Texts({
+    //     shape: {
+    //         x: 200,
+    //         y: 200,
+    //         text: "R"
+    //     },
+    //     style: {
+    //         fontSize: 100
+    //     },
+    //     textLine:{
+    //         textA: 'center',
+    //         textB: 'middle'
+    //     }
+    // })
+
+    // R.rotate = 90;
+
+    // ez.add([R,line,line0]);
 
     // let rect = new ezpsy.Rectangle({
     //     shape:{

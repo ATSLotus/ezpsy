@@ -48,6 +48,7 @@ export { sinGrating } from './Graphic/sinGrating'
 export { Grat } from './Graphic/grating'
 export { Time } from './Time/timePerformance'
 export { RandomDot } from './Graphic/randomDot'
+export { RandomFunctions } from './Functions';
 
 // export { animate } from './Animate/animate'
 // export { makeRectangle } from './Graphic/rectangle'

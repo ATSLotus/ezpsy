@@ -85,7 +85,7 @@ export class Keypress{
 }
 
 export function KeypressInit(keyType?: string){
-    let keypress = new Keypress();
+    let keypress = new Keypress(keyType);
     return keypress
 }
 

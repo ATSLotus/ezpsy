@@ -30,6 +30,7 @@
     },
     "dependencies": {
         "@rollup/plugin-babel": "^5.3.0",
+        "@rollup/plugin-replace": "^4.0.0",
         "noty": "^3.2.0-beta-deprecated",
         "react-bootstrap-sweetalert": "^5.2.0",
         "sweetalert2": "^11.4.8",

@@ -1,4 +1,12 @@
-import { Scale, Translate } from "../Element"
+/*
+ * @Author: ATSLotus/时桐
+ * @Date: 2022-02-24 22:05:19
+ * @LastEditors: ATSLotus/时桐
+ * @LastEditTime: 2022-10-11 21:33:43
+ * @Description: 
+ * @FilePath: /ezpsy/src/DataType/dataType.ts
+ */
+import { Elements, Scale, Translate } from "../Element"
 
 export interface Shape{  
     x?: number     //position x
@@ -51,4 +59,8 @@ export interface nameStyle{
 export interface Opts{
     shape?: Shape
     style?: Style
+}
+
+export interface Options{
+    els: Array<string>  //元素变量名
 }

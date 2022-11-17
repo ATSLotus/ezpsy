@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 import 'sweetalert2/src/sweetalert2.scss'
 import { judgeDlgContent } from "../Judge/judge";
-import './dialogue.scss'
+import '../Style/dialogue.scss'
 
 export function test(){
     Swal.fire({

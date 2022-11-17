@@ -1,7 +1,7 @@
 <html>
   <head>
     <script src="../dist/iife/ezpsy.js"></script>
-    <link rel="stylesheet" href="../dist/iife/ezpsy.css" />
+    <!-- <link rel="stylesheet" href="../dist/iife/ezpsy.css" /> -->
     <!-- <link rel="stylesheet" href="../testCss/sweetalert2.css" /> -->
   </head>
   <body>
@@ -15,16 +15,16 @@
     
     <script>
 
-      let ez = ezpsy.init(document.getElementById('test'));
+      // let ez = ezpsy.init(document.getElementById('test'));
 
-      let a = new ezpsy.Circle({
-        shape: {
-          x: 0,
-          y: 0,
-          r: 100
-        }
-      })
-      ez.add(a)
+      // let a = new ezpsy.Circle({
+      //   shape: {
+      //     x: 0,
+      //     y: 0,
+      //     r: 100
+      //   }
+      // })
+      // ez.add(a)
 
       // let img = new ezpsy.Img({
       //   shape: {
@@ -45,13 +45,13 @@
       //   imgHeight: 800,
       // })
 
-      // let dlg = ezpsy.DlgInit()
-      // dlg.questDlg({
-      //   tille: '文件删除',
-      //   content: '是否删除该文件'
-      // }).then(e=>{
-      //   console.dir(e)
-      // })
+      let dlg = ezpsy.DlgInit()
+      dlg.questDlg({
+        tille: '文件删除',
+        content: '是否删除该文件'
+      }).then(e=>{
+        console.dir(e)
+      })
       
       // dlg.listDlg({
       //   list: {

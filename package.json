@@ -1,6 +1,6 @@
 {
     "name": "ezpsy",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "",
     "main": "index.js",
     "directories": {
@@ -13,27 +13,38 @@
     },
     "author": "",
     "license": "ISC",
+    "files": [
+        "dist/esm"
+    ],
     "devDependencies": {
+        "@rollup/plugin-babel": "^5.3.0",
         "@rollup/plugin-buble": "^0.21.3",
+        "@rollup/plugin-replace": "^4.0.0",
         "@rollup/plugin-typescript": "^8.3.0",
         "@rollup/plugin-wasm": "^5.2.0",
         "babel-plugin-external-helpers": "^6.22.0",
         "babel-preset-latest": "^6.24.1",
+        "cssnano": "^5.1.14",
+        "node-sass": "^8.0.0",
+        "noty": "^3.2.0-beta-deprecated",
+        "postcss-cssnext": "^3.1.1",
+        "postcss-nested": "^6.0.0",
+        "postcss-simple-vars": "^7.0.1",
+        "react-bootstrap-sweetalert": "^5.2.0",
         "rollup": "^2.63.0",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-css-porter": "^1.0.2",
+        "rollup-plugin-eslint": "^7.0.0",
+        "rollup-plugin-import-css": "^3.1.0",
         "rollup-plugin-node-resolve": "^5.2.0",
+        "rollup-plugin-postcss": "^4.0.2",
         "rollup-plugin-scss": "^3.0.0",
         "rollup-plugin-wasm": "^3.0.0",
         "sass": "^1.50.0",
+        "tslib": "^2.3.1",
         "typescript": "^4.5.4"
     },
     "dependencies": {
-        "@rollup/plugin-babel": "^5.3.0",
-        "@rollup/plugin-replace": "^4.0.0",
-        "noty": "^3.2.0-beta-deprecated",
-        "react-bootstrap-sweetalert": "^5.2.0",
-        "sweetalert2": "^11.4.8",
-        "tslib": "^2.3.1"
+        "sweetalert2": "^11.4.8"
     }
 }

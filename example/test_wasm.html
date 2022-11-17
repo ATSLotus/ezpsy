@@ -1,0 +1,103 @@
+<!--
+ * @Author: ATSLotus/时桐
+ * @Date: 2022-11-13 12:38:42
+ * @LastEditors: ATSLotus/时桐
+ * @LastEditTime: 2022-11-17 11:39:03
+ * @Description: 
+ * @FilePath: /ezpsy/example/test_wasm.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/iife/ezpsy.js"></script>
+</head>
+<body>
+    <div id="test"></div>
+</body>
+<!-- <script>
+    
+    function getInt32Memory0(wasm) {
+      let cachegetInt32Memory0 = null;
+      if (cachegetInt32Memory0 === null || cachegetInt32Memory0.buffer !== wasm.memory.buffer) {
+        cachegetInt32Memory0 = new Int32Array(wasm.memory.buffer);
+      }
+
+      return cachegetInt32Memory0;
+    }
+
+    let cachegetUint8Memory0 = null;
+
+    function getUint8Memory0(wasm) {
+    if (cachegetUint8Memory0 === null || cachegetUint8Memory0.buffer !== wasm.memory.buffer) {
+        cachegetUint8Memory0 = new Uint8Array(wasm.memory.buffer);
+    }
+
+    return cachegetUint8Memory0;
+    }
+
+
+    function getArrayU8FromWasm0(wasm, ptr, len) {
+      return getUint8Memory0(wasm).subarray(ptr / 1, ptr / 1 + len);
+    }
+
+    function pre_singrat(wasm,radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, gamma) {
+      try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+
+        wasm.pre_singrat(retptr, radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, gamma);
+        var r0 = getInt32Memory0(wasm)[retptr / 4 + 0];
+        var r1 = getInt32Memory0(wasm)[retptr / 4 + 1];
+        var v0 = getArrayU8FromWasm0(wasm, r0, r1).slice();
+
+        wasm.__wbindgen_free(r0, r1 * 1);
+
+        return v0;
+      } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+      }
+    }
+    let canvas = document.getElementById('test');
+    let ctx = canvas.getContext('2d');
+    // ezpsy.test().then(res => {
+    //     let wasm = res.instance.exports;
+    //     console.dir(wasm)
+    //     let t0 = performance.now();
+    //     let a = pre_singrat(wasm,100,57,2,0,1,0,1)
+    //     let t1 = performance.now();
+    //     console.dir(t1-t0)
+    //     console.dir(a)
+    //     sinGrat = new ImageData(301, 301);
+    //     sinGrat.data.set(a);
+    //     ctx.putImageData(sinGrat,0,0)
+    // })
+</script> -->
+<script>
+    let ez = ezpsy.init(document.getElementById("test"));
+    ez.setCanvasStyle({
+        width: window.innerWidth,
+        height: window.innerHeight
+    })
+    
+    let a = new ezpsy.sinGrating({
+        shape: {
+            x: window.innerWidth/2,                 
+            y: window.innerHeight/2,                 
+            r: 120,    
+            pixelsPerDegree: 57, 
+            spatialFrequency: 2,
+            angle: 90, 
+            contrast: 1, 
+            phase: 0,
+            level: 0.5,
+            gamma: 1
+        },
+        isNoise: false
+    })
+    ez.add(a)
+    a.play()
+</script>
+</html>

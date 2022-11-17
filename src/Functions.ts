@@ -2,7 +2,7 @@
  * @Author: ATSLotus/时桐
  * @Date: 2022-10-11 20:13:52
  * @LastEditors: ATSLotus/时桐
- * @LastEditTime: 2022-10-11 21:48:18
+ * @LastEditTime: 2022-11-17 15:16:17
  * @Description: 
  * @FilePath: /ezpsy/src/Functions.ts
  */
@@ -43,6 +43,7 @@ export class RandomFunctions extends Functions{
         let x = this.random()
         let code = this.setttings('x')
         console.dir(code)
+        // @ts-ignore
         eval(code)
         // eval(this.setttings());
         return x;

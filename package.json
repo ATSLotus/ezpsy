@@ -9,7 +9,7 @@
     "scripts": {
         "build": "rm -rf dist/* && rollup -c",
         "watch": "rm -rf dist/* && rollup -c -w",
-        "dev": "rm -rf dist/* && cp static/pkg/singrat_bg.wasm dist && rollup -c -w"
+        "dev": "rm -rf dist/* && rollup -c -w"
     },
     "author": "",
     "license": "ISC",

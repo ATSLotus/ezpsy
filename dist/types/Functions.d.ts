@@ -5,9 +5,11 @@ declare class Functions {
 }
 export declare class RandomFunctions extends Functions {
     elements: Array<string>;
+    private index;
     constructor(options: Options);
-    random(): number;
-    setttings(strArg: any): string;
-    run(): number;
+    random(): void;
+    setttings(): string;
+    run(): void;
+    getIndex(): number;
 }
 export {};

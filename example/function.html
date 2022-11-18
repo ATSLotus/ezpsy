@@ -2,7 +2,7 @@
  * @Author: ATSLotus/时桐
  * @Date: 2022-10-11 20:23:18
  * @LastEditors: ATSLotus/时桐
- * @LastEditTime: 2022-10-11 21:32:13
+ * @LastEditTime: 2022-11-18 20:25:47
  * @Description: 
  * @FilePath: /ezpsy/example/function.html
 -->
@@ -19,9 +19,9 @@
     <div id="test"></div>
 </body>
 <script>
-    let test = document.getElementById('test')
+    // let test = document.getElementById('test')
     let keypress = ezpsy.KeypressInit('keyup');
-    let ez = ezpsy.init(test)
+    let ez = ezpsy.init()
     let c0 = new ezpsy.Circle({
         shape: {
             x: 200,
@@ -46,7 +46,7 @@
         els: ['c0','c1']
     })
     console.dir(f);
-    let x = f.run()
-    console.dir(x);
+    f.run()
+    console.dir(f.getIndex())
 </script>
 </html>

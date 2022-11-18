@@ -6,7 +6,25 @@ var ezpsy = (function () {
         return idStart++;
     }
 
-    function createCanvas(dom, cStyle) {
+    // export function createCanvas(dom: HTMLElement,cStyle?: canvasStyle): CanvasRenderingContext2D{
+    //     let c = document.createElement('canvas')
+    //     // let cStyle: canvasStyle = {
+    //     //     width: 100,
+    //     //     height: 100
+    //     // }
+    //     c.style.position = 'absolute'
+    //     c.width = cStyle.width;
+    //     c.height = cStyle.height;
+    //     let w = window.innerWidth
+    //     let h = window.innerHeight
+    //     // console.dir(w)
+    //     c.style.top = ((h-cStyle.height)/2).toString() + 'px'
+    //     c.style.left = ((w-cStyle.width)/2).toString() + 'px'
+    //     let ctx = c.getContext('2d');
+    //     dom.append(c);
+    //     return ctx;
+    // }
+    function createCanvas(cStyle) {
         let c = document.createElement('canvas');
         // let cStyle: canvasStyle = {
         //     width: 100,
@@ -21,7 +39,8 @@ var ezpsy = (function () {
         c.style.top = ((h - cStyle.height) / 2).toString() + 'px';
         c.style.left = ((w - cStyle.width) / 2).toString() + 'px';
         let ctx = c.getContext('2d');
-        dom.append(c);
+        // dom.append(c);
+        document.body.append(c);
         return ctx;
     }
 
@@ -7106,6 +7125,7 @@ var ezpsy = (function () {
         return dlg;
     }
 
+    // import { Elements } from "./Element";
     let nameId = 0;
     class Functions {
         name;
@@ -7119,15 +7139,17 @@ var ezpsy = (function () {
     }
     class RandomFunctions extends Functions {
         elements; //元素变量名
+        index;
         constructor(options) {
             super();
             this.elements = options.els;
+            this.index = -1;
         }
         random() {
-            return Math.floor(Math.random() * this.elements.length);
+            this.index = Math.floor(Math.random() * this.elements.length);
         }
-        setttings(strArg) {
-            let object = `switch(${strArg}){\n`;
+        setttings() {
+            let object = `switch(${this.index}){\n`;
             for (let i = 0; i < this.elements.length; i++) {
                 object += `\tcase ${i}: \n\t\tez.add(${this.elements[i]});\n\t\tbreak;\n`;
             }
@@ -7135,14 +7157,19 @@ var ezpsy = (function () {
             return object;
         }
         run() {
-            let x = this.random();
-            let code = this.setttings('x');
+            this.random();
+            let code = this.setttings();
             console.dir(code);
-            // @ts-ignore
-            eval(code);
-            // eval(this.setttings());
-            return x;
+            // eval(code)
+            evals(code);
         }
+        getIndex() {
+            return this.index;
+        }
+    }
+    function evals(str) {
+        let F = Function;
+        return new F(`"use strict";\n${str}`)();
     }
 
     // export { animate } from './Animate/animate'
@@ -7155,13 +7182,21 @@ var ezpsy = (function () {
         storage;
         cStyle;
         // Rectangle: Rectangle
-        constructor(id, dom, cStyle) {
+        // constructor(id: number,dom: HTMLElement,cStyle?: canvasStyle){
+        //     this.id = id;
+        //     this.dom = dom;
+        //     this.storage = new Storage()
+        //     cStyle = ezJudge.judgeCanvasStyle(cStyle);
+        //     this.cStyle = cStyle;
+        //     this.ctx = ezCanvas.createCanvas(dom,cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
+        // }
+        constructor(id, cStyle) {
             this.id = id;
-            this.dom = dom;
+            // this.dom = dom;
             this.storage = new Storage();
             cStyle = judgeCanvasStyle(cStyle);
             this.cStyle = cStyle;
-            this.ctx = createCanvas(dom, cStyle); //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
+            this.ctx = createCanvas(cStyle); //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
         }
         setCanvasStyle(cStyle) {
             // for(let i = 0;i < this.ctxList.length;i++){
@@ -7332,8 +7367,14 @@ var ezpsy = (function () {
             c.height = this.cStyle.height;
         }
     }
-    function init(dom, cStyle) {
-        let ez = new Ezpsy(Count(), dom, cStyle);
+    // export function init(dom: HTMLElement,cStyle?: canvasStyle) {
+    //     let ez = new Ezpsy(ezUtils.Count(),cStyle);
+    //     // pushEzpsyList(ez);
+    //     // console.dir(EzpsyList);
+    //     return ez;
+    // }
+    function init(cStyle) {
+        let ez = new Ezpsy(Count(), cStyle);
         // pushEzpsyList(ez);
         // console.dir(EzpsyList);
         return ez;

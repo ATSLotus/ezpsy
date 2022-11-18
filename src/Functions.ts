@@ -2,12 +2,12 @@
  * @Author: ATSLotus/时桐
  * @Date: 2022-10-11 20:13:52
  * @LastEditors: ATSLotus/时桐
- * @LastEditTime: 2022-11-17 15:16:17
+ * @LastEditTime: 2022-11-18 20:22:14
  * @Description: 
  * @FilePath: /ezpsy/src/Functions.ts
  */
 import { nameStyle, Options } from "./DataType/dataType";
-import { Elements } from "./Element";
+// import { Elements } from "./Element";
 
 let nameId = 0;
 class Functions{
@@ -23,15 +23,17 @@ class Functions{
 
 export class RandomFunctions extends Functions{
     elements: Array<string>     //元素变量名
+    private index: number
     constructor(options: Options){
         super();
         this.elements = options.els
+        this.index = -1;
     }
     random(){
-        return Math.floor(Math.random()*this.elements.length);
+        this.index = Math.floor(Math.random()*this.elements.length);
     }
-    setttings(strArg){
-        let object = `switch(${strArg}){\n`;
+    setttings(){
+        let object = `switch(${this.index}){\n`;
         for(let i = 0;i < this.elements.length;i++)
         {
             object += `\tcase ${i}: \n\t\tez.add(${this.elements[i]});\n\t\tbreak;\n`
@@ -40,12 +42,18 @@ export class RandomFunctions extends Functions{
         return object;
     }
     run(){
-        let x = this.random()
-        let code = this.setttings('x')
+        this.random()
+        let code = this.setttings()
         console.dir(code)
-        // @ts-ignore
-        eval(code)
-        // eval(this.setttings());
-        return x;
+        // eval(code)
+        evals(code)
     }
+    getIndex(){
+        return this.index;
+    }
+}
+
+function evals(str: string): Function{
+    let F = Function;
+    return new F(`"use strict";\n${str}`)();
 }

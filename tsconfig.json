@@ -5,7 +5,7 @@
         "jsx": "preserve",
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
-        // "strictFunctionTypes": true
+        // "strictFunctionTypes": true,
         "typeRoots": [
             "node_modules/@types",
             "@types"

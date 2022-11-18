@@ -39,7 +39,7 @@ declare class Ezpsy {
     readonly ctx: CanvasRenderingContext2D;
     private storage;
     cStyle?: canvasStyle;
-    constructor(id: number, dom: HTMLElement, cStyle?: canvasStyle);
+    constructor(id: number, cStyle?: canvasStyle);
     setCanvasStyle(cStyle: canvasStyle): void;
     refresh(): void;
     add(el: Elements | Elements[] | Group): void;
@@ -48,4 +48,4 @@ declare class Ezpsy {
     setTextLine(textLine: TextLine): void;
     clear(): void;
 }
-export declare function init(dom: HTMLElement, cStyle?: canvasStyle): Ezpsy;
+export declare function init(cStyle?: canvasStyle): Ezpsy;

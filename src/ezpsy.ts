@@ -64,14 +64,21 @@ class Ezpsy {
 
     // Rectangle: Rectangle
 
-    constructor(id: number,dom: HTMLElement,cStyle?: canvasStyle){
+    // constructor(id: number,dom: HTMLElement,cStyle?: canvasStyle){
+    //     this.id = id;
+    //     this.dom = dom;
+    //     this.storage = new Storage()
+    //     cStyle = ezJudge.judgeCanvasStyle(cStyle);
+    //     this.cStyle = cStyle;
+    //     this.ctx = ezCanvas.createCanvas(dom,cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
+    // }
+    constructor(id: number,cStyle?: canvasStyle){
         this.id = id;
-        this.dom = dom;
+        // this.dom = dom;
         this.storage = new Storage()
         cStyle = ezJudge.judgeCanvasStyle(cStyle);
         this.cStyle = cStyle;
-        this.ctx = ezCanvas.createCanvas(dom,cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
-        
+        this.ctx = ezCanvas.createCanvas(cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
     }
 
     setCanvasStyle(cStyle: canvasStyle){
@@ -277,8 +284,14 @@ class Ezpsy {
 
 }
 
-export function init(dom: HTMLElement,cStyle?: canvasStyle) {
-    let ez = new Ezpsy(ezUtils.Count(),dom,cStyle);
+// export function init(dom: HTMLElement,cStyle?: canvasStyle) {
+//     let ez = new Ezpsy(ezUtils.Count(),cStyle);
+//     // pushEzpsyList(ez);
+//     // console.dir(EzpsyList);
+//     return ez;
+// }
+export function init(cStyle?: canvasStyle) {
+    let ez = new Ezpsy(ezUtils.Count(),cStyle);
     // pushEzpsyList(ez);
     // console.dir(EzpsyList);
     return ez;

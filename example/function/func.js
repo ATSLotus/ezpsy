@@ -2,7 +2,7 @@
  * @Author: ATSLotus/时桐
  * @Date: 2022-11-18 20:33:43
  * @LastEditors: ATSLotus/时桐
- * @LastEditTime: 2022-11-18 21:32:34
+ * @LastEditTime: 2022-11-18 21:41:45
  * @Description: 
  * @FilePath: /ezpsy/example/function/func.js
  */
@@ -32,12 +32,11 @@ let c1 = new ezpsy.Circle({
     }
 })
 let f = new ezpsy.RandomFunctions({
-    els: [() => {ez.remove();ez.add(c0);},() => {ez.add(c1)}]
+    els: [() => {ez.remove([c0,c1]);ez.add(c0);},() => {ez.remove([c0,c1]);ez.add(c1)}]
 })
 console.dir(f);
 keypress.listen(' ',()=>{
     f.run()
     console.dir(f.getIndex())
-    console.dir(ez)
 },false)
 

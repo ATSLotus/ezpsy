@@ -25,7 +25,7 @@ export class Line extends Elements{
     constructor(opts: LineOpts){
         super()
         this.shape = opts.shape;
-        this.ctx = super.ctx
+        // this.ctx = super.ctx
         // console.dir(opts.style)
         if(opts.style)
         {

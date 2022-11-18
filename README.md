@@ -1,1 +1,2 @@
-have a good day
+# EZPSY
+welcome to ezpsy! This is a libirary to experimental design in field of neuroscience or psychology.

@@ -39,7 +39,7 @@ export class sinGrating extends Elements{
     isNoise: boolean;
     constructor(opts: GratingOpts){
         super();
-        this.ctx = super.ctx;
+        // this.ctx = super.ctx;
         // this.wasm = opts.wasm;
         this.shape = opts.shape;
         let sh = this.shape;

@@ -26,7 +26,7 @@ export class Arc extends Elements{
     constructor(opts: ArcOpts){
         super()
         this.shape = opts.shape;
-        this.ctx = super.ctx
+        // this.ctx = super.ctx
         // console.dir(opts.style)
         if(opts.style)
         {

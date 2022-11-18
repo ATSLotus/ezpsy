@@ -1,20 +1,31 @@
 {
     "name": "ezpsy",
-    "version": "1.0.1",
-    "description": "",
-    "main": "index.js",
+    "version": "1.0.0",
+    "description": "脑科学、心理学实验设计",
+    "main": "./dist/index.js",
+    "types": "./dist/types/index.d.ts",
     "directories": {
         "example": "example"
     },
+    "repository": {
+        "type": "git",
+        "directory": "https://github.com/ATSLotus/ezpsy"
+    },
+    "keywords": [
+        "experimental design",
+        "neuroscience",
+        "psychology"
+    ],
     "scripts": {
         "build": "rm -rf dist/* && rollup -c",
         "watch": "rm -rf dist/* && rollup -c -w",
-        "dev": "rm -rf dist/* && rollup -c -w"
+        "dev": "rm -rf dist/* && rollup -c -w",
+        "builddts": "tsc -b ./tsconfig.types.json"
     },
     "author": "",
     "license": "ISC",
     "files": [
-        "dist/esm"
+        "dist"
     ],
     "devDependencies": {
         "@rollup/plugin-babel": "^5.3.0",
@@ -39,12 +50,11 @@
         "rollup-plugin-node-resolve": "^5.2.0",
         "rollup-plugin-postcss": "^4.0.2",
         "rollup-plugin-scss": "^3.0.0",
+        "rollup-plugin-typescript2": "^0.34.1",
         "rollup-plugin-wasm": "^3.0.0",
         "sass": "^1.50.0",
+        "sweetalert2": "^11.4.8",
         "tslib": "^2.3.1",
         "typescript": "^4.5.4"
-    },
-    "dependencies": {
-        "sweetalert2": "^11.4.8"
     }
 }

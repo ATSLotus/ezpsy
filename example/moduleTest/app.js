@@ -2,11 +2,11 @@
  * @Author: ATSLotus/时桐
  * @Date: 2022-02-24 22:05:19
  * @LastEditors: ATSLotus/时桐
- * @LastEditTime: 2022-11-11 15:30:46
+ * @LastEditTime: 2022-11-18 16:36:51
  * @Description: 
  * @FilePath: /ezpsy/example/moduleTest/app.js
  */
-import ezpsy from "../../dist/esm/index.js"
+import ezpsy from "../../dist/index.js"
 let dom = document.querySelector('#dom')
 let ez = ezpsy.init(dom)
 // let dlg = ezpsy.DlgInit(dom)

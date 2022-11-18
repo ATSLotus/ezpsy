@@ -38,7 +38,7 @@ export class RandomDot extends Elements{
     constructor(opts: RandomDotOpts){
         super();
         this.shape = opts.shape;
-        this.ctx = super.ctx;
+        // this.ctx = super.ctx;
         if(!this.shape.maskBand)
             this.shape.maskBand = 8;
         if(!this.shape.number)

@@ -1,3 +1,11 @@
+/*
+ * @Author: ATSLotus/时桐
+ * @Date: 2022-02-24 22:05:19
+ * @LastEditors: ATSLotus/时桐
+ * @LastEditTime: 2022-11-18 17:36:15
+ * @Description: 
+ * @FilePath: /ezpsy/src/Group/group.ts
+ */
 import { Class } from 'estree';
 import { judgeElement } from '../Judge/judge'
 import { Elements } from '../Element'
@@ -18,7 +26,7 @@ export class Group extends Elements{
 
         super()
 
-        this.ctx = super.ctx
+        // this.ctx = super.ctx
         // this.id = groupId;
         if(el instanceof Group)
         {

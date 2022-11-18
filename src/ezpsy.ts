@@ -23,7 +23,7 @@ export * from './Graphic/text'
 export * from './Graphic/image'
 // export * from './Graphic/imageCV'
 export * from './Time/time'
-export * from './Keypress/keypress'
+// export * from './Keypress/keypress'
 // export * from './Dialogue/dialogue'
 export * from './Graphic/grating'
 export * from './Graphic/sinGrat'
@@ -205,72 +205,7 @@ class Ezpsy {
                 }
             }
         })()
-        
-
-        // window.setInterval(()=>{
-        //     // let a = performance.now()
-        //     func();
-        //     // ezTime.WaitSecs0(delay/2)
-        //     ezTimer.sleep(delay).then(()=>{
-        //         el.remove()
-        //         that.add(el);
-        //         // console.dir(performance.now() - a - 100)
-        //     })
-            
-        // },0)
-
-
-        // (async function(){
-        //     for(let i = 0;i < 10;i++)
-        //     {
-                
-        //         await func();
-        //         // await ezTime.WaitSecs0(delay/2)
-        //         await ezTimer.sleep(delay)
-        //         await el.remove()
-        //         await that.add(el);
-        //         // that.storage.push(el)
-        //         // that.storage.reDraw(ctx)
-        //         // ezJudge.judgeAnimate(el,ctx);
-        //         // await that.storage.reDraw(ctx);
-        //         // await ezTime.WaitSecs0(delay/2)
-        //     }
-        // })()
     }
-
-    // sinGratPlay(opts: GratOpts){
-    //     let sinGratList = new Array();
-    //     let sh = opts.shape;
-    //     for(let i = 0;i < Math.floor(60*sh.cycle);i++)
-    //     {
-            
-    //         let singrat = new sinGrat({
-    //             shape: {
-    //                 x: sh.x,
-    //                 y: sh.y,
-    //                 r: sh.r,
-    //                 pixelsPerDegree: sh.pixelsPerDegree, 
-    //                 spatialFrequency: sh.spatialFrequency,
-    //                 angle: sh.angle, 
-    //                 contrast: sh.contrast, 
-    //                 phase: sh.phase + 2*i*Math.PI/60,
-    //                 cycle: sh.cycle,
-    //                 speed: sh.speed
-    //             }
-    //         });
-    //         sinGratList.push(singrat);
-    //     }
-    //     console.dir(sinGratList);
-    //     (async ()=>{
-    //         for(let i = 0;i < sinGratList.length;i+=sh.speed)
-    //         {
-    //             this.add(sinGratList[i])
-    //             await ezTime.delay_frame(1);
-    //             if(i!==sinGratList.length-sh.speed)
-    //                 sinGratList[i].remove();
-    //         }
-    //     })()
-    // }
 
     setTextLine(textLine: TextLine)
     {
@@ -342,14 +277,19 @@ class Ezpsy {
 
 }
 
-// export function pushEzpsyList(ez: Ezpsy){
-//     let num = ez.id;
-//     EzpsyList[num] = ez;
-// }
-
 export function init(dom: HTMLElement,cStyle?: canvasStyle) {
     let ez = new Ezpsy(ezUtils.Count(),dom,cStyle);
     // pushEzpsyList(ez);
     // console.dir(EzpsyList);
     return ez;
 }
+
+
+ 
+
+
+// export function pushEzpsyList(ez: Ezpsy){
+//     let num = ez.id;
+//     EzpsyList[num] = ez;
+// }
+

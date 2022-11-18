@@ -71,7 +71,7 @@ export class Rectangle extends Elements{
     constructor(opts: RectangleOpts){
         super()
         this.shape = opts.shape;
-        this.ctx = super.ctx;
+        // this.ctx = super.ctx;
         if(opts.style)
         {
             this.style = opts.style;

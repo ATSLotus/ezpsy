@@ -49,7 +49,7 @@ export class Img extends Elements{
     constructor(opts: ImgOpts){
         super()
         this.shape = opts.shape;
-        this.ctx = super.ctx
+        // this.ctx = super.ctx
         if(opts.Img === undefined)
         {
             let I = new Image()

@@ -2,11 +2,11 @@
  * @Author: ATSLotus/时桐
  * @Date: 2022-02-24 22:05:19
  * @LastEditors: ATSLotus/时桐
- * @LastEditTime: 2022-11-17 22:42:36
+ * @LastEditTime: 2022-11-18 17:24:15
  * @Description: 
  * @FilePath: /ezpsy/rollup.config.js
  */
-import typescript from '@rollup/plugin-typescript';
+import typescript from 'rollup-plugin-typescript2';
 import babel from '@rollup/plugin-babel';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
@@ -18,7 +18,7 @@ import replace from '@rollup/plugin-replace'
 const postcss = require('rollup-plugin-postcss');
 const sass = require('node-sass');
 
-import eslint from 'rollup-plugin-eslint';
+// import eslint from 'rollup-plugin-eslint';
 import simplevars from 'postcss-simple-vars';
 import nested from 'postcss-nested';
 import cssnext from 'postcss-cssnext';
@@ -50,18 +50,17 @@ const processSass = function(context, payload) {
 
 module.exports = [
   {
-    input: 'index.ts',   //输入文件
-    output:[
+    input: './src/index.ts',   //输入文件
+    output:[                //输出文件
       {
-        file: 'dist/iife/ezpsy.js', //输出文件
+        file: 'dist/ezpsy.js', 
         format: 'iife',
         name: 'ezpsy'
       }, 
       {
-        file: 'dist/esm/index.js',
+        file: 'dist/index.js',
         format: "esm",
-        name: "ezpsy",
-        sourcemap: 'inline'
+        name: "ezpsy"
       },
     ],
     context: 'that',
@@ -113,8 +112,12 @@ module.exports = [
         exclude: 'node_modules/**' // 只编译我们的源代码
       }),
       replace({
-        ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+        "_loadWasmModule(1,":"_loadWasmModule(0,",
+        delimiters: ['','']
       }),
+      replace({
+        ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+      })
     ],
   },
 ]

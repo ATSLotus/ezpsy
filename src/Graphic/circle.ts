@@ -24,7 +24,7 @@ export class Circle extends Elements{
     constructor(opts: CircleOpts){
         super()
         this.shape = opts.shape;
-        this.ctx = super.ctx
+        // this.ctx = super.ctx
         // console.dir(opts.style)
         if(opts.style)
         {

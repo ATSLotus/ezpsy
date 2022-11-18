@@ -1,5 +1,6 @@
 import { Elements } from "../Element";
-import { delay_frame, nameStyle, Opts, Shape, Style } from "../ezpsy";
+import { delay_frame } from "../Time/time"
+import { nameStyle, Opts, Shape, Style } from "../DataType/dataType"
 import { judgeElement, judgeStyle } from "../Judge/judge";
 import * as ezJudge from '../Judge/judge'
 import { createGratLinearGradient } from "../Gradient/gradient";

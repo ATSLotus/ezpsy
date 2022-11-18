@@ -10,7 +10,7 @@ import { Ellipse, makeEllipse } from '../Graphic/ellipse'
 import { makePolygon, Polygon } from '../Graphic/polygon'
 import { makeText, Texts } from '../Graphic/text'
 import { Img, makeImg } from '../Graphic/image'
-import { contentStyle } from '../Dialogue/dialogue'
+// import { contentStyle } from '../Dialogue/dialogue'
 import { Grat, makeGrat } from '../Graphic/grating'
 import { sinGrating } from '../Graphic/sinGrating'
 import { playRandomDot, RandomDot } from '../Graphic/randomDot'
@@ -66,46 +66,46 @@ export function judgeDivStyle(dStyle: DivStyle): DivStyle{
     return dStyle;
 }
 
-export function judgeContentStyle(cStyle: contentStyle,title: string,content: string): contentStyle{
-    if(!cStyle)
-    {
-        cStyle = {
-            title: title,
-            content: content,
-            btnStr: ['OK'],
-            noIcon: false,
-            noInt: false,
-            confirmPosition: 0
-        }
-    }
-    if(!cStyle.title)
-    {
-        cStyle.title = title
-    }
-    if(!cStyle.content)
-    {
-        cStyle.content = content
-    }
-    if(!cStyle.btnStr){
-        cStyle.btnStr = ['OK']
-    }
-    if(!cStyle.noIcon)
-    {
-        cStyle.noIcon = false
-    }
-    if(!cStyle.noInt)
-    {
-        cStyle.noInt = false
-    }
-    if(!cStyle.confirmPosition)
-    {
-        cStyle.confirmPosition = 0;
-    }
-    if(cStyle.confirmPosition !== 0 && cStyle.confirmPosition !== 1 && cStyle.confirmPosition !== 2){
-        cStyle.confirmPosition = 0
-    }
-    return cStyle
-}
+// export function judgeContentStyle(cStyle: contentStyle,title: string,content: string): contentStyle{
+//     if(!cStyle)
+//     {
+//         cStyle = {
+//             title: title,
+//             content: content,
+//             btnStr: ['OK'],
+//             noIcon: false,
+//             noInt: false,
+//             confirmPosition: 0
+//         }
+//     }
+//     if(!cStyle.title)
+//     {
+//         cStyle.title = title
+//     }
+//     if(!cStyle.content)
+//     {
+//         cStyle.content = content
+//     }
+//     if(!cStyle.btnStr){
+//         cStyle.btnStr = ['OK']
+//     }
+//     if(!cStyle.noIcon)
+//     {
+//         cStyle.noIcon = false
+//     }
+//     if(!cStyle.noInt)
+//     {
+//         cStyle.noInt = false
+//     }
+//     if(!cStyle.confirmPosition)
+//     {
+//         cStyle.confirmPosition = 0;
+//     }
+//     if(cStyle.confirmPosition !== 0 && cStyle.confirmPosition !== 1 && cStyle.confirmPosition !== 2){
+//         cStyle.confirmPosition = 0
+//     }
+//     return cStyle
+// }
 
 export function judgeModel(model: string): [string,string,string,string]{
     if(model === 'error')

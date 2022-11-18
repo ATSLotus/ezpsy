@@ -7139,34 +7139,46 @@ class RandomFunctions extends Functions {
     index;
     constructor(options) {
         super();
+        // console.dir(this.ez)
         this.elements = options.els;
         this.index = -1;
     }
     random() {
         this.index = Math.floor(Math.random() * this.elements.length);
+        return this.index;
     }
-    setttings() {
-        let object = `switch(${this.index}){\n`;
-        for (let i = 0; i < this.elements.length; i++) {
-            object += `\tcase ${i}: \n\t\tez.add(${this.elements[i]});\n\t\tbreak;\n`;
-        }
-        object += `\tdefault:\n\t\tconsole.dir('error');\n}\n`;
-        return object;
-    }
+    // setttings(){
+    //     // let object = `let ez = ${this.ez};\n`;
+    //     // for(let i = 0;i < this.elements.length;i++)
+    //     // {
+    //     //     let el = {...this.elements[i]};
+    //     //     object += `let e${i} = ${el};\n`
+    //     // }
+    //     // object += `switch(${this.index}){\n`
+    //     // for(let i = 0;i < this.elements.length;i++)
+    //     // {
+    //     //     object += `\tcase ${i}: \n\t\tez.add(e${i});\n\t\tbreak;\n`
+    //     // }
+    //     // object += `\tdefault:\n\t\tconsole.dir('error');\n}\n`
+    //     let object = `switch(${this.index}){\n`
+    //     for(let i = 0;i < this.elements.length;i++)
+    //     {
+    //         object += `\tcase ${i}: \n\t\t${this.elements[i]}();\n\t\tbreak;\n`
+    //     }
+    //     object += `\tdefault:\n\t\tconsole.dir('error');\n}\n`
+    //     return object;
+    // }
     run() {
-        this.random();
-        let code = this.setttings();
-        console.dir(code);
-        // eval(code)
-        evals(code);
+        let x = this.random();
+        this.elements[x]();
+        // let code = this.setttings()
+        // console.dir(code)
+        // // eval(code)
+        // evals(code)
     }
     getIndex() {
         return this.index;
     }
-}
-function evals(str) {
-    let F = Function;
-    return new F(`"use strict";\n${str}`)();
 }
 
 // export { animate } from './Animate/animate'
@@ -7174,7 +7186,7 @@ function evals(str) {
 // let EzpsyList = new Array();
 class Ezpsy {
     id;
-    dom;
+    // dom: HTMLElement
     ctx;
     storage;
     cStyle;
@@ -7187,8 +7199,8 @@ class Ezpsy {
     //     this.cStyle = cStyle;
     //     this.ctx = ezCanvas.createCanvas(dom,cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
     // }
-    constructor(id, cStyle) {
-        this.id = id;
+    constructor(cStyle) {
+        this.id = Count();
         // this.dom = dom;
         this.storage = new Storage();
         cStyle = judgeCanvasStyle(cStyle);
@@ -7371,7 +7383,7 @@ class Ezpsy {
 //     return ez;
 // }
 function init(cStyle) {
-    let ez = new Ezpsy(Count(), cStyle);
+    let ez = new Ezpsy(cStyle);
     // pushEzpsyList(ez);
     // console.dir(EzpsyList);
     return ez;

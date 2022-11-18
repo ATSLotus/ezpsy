@@ -57,7 +57,7 @@ export { RandomFunctions } from './Functions';
 
 class Ezpsy {
     readonly id: number
-    dom: HTMLElement
+    // dom: HTMLElement
     readonly ctx: CanvasRenderingContext2D
     private storage: Storage
     cStyle?: canvasStyle
@@ -72,8 +72,8 @@ class Ezpsy {
     //     this.cStyle = cStyle;
     //     this.ctx = ezCanvas.createCanvas(dom,cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
     // }
-    constructor(id: number,cStyle?: canvasStyle){
-        this.id = id;
+    constructor(cStyle?: canvasStyle){
+        this.id = ezUtils.Count();
         // this.dom = dom;
         this.storage = new Storage()
         cStyle = ezJudge.judgeCanvasStyle(cStyle);
@@ -291,7 +291,7 @@ class Ezpsy {
 //     return ez;
 // }
 export function init(cStyle?: canvasStyle) {
-    let ez = new Ezpsy(ezUtils.Count(),cStyle);
+    let ez = new Ezpsy(cStyle);
     // pushEzpsyList(ez);
     // console.dir(EzpsyList);
     return ez;

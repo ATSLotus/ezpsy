@@ -2,7 +2,7 @@
  * @Author: ATSLotus/时桐
  * @Date: 2022-10-11 20:23:18
  * @LastEditors: ATSLotus/时桐
- * @LastEditTime: 2022-11-18 20:25:47
+ * @LastEditTime: 2022-11-18 21:34:56
  * @Description: 
  * @FilePath: /ezpsy/example/function.html
 -->
@@ -43,7 +43,7 @@
         }
     })
     let f = new ezpsy.RandomFunctions({
-        els: ['c0','c1']
+        els: [()=>{ez.add(c0)},()=>{ez.add(c1)}]
     })
     console.dir(f);
     f.run()

@@ -2,11 +2,12 @@
  * @Author: ATSLotus/时桐
  * @Date: 2022-02-24 22:05:19
  * @LastEditors: ATSLotus/时桐
- * @LastEditTime: 2022-10-11 21:33:43
+ * @LastEditTime: 2022-11-18 21:24:19
  * @Description: 
  * @FilePath: /ezpsy/src/DataType/dataType.ts
  */
-import { Elements, Scale, Translate } from "../Element"
+// import { Elements, Scale, Translate } from "../Element"
+import { Elements } from "../Element"
 
 export interface Shape{  
     x?: number     //position x
@@ -62,5 +63,5 @@ export interface Opts{
 }
 
 export interface Options{
-    els: Array<string>  //元素变量名
+    els: Array<any>  //元素变量名
 }

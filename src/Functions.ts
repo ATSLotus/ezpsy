@@ -2,7 +2,7 @@
  * @Author: ATSLotus/时桐
  * @Date: 2022-10-11 20:13:52
  * @LastEditors: ATSLotus/时桐
- * @LastEditTime: 2022-11-18 21:34:26
+ * @LastEditTime: 2022-11-18 21:36:48
  * @Description: 
  * @FilePath: /ezpsy/src/Functions.ts
  */
@@ -61,7 +61,6 @@ export class RandomFunctions extends Functions{
         this.elements[x]()
         // let code = this.setttings()
         // console.dir(code)
-        // // eval(code)
         // evals(code)
     }
     getIndex(){

@@ -89,24 +89,23 @@ export class Time0{
 //     return t
 // }
 
-export function WaitSecs0(delay: number,message?: any){
+export function delay_ms(delay: number){
     return new Promise(function(resolve,reject){
         setTimeout(function () {
-            // console.log(message);
-            resolve(1);
+            resolve(true);
         }, delay);
     })
 }
 
-export function delay_frame(num1){
-    let time_num=0;     
+export function delay_frame(delay:number){
+    let count=0;     
     return new Promise(function (resolve, reject) {
         (function raf(){
-            time_num++;
+            count++;
             let id =window.requestAnimationFrame(raf);
-        if( time_num>num1){
+        if( count>delay){
             window.cancelAnimationFrame(id);
-            resolve(0);
+            resolve(true);
         }
     }())
     })

@@ -12,6 +12,7 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import wasm from '@rollup/plugin-wasm';
 import replace from '@rollup/plugin-replace'
+import { terser } from "rollup-plugin-terser";
 const postcss = require('rollup-plugin-postcss');
 // const sass = require('node-sass');
 
@@ -61,6 +62,7 @@ module.exports = [
     ],
     context: 'that',
     plugins:[
+      terser(),
       wasm({
         sync: [
           'static/singrat_bg.wasm'

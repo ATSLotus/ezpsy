@@ -19,8 +19,9 @@
     "scripts": {
         "build": "rm -rf dist/* && rollup -c && npm run builddts",
         "watch": "rm -rf dist/* && rollup -c -w",
-        "dev": "rm -rf dist/* && rollup -c -w",
-        "builddts": "tsc -b ./tsconfig.types.json"
+        "builddts": "tsc -b ./tsconfig.types.json",
+        "prepublic:publish": "npm run build && npm run bump-version",
+        "public:publish": "npm publish -f"
     },
     "author": "",
     "license": "ISC",

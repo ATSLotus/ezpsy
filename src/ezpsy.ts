@@ -1,7 +1,7 @@
 import * as ezUtils from './utils'
 import * as ezCanvas from './Canvas/canvas'
 import * as ezTime from './Time/time'
-import { canvasStyle } from './Canvas/canvas'
+import { canvasStyle , initProperties } from './Canvas/canvas'
 import * as ezJudge from './Judge/judge'
 import { Elements } from './Element'
 import { Group } from './Group/group'
@@ -72,13 +72,12 @@ class Ezpsy {
     //     this.cStyle = cStyle;
     //     this.ctx = ezCanvas.createCanvas(dom,cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
     // }
-    constructor(cStyle?: canvasStyle){
+    constructor(init?: initProperties){
         this.id = ezUtils.Count();
         // this.dom = dom;
         this.storage = new Storage()
-        cStyle = ezJudge.judgeCanvasStyle(cStyle);
-        this.cStyle = cStyle;
-        this.ctx = ezCanvas.createCanvas(cStyle);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
+        this.cStyle = init.style
+        this.ctx = ezCanvas.exportContext(init);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
     }
 
     setCanvasStyle(cStyle: canvasStyle){
@@ -122,7 +121,7 @@ class Ezpsy {
     //         c.height = cStyle.height
     //     }
     // }
-
+    // 实际绘图
     add(el: Elements|Elements[]|Group){
         let ctx = this.ctx
         let st = this.storage
@@ -290,11 +289,10 @@ class Ezpsy {
 //     // console.dir(EzpsyList);
 //     return ez;
 // }
-export function init(cStyle?: canvasStyle) {
-    let ez = new Ezpsy(cStyle);
-    // pushEzpsyList(ez);
-    // console.dir(EzpsyList);
-    return ez;
+
+// return 画布
+export function init(init?: initProperties) {
+    return new Ezpsy(init);
 }
 
 

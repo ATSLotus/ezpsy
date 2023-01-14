@@ -3,48 +3,20 @@
     <head>
         <title>text</title>
         <script src="../dist/ezpsy.js"></script>
-        <link rel="stylesheet" href="../dist/ezpsy.css" >
+        <!-- <link rel="stylesheet" href="../dist/ezpsy.css" >s -->
     </head>
     <body>
         <div id="text"></div>
     </body>
     <script>
-
-        let dlg = ezpsy.DlgInit()
-
-        dlg.listDlg({
-          list: {
-            Sex: {
-              0: '女',
-              1: '男'
-            },
-            Age: {
-              20: '20',
-              21: '21',
-              22: '22'
-            },
-            Name: {MH: "MH"}
-          },
-        //   IsMulti: true
-        }).then(e=>{
-          console.dir(e)
-        })
-
-        let ez = ezpsy.init(document.getElementById("text"));
-        let text0 = new ezpsy.Texts({
-            shape: {
-                x: 200,
-                y: 40,
-                text: "text"
-            },
-            style:{
-                fill: 'red',
-                fontSize: '30px'
-            },
-            textLine: {
-                textA: 'center'
+        let ez = ezpsy.init( {
+            el: document.getElementById("text"),
+            style: {
+                width: "400px",
+                height: "400px"
             }
-        })
+        } ) 
+        ;
         let rect = new ezpsy.Rectangle({
             shape: {
                 x: 100,
@@ -56,12 +28,11 @@
                 fill: 'red'
             }
         })
-        ez.add([text0,rect])
-        rect.remove()
-        
-       
-
-
+        ez.add([rect])
+        setTimeout(()=>{
+            ez.clear()
+        })
+        // rect.remove()
     </script>
     <style>
         canvas{

@@ -14,7 +14,34 @@ import css from 'rollup-plugin-css-porter';
 import scss from 'rollup-plugin-scss';
 // import wasm from 'rollup-plugin-wasm';
 import wasm from '@rollup/plugin-wasm';
-import replace from '@rollup/plugin-replace';
+import replace from '@rollup/plugin-replace'
+import { terser } from "rollup-plugin-terser";
+const postcss = require('rollup-plugin-postcss');
+// const sass = require('node-sass');
+
+// import css from "rollup-plugin-import-css"
+
+// const resolveFile = function(filePath) {
+//   let p = path.join(__dirname, '..', filePath)
+//   console.dir(p)
+//   return p
+// }
+
+// const isProductionEnv = process.env.NODE_ENV === 'production'
+
+// const processSass = function(context, payload) {
+//   return new Promise(( resolve, reject ) => {
+//     sass.render({
+//       file: context
+//     }, function(err, result) {
+//       if( !err ) {
+//         resolve(result);
+//       } else {
+//         reject(err)
+//       }
+//     });
+//   })
+// }
 module.exports = [
   {
     input: 'index.ts',   //输入文件
@@ -33,6 +60,7 @@ module.exports = [
     ],
     context: 'that',
     plugins:[
+      terser(),
       wasm({
         sync: [
           'static/singrat_bg.wasm'
@@ -43,10 +71,10 @@ module.exports = [
       commonjs(),
       css(),
       scss(),
-      // replace({
-      //   "_loadWasmModule(1,":"_loadWasmModule(0,",
-      //   delimiters: ['','']
-      // }),
+      replace({
+        "_loadWasmModule(1,":"_loadWasmModule(0,",
+        delimiters: ['','']
+      }),
       babel({
         exclude: 'node_modules/**' // 只编译我们的源代码
       })

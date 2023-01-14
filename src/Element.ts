@@ -119,18 +119,18 @@ export class Elements{
             }
                 
             //     func();
-            //     // await ezTime.WaitSecs0(delay/2)
+            //     // await ezTime.delay_ms(delay/2)
             //     await ezTimer.sleep(delay)
             //     that.remove()
             //     that.storage.push(that)
             //     that.storage.reDraw(ctx)
             //     // ezJudge.judgeAnimate(that,ctx);
             //     // await that.storage.reDraw(ctx);
-            //     // await ezTime.WaitSecs0(delay/2)
+            //     // await ezTime.delay_ms(delay/2)
             // }
             // window.setInterval(()=>{
             //     func();
-            //     // await ezTime.WaitSecs0(delay/2)
+            //     // await ezTime.delay_ms(delay/2)
             //     ezTimer.sleep(delay).then(()=>{
             //         that.remove()
             //         that.storage.push(that)

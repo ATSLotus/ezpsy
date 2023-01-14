@@ -19,8 +19,9 @@
     "scripts": {
         "build": "rm -rf dist/* && rollup -c && npm run builddts",
         "watch": "rm -rf dist/* && rollup -c -w",
-        "dev": "rm -rf dist/* && rollup -c -w",
-        "builddts": "tsc -b ./tsconfig.types.json"
+        "builddts": "tsc -b ./tsconfig.types.json",
+        "prepublic:publish": "npm run build && npm run bump-version",
+        "public:publish": "npm publish -f"
     },
     "author": "",
     "license": "ISC",
@@ -50,6 +51,7 @@
         "rollup-plugin-node-resolve": "^5.2.0",
         "rollup-plugin-postcss": "^4.0.2",
         "rollup-plugin-scss": "^3.0.0",
+        "rollup-plugin-terser": "^7.0.2",
         "rollup-plugin-typescript2": "^0.34.1",
         "rollup-plugin-wasm": "^3.0.0",
         "sass": "^1.50.0",

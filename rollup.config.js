@@ -2,22 +2,24 @@
  * @Author: ATSLotus/时桐
  * @Date: 2022-02-24 22:05:19
  * @LastEditors: ATSLotus/时桐
- * @LastEditTime: 2022-11-17 15:19:14
+ * @LastEditTime: 2022-11-18 20:04:04
  * @Description: 
  * @FilePath: /ezpsy/rollup.config.js
  */
-import typescript from '@rollup/plugin-typescript';
+import typescript from 'rollup-plugin-typescript2';
 import babel from '@rollup/plugin-babel';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import css from 'rollup-plugin-css-porter';
-import scss from 'rollup-plugin-scss';
-// import wasm from 'rollup-plugin-wasm';
 import wasm from '@rollup/plugin-wasm';
 import replace from '@rollup/plugin-replace'
 import { terser } from "rollup-plugin-terser";
 const postcss = require('rollup-plugin-postcss');
 // const sass = require('node-sass');
+
+import simplevars from 'postcss-simple-vars';
+import nested from 'postcss-nested';
+import cssnext from 'postcss-cssnext';
+import cssnano from 'cssnano';
 
 // import css from "rollup-plugin-import-css"
 
@@ -42,20 +44,20 @@ const postcss = require('rollup-plugin-postcss');
 //     });
 //   })
 // }
+
 module.exports = [
   {
-    input: 'index.ts',   //输入文件
-    output:[
+    input: './src/index.ts',   //输入文件
+    output:[                //输出文件
       {
-        file: 'dist/iife/ezpsy.js', //输出文件
+        file: 'dist/ezpsy.js', 
         format: 'iife',
         name: 'ezpsy'
       }, 
       {
-        file: 'dist/esm/index.js',
+        file: 'dist/index.js',
         format: "esm",
-        name: "ezpsy",
-        sourcemap: 'inline'
+        name: "ezpsy"
       },
     ],
     context: 'that',
@@ -66,18 +68,55 @@ module.exports = [
           'static/singrat_bg.wasm'
         ]
       }),
-      typescript(),  // 默认从 tsconfig加载数据↗
-      nodeResolve(),
+      typescript(),  // 默认从 tsconfig加载数据
+      // nodeResolve(),
+      // postcss({
+      //   extract: true,
+      //   minimize: isProductionEnv,
+      //   extensions:['css', 'scss'],
+      //   process: processSass,
+      // }),
+      postcss({
+        plugins: [
+          simplevars(),
+          nested(),
+          cssnext({ warnForDuplicates: false, }),
+          cssnano(),
+        ],
+        extensions: [ '.css','.scss' ],
+      }),
+      nodeResolve({
+        jsnext: true,
+        main: true,
+        browser: true,
+      }),
       commonjs(),
-      css(),
-      scss(),
+      // processSass(),
+      // scss({ sync: [
+      //   "sweetalert2/src/sweetalert2.scss",
+      //   "src/Dialogue/dialogue.scss"
+      // ] }),
+      // replace({
+      //   "_loadWasmModule(1,":"_loadWasmModule(0,",
+      //   delimiters: ['','']
+      // }),
+      // eslint({
+      //   exclude: [
+      //     'src/Style/**',
+      //   ]
+      // }),
+      babel({
+        "presets": ['@babel/preset-env'],
+        exclude: 'node_modules/**' // 只编译我们的源代码
+      }),
       replace({
         "_loadWasmModule(1,":"_loadWasmModule(0,",
-        delimiters: ['','']
-      }),
-      babel({
-        exclude: 'node_modules/**' // 只编译我们的源代码
+        delimiters: ['',''],
+        "preventAssignment": true
       })
+      // replace({
+      //   ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+      // })
     ],
   },
 ]

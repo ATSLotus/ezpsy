@@ -62,7 +62,7 @@ module.exports = [
     ],
     context: 'that',
     plugins:[
-      terser(),
+      
       wasm({
         sync: [
           'static/singrat_bg.wasm'
@@ -113,7 +113,8 @@ module.exports = [
         "_loadWasmModule(1,":"_loadWasmModule(0,",
         delimiters: ['',''],
         "preventAssignment": true
-      })
+      }),
+      terser()
       // replace({
       //   ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
       // })

@@ -9,19 +9,25 @@
     </body>
     <style>
         body{
-            background-color: #808080;
+            /* background-color: #808080; */
             /* transform: rotate(45deg); */
         }
     </style>
+    <script src="../dist/ezpsy.js"></script>
     <script>
-        let ez = ezpsy.init();
+        let ez = ezpsy.init({
+            el: document.getElementById('sinGrat'),
+            style: {
+                width: 400,
+                height: 400
+            }});
         // console.dir(ez)
         // let keypress = ezpsy.KeypressInit('keyup');
         // let ctx = ez.ctx
-        ez.setCanvasStyle({
-            width: window.innerWidth,
-            height: window.innerHeight
-        })
+        // ez.setCanvasStyle({
+        //     width: window.innerWidth,
+        //     height: window.innerHeight
+        // })
 
         // var str=window.location.search; //location.search是从当前URL的?号开始的字符串
         // arr=str.split("?");

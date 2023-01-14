@@ -39,13 +39,15 @@ export interface initProperties{
 // }
 const styleValueParse = (attr: string | number) => {
     if (typeof(attr) == 'number') {
-        return `${attr}px`
+        return attr
     }else {
-        return attr.endsWith('px') ? attr : `${attr}px`
+        return parseInt(attr.endsWith('px') ? attr.split('px')[0] : attr)
     }
 }
 export function exportContext(init?: initProperties): CanvasRenderingContext2D{
     let parentEle:HTMLElement = init.el
+    console.log(parentEle);
+    
     let ele:HTMLCanvasElement = document.createElement('canvas')
     // let cStyle: canvasStyle = {
     //     width: 100,
@@ -53,18 +55,16 @@ export function exportContext(init?: initProperties): CanvasRenderingContext2D{
     // }
     const style = init.style
     if (style.width) {
-        ele.style.width = styleValueParse(style.width);
+        ele.width = styleValueParse(style.width);
     }else {
-        ele.style.width = `${window.innerWidth}px`;
+        ele.width = window.innerWidth;
     }
     if (style.height) {
-        ele.style.height = styleValueParse(style.height);
+        ele.height = styleValueParse(style.height);
     }else {
-        ele.style.height = `${window.innerHeight}px`;
+        ele.height = window.innerHeight;
     }
     ele.style.position = 'absolute'
-    ele.style.width = styleValueParse(style.width);
-    ele.style.height = styleValueParse(style.height);
     // c.height = cStyle.height;
     let ctx = ele.getContext('2d');
     parentEle.append(ele)

@@ -11,11 +11,13 @@
     <script>
 
         
-        let ez = ezpsy.init(document.getElementById("stroop"))
+        let ez = ezpsy.init({
+            el: document.getElementById("stroop")
+        })
         let keypress = ezpsy.KeypressInit();
         let dlg = ezpsy.DlgInit();
         let time = new ezpsy.Time();
-        ez.setCanvasStyle({width: 1200,height: 800})
+        ez.setCanvasStyle({width: 1200,height: 800})f
         let centerX = 600;
         let centerY = 400;
         dlg.msgDlg({

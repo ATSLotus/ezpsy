@@ -114,7 +114,7 @@ module.exports = [
         delimiters: ['',''],
         "preventAssignment": true
       }),
-      terser()
+      // terser()
       // replace({
       //   ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
       // })

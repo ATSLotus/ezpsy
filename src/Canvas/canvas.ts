@@ -46,27 +46,16 @@ const styleValueParse = (attr: string | number) => {
 }
 export function exportContext(init?: initProperties): CanvasRenderingContext2D{
     let parentEle:HTMLElement = init.el
-    console.log(parentEle);
-    
     let ele:HTMLCanvasElement = document.createElement('canvas')
-    // let cStyle: canvasStyle = {
-    //     width: 100,
-    //     height: 100
-    // }
-    const style = init.style
-    if (style.width) {
-        ele.width = styleValueParse(style.width);
-    }else {
-        ele.width = window.innerWidth;
+    // 默认宽高为全屏
+    const style = init.style || {
+        width: window.innerWidth,
+        height: window.innerHeight
     }
-    if (style.height) {
-        ele.height = styleValueParse(style.height);
-    }else {
-        ele.height = window.innerHeight;
-    }
+    ele.width = style.width ? styleValueParse(style.width) : window.innerWidth;
+    ele.height = style.height ? styleValueParse(style.height) : window.innerHeight
     ele.style.position = 'absolute'
-    // c.height = cStyle.height;
-    let ctx = ele.getContext('2d');
+    const ctx = ele.getContext('2d');
     parentEle.append(ele)
     return ctx;
 }

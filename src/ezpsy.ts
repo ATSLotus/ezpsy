@@ -74,19 +74,15 @@ class Ezpsy {
     // }
     constructor(init?: initProperties){
         this.id = ezUtils.Count();
-        // this.dom = dom;
         this.storage = new Storage()
-        this.cStyle = init.style
+        this.cStyle = init.style || {
+            width: window.innerWidth,
+            height: window.innerHeight
+        }
         this.ctx = ezCanvas.exportContext(init);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
     }
 
     setCanvasStyle(cStyle: canvasStyle){
-        // for(let i = 0;i < this.ctxList.length;i++){
-        //     let c = this.ctxList[i].canvas;
-        //     c.width = cStyle.width
-        //     c.height = cStyle.height
-        // }
-        // let el = this.storage.ElementsList
         let c = this.ctx.canvas;
         let ctx = this.ctx
         cStyle = ezJudge.judgeCanvasStyle(cStyle);
@@ -97,6 +93,7 @@ class Ezpsy {
         // console.dir(w)
         c.style.top = ((h-cStyle.height)/2).toString() + 'px'
         c.style.left = ((w-cStyle.width)/2).toString() + 'px'
+
         this.cStyle = {
             width: cStyle.width,
             height: cStyle.height
@@ -105,8 +102,6 @@ class Ezpsy {
     }
 
     refresh(){
-        // console.dir(this.storage.ElementsList)
-        // this.storage.ElementsList = new Array();
         let c = this.ctx.canvas;
         c.width = this.cStyle.width
         c.height = this.cStyle.height

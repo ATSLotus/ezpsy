@@ -14,7 +14,7 @@
         }
     </style>
     <script>
-        let ez = ezpsy.init(document.getElementById("sinGrat"));
+        let ez = ezpsy.init();
         // console.dir(ez)
         // let keypress = ezpsy.KeypressInit('keyup');
         // let ctx = ez.ctx
@@ -30,18 +30,17 @@
         // eval(sessionStorage.getItem(key));
         
         let a = new ezpsy.sinGrating({
-            wasm : '/dist/singrat_bg.wasm',
             shape: {
                 x: window.innerWidth/2,                 
                 y: window.innerHeight/2,                 
                 r: 120,    
-                pixelsPerDegree: 57, 
-                spatialFrequency: 2,
-                angle: 90, 
-                contrast: 1, 
-                phase: 0,
-                level: 0.5,
-                gamma: 1
+                // pixelsPerDegree: 57, 
+                // spatialFrequency: 2,
+                // angle: 90, 
+                // contrast: 1, 
+                // phase: 0,
+                // level: 0.5,
+                // gamma: 1
             },
             isNoise: false
         })

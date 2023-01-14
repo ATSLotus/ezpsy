@@ -1,6 +1,6 @@
 {
     "name": "ezpsy",
-    "version": "1.0.0",
+    "version": "1.1.1",
     "description": "脑科学、心理学实验设计",
     "main": "./dist/index.js",
     "types": "./dist/types/index.d.ts",

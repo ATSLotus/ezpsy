@@ -47,6 +47,14 @@ export class sinGrating extends Elements{
         this.sinGrat = new ImageData(this.width,this.width);
         this.imgDataList = new Array<ImageData>();
         this.isNoise = opts.isNoise;
+        this.shape.pixelsPerDegree = !this.shape.pixelsPerDegree ? 57 : this.shape.pixelsPerDegree
+        this.shape.spatialFrequency = !this.shape.spatialFrequency ?  2 : this.shape.spatialFrequency
+        this.shape.angle = !this.shape.angle ?  0 : this.shape.angle
+        this.shape.contrast = !this.shape.contrast ?  1 : this.shape.contrast
+        this.shape.phase = !this.shape.phase ?  0 : this.shape.phase
+        this.shape.level = !this.shape.level ?  0.5 : this.shape.level
+        this.shape.gamma = !this.shape.gamma ?  1 : this.shape.gamma
+        console.dir(this.shape)
         // console.dir(this.isNoise)
         
         nameId++;
@@ -79,13 +87,7 @@ export class sinGrating extends Elements{
         // })
         
     }
-    async play(timeFrequency,time,fps){
-        if(!timeFrequency)
-            timeFrequency = 1;
-        if(!time)
-            time = 1000
-        if(!fps)
-            fps = 60;
+    async play(timeFrequency:number = 1,time:number = 1000,fps:number = 60){
         let interval = 2*Math.PI*timeFrequency/fps;
         let fpsNum = Math.floor(time/1000 * fps);
         let index = 0;

@@ -120,12 +120,13 @@ class Ezpsy {
     add(el: Elements|Elements[]|Group){
         let ctx = this.ctx
         let st = this.storage
-        let name = st.getElementsName(el)
-        let index = st.searchElementsName(name)
+        // let name = st.getElementsName(el)
+        // let index = st.searchElementsName(name)
         
         if(el instanceof Elements||el instanceof Group)
         {
-            if(index !== -1)
+            // if(index !== -1)
+            if(st.ElementList.has(el.name))
             {
                 el.remove()
                 this.add(el)
@@ -220,40 +221,72 @@ class Ezpsy {
             if(textLine.textA)
             {
                 // this.textLine.textA = textLine.textA
-                for(let i = 0;i < st.ElementsList.length;i++)
-                {
-                    if(st.ElementsList[i] instanceof Texts)
-                        st.ElementsList[i].textLine.textA = textLine.textA
-                    else if(st.ElementsList[i] instanceof Group)
+
+                // for(let i = 0;i < st.ElementsList.length;i++)
+                // {
+                //     if(st.ElementsList[i] instanceof Texts)
+                //         st.ElementsList[i].textLine.textA = textLine.textA
+                //     else if(st.ElementsList[i] instanceof Group)
+                //     {
+                //         for(let t = 0;t < (<Group>st.ElementsList[i]).groupList.length;t++)
+                //         {
+                //             if((<Group>st.ElementsList[i]).groupList[t] instanceof Texts)
+                //             {
+                //                 (<Group>st.ElementsList[i]).groupList[t].textLine.textA = textLine.textA
+                //             }
+                //         }
+                //     }
+                // }
+                
+                st.ElementList.forEach((value, key) => {
+                    if(value instanceof Texts)
+                        value.textLine.textA = textLine.textA
+                    else if(value instanceof Group)
                     {
-                        for(let t = 0;t < (<Group>st.ElementsList[i]).groupList.length;t++)
+                        for(let t = 0;t < (<Group>value).groupList.length;t++)
                         {
-                            if((<Group>st.ElementsList[i]).groupList[t] instanceof Texts)
+                            if((<Group>value).groupList[t] instanceof Texts)
                             {
-                                (<Group>st.ElementsList[i]).groupList[t].textLine.textA = textLine.textA
+                                (<Group>value).groupList[t].textLine.textA = textLine.textA
                             }
                         }
                     }
-                }
+                })
             }
             if(textLine.textB)
             {
                 // this.textLine.textB = textLine.textB
-                for(let i = 0;i < st.ElementsList.length;i++)
-                {
-                    if(st.ElementsList[i] instanceof Texts)
-                        st.ElementsList[i].textLine.textB = textLine.textB
-                    else if(st.ElementsList[i] instanceof Group)
+
+                // for(let i = 0;i < st.ElementsList.length;i++)
+                // {
+                //     if(st.ElementsList[i] instanceof Texts)
+                //         st.ElementsList[i].textLine.textB = textLine.textB
+                //     else if(st.ElementsList[i] instanceof Group)
+                //     {
+                //         for(let t = 0;t < (<Group>st.ElementsList[i]).groupList.length;t++)
+                //         {
+                //             if((<Group>st.ElementsList[i]).groupList[t] instanceof Texts)
+                //             {
+                //                 (<Group>st.ElementsList[i]).groupList[t].textLine.textB = textLine.textB
+                //             }
+                //         }
+                //     }
+                // }
+
+                st.ElementList.forEach((value, _key) => {
+                    if(value instanceof Texts)
+                        value.textLine.textB = textLine.textB
+                    else if(value instanceof Group)
                     {
-                        for(let t = 0;t < (<Group>st.ElementsList[i]).groupList.length;t++)
+                        for(let t = 0;t < (<Group>value).groupList.length;t++)
                         {
-                            if((<Group>st.ElementsList[i]).groupList[t] instanceof Texts)
+                            if((<Group>value).groupList[t] instanceof Texts)
                             {
-                                (<Group>st.ElementsList[i]).groupList[t].textLine.textB = textLine.textB
+                                (<Group>value).groupList[t].textLine.textB = textLine.textB
                             }
                         }
                     }
-                }
+                })
             }
         }
         st.reDraw(this.ctx);

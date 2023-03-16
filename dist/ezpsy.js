@@ -2929,100 +2929,129 @@ var ezpsy = (function () {
     }
 
     class Storage {
-        ElementsList;
+        // ElementsList: Array<Elements>
+        ElementList;
         textLine;
         constructor() {
-            this.ElementsList = [];
+            // this.ElementsList = [];
+            this.ElementList = new Map();
         }
         push(el) {
             if (el instanceof Elements || el instanceof Group) {
-                this.ElementsList.push(el);
+                // this.ElementsList.push(el)
+                this.ElementList.set(el.name, el);
             }
             else {
                 for (let i = 0; i < el.length; i++) {
-                    this.ElementsList.push(el[i]);
+                    // this.ElementsList.push(el[i]);
+                    this.push(el[i]);
                 }
             }
         }
         remove(el) {
-            let name = this.getElementsName(el);
-            let index = this.searchElementsName(name);
-            if (index !== undefined) {
-                if (index instanceof Array) {
-                    // index.sort();
-                    index.sort((a, b) => {
-                        if (a > b)
-                            return 1;
-                        else if (a < b)
-                            return -1;
-                        else
-                            return 0;
-                    });
-                    for (let i = index.length - 1; i >= 0; i--) {
-                        this.ElementsList.splice(index[i], 1);
-                    }
-                }
-                else {
-                    this.ElementsList.splice(index, 1);
-                }
-            }
-        }
-        getElementsName(el) {
-            if (el instanceof Elements || el instanceof Group) {
-                let name = el.name;
-                return name;
-            }
-            else {
-                let name = new Array();
+            // let name = this.getElementsName(el);
+            // let index = this.searchElementsName(name);
+            // if(index !== undefined)
+            // {
+            //     if(index instanceof Array)
+            //     {
+            //         // index.sort();
+            //         index.sort((a,b)=>{
+            //             if(a>b)
+            //               return 1;
+            //             else if (a<b)
+            //               return -1;
+            //             else 
+            //               return 0;
+            //         })
+            //         for(let i = index.length-1;i >= 0;i--)
+            //         {
+            //             this.ElementsList.splice(index[i],1);
+            //         }
+            //     }
+            //     else{
+            //         this.ElementsList.splice(index,1);
+            //     }
+            // }
+            if (el instanceof Array) {
                 for (let i = 0; i < el.length; i++) {
-                    name[i] = el[i].name;
+                    this.remove(el[i]);
                 }
-                return name;
-            }
-        }
-        searchElementsName(name) {
-            if (name instanceof Array) {
-                let index = new Array();
-                for (let i = 0; i < name.length; i++) {
-                    for (let t = 0; t < this.ElementsList.length; t++) {
-                        if (name[i].name === this.ElementsList[t].name.name) {
-                            index[i] = t;
-                            break;
-                        }
-                    }
-                }
-                return index;
             }
             else {
-                let index = -1;
-                for (let t = 0; t < this.ElementsList.length; t++) {
-                    if (name.name === this.ElementsList[t].name.name) {
-                        index = t;
-                        break;
-                    }
-                }
-                return index;
+                this.ElementList.delete(el.name);
             }
         }
+        // getElementsName(el: Elements | Array<Elements> | Group){
+        //     if(el instanceof Elements || el instanceof Group)
+        //     {
+        //         let name = el.name;
+        //         return name
+        //     }
+        //     else
+        //     {
+        //         let name = new Array()
+        //         for(let i = 0;i < el.length;i++)
+        //         {
+        //             name[i] = el[i].name
+        //         }
+        //         return name
+        //     }
+        // }
+        // searchElementsName(name: nameStyle | Array<nameStyle>){
+        //     if(name instanceof Array)
+        //     {
+        //         let index = new Array()
+        //         for(let i = 0;i < name.length;i++)
+        //         {
+        //             for(let t = 0;t < this.ElementsList.length;t++)
+        //             {
+        //                 if(name[i].name === this.ElementsList[t].name.name)
+        //                 {
+        //                     index[i] = t;
+        //                     break;
+        //                 }
+        //             }
+        //         }
+        //         return index
+        //     }
+        //     else{
+        //         let index = -1;
+        //         for(let t = 0;t < this.ElementsList.length;t++)
+        //         {
+        //             if(name.name === this.ElementsList[t].name.name)
+        //             {
+        //                 index = t;
+        //                 break;
+        //             }
+        //         }
+        //         return index;
+        //     }
+        // }
         reDraw(ctx) {
-            let el = this.ElementsList;
-            for (let i = 0; i < el.length; i++) {
-                el[i].ctx = ctx;
-                // if(el[i] instanceof RandomDot)
-                // {
-                //     let randomDot:RandomDot = <RandomDot>el[i];
-                //     randomDot.maskBand.ctx = ctx;
-                //     ezJudge.judgeElement(randomDot.maskBand,ctx);
-                //     for(let index = 0;index < randomDot.RandomDotArray.length;index++)
-                //     {
-                //         randomDot.RandomDotArray[index].ctx = ctx;
-                //         ezJudge.judgeElement(randomDot.RandomDotArray[index],ctx)
-                //     }
-                // }
-                // else{
-                judgeElement(el[i], ctx);
-                // }
-            }
+            // let el = this.ElementsList 
+            // for(let i = 0;i < el.length;i++)
+            // {
+            //     el[i].ctx = ctx
+            //     // if(el[i] instanceof RandomDot)
+            //     // {
+            //     //     let randomDot:RandomDot = <RandomDot>el[i];
+            //     //     randomDot.maskBand.ctx = ctx;
+            //     //     ezJudge.judgeElement(randomDot.maskBand,ctx);
+            //     //     for(let index = 0;index < randomDot.RandomDotArray.length;index++)
+            //     //     {
+            //     //         randomDot.RandomDotArray[index].ctx = ctx;
+            //     //         ezJudge.judgeElement(randomDot.RandomDotArray[index],ctx)
+            //     //     }
+            //     // }
+            //     // else{
+            //         ezJudge.judgeElement(el[i],ctx)
+            //     // }
+            // }
+            this.ElementList.forEach((value, _key) => {
+                value.ctx = ctx;
+                judgeElement(value, ctx);
+            });
         }
     }
 
@@ -7250,10 +7279,11 @@ var ezpsy = (function () {
         add(el) {
             let ctx = this.ctx;
             let st = this.storage;
-            let name = st.getElementsName(el);
-            let index = st.searchElementsName(name);
+            // let name = st.getElementsName(el)
+            // let index = st.searchElementsName(name)
             if (el instanceof Elements || el instanceof Group) {
-                if (index !== -1) {
+                // if(index !== -1)
+                if (st.ElementList.has(el.name)) {
                     el.remove();
                     this.add(el);
                     this.refresh();
@@ -7331,31 +7361,61 @@ var ezpsy = (function () {
             if (textLine) {
                 if (textLine.textA) {
                     // this.textLine.textA = textLine.textA
-                    for (let i = 0; i < st.ElementsList.length; i++) {
-                        if (st.ElementsList[i] instanceof Texts)
-                            st.ElementsList[i].textLine.textA = textLine.textA;
-                        else if (st.ElementsList[i] instanceof Group) {
-                            for (let t = 0; t < st.ElementsList[i].groupList.length; t++) {
-                                if (st.ElementsList[i].groupList[t] instanceof Texts) {
-                                    st.ElementsList[i].groupList[t].textLine.textA = textLine.textA;
+                    // for(let i = 0;i < st.ElementsList.length;i++)
+                    // {
+                    //     if(st.ElementsList[i] instanceof Texts)
+                    //         st.ElementsList[i].textLine.textA = textLine.textA
+                    //     else if(st.ElementsList[i] instanceof Group)
+                    //     {
+                    //         for(let t = 0;t < (<Group>st.ElementsList[i]).groupList.length;t++)
+                    //         {
+                    //             if((<Group>st.ElementsList[i]).groupList[t] instanceof Texts)
+                    //             {
+                    //                 (<Group>st.ElementsList[i]).groupList[t].textLine.textA = textLine.textA
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    st.ElementList.forEach((value, key) => {
+                        if (value instanceof Texts)
+                            value.textLine.textA = textLine.textA;
+                        else if (value instanceof Group) {
+                            for (let t = 0; t < value.groupList.length; t++) {
+                                if (value.groupList[t] instanceof Texts) {
+                                    value.groupList[t].textLine.textA = textLine.textA;
                                 }
                             }
                         }
-                    }
+                    });
                 }
                 if (textLine.textB) {
                     // this.textLine.textB = textLine.textB
-                    for (let i = 0; i < st.ElementsList.length; i++) {
-                        if (st.ElementsList[i] instanceof Texts)
-                            st.ElementsList[i].textLine.textB = textLine.textB;
-                        else if (st.ElementsList[i] instanceof Group) {
-                            for (let t = 0; t < st.ElementsList[i].groupList.length; t++) {
-                                if (st.ElementsList[i].groupList[t] instanceof Texts) {
-                                    st.ElementsList[i].groupList[t].textLine.textB = textLine.textB;
+                    // for(let i = 0;i < st.ElementsList.length;i++)
+                    // {
+                    //     if(st.ElementsList[i] instanceof Texts)
+                    //         st.ElementsList[i].textLine.textB = textLine.textB
+                    //     else if(st.ElementsList[i] instanceof Group)
+                    //     {
+                    //         for(let t = 0;t < (<Group>st.ElementsList[i]).groupList.length;t++)
+                    //         {
+                    //             if((<Group>st.ElementsList[i]).groupList[t] instanceof Texts)
+                    //             {
+                    //                 (<Group>st.ElementsList[i]).groupList[t].textLine.textB = textLine.textB
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    st.ElementList.forEach((value, _key) => {
+                        if (value instanceof Texts)
+                            value.textLine.textB = textLine.textB;
+                        else if (value instanceof Group) {
+                            for (let t = 0; t < value.groupList.length; t++) {
+                                if (value.groupList[t] instanceof Texts) {
+                                    value.groupList[t].textLine.textB = textLine.textB;
                                 }
                             }
                         }
-                    }
+                    });
                 }
             }
             st.reDraw(this.ctx);

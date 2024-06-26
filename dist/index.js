@@ -3082,6 +3082,12 @@ class Time {
         }
         return this.timeIntervalValue;
     }
+    clear() {
+        this.startTime = performance.now();
+        this.timeStamp = [];
+        this.timeContinueValue = [];
+        this.timeIntervalValue = [];
+    }
 }
 // export function sleep(delay: number): Promise<number>{
 //     return new Promise((res,rej)=>{

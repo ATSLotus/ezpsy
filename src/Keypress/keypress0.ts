@@ -1,5 +1,6 @@
 import { judgeKey } from "../Judge/judge"
 
+const listenners = new Map()
 
 export class Keypress{
     keyType: string
@@ -80,8 +81,8 @@ export class Keypress{
                 console.error("You shouldn't use this function without Parametric key !!!");
             }
         })
-        
     }
+    
 }
 
 export function KeypressInit(keyType?: string){
@@ -130,6 +131,7 @@ function listen(key: Array<string>,keyType: string,func: Func,IsDestroy: boolean
                 }
             }
         }
+        listenners.set(key.join("-"), linstenner)
     })
 }
 

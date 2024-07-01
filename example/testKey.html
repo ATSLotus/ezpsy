@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/ezpsy.js"></script> 
+</head>
+<body>
+    <div id="test"></div>
+</body>
+<script>
+    (async () => {
+        const keypress = new ezpsy.keypress()
+        console.log("TTTT")
+        keypress.listen("test", ["f"], {
+            funcList: {
+                0: (async () => {
+                    console.log("AAAA")
+                })
+            }
+        }, false)
+        setTimeout(() => {
+            console.log("BBB")
+            keypress.destroy("test")
+        }, 2000)
+    })()
+    
+</script>
+</html>

@@ -12,6 +12,13 @@ export class Time{
     record(){
         this.timeStamp.push(performance.now())
     }
+    // 取消一次记录
+    cancel() {
+        this.timeStamp.pop()
+        if(this.timeStamp.length%2==0) {
+            this.timeStamp.pop()
+        }
+    }
     getStamp(){
         return this.timeStamp
     }

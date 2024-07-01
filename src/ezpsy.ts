@@ -42,6 +42,7 @@ export { Texts } from './Graphic/text'
 export { Img } from './Graphic/image'
 // export { Img } from './Graphic/imageCV'
 export { Keypress } from './Keypress/keypress0'
+export { keypress } from "./Keypress/keypress"
 // export { Time } from './Time/time'
 // export { Dialogue_0} from './Dialogue/dialogue'
 export { sinGrating } from './Graphic/sinGrating'

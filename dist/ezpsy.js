@@ -1957,29 +1957,14 @@ var ezpsy = (function () {
         async draw() {
             let sh = this.shape;
             let wasm = await getWasm();
-            console.dir(wasm);
+            // console.dir(wasm)
             if (this.isNoise)
                 this.param = pre_noise_singrat(wasm, sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma);
             else
                 this.param = pre_singrat(wasm, sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma);
             this.sinGrat.data.set(this.param);
             this.ctx.putImageData(this.sinGrat, sh.x - 1.5 * sh.r, sh.y - 1.5 * sh.r);
-            console.dir("success");
-            // SG.default(this.wasm)
-            // .then(()=>{
-            //     // let t0 = performance.now()
-            //     // console.dir(t0)
-            //     if(this.isNoise)
-            //         this.param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
-            //     else
-            //         this.param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
-            //     this.sinGrat.data.set(this.param);
-            //     this.ctx.putImageData(this.sinGrat,sh.x-1.5*sh.r,sh.y-1.5*sh.r)
-            //     console.dir("success")
-            //     // let t1 = performance.now();
-            //     // console.dir(t1);
-            //     // console.dir(t1-t0);
-            // })
+            // console.dir("success");
         }
         async play(timeFrequency = 1, time = 1000, fps = 60) {
             let interval = 2 * Math.PI * timeFrequency / fps;
@@ -7693,6 +7678,7 @@ var ezpsy = (function () {
         Keypress: Keypress,
         keypress: keypress,
         sinGrating: sinGrating,
+        sinGrat: sinGrat,
         Grat: Grat,
         Time: Time,
         RandomDot: RandomDot,
@@ -7754,7 +7740,6 @@ var ezpsy = (function () {
         delay_ms: delay_ms,
         delay_frame: delay_frame,
         makeGrat: makeGrat,
-        sinGrat: sinGrat,
         sleep: sleep,
         WaitSecs: WaitSecs,
         KeypressInit: KeypressInit,

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../dist/ezpsy.js"></script>
+</head>
+
+<body>
+    <div id="sinGrat"></div>
+</body>
+<script>
+    let ez = ezpsy.init({
+        el: document.getElementById('sinGrat'),
+    });
+    let a = new ezpsy.sinGrat({
+        shape: {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            r: 120,
+            pixelsPerDegree: 57, 
+            spatialFrequency: 2,
+            angle: 0, 
+            contrast: 1, 
+            phase: 0,
+            level: 0.5,
+            gamma: 1
+        },
+        isNoise: true
+    })
+    ez.add(a)
+    a.draw()
+</script>
+
+</html>

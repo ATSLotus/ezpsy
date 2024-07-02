@@ -46,6 +46,7 @@ export { keypress } from "./Keypress/keypress"
 // export { Time } from './Time/time'
 // export { Dialogue_0} from './Dialogue/dialogue'
 export { sinGrating } from './Graphic/sinGrating'
+export { sinGrat } from './Graphic/sinGrat'
 export { Grat } from './Graphic/grating'
 export { Time } from './Time/timePerformance'
 export { RandomDot } from './Graphic/randomDot'

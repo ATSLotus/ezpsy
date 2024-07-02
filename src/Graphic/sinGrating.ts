@@ -62,29 +62,14 @@ export class sinGrating extends Elements{
     async draw(){
         let sh = this.shape;
         let wasm = await getWasm()
-        console.dir(wasm)
+        // console.dir(wasm)
         if(this.isNoise)
             this.param = SG.pre_noise_singrat(wasm,sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
         else
             this.param = SG.pre_singrat(wasm,sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
         this.sinGrat.data.set(this.param);
         this.ctx.putImageData(this.sinGrat,sh.x-1.5*sh.r,sh.y-1.5*sh.r)
-        console.dir("success");
-        // SG.default(this.wasm)
-        // .then(()=>{
-        //     // let t0 = performance.now()
-        //     // console.dir(t0)
-        //     if(this.isNoise)
-        //         this.param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
-        //     else
-        //         this.param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
-        //     this.sinGrat.data.set(this.param);
-        //     this.ctx.putImageData(this.sinGrat,sh.x-1.5*sh.r,sh.y-1.5*sh.r)
-        //     console.dir("success")
-        //     // let t1 = performance.now();
-        //     // console.dir(t1);
-        //     // console.dir(t1-t0);
-        // })
+        // console.dir("success");
         
     }
     async play(timeFrequency:number = 1,time:number = 1000,fps:number = 60){

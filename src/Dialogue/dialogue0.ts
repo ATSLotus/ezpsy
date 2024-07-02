@@ -23,7 +23,7 @@ export class Dialogue{
         this.id = DlgId;
         DlgId++;
     }
-    inputDlg(dlgContent: DlgContent){
+    async inputDlg(dlgContent: DlgContent){
         let that = this;
         let int = new Array()
         let value = new Array()
@@ -84,6 +84,7 @@ export class Dialogue{
             showCancelButton: true,
             confirmButtonText: dlgContent.confirm,
             cancelButtonText: dlgContent.cancel,
+            allowOutsideClick: false,
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn',
                 cancelButton: 'ezpsy-dlg-btn'
@@ -109,6 +110,7 @@ export class Dialogue{
                         title: 'Success',
                         icon: 'success',
                         showConfirmButton: false,
+                        allowOutsideClick: false,
                         timer: 200
                     });
                     res(e.value);
@@ -122,10 +124,11 @@ export class Dialogue{
     }
     errorDlg(dlgContent: DlgContent){
         dlgContent = judgeDlgContent(dlgContent,'错误对话','错误信息');
-        Swal.fire({
+        return Swal.fire({
             title: dlgContent.title,
             text: dlgContent.content,
             confirmButtonColor: '#4983d0',
+            allowOutsideClick: false,
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn'
             },
@@ -134,10 +137,11 @@ export class Dialogue{
     }
     helpDlg(dlgContent: DlgContent){
         dlgContent = judgeDlgContent(dlgContent,'帮助对话','帮助信息');
-        Swal.fire({
+        return Swal.fire({
             title: dlgContent.title,
             text: dlgContent.content,
             confirmButtonColor: '#4983d0',
+            allowOutsideClick: false,
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn'
             },
@@ -200,6 +204,7 @@ export class Dialogue{
                 showCancelButton: true,
                 confirmButtonText: dlgContent.confirm,
                 cancelButtonText: dlgContent.cancel,
+                allowOutsideClick: false,
                 customClass: {
                     confirmButton: 'ezpsy-dlg-btn',
                     cancelButton: 'ezpsy-dlg-btn'
@@ -264,6 +269,7 @@ export class Dialogue{
                 confirmButtonColor: '#4983d0',  
                 inputOptions: dlgContent.list,
                 inputPlaceholder: 'Select',
+                allowOutsideClick: false,
                 showCancelButton: true,
                 confirmButtonText: dlgContent.confirm,
                 cancelButtonText: dlgContent.cancel,
@@ -319,13 +325,16 @@ export class Dialogue{
         }
         
     }
-    questDlg(dlgContent: DlgContent){
+    async questDlg(dlgContent: DlgContent){
         dlgContent = judgeDlgContent(dlgContent,'询问对话','询问信息');
         return Swal.fire({
             title: dlgContent.title,
             text: dlgContent.content,
             confirmButtonColor: '#4983d0',
+            confirmButtonText: "是",
+            allowOutsideClick: false,
             showCancelButton: true,
+            cancelButtonText: "否",
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn',
                 cancelButton: 'ezpsy-dlg-btn'
@@ -335,12 +344,13 @@ export class Dialogue{
             return new Promise((res,rej)=>{
                 if(e.isConfirmed)
                 {
-                    Swal.fire({
-                        title: 'Success',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 200
-                    });
+                    // Swal.fire({
+                    //     title: 'Success',
+                    //     icon: 'success',
+                    //     showConfirmButton: false,
+                    //     allowOutsideClick: false,
+                    //     timer: 200
+                    // });
                     res(e.value);
                 }
                 else{
@@ -351,17 +361,19 @@ export class Dialogue{
     }
     warnDlg(dlgContent: DlgContent){
         dlgContent = judgeDlgContent(dlgContent,'帮助对话','帮助信息');
-        Swal.fire({
+        return Swal.fire({
             title: dlgContent.title,
             text: dlgContent.content,
+            confirmButtonText: dlgContent.confirm,
             confirmButtonColor: '#4983d0',
+            allowOutsideClick: false,
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn'
             },
             icon: 'warning'
         })
     }
-    msgDlg(dlgContent: DlgContent){
+    async msgDlg(dlgContent: DlgContent){
         if(dlgContent.imgUrl === undefined)
             dlgContent.imgUrl = 'https://unsplash.it/400/200'
         if(dlgContent.imgWidth === undefined)
@@ -377,6 +389,7 @@ export class Dialogue{
             imageUrl: dlgContent.imgUrl,
             imageWidth: dlgContent.imgWidth,
             imageHeight: dlgContent.imgHeight,
+            allowOutsideClick: false,
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn'
             }

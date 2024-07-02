@@ -6822,7 +6822,7 @@ class Dialogue {
         this.id = DlgId;
         DlgId++;
     }
-    inputDlg(dlgContent) {
+    async inputDlg(dlgContent) {
         let that = this;
         let int = new Array();
         let value = new Array();
@@ -6876,6 +6876,7 @@ class Dialogue {
             showCancelButton: true,
             confirmButtonText: dlgContent.confirm,
             cancelButtonText: dlgContent.cancel,
+            allowOutsideClick: false,
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn',
                 cancelButton: 'ezpsy-dlg-btn'
@@ -6899,6 +6900,7 @@ class Dialogue {
                         title: 'Success',
                         icon: 'success',
                         showConfirmButton: false,
+                        allowOutsideClick: false,
                         timer: 200
                     });
                     res(e.value);
@@ -6911,10 +6913,11 @@ class Dialogue {
     }
     errorDlg(dlgContent) {
         dlgContent = judgeDlgContent(dlgContent, '错误对话', '错误信息');
-        sweetalert2_all.fire({
+        return sweetalert2_all.fire({
             title: dlgContent.title,
             text: dlgContent.content,
             confirmButtonColor: '#4983d0',
+            allowOutsideClick: false,
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn'
             },
@@ -6923,10 +6926,11 @@ class Dialogue {
     }
     helpDlg(dlgContent) {
         dlgContent = judgeDlgContent(dlgContent, '帮助对话', '帮助信息');
-        sweetalert2_all.fire({
+        return sweetalert2_all.fire({
             title: dlgContent.title,
             text: dlgContent.content,
             confirmButtonColor: '#4983d0',
+            allowOutsideClick: false,
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn'
             },
@@ -6982,6 +6986,7 @@ class Dialogue {
                 showCancelButton: true,
                 confirmButtonText: dlgContent.confirm,
                 cancelButtonText: dlgContent.cancel,
+                allowOutsideClick: false,
                 customClass: {
                     confirmButton: 'ezpsy-dlg-btn',
                     cancelButton: 'ezpsy-dlg-btn'
@@ -7044,6 +7049,7 @@ class Dialogue {
                 confirmButtonColor: '#4983d0',
                 inputOptions: dlgContent.list,
                 inputPlaceholder: 'Select',
+                allowOutsideClick: false,
                 showCancelButton: true,
                 confirmButtonText: dlgContent.confirm,
                 cancelButtonText: dlgContent.cancel,
@@ -7097,13 +7103,16 @@ class Dialogue {
             // })
         }
     }
-    questDlg(dlgContent) {
+    async questDlg(dlgContent) {
         dlgContent = judgeDlgContent(dlgContent, '询问对话', '询问信息');
         return sweetalert2_all.fire({
             title: dlgContent.title,
             text: dlgContent.content,
             confirmButtonColor: '#4983d0',
+            confirmButtonText: "是",
+            allowOutsideClick: false,
             showCancelButton: true,
+            cancelButtonText: "否",
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn',
                 cancelButton: 'ezpsy-dlg-btn'
@@ -7112,12 +7121,13 @@ class Dialogue {
         }).then(e => {
             return new Promise((res, rej) => {
                 if (e.isConfirmed) {
-                    sweetalert2_all.fire({
-                        title: 'Success',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 200
-                    });
+                    // Swal.fire({
+                    //     title: 'Success',
+                    //     icon: 'success',
+                    //     showConfirmButton: false,
+                    //     allowOutsideClick: false,
+                    //     timer: 200
+                    // });
                     res(e.value);
                 }
                 else {
@@ -7128,17 +7138,19 @@ class Dialogue {
     }
     warnDlg(dlgContent) {
         dlgContent = judgeDlgContent(dlgContent, '帮助对话', '帮助信息');
-        sweetalert2_all.fire({
+        return sweetalert2_all.fire({
             title: dlgContent.title,
             text: dlgContent.content,
+            confirmButtonText: dlgContent.confirm,
             confirmButtonColor: '#4983d0',
+            allowOutsideClick: false,
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn'
             },
             icon: 'warning'
         });
     }
-    msgDlg(dlgContent) {
+    async msgDlg(dlgContent) {
         if (dlgContent.imgUrl === undefined)
             dlgContent.imgUrl = 'https://unsplash.it/400/200';
         if (dlgContent.imgWidth === undefined)
@@ -7154,6 +7166,7 @@ class Dialogue {
             imageUrl: dlgContent.imgUrl,
             imageWidth: dlgContent.imgWidth,
             imageHeight: dlgContent.imgHeight,
+            allowOutsideClick: false,
             customClass: {
                 confirmButton: 'ezpsy-dlg-btn'
             }

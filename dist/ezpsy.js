@@ -6825,7 +6825,7 @@ var ezpsy = (function () {
             this.id = DlgId;
             DlgId++;
         }
-        inputDlg(dlgContent) {
+        async inputDlg(dlgContent) {
             let that = this;
             let int = new Array();
             let value = new Array();
@@ -6879,6 +6879,7 @@ var ezpsy = (function () {
                 showCancelButton: true,
                 confirmButtonText: dlgContent.confirm,
                 cancelButtonText: dlgContent.cancel,
+                allowOutsideClick: false,
                 customClass: {
                     confirmButton: 'ezpsy-dlg-btn',
                     cancelButton: 'ezpsy-dlg-btn'
@@ -6902,6 +6903,7 @@ var ezpsy = (function () {
                             title: 'Success',
                             icon: 'success',
                             showConfirmButton: false,
+                            allowOutsideClick: false,
                             timer: 200
                         });
                         res(e.value);
@@ -6914,10 +6916,11 @@ var ezpsy = (function () {
         }
         errorDlg(dlgContent) {
             dlgContent = judgeDlgContent(dlgContent, '错误对话', '错误信息');
-            sweetalert2_all.fire({
+            return sweetalert2_all.fire({
                 title: dlgContent.title,
                 text: dlgContent.content,
                 confirmButtonColor: '#4983d0',
+                allowOutsideClick: false,
                 customClass: {
                     confirmButton: 'ezpsy-dlg-btn'
                 },
@@ -6926,10 +6929,11 @@ var ezpsy = (function () {
         }
         helpDlg(dlgContent) {
             dlgContent = judgeDlgContent(dlgContent, '帮助对话', '帮助信息');
-            sweetalert2_all.fire({
+            return sweetalert2_all.fire({
                 title: dlgContent.title,
                 text: dlgContent.content,
                 confirmButtonColor: '#4983d0',
+                allowOutsideClick: false,
                 customClass: {
                     confirmButton: 'ezpsy-dlg-btn'
                 },
@@ -6985,6 +6989,7 @@ var ezpsy = (function () {
                     showCancelButton: true,
                     confirmButtonText: dlgContent.confirm,
                     cancelButtonText: dlgContent.cancel,
+                    allowOutsideClick: false,
                     customClass: {
                         confirmButton: 'ezpsy-dlg-btn',
                         cancelButton: 'ezpsy-dlg-btn'
@@ -7047,6 +7052,7 @@ var ezpsy = (function () {
                     confirmButtonColor: '#4983d0',
                     inputOptions: dlgContent.list,
                     inputPlaceholder: 'Select',
+                    allowOutsideClick: false,
                     showCancelButton: true,
                     confirmButtonText: dlgContent.confirm,
                     cancelButtonText: dlgContent.cancel,
@@ -7100,13 +7106,16 @@ var ezpsy = (function () {
                 // })
             }
         }
-        questDlg(dlgContent) {
+        async questDlg(dlgContent) {
             dlgContent = judgeDlgContent(dlgContent, '询问对话', '询问信息');
             return sweetalert2_all.fire({
                 title: dlgContent.title,
                 text: dlgContent.content,
                 confirmButtonColor: '#4983d0',
+                confirmButtonText: "是",
+                allowOutsideClick: false,
                 showCancelButton: true,
+                cancelButtonText: "否",
                 customClass: {
                     confirmButton: 'ezpsy-dlg-btn',
                     cancelButton: 'ezpsy-dlg-btn'
@@ -7115,12 +7124,13 @@ var ezpsy = (function () {
             }).then(e => {
                 return new Promise((res, rej) => {
                     if (e.isConfirmed) {
-                        sweetalert2_all.fire({
-                            title: 'Success',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 200
-                        });
+                        // Swal.fire({
+                        //     title: 'Success',
+                        //     icon: 'success',
+                        //     showConfirmButton: false,
+                        //     allowOutsideClick: false,
+                        //     timer: 200
+                        // });
                         res(e.value);
                     }
                     else {
@@ -7131,17 +7141,19 @@ var ezpsy = (function () {
         }
         warnDlg(dlgContent) {
             dlgContent = judgeDlgContent(dlgContent, '帮助对话', '帮助信息');
-            sweetalert2_all.fire({
+            return sweetalert2_all.fire({
                 title: dlgContent.title,
                 text: dlgContent.content,
+                confirmButtonText: dlgContent.confirm,
                 confirmButtonColor: '#4983d0',
+                allowOutsideClick: false,
                 customClass: {
                     confirmButton: 'ezpsy-dlg-btn'
                 },
                 icon: 'warning'
             });
         }
-        msgDlg(dlgContent) {
+        async msgDlg(dlgContent) {
             if (dlgContent.imgUrl === undefined)
                 dlgContent.imgUrl = 'https://unsplash.it/400/200';
             if (dlgContent.imgWidth === undefined)
@@ -7157,6 +7169,7 @@ var ezpsy = (function () {
                 imageUrl: dlgContent.imgUrl,
                 imageWidth: dlgContent.imgWidth,
                 imageHeight: dlgContent.imgHeight,
+                allowOutsideClick: false,
                 customClass: {
                     confirmButton: 'ezpsy-dlg-btn'
                 }

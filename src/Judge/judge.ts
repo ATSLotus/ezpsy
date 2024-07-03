@@ -174,18 +174,18 @@ export function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRenderingC
     {
         makeText(el,ctx);
     }
-    else if(el instanceof Grat)
-    {
-        makeGrat(el,ctx);
-    }
+    // else if(el instanceof Grat)
+    // {
+    //     makeGrat(el,ctx);
+    // }
     else if(el instanceof Img)
     {
         makeImg(el,ctx)
     }
-    else if(el instanceof ezSinGrat.sinGrat)
-    {
-        (<ezSinGrat.sinGrat>el).draw();
-    }
+    // else if(el instanceof ezSinGrat.sinGrat)
+    // {
+    //     (<ezSinGrat.sinGrat>el).draw();
+    // }
     else if(el instanceof sinGrating){
         console.dir("Add Success!");
         // (<sinGrating>el).draw();

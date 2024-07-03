@@ -2,8 +2,8 @@ import { Shape,Opts,Style,nameStyle } from '../DataType/dataType'
 import { Elements } from '../Element';
 // import * as SG from '../../static/pkg/singrat'
 import * as TIME from '../Time/time'
-import { getWasm } from "../setWasm"
-import * as SG from '../setWasm'
+import { getWasm } from "../setWasm_old"
+import * as SG from '../setWasm_old'
 
 interface GratingShape extends Shape{
     x: number,
@@ -25,6 +25,7 @@ export interface GratingOpts extends Opts{
 }
 
 let nameId = 0;
+let wasm = {}
 
 export class sinGrating extends Elements{
     readonly name?: nameStyle = {
@@ -54,19 +55,28 @@ export class sinGrating extends Elements{
         this.shape.phase = !this.shape.phase ?  0 : this.shape.phase
         this.shape.level = !this.shape.level ?  0.5 : this.shape.level
         this.shape.gamma = !this.shape.gamma ?  1 : this.shape.gamma
-        console.dir(this.shape)
-        // console.dir(this.isNoise)
+
+        // getWasm().then(wasm => {
+        //     this.wasm = wasm
+        // })
         
         nameId++;
     }
-    async draw(){
+    count() {
         let sh = this.shape;
-        let wasm = await getWasm()
-        // console.dir(wasm)
+        // let wasm = this.wasm
         if(this.isNoise)
-            this.param = SG.pre_noise_singrat(wasm,sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
+            this.param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
         else
-            this.param = SG.pre_singrat(wasm,sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
+            this.param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
+    }
+    draw(){
+        // let wasm = this.wasm
+        let sh = this.shape;
+        if(this.isNoise)
+            this.param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
+        else
+            this.param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
         this.sinGrat.data.set(this.param);
         this.ctx.putImageData(this.sinGrat,sh.x-1.5*sh.r,sh.y-1.5*sh.r)
         // console.dir("success");
@@ -78,17 +88,11 @@ export class sinGrating extends Elements{
         let index = 0;
         let sh = this.shape;
         let that = this;
-        let wasm = await getWasm()
-        console.dir(wasm);
-        // SG.default(this.wasm)
-        // .then(()=>{
-        //     // let t0 = performance.now()
-        //     // console.dir(t0)
         if(this.isNoise)
         {
             for(let i = 0;i < fps;i++)
             {
-                let img = SG.pre_noise_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+i*interval,sh.level,sh.gamma);
+                let img = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+i*interval,sh.level,sh.gamma);
                 let imgData = new ImageData(new Uint8ClampedArray(img),this.width,this.width)
                 this.imgDataList.push(imgData)
             }
@@ -96,14 +100,11 @@ export class sinGrating extends Elements{
         else{
             for(let i = 0;i < fps;i++)
             {
-                let img = SG.pre_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+i*interval,sh.gamma);
+                let img = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+i*interval,sh.gamma);
                 let imgData = new ImageData(new Uint8ClampedArray(img),this.width,this.width)
                 this.imgDataList.push(imgData)
             }
         }
-        //     // let t1 = performance.now();
-        //     // console.dir(t1);
-        //     // console.dir(t1-t0);
         (async ()=>{
             for(let i = 0;i < fpsNum;i++)
             {
@@ -115,6 +116,10 @@ export class sinGrating extends Elements{
         })()
         // })
     }
+}
+
+export const initWasm = async () => {
+    wasm = await getWasm()
 }
 
 // function readWasm(wasm){

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../dist/ezpsy.js"></script>
+</head>
+<body>
+    <div id="sinGrat"></div>
+</body>
+<style>
+
+</style>
+<script>
+const index = 1;
+const radius = 512;
+const isNoise = true;
+(async () => {
+    let ez = await ezpsy.init({
+        el: document.getElementById('sinGrat'),
+    });
+    let singrat_js = new ezpsy.sinGrat({
+        shape: {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            r: radius,
+            pixelsPerDegree: 57, 
+            spatialFrequency: 2,
+            angle: 0, 
+            contrast: 1, 
+            phase: 0,
+            level: 0.5,
+            gamma: 1
+        },
+        isNoise: isNoise
+    })
+    let singrat_wasm = new ezpsy.sinGrating({
+        shape: {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            r: radius,
+            pixelsPerDegree: 57, 
+            spatialFrequency: 2,
+            angle: 0, 
+            contrast: 1, 
+            phase: 0,
+            level: 0.5,
+            gamma: 1
+        },
+        isNoise: isNoise
+    })
+    // ez.add(singrat_js)
+    // ez.add(singrat_wasm)
+    const singrat_js_list = []
+    const singrat_wasm_list = []
+    for(let i = 0; i < index; i++) {
+        const js_t0 = performance.now() 
+        singrat_js.count()
+        const js_t1 = performance.now()
+        singrat_js_list.push(js_t1 - js_t0)
+    } 
+    for(let i = 0; i < index; i++) {
+        const wasm_t0 = performance.now()  
+        singrat_wasm.count()
+        const wasm_t1 = performance.now()
+        singrat_wasm_list.push(wasm_t1 - wasm_t0)
+    }
+    console.log("JS")
+    console.log(singrat_js_list)
+    console.log("WASM")
+    console.log(singrat_wasm_list)
+    
+})()
+</script>
+</html>

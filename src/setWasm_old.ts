@@ -18,38 +18,43 @@ export async function  getWasm(){
     return wasm;
 }
 
-let cachedInt32Memory0 = null;
-
-function getInt32Memory0() {
-    if (cachedInt32Memory0 === null || cachedInt32Memory0.byteLength === 0) {
-        cachedInt32Memory0 = new Int32Array(wasm.memory.buffer);
+function getInt32Memory0(wasm) {
+    let cachegetInt32Memory0 = null;
+    if (cachegetInt32Memory0 === null || cachegetInt32Memory0.buffer !== wasm.memory.buffer) {
+        cachegetInt32Memory0 = new Int32Array(wasm.memory.buffer);
     }
-    return cachedInt32Memory0;
+
+    return cachegetInt32Memory0;
 }
 
-let cachedUint8Memory0 = null;
+let cachegetUint8Memory0 = null;
 
-function getUint8Memory0() {
-    if (cachedUint8Memory0 === null || cachedUint8Memory0.byteLength === 0) {
-        cachedUint8Memory0 = new Uint8Array(wasm.memory.buffer);
+function getUint8Memory0(wasm) {
+    if (cachegetUint8Memory0 === null || cachegetUint8Memory0.buffer !== wasm.memory.buffer) {
+        cachegetUint8Memory0 = new Uint8Array(wasm.memory.buffer);
     }
-    return cachedUint8Memory0;
+
+    return cachegetUint8Memory0;
 }
 
-function getArrayU8FromWasm0(ptr, len) {
-    ptr = ptr >>> 0;
-    return getUint8Memory0().subarray(ptr / 1, ptr / 1 + len);
+
+function getArrayU8FromWasm0(wasm, ptr, len) {
+    return getUint8Memory0(wasm).subarray(ptr / 1, ptr / 1 + len);
 }
+
 
 export function pre_singrat(radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, gamma) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+
         wasm.pre_singrat(retptr, radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, gamma);
-        var r0 = getInt32Memory0()[retptr / 4 + 0];
-        var r1 = getInt32Memory0()[retptr / 4 + 1];
-        var v1 = getArrayU8FromWasm0(r0, r1).slice();
-        wasm.__wbindgen_free(r0, r1 * 1, 1);
-        return v1;
+        var r0 = getInt32Memory0(wasm)[retptr / 4 + 0];
+        var r1 = getInt32Memory0(wasm)[retptr / 4 + 1];
+        var v0 = getArrayU8FromWasm0(wasm, r0, r1).slice();
+
+        wasm.__wbindgen_free(r0, r1 * 1);
+
+        return v0;
     } finally {
         wasm.__wbindgen_add_to_stack_pointer(16);
     }
@@ -59,11 +64,11 @@ export function pre_noise_singrat(radius, pixels_per_degree, spatial_frequency, 
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
         wasm.pre_noise_singrat(retptr, radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, level, gamma);
-        var r0 = getInt32Memory0()[retptr / 4 + 0];
-        var r1 = getInt32Memory0()[retptr / 4 + 1];
-        var v1 = getArrayU8FromWasm0(r0, r1).slice();
-        wasm.__wbindgen_free(r0, r1 * 1, 1);
-        return v1;
+        var r0 = getInt32Memory0(wasm)[retptr / 4 + 0];
+        var r1 = getInt32Memory0(wasm)[retptr / 4 + 1];
+        var v0 = getArrayU8FromWasm0(wasm, r0, r1).slice();
+        wasm.__wbindgen_free(r0, r1 * 1);
+        return v0;
     } finally {
         wasm.__wbindgen_add_to_stack_pointer(16);
     }

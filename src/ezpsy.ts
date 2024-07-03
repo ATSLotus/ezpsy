@@ -7,6 +7,7 @@ import { Elements } from './Element'
 import { Group } from './Group/group'
 import { Storage } from './Storage/storage'
 import { TextLine,Texts } from './Graphic/text'
+import { initWasm } from './Graphic/sinGrating'
 // import { GratOpts,sinGrat } from './Graphic/sinGrat'
 
 
@@ -321,7 +322,8 @@ class Ezpsy {
 // }
 
 // return 画布
-export function init(init?: initProperties) {
+export async function init(init?: initProperties) {
+    await initWasm()
     return new Ezpsy(init);
 }
 

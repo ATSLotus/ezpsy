@@ -12,14 +12,16 @@
     <div id="sinGrat"></div>
 </body>
 <script>
-    let ez = ezpsy.init({
+(async () => {
+    const T0 = performance.now()
+    let ez = await ezpsy.init({
         el: document.getElementById('sinGrat'),
     });
     let a = new ezpsy.sinGrat({
         shape: {
             x: window.innerWidth / 2,
             y: window.innerHeight / 2,
-            r: 120,
+            r: 50,
             pixelsPerDegree: 57, 
             spatialFrequency: 2,
             angle: 0, 
@@ -31,7 +33,34 @@
         isNoise: true
     })
     ez.add(a)
-    a.draw()
+    // a.draw()
+    const list = []
+    for(let i = 0; i < 10000; i++) {
+        const t0 = performance.now()  
+        await a.draw()
+        const t1 = performance.now()
+        list.push(t1 - t0)
+    }
+    console.log(list)
+    const T1 = performance.now()
+    console.log(T1-T0)
+    // const jsonString = JSON.stringify(list, null, 2);
+
+    // // 创建 Blob 对象
+    // const blob = new Blob([jsonString], { type: 'application/json' });
+
+    // // 生成 URL
+    // const url = URL.createObjectURL(blob);
+
+    // // 创建隐藏的 <a> 元素
+    // const b = document.createElement('a');
+    // b.href = url;
+    // b.download = 'singrat_js.json'; // 设置下载文件的文件名
+
+    // // 触发点击事件
+    // document.body.appendChild(b);
+    // b.click();
+})()
 </script>
 
 </html>

@@ -12,6 +12,7 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import wasm from '@rollup/plugin-wasm';
 import replace from '@rollup/plugin-replace'
+import replaceWasm from '@rollup/plugin-replace'
 import { terser } from "rollup-plugin-terser";
 const postcss = require('rollup-plugin-postcss');
 // const sass = require('node-sass');
@@ -66,7 +67,8 @@ module.exports = [
       wasm({
         sync: [
           'static/singrat_bg.wasm'
-        ]
+        ],
+        maxFileSize: 30000000,
       }),
       typescript(),  // 默认从 tsconfig加载数据
       // nodeResolve(),
@@ -76,6 +78,11 @@ module.exports = [
       //   extensions:['css', 'scss'],
       //   process: processSass,
       // }),
+      replaceWasm({
+        "(1,null,":"(0,null,",
+        delimiters: ['',''],
+        "preventAssignment": true
+      }),
       postcss({
         plugins: [
           simplevars(),

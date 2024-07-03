@@ -19,7 +19,7 @@
         shape: {
             x: window.innerWidth / 2,
             y: window.innerHeight / 2,
-            r: 50,
+            r: 1280,
             pixelsPerDegree: 57, 
             spatialFrequency: 2,
             angle: 0, 
@@ -31,16 +31,21 @@
         isNoise: true
     })
     ez.add(a)
+    // a.draw()
     const list = []
-    for(let i = 0; i < 10000; i++) {
+    for(let i = 0; i < 10; i++) {
         const t0 = performance.now()
-        a.draw()
+        a.count()
         const t1 = performance.now()
+        console.log(i, t1 - t0)
         list.push(t1 - t0)
     }
-    console.log(list)
-    const T1 = performance.now()
-    console.log(T1-T0)
+    console.log("WASM", list)
+    const sum = list.reduce((acc, val) => acc + val, 0); // 计算数组元素总和
+    const average = sum / list.length; // 计算平均值
+    console.log("WASM", average)
+    // const T1 = performance.now()
+    // console.log(T1-T0)
     // const jsonString = JSON.stringify(list, null, 2);
 
     // // 创建 Blob 对象

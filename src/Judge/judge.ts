@@ -186,10 +186,10 @@ export function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRenderingC
     // {
     //     (<ezSinGrat.sinGrat>el).draw();
     // }
-    else if(el instanceof sinGrating){
-        console.dir("Add Success!");
-        // (<sinGrating>el).draw();
-    }
+    // else if(el instanceof sinGrating){
+    //     console.dir("Add Success!");
+    //     // (<sinGrating>el).draw();
+    // }
     else if(el instanceof RandomDot)
     {
         playRandomDot(el,ctx);

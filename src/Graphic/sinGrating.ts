@@ -2,8 +2,8 @@ import { Shape,Opts,Style,nameStyle } from '../DataType/dataType'
 import { Elements } from '../Element';
 // import * as SG from '../../static/pkg/singrat'
 import * as TIME from '../Time/time'
-import { getWasm } from "../setWasm_old"
-import * as SG from '../setWasm_old'
+import { getWasm } from "../setWasm"
+import * as SG from '../setWasm'
 
 interface GratingShape extends Shape{
     x: number,
@@ -44,7 +44,7 @@ export class sinGrating extends Elements{
         // this.wasm = opts.wasm;
         this.shape = opts.shape;
         let sh = this.shape;
-        this.width = 2*(sh.r/2+sh.r)+1;
+        this.width = 2*(0.5*sh.r+sh.r)+1;
         this.sinGrat = new ImageData(this.width,this.width);
         this.imgDataList = new Array<ImageData>();
         this.isNoise = opts.isNoise;
@@ -65,10 +65,16 @@ export class sinGrating extends Elements{
     count() {
         let sh = this.shape;
         // let wasm = this.wasm
-        if(this.isNoise)
-            this.param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
-        else
-            this.param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
+        // if(this.isNoise)
+            const param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
+            for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
+                this.sinGrat.data[i + 0] = param[j];
+                this.sinGrat.data[i + 1] = param[j];
+                this.sinGrat.data[i + 2] = param[j];
+                this.sinGrat.data[i + 3] = 255;
+            }
+        // else
+        //     this.param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
     }
     draw(){
         // let wasm = this.wasm

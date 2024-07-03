@@ -50,18 +50,15 @@ export class sinGrat extends Elements{
     }
     count() {
         let sh = this.shape;
-        if(!this.isNoise)
-            this.sinGrat = getSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma)
-        else{
-            if(!sh.level)
-                sh.level = 1
+        // if(!this.isNoise)
+        //     this.sinGrat = getSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma)
+        // else{
             this.sinGrat = getNoiseSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma)    
-        }
+        // }
     }
     //绘制方法, 参数ctx为canvas.getContext('2d')
     draw(){
         let sh = this.shape;
-        const t0 = performance.now()
         if(!this.isNoise)
             this.sinGrat = getSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma)
         else{
@@ -69,8 +66,6 @@ export class sinGrat extends Elements{
                 sh.level = 1
             this.sinGrat = getNoiseSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma)    
         }
-        const t1 = performance.now()
-        console.log("JS", t1 - t0)
         this.ctx.putImageData(this.sinGrat,this.shape.x - 1.5 * this.shape.r,this.shape.y - 1.5 * this.shape.r)
     }
     //给原有光栅加上噪声, 参数level为噪声等级
@@ -154,7 +149,7 @@ function getNoiseSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contr
     let noise = get_noise(width);
     const NoiseGratDegree = new Array()
     const noiseSinGrat = ctx.createImageData(width, width)
-    for (let i = 0; i < x.length; i++) {
+    for (let i = 0; i < mask.length; i++) {
         let p = (1 - level)*(0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase)) + level * (0.5 + 0.5 * mask[i] * noise[i])
         p = Math.pow(p, 1/gamma)
         p = 255 * p
@@ -270,7 +265,7 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
             mask[i] = 1;
     }
     const gratDegree = new Array()
-    for (let i = 0; i < x.length; i++) {
+    for (let i = 0; i < mask.length; i++) {
         let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
         p = Math.pow(p, 1/gamma)
         p = 255 * p

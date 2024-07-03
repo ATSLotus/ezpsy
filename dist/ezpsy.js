@@ -2017,11 +2017,11 @@ var ezpsy = (function () {
         }
         count() {
             let sh = this.shape;
-            // if(!this.isNoise)
-            //     this.sinGrat = getSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma)
-            // else{
-            this.sinGrat = getNoiseSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma);
-            // }
+            if (!this.isNoise)
+                this.sinGrat = getSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma);
+            else {
+                this.sinGrat = getNoiseSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma);
+            }
         }
         //绘制方法, 参数ctx为canvas.getContext('2d')
         draw() {
@@ -2099,8 +2099,7 @@ var ezpsy = (function () {
         for (let i = 0; i < width * width; i++) {
             let m = Math.pow(x[i], 2) + Math.pow(y[i], 2);
             let n = Math.pow(radius, 2);
-            mask.push(Math.exp(-m / n * 4) * Math.exp(4));
-            // mask[i] *= ;
+            mask[i] = Math.exp(-m / n * 4) * Math.exp(4);
             if (mask[i] >= 1)
                 mask[i] = 1;
         }
@@ -2111,10 +2110,10 @@ var ezpsy = (function () {
         const NoiseGratDegree = new Array();
         const noiseSinGrat = ctx.createImageData(width, width);
         for (let i = 0; i < mask.length; i++) {
-            let p = (1 - level) * (0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase)) + level * (0.5 + 0.5 * mask[i] * noise[i]);
+            let p = (1 - level) * (0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase)) + level * (0.5 + 0.5 * mask[i] * noise[i] / 255);
             p = Math.pow(p, 1 / gamma);
             p = 255 * p;
-            NoiseGratDegree.push(p);
+            NoiseGratDegree[i] = p;
         }
         for (let i = 0, j = 0; i < noiseSinGrat.data.length; i += 4, j++) {
             noiseSinGrat.data[i + 0] = NoiseGratDegree[j];
@@ -2127,7 +2126,7 @@ var ezpsy = (function () {
     function get_noise(width) {
         const greyDegree = new Array();
         for (let i = 0; i < width * width; i++) {
-            greyDegree.push(Math.random());
+            greyDegree[i] = Math.random() * 256;
         }
         return greyDegree;
     }
@@ -2149,8 +2148,7 @@ var ezpsy = (function () {
         for (let i = 0; i < width * width; i++) {
             let m = Math.pow(x[i], 2) + Math.pow(y[i], 2);
             let n = Math.pow(radius, 2);
-            mask.push(Math.exp(-m / n * 4) * Math.exp(4));
-            // mask[i] *= Math.exp(4);
+            mask[i] = Math.exp(-m / n * 4) * Math.exp(4);
             if (mask[i] >= 1)
                 mask[i] = 1;
         }
@@ -2159,7 +2157,7 @@ var ezpsy = (function () {
             let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
             p = Math.pow(p, 1 / gamma);
             p = 255 * p;
-            gratDegree.push(p);
+            gratDegree[i] = p;
         }
         let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
         for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
@@ -2175,10 +2173,10 @@ var ezpsy = (function () {
     function meshgrid(radius) {
         let x = new Array();
         let y = new Array();
-        for (let i = -radius; i <= radius; i++) {
-            for (let j = -radius; j <= radius; j++) {
-                x.push(i);
-                y.push(j);
+        for (let i = -radius, k = 0; i <= radius; i++, k++) {
+            for (let j = -radius, t = 0; j <= radius; j++, t++) {
+                x[(2 * radius + 1) * k + t] = i;
+                y[(2 * radius + 1) * k + t] = j;
             }
         }
         return [x, y];

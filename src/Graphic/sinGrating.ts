@@ -65,7 +65,7 @@ export class sinGrating extends Elements{
     count() {
         let sh = this.shape;
         // let wasm = this.wasm
-        // if(this.isNoise)
+        if(this.isNoise) {
             const param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
             for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
                 this.sinGrat.data[i + 0] = param[j];
@@ -73,17 +73,26 @@ export class sinGrating extends Elements{
                 this.sinGrat.data[i + 2] = param[j];
                 this.sinGrat.data[i + 3] = 255;
             }
-        // else
-        //     this.param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
+        }
+        else {
+            const param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
+            for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
+                this.sinGrat.data[i + 0] = param[j];
+                this.sinGrat.data[i + 1] = param[j];
+                this.sinGrat.data[i + 2] = param[j];
+                this.sinGrat.data[i + 3] = 255;
+            }
+        }
     }
     draw(){
         // let wasm = this.wasm
         let sh = this.shape;
-        if(this.isNoise)
-            this.param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
-        else
-            this.param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
-        this.sinGrat.data.set(this.param);
+        // if(this.isNoise) {}
+        //     this.param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
+        // else
+        //     this.param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
+        // this.sinGrat.data.set(this.param);
+        this.count()
         this.ctx.putImageData(this.sinGrat,sh.x-1.5*sh.r,sh.y-1.5*sh.r)
         // console.dir("success");
         
@@ -98,7 +107,14 @@ export class sinGrating extends Elements{
         {
             for(let i = 0;i < fps;i++)
             {
-                let img = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+i*interval,sh.level,sh.gamma);
+                let param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+i*interval,sh.level,sh.gamma);
+                const img = new Array()
+                for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
+                    img[i + 0] = param[j];
+                    img[i + 1] = param[j];
+                    img[i + 2] = param[j];
+                    img[i + 3] = 255;
+                }
                 let imgData = new ImageData(new Uint8ClampedArray(img),this.width,this.width)
                 this.imgDataList.push(imgData)
             }
@@ -106,7 +122,14 @@ export class sinGrating extends Elements{
         else{
             for(let i = 0;i < fps;i++)
             {
-                let img = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+i*interval,sh.gamma);
+                let param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+i*interval,sh.gamma);
+                const img = new Array()
+                for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
+                    img[i + 0] = param[j];
+                    img[i + 1] = param[j];
+                    img[i + 2] = param[j];
+                    img[i + 3] = 255;
+                }
                 let imgData = new ImageData(new Uint8ClampedArray(img),this.width,this.width)
                 this.imgDataList.push(imgData)
             }

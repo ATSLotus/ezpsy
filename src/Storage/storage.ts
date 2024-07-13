@@ -128,7 +128,7 @@ export class Storage{
         //         ezJudge.judgeElement(el[i],ctx)
         //     // }
         // }
-        this.ElementList.forEach((value, _key) => {
+        this.ElementList.forEach(async (value, _key) => {
             value.ctx = ctx
             ezJudge.judgeElement(value, ctx)
         })

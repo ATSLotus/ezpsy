@@ -34,6 +34,9 @@ export function judgeCanvasStyle(cStyle: canvasStyle):canvasStyle{
     {
         cStyle.height = 400
     }
+    if(!cStyle.backColor) {
+        cStyle.backColor = "#FFFFFF"
+    }
     return cStyle;
 }
 
@@ -143,7 +146,7 @@ export function judgeModel(model: string): [string,string,string,string]{
 //     if(!style)
 // }
 
-export function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRenderingContext2D){
+export async function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRenderingContext2D){
     // console.dir(el)
     // console.dir(Rectangle)
     // console.dir(el instanceof Rectangle)
@@ -188,7 +191,7 @@ export function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRenderingC
     }
     else if(el instanceof sinGrating){
         console.dir("Add Success!");
-        // (<sinGrating>el).draw();
+        (<sinGrating>el).pre_draw();
     }
     else if(el instanceof RandomDot)
     {

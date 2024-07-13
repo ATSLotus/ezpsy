@@ -10,7 +10,9 @@
 import sample from "../static/singrat_bg.wasm"
 
 export async function  getWasm(){
-    const instance = sample({});
+    const instance = sample({
+        wbg: {}
+    });
     let res = await instance.then()
     let wasm = res.instance.exports
     return wasm;

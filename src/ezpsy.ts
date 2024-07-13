@@ -7,6 +7,7 @@ import { Elements } from './Element'
 import { Group } from './Group/group'
 import { Storage } from './Storage/storage'
 import { TextLine,Texts } from './Graphic/text'
+import { getWasm } from './setWasm'
 // import { GratOpts,sinGrat } from './Graphic/sinGrat'
 
 
@@ -87,18 +88,22 @@ class Ezpsy {
     setCanvasStyle(cStyle: canvasStyle){
         let c = this.ctx.canvas;
         let ctx = this.ctx
-        cStyle = ezJudge.judgeCanvasStyle(cStyle);
-        c.width = cStyle.width;
-        c.height = cStyle.height;
-        let w = window.innerWidth
-        let h = window.innerHeight
-        // console.dir(w)
-        c.style.top = ((h-cStyle.height)/2).toString() + 'px'
-        c.style.left = ((w-cStyle.width)/2).toString() + 'px'
 
-        this.cStyle = {
-            width: cStyle.width,
-            height: cStyle.height
+        if(cStyle.width) {
+            c.width = cStyle.width;
+            let w = window.innerWidth
+            c.style.left = ((w-cStyle.width)/2).toString() + 'px'
+            this.cStyle.width = w
+        }
+        if(cStyle.height) {
+            c.height = cStyle.height;
+            let h = window.innerHeight
+            c.style.top = ((h-cStyle.height)/2).toString() + 'px'
+            this.cStyle.height = h
+        }
+        if(cStyle.backColor) {
+            c.style.background = cStyle.backColor
+            this.cStyle.backColor = cStyle.backColor
         }
         this.storage.reDraw(ctx);
     }
@@ -119,7 +124,7 @@ class Ezpsy {
     //     }
     // }
     // 实际绘图
-    add(el: Elements|Elements[]|Group){
+    async add(el: Elements|Elements[]|Group){
         let ctx = this.ctx
         let st = this.storage
         // let name = st.getElementsName(el)

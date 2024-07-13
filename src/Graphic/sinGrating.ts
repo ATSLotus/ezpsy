@@ -6,22 +6,24 @@ import { getWasm } from "../setWasm"
 import * as SG from '../setWasm'
 
 interface GratingShape extends Shape{
-    x: number,
-    y: number,
-    r: number,
-    pixelsPerDegree?: number, 
-    spatialFrequency?: number,
-    angle?: number, 
-    contrast?: number, 
-    phase?: number,
-    level?: number,
+    x: number
+    y: number
+    r: number
+    pixelsPerDegree?: number 
+    spatialFrequency?: number
+    timeFrequency?: number
+    angle?: number 
+    contrast?: number 
+    phase?: number
+    level?: number
     gamma?: number
 }
 
 export interface GratingOpts extends Opts{
-    shape: GratingShape,
-    style?: Style,
+    shape: GratingShape
+    style?: Style
     isNoise?: boolean
+    time?: number
 }
 
 let nameId = 0;
@@ -31,16 +33,15 @@ export class sinGrating extends Elements{
         name: "singrating" + nameId.toString(),
         graphicId: nameId
     }
-    wasm: Object;
     param: Uint8Array;
     width: number;
     sinGrat: ImageData;        //光栅图片数据
     imgDataList: Array<ImageData>;    //用于储存参与动画的图片
     isNoise: boolean;
+    fps: number;
+    timeFrequency: number
     constructor(opts: GratingOpts){
         super();
-        // this.ctx = super.ctx;
-        // this.wasm = opts.wasm;
         this.shape = opts.shape;
         let sh = this.shape;
         this.width = 2*(sh.r/2+sh.r)+1;
@@ -54,56 +55,105 @@ export class sinGrating extends Elements{
         this.shape.phase = !this.shape.phase ?  0 : this.shape.phase
         this.shape.level = !this.shape.level ?  0.5 : this.shape.level
         this.shape.gamma = !this.shape.gamma ?  1 : this.shape.gamma
-        console.dir(this.shape)
-        // console.dir(this.isNoise)
+        const timeFrequency = opts.shape.timeFrequency || 0
+        this.timeFrequency = timeFrequency
+        this.fps = 60
         
         nameId++;
     }
-    async draw(){
+    async pre_draw() {
+        const timeFrequency = this.timeFrequency
         let sh = this.shape;
-        let wasm = await getWasm()
-        // console.dir(wasm)
-        if(this.isNoise)
-            this.param = SG.pre_noise_singrat(wasm,sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
-        else
-            this.param = SG.pre_singrat(wasm,sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
-        this.sinGrat.data.set(this.param);
-        this.ctx.putImageData(this.sinGrat,sh.x-1.5*sh.r,sh.y-1.5*sh.r)
-        // console.dir("success");
         
+        let param = []
+        if(!timeFrequency) {
+            const t0 = performance.now()
+            const wasm = await getWasm()
+            if(this.isNoise) {
+                param = SG.pre_noise_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
+            }
+            else
+                param = SG.pre_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
+            for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
+                this.sinGrat.data[i + 0] = param[j];
+                this.sinGrat.data[i + 1] = param[j];
+                this.sinGrat.data[i + 2] = param[j];
+                this.sinGrat.data[i + 3] = 255;
+            }
+            const t1 = performance.now()
+            console.log("TIME", t1 - t0)
+        }
+        this.fps = 60
+        if(timeFrequency) {
+            let interval = 2*Math.PI*timeFrequency/this.fps;
+            let sh = this.shape;
+            const array = new Array(Math.ceil(this.fps)).fill(0);
+            const t0 = performance.now()
+            const wasm = await getWasm()
+            if(this.isNoise)
+            {
+                for(let i = 0;i < this.fps;i++)
+                {
+                    await Promise.all(array.map(async (item, index) => {
+                        let param = SG.pre_noise_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+i*interval,sh.level,sh.gamma);
+                        const img = new Array()
+                        for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
+                            img[i + 0] = param[j];
+                            img[i + 1] = param[j];
+                            img[i + 2] = param[j];
+                            img[i + 3] = 255;
+                        }
+                        let imgData = new ImageData(new Uint8ClampedArray(img),this.width,this.width)
+                        this.imgDataList.push(imgData)
+                    }))
+                }
+            }
+            else{
+                await Promise.all(array.map(async (item, index) => {
+                    const wasm = await getWasm()
+                    let param = SG.pre_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+index*interval,sh.gamma);
+                    const img = new Array()
+                    for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
+                        img[i + 0] = param[j];
+                        img[i + 1] = param[j];
+                        img[i + 2] = param[j];
+                        img[i + 3] = 255;
+                    }
+                    let imgData = new ImageData(new Uint8ClampedArray(img),this.width,this.width)
+                    this.imgDataList[index] = imgData
+                }))
+            }
+            const t1 = performance.now()
+            console.log("TIME", t1 - t0)
+        }
     }
-    async play(timeFrequency:number = 1,time:number = 1000,fps:number = 60){
-        let interval = 2*Math.PI*timeFrequency/fps;
-        let fpsNum = Math.floor(time/1000 * fps);
+    async draw(time: number = 1000){
+        let sh = this.shape;
+        if(!this.timeFrequency) {
+            this.ctx.putImageData(this.sinGrat,sh.x-1.5*sh.r,sh.y-1.5*sh.r)
+        } else {
+            const fps = this.fps
+            let fpsNum = Math.floor(time / 1000 * fps);
+            let index = 0;
+            let sh = this.shape;
+            let that = this;
+            await (async ()=>{
+                for(let i = 0;i < fpsNum;i++)
+                {
+                    index = i % fps;
+                    that.ctx.putImageData(that.imgDataList[index],sh.x-1.5*sh.r,sh.y-1.5*sh.r);
+                    await TIME.delay_frame(1);
+                    that.remove();
+                }
+            })()
+        }
+    }
+    play(time: number = 1000) {
+        const fps = this.fps
+        let fpsNum = Math.floor(time / 1000 * fps);
         let index = 0;
         let sh = this.shape;
         let that = this;
-        let wasm = await getWasm()
-        console.dir(wasm);
-        // SG.default(this.wasm)
-        // .then(()=>{
-        //     // let t0 = performance.now()
-        //     // console.dir(t0)
-        if(this.isNoise)
-        {
-            for(let i = 0;i < fps;i++)
-            {
-                let img = SG.pre_noise_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+i*interval,sh.level,sh.gamma);
-                let imgData = new ImageData(new Uint8ClampedArray(img),this.width,this.width)
-                this.imgDataList.push(imgData)
-            }
-        }
-        else{
-            for(let i = 0;i < fps;i++)
-            {
-                let img = SG.pre_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+i*interval,sh.gamma);
-                let imgData = new ImageData(new Uint8ClampedArray(img),this.width,this.width)
-                this.imgDataList.push(imgData)
-            }
-        }
-        //     // let t1 = performance.now();
-        //     // console.dir(t1);
-        //     // console.dir(t1-t0);
         (async ()=>{
             for(let i = 0;i < fpsNum;i++)
             {
@@ -113,7 +163,6 @@ export class sinGrating extends Elements{
                 that.remove();
             }
         })()
-        // })
     }
 }
 

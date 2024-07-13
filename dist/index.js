@@ -1956,10 +1956,11 @@ class sinGrating extends Elements {
     async pre_draw() {
         const timeFrequency = this.timeFrequency;
         let sh = this.shape;
+        const wasm = await getWasm();
         let param = [];
+        const t0 = performance.now();
         if (!timeFrequency) {
             const t0 = performance.now();
-            const wasm = await getWasm();
             if (this.isNoise) {
                 param = pre_noise_singrat(wasm, sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma);
             }
@@ -1974,28 +1975,23 @@ class sinGrating extends Elements {
             const t1 = performance.now();
             console.log("TIME", t1 - t0);
         }
-        this.fps = 60;
-        if (timeFrequency) {
+        else {
             let interval = 2 * Math.PI * timeFrequency / this.fps;
             let sh = this.shape;
             const array = new Array(Math.ceil(this.fps)).fill(0);
-            const t0 = performance.now();
-            const wasm = await getWasm();
             if (this.isNoise) {
-                for (let i = 0; i < this.fps; i++) {
-                    await Promise.all(array.map(async (item, index) => {
-                        let param = pre_noise_singrat(wasm, sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase + i * interval, sh.level, sh.gamma);
-                        const img = new Array();
-                        for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
-                            img[i + 0] = param[j];
-                            img[i + 1] = param[j];
-                            img[i + 2] = param[j];
-                            img[i + 3] = 255;
-                        }
-                        let imgData = new ImageData(new Uint8ClampedArray(img), this.width, this.width);
-                        this.imgDataList.push(imgData);
-                    }));
-                }
+                await Promise.all(array.map(async (item, index) => {
+                    let param = pre_noise_singrat(wasm, sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase + index * interval, sh.level, sh.gamma);
+                    const img = new Array();
+                    for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
+                        img[i + 0] = param[j];
+                        img[i + 1] = param[j];
+                        img[i + 2] = param[j];
+                        img[i + 3] = 255;
+                    }
+                    let imgData = new ImageData(new Uint8ClampedArray(img), this.width, this.width);
+                    this.imgDataList[index] = imgData;
+                }));
             }
             else {
                 await Promise.all(array.map(async (item, index) => {
@@ -2012,12 +2008,13 @@ class sinGrating extends Elements {
                     this.imgDataList[index] = imgData;
                 }));
             }
-            const t1 = performance.now();
-            console.log("TIME", t1 - t0);
         }
+        const t1 = performance.now();
+        console.log("TIME", t1 - t0);
     }
     async draw(time = 1000) {
         let sh = this.shape;
+        const t0 = performance.now();
         if (!this.timeFrequency) {
             this.ctx.putImageData(this.sinGrat, sh.x - 1.5 * sh.r, sh.y - 1.5 * sh.r);
         }
@@ -2027,6 +2024,7 @@ class sinGrating extends Elements {
             let index = 0;
             let sh = this.shape;
             let that = this;
+            console.log(that.imgDataList[0]);
             await (async () => {
                 for (let i = 0; i < fpsNum; i++) {
                     index = i % fps;
@@ -2036,6 +2034,8 @@ class sinGrating extends Elements {
                 }
             })();
         }
+        const t1 = performance.now();
+        console.log("TIME DELAY", t1 - t0);
     }
     play(time = 1000) {
         const fps = this.fps;

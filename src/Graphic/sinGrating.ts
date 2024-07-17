@@ -68,7 +68,7 @@ export class sinGrating extends Elements{
         let param = []
         const t0 = performance.now()
         if(!timeFrequency) {
-            const t0 = performance.now()
+            // const t0 = performance.now()
             if(this.isNoise) {
                 param = SG.pre_noise_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
             }
@@ -80,8 +80,8 @@ export class sinGrating extends Elements{
                 this.sinGrat.data[i + 2] = param[j];
                 this.sinGrat.data[i + 3] = 255;
             }
-            const t1 = performance.now()
-            console.log("TIME", t1 - t0)
+            // const t1 = performance.now()
+            // console.log("TIME", t1 - t0)
         } else {
             let interval = 2*Math.PI*timeFrequency/this.fps;
             let sh = this.shape;
@@ -122,7 +122,7 @@ export class sinGrating extends Elements{
     }
     async draw(time: number = 1000){
         let sh = this.shape;
-        const t0 = performance.now();
+        // const t0 = performance.now();
         if(!this.timeFrequency) {
             this.ctx.putImageData(this.sinGrat,sh.x-1.5*sh.r,sh.y-1.5*sh.r)
         } else {
@@ -141,8 +141,8 @@ export class sinGrating extends Elements{
                 }
             })();
         }
-        const t1 = performance.now()
-        console.log("TIME DELAY", t1 - t0)
+        // const t1 = performance.now()
+        // console.log("TIME DELAY", t1 - t0)
     }
     play(time: number = 1000) {
         const fps = this.fps

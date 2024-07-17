@@ -1960,7 +1960,7 @@ class sinGrating extends Elements {
         let param = [];
         const t0 = performance.now();
         if (!timeFrequency) {
-            const t0 = performance.now();
+            // const t0 = performance.now()
             if (this.isNoise) {
                 param = pre_noise_singrat(wasm, sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma);
             }
@@ -1972,8 +1972,8 @@ class sinGrating extends Elements {
                 this.sinGrat.data[i + 2] = param[j];
                 this.sinGrat.data[i + 3] = 255;
             }
-            const t1 = performance.now();
-            console.log("TIME", t1 - t0);
+            // const t1 = performance.now()
+            // console.log("TIME", t1 - t0)
         }
         else {
             let interval = 2 * Math.PI * timeFrequency / this.fps;
@@ -2014,7 +2014,7 @@ class sinGrating extends Elements {
     }
     async draw(time = 1000) {
         let sh = this.shape;
-        const t0 = performance.now();
+        // const t0 = performance.now();
         if (!this.timeFrequency) {
             this.ctx.putImageData(this.sinGrat, sh.x - 1.5 * sh.r, sh.y - 1.5 * sh.r);
         }
@@ -2034,8 +2034,8 @@ class sinGrating extends Elements {
                 }
             })();
         }
-        const t1 = performance.now();
-        console.log("TIME DELAY", t1 - t0);
+        // const t1 = performance.now()
+        // console.log("TIME DELAY", t1 - t0)
     }
     play(time = 1000) {
         const fps = this.fps;
@@ -2564,7 +2564,7 @@ async function judgeElement(el, ctx) {
         el.draw();
     }
     else if (el instanceof sinGrating) {
-        console.dir("Add Success!");
+        // console.dir("Add Success!");
         el.pre_draw();
     }
     else if (el instanceof RandomDot) {

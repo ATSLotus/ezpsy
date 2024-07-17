@@ -190,7 +190,7 @@ export async function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRend
         (<ezSinGrat.sinGrat>el).draw();
     }
     else if(el instanceof sinGrating){
-        console.dir("Add Success!");
+        // console.dir("Add Success!");
         (<sinGrating>el).pre_draw();
     }
     else if(el instanceof RandomDot)

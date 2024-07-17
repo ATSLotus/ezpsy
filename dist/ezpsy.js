@@ -2314,7 +2314,7 @@ var ezpsy = (function () {
         }
         //绘制方法, 参数ctx为canvas.getContext('2d')
         draw() {
-            this.ctx.putImageData(this.sinGrat, this.shape.x - 2.5 * this.shape.r, this.shape.y - 2.5 * this.shape.r);
+            this.ctx.putImageData(this.sinGrat, this.shape.x - 1.5 * this.shape.r, this.shape.y - 1.5 * this.shape.r);
         }
         //给原有光栅加上噪声, 参数level为噪声等级
         imNoise(level) {
@@ -2347,7 +2347,7 @@ var ezpsy = (function () {
                 for (let i = 0; i < fpsnum; i++) {
                     // i = i%fps;
                     let index = i % fps;
-                    ctx.putImageData(that.imgDataList[index], that.shape.x - 2.5 * that.shape.r, that.shape.y - 2.5 * that.shape.r);
+                    ctx.putImageData(that.imgDataList[index], that.shape.x - 1.5 * that.shape.r, that.shape.y - 1.5 * that.shape.r);
                     // console.dir(that.storage)
                     await delay_frame(1);
                     that.clear(ctx);
@@ -2356,9 +2356,9 @@ var ezpsy = (function () {
         }
         //清除光栅所在位置的矩形区域
         clear(ctx) {
-            let width = 2 * (2.5 * this.shape.r) + 1;
-            let height = 2 * (2.5 * this.shape.r) + 1;
-            ctx.clearRect(this.shape.x - 2.5 * this.shape.r, this.shape.y - 2.5 * this.shape.r, width, height);
+            let width = 2 * (1.5 * this.shape.r) + 1;
+            let height = 2 * (1.5 * this.shape.r) + 1;
+            ctx.clearRect(this.shape.x - 1.5 * this.shape.r, this.shape.y - 1.5 * this.shape.r, width, height);
         }
     }
     //生成噪声光栅, 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位, 噪声等级
@@ -2366,7 +2366,7 @@ var ezpsy = (function () {
     function getNoiseSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, phase, level) {
         if (level === undefined)
             level = 1;
-        let maskBand = 1.5 * radius;
+        let maskBand = 0.5 * radius;
         let imagesize = radius + maskBand;
         let [x, y] = meshgrid(imagesize);
         let mask = new Array();
@@ -2398,7 +2398,7 @@ var ezpsy = (function () {
         let ctx = c.getContext('2d');
         let NoiseGratDegree = new Array();
         let i = 0;
-        let maskBand = 1.5 * radius;
+        let maskBand = 0.5 * radius;
         let imagesize = radius + maskBand;
         let M = 2 * imagesize + 1;
         let NoiseGrat = ctx.createImageData(M, M);
@@ -2434,7 +2434,7 @@ var ezpsy = (function () {
     function getNoise(radius) {
         let noise = new Array();
         let mask = new Array();
-        let maskBand = 1.5 * radius;
+        let maskBand = 0.5 * radius;
         let imagesize = radius + maskBand;
         let [x, y] = meshgrid(imagesize);
         for (let i = 0; i < x.length; i++) {
@@ -2464,7 +2464,7 @@ var ezpsy = (function () {
         c.width = window.innerWidth;
         c.height = window.innerHeight;
         let ctx = c.getContext('2d');
-        let maskBand = 1.5 * radius;
+        let maskBand = 0.5 * radius;
         let imagesize = radius + maskBand;
         let [x, y] = meshgrid(imagesize);
         let w = 2 * Math.PI * spatialFrequency / pixelsPerDegree;

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../dist/ezpsy.js"></script>
+</head>
+<body>
+    <div id="sinGrat"></div>
+</body>
+<script>
+
+    var delay_frame = function (num1) {
+        let time_num=0;     
+        return new Promise(function (resolve, reject) {
+            (function raf(){
+                time_num++;
+                let id =window.requestAnimationFrame(raf);
+            if( time_num==num1){
+                window.cancelAnimationFrame(id);
+                resolve(0);
+            }
+            }())
+        })
+    };
+    
+    let ez = ezpsy.init({
+        el: document.getElementById('sinGrat'),
+    });
+    let a = new ezpsy.sinGrat({
+        shape: {
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            r: 100,
+            pixelsPerDegree: 57, 
+            spatialFrequency: 0.5,
+            timeFrequency: 0,
+            angle: 90, 
+            contrast: 1, 
+            phase: 0,
+            level: 0.5,
+            gamma: 0.5
+        },
+        isNoise: false
+    })
+    ez.add(a);
+
+    (async() => {
+        await delay_frame(6)
+        a.draw(500)
+    })()
+    
+</script>
+<style>
+    canvas {
+        background: #808080;
+    }
+</style>
+</html>

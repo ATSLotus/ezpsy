@@ -64,16 +64,15 @@ export class sinGrating extends Elements{
     async pre_draw() {
         const timeFrequency = this.timeFrequency
         let sh = this.shape;
-        const wasm = await getWasm()
         let param = []
         const t0 = performance.now()
         if(!timeFrequency) {
             // const t0 = performance.now()
             if(this.isNoise) {
-                param = SG.pre_noise_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
+                param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
             }
             else
-                param = SG.pre_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
+                param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
             for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
                 this.sinGrat.data[i + 0] = param[j];
                 this.sinGrat.data[i + 1] = param[j];
@@ -89,7 +88,7 @@ export class sinGrating extends Elements{
             if(this.isNoise)
             {
                 await Promise.all(array.map(async (item, index) => {
-                    let param = SG.pre_noise_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+index*interval,sh.level,sh.gamma);
+                    let param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+index*interval,sh.level,sh.gamma);
                     const img = new Array()
                     for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
                         img[i + 0] = param[j];
@@ -104,7 +103,7 @@ export class sinGrating extends Elements{
             else{
                 await Promise.all(array.map(async (item, index) => {
                     const wasm = await getWasm()
-                    let param = SG.pre_singrat(wasm, sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+index*interval,sh.gamma);
+                    let param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+index*interval,sh.gamma);
                     const img = new Array()
                     for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
                         img[i + 0] = param[j];

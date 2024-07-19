@@ -12,26 +12,43 @@
     <div id="sinGrat"></div>
 </body>
 <script>
-    let ez = ezpsy.init({
-        el: document.getElementById('sinGrat'),
-    });
-    let a = new ezpsy.sinGrat({
-        shape: {
-            x: window.innerWidth / 2,
-            y: window.innerHeight / 2,
-            r: 120,
-            pixelsPerDegree: 57, 
-            spatialFrequency: 2,
-            angle: 0, 
-            contrast: 1, 
-            phase: 0,
-            level: 0.5,
-            gamma: 1
-        },
-        isNoise: true
-    })
-    ez.add(a)
-    a.draw()
+    const average = (arr) => {
+        let num = 0
+        arr.forEach(item => {
+            num += item
+        })
+        return num / arr.length
+    }
+    (async () => {
+        let ez = await ezpsy.init({
+            el: document.getElementById('sinGrat'),
+        });
+        const arr = []
+        for(let i = 0; i < 10; i++) {
+            const t0 = performance.now()
+            let a = new ezpsy.sinGrat({
+                shape: {
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2,
+                    r: 1280,
+                    pixelsPerDegree: 57, 
+                    spatialFrequency: 2,
+                    angle: 0, 
+                    contrast: 1, 
+                    phase: 0,
+                    level: 0.5,
+                    gamma: 1
+                },
+                isNoise: true
+            })
+            ez.add(a)
+            const t1 = performance.now()
+            console.log(t1 - t0)
+            arr.push(t1 - t0)
+        }
+        console.log("AVERAGE", average(arr))
+    })()
+    
 </script>
 
 </html>

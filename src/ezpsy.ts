@@ -326,7 +326,8 @@ class Ezpsy {
 // }
 
 // return 画布
-export function init(init?: initProperties) {
+export async function init(init?: initProperties) {
+    await getWasm()
     return new Ezpsy(init);
 }
 

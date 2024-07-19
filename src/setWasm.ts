@@ -9,12 +9,14 @@
 // @ts-ignore
 import sample from "../static/singrat_bg.wasm"
 
+let wasm
+
 export async function  getWasm(){
     const instance = sample({
         wbg: {}
     });
     let res = await instance.then()
-    let wasm = res.instance.exports
+    wasm = res.instance.exports
     return wasm;
 }
 
@@ -43,7 +45,7 @@ function getArrayU8FromWasm0(wasm, ptr, len) {
 }
 
 
-export function pre_singrat(wasm,radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, gamma) {
+export function pre_singrat(radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, gamma) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
 
@@ -60,7 +62,7 @@ export function pre_singrat(wasm,radius, pixels_per_degree, spatial_frequency, a
     }
 }
 
-export function pre_noise_singrat(wasm, radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, level, gamma) {
+export function pre_noise_singrat(radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, level, gamma) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
         wasm.pre_noise_singrat(retptr, radius, pixels_per_degree, spatial_frequency, angle, contrast, phase, level, gamma);

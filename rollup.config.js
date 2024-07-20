@@ -65,7 +65,8 @@ module.exports = [
       
       wasm({
         sync: [
-          'static/singrat_bg.wasm'
+          'static/singrat_bg.wasm',
+          'static/singrat_bg_0.wasm'
         ]
       }),
       typescript(),  // 默认从 tsconfig加载数据

@@ -7,7 +7,7 @@
  * @FilePath: /ezpsy/src/setWasm.ts
  */
 // @ts-ignore
-import sample from "../static/singrat_bg.wasm"
+import sample from "../static/singrat_bg_0.wasm"
 
 let wasm
 

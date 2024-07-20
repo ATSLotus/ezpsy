@@ -8,6 +8,7 @@ import { Group } from './Group/group'
 import { Storage } from './Storage/storage'
 import { TextLine,Texts } from './Graphic/text'
 import { getWasm } from './setWasm'
+import { initWasm } from './initWasm'
 // import { GratOpts,sinGrat } from './Graphic/sinGrat'
 
 
@@ -52,6 +53,8 @@ export { Grat } from './Graphic/grating'
 export { Time } from './Time/timePerformance'
 export { RandomDot } from './Graphic/randomDot'
 export { RandomFunctions } from './Functions';
+
+export { wasmSinGrating } from './Graphic/singratWasm'
 
 // export { animate } from './Animate/animate'
 // export { makeRectangle } from './Graphic/rectangle'
@@ -327,6 +330,7 @@ class Ezpsy {
 
 // return 画布
 export async function init(init?: initProperties) {
+    await initWasm()
     await getWasm()
     return new Ezpsy(init);
 }

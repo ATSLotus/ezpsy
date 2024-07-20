@@ -17,6 +17,7 @@ import { playRandomDot, RandomDot } from '../Graphic/randomDot'
 import * as ezSinGrat from '../Graphic/sinGrat'
 import * as ezCanvas from '../Canvas/canvas'
 import { DlgContent } from '../Dialogue/dialogue0'
+import { wasmSinGrating } from '../ezpsy'
 
 export function judgeCanvasStyle(cStyle: canvasStyle):canvasStyle{
     if(!cStyle) 
@@ -187,11 +188,15 @@ export async function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRend
     }
     else if(el instanceof ezSinGrat.sinGrat)
     {
-        (<ezSinGrat.sinGrat>el).draw();
+        (<ezSinGrat.sinGrat>el).pre_draw();
     }
     else if(el instanceof sinGrating){
         // console.dir("Add Success!");
         (<sinGrating>el).pre_draw();
+    }
+    else if(el instanceof wasmSinGrating){
+        // console.dir("Add Success!");
+        (<wasmSinGrating>el).pre_draw();
     }
     else if(el instanceof RandomDot)
     {

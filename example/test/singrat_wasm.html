@@ -10,7 +10,6 @@
     <div id="sinGrat"></div>
 </body>
 <script>
-    // ez.add(a)
     const average = (arr) => {
         let num = 0
         arr.forEach(item => {
@@ -22,6 +21,7 @@
         let ez = await ezpsy.init({
             el: document.getElementById('sinGrat'),
         });
+        const list = []
         let a = new ezpsy.sinGrating({
             shape: {
                 x: window.innerWidth / 2,
@@ -37,34 +37,16 @@
             },
             isNoise: true
         })
-        const list = [];
-        for(let i = 0; i < 10; i++) {
+        for(let i = 0; i < 1000; i++) {
             const t0 = performance.now()
             await a.pre_draw()
             const t1 = performance.now()
             console.log(t1 - t0)
             list.push(t1 - t0)
         }
+        console.log(list)
         console.log("AVERAGE", average(list))
     })()
-    
-    
-    // const jsonString = JSON.stringify(list, null, 2);
-
-    // // 创建 Blob 对象
-    // const blob = new Blob([jsonString], { type: 'application/json' });
-
-    // // 生成 URL
-    // const url = URL.createObjectURL(blob);
-
-    // // 创建隐藏的 <a> 元素
-    // const b = document.createElement('a');
-    // b.href = url;
-    // b.download = 'data.json'; // 设置下载文件的文件名
-
-    // // 触发点击事件
-    // document.body.appendChild(b);
-    // b.click();
     
 </script>
 </html>

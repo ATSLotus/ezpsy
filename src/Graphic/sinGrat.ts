@@ -56,8 +56,7 @@ export class sinGrat extends Elements{
             this.sinGrat = getNoiseSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma)    
         }
     }
-    //绘制方法, 参数ctx为canvas.getContext('2d')
-    draw(){
+    async pre_draw() {
         let sh = this.shape;
         if(!this.isNoise)
             this.sinGrat = getSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma)
@@ -66,6 +65,10 @@ export class sinGrat extends Elements{
                 sh.level = 1
             this.sinGrat = getNoiseSingrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma)    
         }
+    }
+    //绘制方法, 参数ctx为canvas.getContext('2d')
+    draw(){
+        let sh = this.shape;
         this.ctx.putImageData(this.sinGrat,this.shape.x - 1.5 * this.shape.r,this.shape.y - 1.5 * this.shape.r)
     }
     //给原有光栅加上噪声, 参数level为噪声等级

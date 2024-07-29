@@ -22,11 +22,11 @@
             el: document.getElementById('sinGrat'),
         });
         const list = []
-        let a = new ezpsy.sinGrating({
+        let a = new ezpsy.wasmSinGrating({
             shape: {
                 x: window.innerWidth / 2,
                 y: window.innerHeight / 2,
-                r: 300,
+                r: 100,
                 pixelsPerDegree: 57, 
                 spatialFrequency: 0.5,
                 angle: 90, 
@@ -37,16 +37,32 @@
             },
             isNoise: false
         })
-        for(let i = 0; i < 1000; i++) {
-            const t0 = performance.now()
-            await a.pre_draw()
-            const t1 = performance.now()
-            console.log(t1 - t0)
-            list.push(t1 - t0)
-        }
-        console.log(list.join("\n"))
-        console.log("AVERAGE", average(list))
+        ez.add(a)
+        const t0 = performance.now()
+        await a.pre_draw()
+        const t1 = performance.now()
+        console.log(t1 - t0)
+        setTimeout(() => {
+            a.draw()
+        }, 100)
+        // for(let i = 0; i < 10; i++) {
+        //     const t0 = performance.now()
+        //     await a.pre_draw()
+        //     const t1 = performance.now()
+        //     console.log(t1 - t0)
+        //     list.push(t1 - t0)
+        // }
+        // console.log(list.join("\n"))
+        // console.log("AVERAGE", average(list))
     })()
     
 </script>
+<style>
+    canvas {
+        background-color: #404040;
+    }
+    body {
+        margin: 0;
+    }
+</style>
 </html>

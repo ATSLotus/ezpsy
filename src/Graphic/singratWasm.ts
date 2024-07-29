@@ -3,7 +3,7 @@ import { Elements } from '../Element';
 // import * as SG from '../../static/pkg/singrat'
 import * as TIME from '../Time/time'
 import { getWasm } from "../setWasm"
-import * as SG from '../setWasm'
+// import * as SG from '../setWasm'
 import * as SGW from "../initWasm"
 
 interface GratingShape extends Shape{
@@ -28,6 +28,43 @@ export interface GratingOpts extends Opts{
 }
 
 let nameId = 0;
+
+function searchMapDA(num: number) {
+    const x = Math.floor(num / 7)
+    const rgb = {
+        r: x,
+        g: x,
+        b: x
+    }
+    switch(num % 7) {
+        case 0:
+            break
+        case 1: 
+            rgb.b += 1
+            break
+        case 2: 
+            rgb.r += 1
+            break
+        case 3:
+            rgb.b += 1
+            rgb.r += 1
+            break
+        case 4:
+            rgb.g += 1
+            break
+        case 5:
+            rgb.b += 1
+            rgb.g += 1
+            break
+        case 6:
+            rgb.r += 1
+            rgb.g += 1
+            break
+        default:
+            throw Error("Unknown Error")
+    }
+    return rgb
+}
 
 export class wasmSinGrating extends Elements{
     readonly name?: nameStyle = {
@@ -67,20 +104,18 @@ export class wasmSinGrating extends Elements{
         let sh = this.shape;
         let param = []
         if(!timeFrequency) {
-            // const t0 = performance.now()
             if(this.isNoise) {
-                param = SGW.generate(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
+                param = SGW.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.level,sh.gamma);
             }
             else
-                param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
+                param = SGW.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase,sh.gamma);
             for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
-                this.sinGrat.data[i + 0] = param[j];
-                this.sinGrat.data[i + 1] = param[j];
-                this.sinGrat.data[i + 2] = param[j];
+                const rgb = searchMapDA(param[j])
+                this.sinGrat.data[i + 0] = rgb.r;
+                this.sinGrat.data[i + 1] = rgb.g;
+                this.sinGrat.data[i + 2] = rgb.b;
                 this.sinGrat.data[i + 3] = 255;
             }
-            // const t1 = performance.now()
-            // console.log("TIME", t1 - t0)
         } else {
             let interval = 2*Math.PI*timeFrequency/this.fps;
             let sh = this.shape;
@@ -88,7 +123,7 @@ export class wasmSinGrating extends Elements{
             if(this.isNoise)
             {
                 await Promise.all(array.map(async (item, index) => {
-                    let param = SG.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+index*interval,sh.level,sh.gamma);
+                    let param = SGW.pre_noise_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+index*interval,sh.level,sh.gamma);
                     const img = new Array()
                     for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
                         img[i + 0] = param[j];
@@ -103,7 +138,7 @@ export class wasmSinGrating extends Elements{
             else{
                 await Promise.all(array.map(async (item, index) => {
                     const wasm = await getWasm()
-                    let param = SG.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+index*interval,sh.gamma);
+                    let param = SGW.pre_singrat(sh.r,sh.pixelsPerDegree,sh.spatialFrequency,sh.angle,sh.contrast,sh.phase+index*interval,sh.gamma);
                     const img = new Array()
                     for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
                         img[i + 0] = param[j];
@@ -119,7 +154,6 @@ export class wasmSinGrating extends Elements{
     }
     async draw(time: number = 1000){
         let sh = this.shape;
-        // const t0 = performance.now();
         if(!this.timeFrequency) {
             this.ctx.putImageData(this.sinGrat,sh.x-1.5*sh.r,sh.y-1.5*sh.r)
         } else {
@@ -138,8 +172,6 @@ export class wasmSinGrating extends Elements{
                 }
             })();
         }
-        // const t1 = performance.now()
-        // console.log("TIME DELAY", t1 - t0)
     }
     play(time: number = 1000) {
         const fps = this.fps

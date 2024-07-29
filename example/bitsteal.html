@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="../../dist/ezpsy.js"></script>
 </head>
+
 <body>
     <div id="sinGrat"></div>
 </body>
@@ -21,12 +23,12 @@
         let ez = await ezpsy.init({
             el: document.getElementById('sinGrat'),
         });
-        const list = []
-        let a = new ezpsy.sinGrating({
+        const list = [] 
+        let a = new ezpsy.sinGrat({
             shape: {
                 x: window.innerWidth / 2,
                 y: window.innerHeight / 2,
-                r: 300,
+                r: 100,
                 pixelsPerDegree: 57, 
                 spatialFrequency: 0.5,
                 angle: 90, 
@@ -37,16 +39,28 @@
             },
             isNoise: false
         })
-        for(let i = 0; i < 1000; i++) {
-            const t0 = performance.now()
-            await a.pre_draw()
-            const t1 = performance.now()
-            console.log(t1 - t0)
-            list.push(t1 - t0)
-        }
-        console.log(list.join("\n"))
-        console.log("AVERAGE", average(list))
+        ez.add(a)
+        await a.pre_draw()
+        setTimeout(() => {
+            a.draw()
+        }, 100)
+        // setInterval(() => {
+        //     if(isShow) {
+        //         a.draw()
+        //     } else {
+        //         a.clear()
+        //     }
+        //     isShow = !isShow
+        // }, 500)
     })()
     
 </script>
+<style>
+    canvas {
+        background-color: #404040;
+    }
+    body {
+        margin: 0;
+    }
+</style>
 </html>

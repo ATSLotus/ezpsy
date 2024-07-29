@@ -23,21 +23,21 @@
         let ez = await ezpsy.init({
             el: document.getElementById('sinGrat'),
         });
-        const list = []
+        const list = [] 
         let a = new ezpsy.sinGrat({
             shape: {
                 x: window.innerWidth / 2,
                 y: window.innerHeight / 2,
-                r: 1280,
+                r: 300,
                 pixelsPerDegree: 57, 
-                spatialFrequency: 2,
-                angle: 0, 
-                contrast: 1, 
+                spatialFrequency: 0.5,
+                angle: 90, 
+                contrast: 0.1, 
                 phase: 0,
-                level: 0.5,
-                gamma: 1
+                level: 0,
+                gamma: 0.5
             },
-            isNoise: true
+            isNoise: false
         })
         for(let i = 0; i < 1000; i++) {
             const t0 = performance.now()
@@ -46,7 +46,7 @@
             console.log(t1 - t0)
             list.push(t1 - t0)
         }
-        console.log(list)
+        console.log(list.join("\n"))
         console.log("AVERAGE", average(list))
     })()
     

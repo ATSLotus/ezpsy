@@ -25,7 +25,7 @@ let nameId = 0;
 
 //光栅
 //pixelsPerDegree=57, spatialFrequency=1 对应一度视角
-export class sinGrat extends Elements{
+export class sinGrat1 extends Elements{
     readonly name?: nameStyle = {
         name: "singrat" + nameId.toString(),
         graphicId: nameId
@@ -243,6 +243,50 @@ function get_noise(width) {
     return greyDegree
 }
 
+function createLookupTable() {
+    const lookupTable = new Uint8Array(1024);
+    for (let i = 0; i < 1024; i++) {
+        lookupTable[i] = Math.round((i / 1023) * 255);
+    }
+    return lookupTable;
+}
+
+function bitStealing(lookupTable, r10, g10, b10) {
+    const r8 = lookupTable[r10];
+    const g8 = lookupTable[g10];
+    const b8 = lookupTable[b10];
+    
+    const targetLuminance = 0.299 * r10 + 0.587 * g10 + 0.114 * b10;
+
+    let bestMatch = { r: r8, g: g8, b: b8, luminance: targetLuminance };
+    let minDifference = Infinity;
+
+    for (let dr = -1; dr <= 1; dr++) {
+        for (let dg = -1; dg <= 1; dg++) {
+            for (let db = -1; db <= 1; db++) {
+                const rr = Math.min(Math.max(r10 + dr, 0), 1023);
+                const gg = Math.min(Math.max(g10 + dg, 0), 1023);
+                const bb = Math.min(Math.max(b10 + db, 0), 1023);
+
+                const r = lookupTable[rr];
+                const g = lookupTable[gg];
+                const b = lookupTable[bb];
+
+                const luminance = 0.299 * rr + 0.587 * gg + 0.114 * bb;
+                const difference = Math.abs(luminance - targetLuminance);
+
+                if (difference < minDifference) {
+                    minDifference = difference;
+                    bestMatch = { r, g, b, luminance };
+                }
+            }
+        }
+    }
+
+    return bestMatch;
+}
+
+
 //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
 //返回imageData图片信息
 function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, phase, gamma) {
@@ -270,14 +314,15 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
     for (let i = 0; i < mask.length; i++) {
         let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
         p = Math.pow(p, 1/gamma)
-        p = 255 * p
-        gratDegree[i] = Math.min(Math.floor(p), 255)
+        p = 1023 * p
+        gratDegree[i] = Math.min(Math.floor(p), 1023)
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        imgData.data[i + 0] = gratDegree[j];
-        imgData.data[i + 1] = gratDegree[j];
-        imgData.data[i + 2] = gratDegree[j];
+        const res = bitStealing(createLookupTable(), gratDegree[j], gratDegree[j], gratDegree[j])
+        imgData.data[i + 0] = res.r;
+        imgData.data[i + 1] = res.g;
+        imgData.data[i + 2] = res.b;
         imgData.data[i + 3] = 255;
     }
     return imgData;

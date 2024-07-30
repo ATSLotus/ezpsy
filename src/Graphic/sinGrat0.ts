@@ -25,7 +25,7 @@ let nameId = 0;
 
 //光栅
 //pixelsPerDegree=57, spatialFrequency=1 对应一度视角
-export class sinGrat extends Elements{
+export class sinGrat0 extends Elements{
     readonly name?: nameStyle = {
         name: "singrat" + nameId.toString(),
         graphicId: nameId
@@ -155,13 +155,14 @@ function getNoiseSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contr
     for (let i = 0; i < mask.length; i++) {
         let p = (1 - level)*(0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase)) + level * (0.5 + 0.5 * mask[i] * noise[i] / 255)
         p = Math.pow(p, 1/gamma)
-        p = 255 * p
-        NoiseGratDegree[i] = Math.min(Math.floor(p), 255)
+        p = 1785 * p
+        NoiseGratDegree[i] = Math.min(Math.floor(p), 1785)
     }
     for (let i=0,j=0;i<noiseSinGrat.data.length;i+=4,j++) {
-        noiseSinGrat.data[i + 0] = NoiseGratDegree[j];
-        noiseSinGrat.data[i + 1] = NoiseGratDegree[j];
-        noiseSinGrat.data[i + 2] = NoiseGratDegree[j];
+        const rgb = searchMapDA(NoiseGratDegree[j])
+        noiseSinGrat.data[i + 0] = rgb.r;
+        noiseSinGrat.data[i + 1] = rgb.g;
+        noiseSinGrat.data[i + 2] = rgb.b;
         noiseSinGrat.data[i+3] = 255;
     }
     return noiseSinGrat;
@@ -243,6 +244,43 @@ function get_noise(width) {
     return greyDegree
 }
 
+function searchMapDA(num: number) {
+    const x = Math.floor(num / 7)
+    const rgb = {
+        r: x,
+        g: x,
+        b: x
+    }
+    switch(num % 7) {
+        case 0:
+            break
+        case 1: 
+            rgb.b += 1
+            break
+        case 2: 
+            rgb.r += 1
+            break
+        case 3:
+            rgb.b += 1
+            rgb.r += 1
+            break
+        case 4:
+            rgb.g += 1
+            break
+        case 5:
+            rgb.b += 1
+            rgb.g += 1
+            break
+        case 6:
+            rgb.r += 1
+            rgb.g += 1
+            break
+        default:
+            throw Error("Unknown Error")
+    }
+    return rgb
+}
+
 //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
 //返回imageData图片信息
 function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, phase, gamma) {
@@ -270,14 +308,15 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
     for (let i = 0; i < mask.length; i++) {
         let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
         p = Math.pow(p, 1/gamma)
-        p = 255 * p
-        gratDegree[i] = Math.min(Math.floor(p), 255)
+        p = 1785 * p
+        gratDegree[i] = Math.min(Math.floor(p), 1785)
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        imgData.data[i + 0] = gratDegree[j];
-        imgData.data[i + 1] = gratDegree[j];
-        imgData.data[i + 2] = gratDegree[j];
+        const rgb = searchMapDA(gratDegree[j])
+        imgData.data[i + 0] = rgb.r;
+        imgData.data[i + 1] = rgb.g;
+        imgData.data[i + 2] = rgb.b;
         imgData.data[i + 3] = 255;
     }
     return imgData;

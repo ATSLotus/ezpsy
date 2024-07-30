@@ -15,6 +15,8 @@ import { Grat, makeGrat } from '../Graphic/grating'
 import { sinGrating } from '../Graphic/sinGrating'
 import { playRandomDot, RandomDot } from '../Graphic/randomDot'
 import * as ezSinGrat from '../Graphic/sinGrat'
+import * as ezSinGrat0 from '../Graphic/sinGrat0'
+import * as ezSinGrat1 from '../Graphic/sinGrat1'
 import * as ezCanvas from '../Canvas/canvas'
 import { DlgContent } from '../Dialogue/dialogue0'
 import { wasmSinGrating } from '../ezpsy'
@@ -189,6 +191,14 @@ export async function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRend
     else if(el instanceof ezSinGrat.sinGrat)
     {
         (<ezSinGrat.sinGrat>el).pre_draw();
+    }
+    else if(el instanceof ezSinGrat0.sinGrat0)
+    {
+        (<ezSinGrat0.sinGrat0>el).pre_draw();
+    }
+    else if(el instanceof ezSinGrat1.sinGrat1)
+    {
+        (<ezSinGrat1.sinGrat1>el).pre_draw();
     }
     else if(el instanceof sinGrating){
         // console.dir("Add Success!");

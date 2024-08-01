@@ -243,49 +243,42 @@ function get_noise(width) {
     return greyDegree
 }
 
-function createLookupTable() {
-    const lookupTable = new Uint8Array(1024);
-    for (let i = 0; i < 1024; i++) {
-        lookupTable[i] = Math.round((i / 1023) * 255);
+function searchMap112(num: number) {
+    const x = Math.floor(num / 7)
+    const rgb = {
+        r: x,
+        g: x,
+        b: x
     }
-    return lookupTable;
+    const random = Math.floor(Math.random() * 2)
+    switch(num % 4) {
+        case 0:
+            break
+        case 1: 
+            if(random)
+                rgb.b += 1
+            else
+                rgb.r += 1
+            break
+        case 2: 
+            rgb.g += 1
+            break
+        case 3:
+            if(random)
+                rgb.b += 1
+            else
+                rgb.r += 1
+            rgb.g += 1
+            break
+        default:
+            throw Error("Unknown Error")
+    }
+    return rgb
 }
 
-function bitStealing(lookupTable, r10, g10, b10) {
-    const r8 = lookupTable[r10];
-    const g8 = lookupTable[g10];
-    const b8 = lookupTable[b10];
-    
-    const targetLuminance = 0.299 * r10 + 0.587 * g10 + 0.114 * b10;
-
-    let bestMatch = { r: r8, g: g8, b: b8, luminance: targetLuminance };
-    let minDifference = Infinity;
-
-    for (let dr = -1; dr <= 1; dr++) {
-        for (let dg = -1; dg <= 1; dg++) {
-            for (let db = -1; db <= 1; db++) {
-                const rr = Math.min(Math.max(r10 + dr, 0), 1023);
-                const gg = Math.min(Math.max(g10 + dg, 0), 1023);
-                const bb = Math.min(Math.max(b10 + db, 0), 1023);
-
-                const r = lookupTable[rr];
-                const g = lookupTable[gg];
-                const b = lookupTable[bb];
-
-                const luminance = 0.299 * rr + 0.587 * gg + 0.114 * bb;
-                const difference = Math.abs(luminance - targetLuminance);
-
-                if (difference < minDifference) {
-                    minDifference = difference;
-                    bestMatch = { r, g, b, luminance };
-                }
-            }
-        }
-    }
-
-    return bestMatch;
+function jitter(value) {
+    return Math.max(0, Math.min(255, value + Math.floor(Math.random() * 5) - 2));
 }
-
 
 //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
 //返回imageData图片信息
@@ -314,15 +307,15 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
     for (let i = 0; i < mask.length; i++) {
         let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
         p = Math.pow(p, 1/gamma)
-        p = 1023 * p
-        gratDegree[i] = Math.min(Math.floor(p), 1023)
+        p = 1020 * p
+        gratDegree[i] = Math.min(Math.floor(p), 1020)
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        const res = bitStealing(createLookupTable(), gratDegree[j], gratDegree[j], gratDegree[j])
-        imgData.data[i + 0] = res.r;
-        imgData.data[i + 1] = res.g;
-        imgData.data[i + 2] = res.b;
+        const res = searchMap112(gratDegree[j])
+        imgData.data[i + 0] = jitter(res.r);
+        imgData.data[i + 1] = jitter(res.g);
+        imgData.data[i + 2] = jitter(res.b);
         imgData.data[i + 3] = 255;
     }
     return imgData;

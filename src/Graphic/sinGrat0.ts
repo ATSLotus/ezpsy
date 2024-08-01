@@ -159,7 +159,7 @@ function getNoiseSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contr
         NoiseGratDegree[i] = Math.min(Math.floor(p), 1785)
     }
     for (let i=0,j=0;i<noiseSinGrat.data.length;i+=4,j++) {
-        const rgb = searchMapDA(NoiseGratDegree[j])
+        const rgb = searchMap124(NoiseGratDegree[j])
         noiseSinGrat.data[i + 0] = rgb.r;
         noiseSinGrat.data[i + 1] = rgb.g;
         noiseSinGrat.data[i + 2] = rgb.b;
@@ -244,7 +244,7 @@ function get_noise(width) {
     return greyDegree
 }
 
-function searchMapDA(num: number) {
+function searchMap124(num: number) {
     const x = Math.floor(num / 7)
     const rgb = {
         r: x,
@@ -281,6 +281,10 @@ function searchMapDA(num: number) {
     return rgb
 }
 
+function jitter(value) {
+    return Math.max(0, Math.min(255, value + Math.floor(Math.random() * 5) - 2));
+}
+
 //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
 //返回imageData图片信息
 function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, phase, gamma) {
@@ -313,10 +317,10 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        const rgb = searchMapDA(gratDegree[j])
-        imgData.data[i + 0] = rgb.r;
-        imgData.data[i + 1] = rgb.g;
-        imgData.data[i + 2] = rgb.b;
+        const rgb = searchMap124(gratDegree[j])
+        imgData.data[i + 0] = jitter(rgb.r);
+        imgData.data[i + 1] = jitter(rgb.g);
+        imgData.data[i + 2] = jitter(rgb.b);
         imgData.data[i + 3] = 255;
     }
     return imgData;

@@ -326,7 +326,7 @@ class RectGroup extends Group {
         this.ParentsRect = rect;
     }
 }
-let nameId$f = 0;
+let nameId$g = 0;
 // class TypeTest implements RectangleShape{
 //     x: number
 //     y: number
@@ -335,8 +335,8 @@ let nameId$f = 0;
 // }
 class Rectangle extends Elements {
     name = {
-        name: "rect" + nameId$f.toString(),
-        graphicId: nameId$f
+        name: "rect" + nameId$g.toString(),
+        graphicId: nameId$g
     };
     constructor(opts) {
         super();
@@ -352,7 +352,7 @@ class Rectangle extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$f++;
+        nameId$g++;
     }
 }
 class logicRect extends Rectangle {
@@ -879,11 +879,11 @@ function FrameRect(rect, lineWidth, stroke) {
     return rect0;
 }
 
-let nameId$e = 0;
+let nameId$f = 0;
 class Circle extends Elements {
     name = {
-        name: "circle" + nameId$e.toString(),
-        graphicId: nameId$e
+        name: "circle" + nameId$f.toString(),
+        graphicId: nameId$f
     };
     constructor(opts) {
         super();
@@ -900,7 +900,7 @@ class Circle extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$e++;
+        nameId$f++;
     }
 }
 function makeCircle(circle, ctx) {
@@ -929,11 +929,11 @@ function DrawDots([x, y, r], color) {
     return circle;
 }
 
-let nameId$d = 0;
+let nameId$e = 0;
 class Line extends Elements {
     name = {
-        name: "line" + nameId$d.toString(),
-        graphicId: nameId$d
+        name: "line" + nameId$e.toString(),
+        graphicId: nameId$e
     };
     constructor(opts) {
         super();
@@ -950,7 +950,7 @@ class Line extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$d++;
+        nameId$e++;
     }
 }
 // export class line{
@@ -1084,11 +1084,11 @@ function LineStipple([x, y, xEnd, yEnd], widthGap) {
 //     }
 // }
 
-let nameId$c = 0;
+let nameId$d = 0;
 class Arc extends Elements {
     name = {
-        name: "arc" + nameId$c.toString(),
-        graphicId: nameId$c
+        name: "arc" + nameId$d.toString(),
+        graphicId: nameId$d
     };
     constructor(opts) {
         super();
@@ -1105,7 +1105,7 @@ class Arc extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$c++;
+        nameId$d++;
     }
 }
 function makeArc(arc, ctx) {
@@ -1190,11 +1190,11 @@ function FillArc(arc, fill) {
     return arc0;
 }
 
-let nameId$b = 0;
+let nameId$c = 0;
 class Ellipse extends Elements {
     name = {
-        name: "ellipse" + nameId$b.toString(),
-        graphicId: nameId$b
+        name: "ellipse" + nameId$c.toString(),
+        graphicId: nameId$c
     };
     constructor(opts) {
         super();
@@ -1211,7 +1211,7 @@ class Ellipse extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$b++;
+        nameId$c++;
     }
 }
 function makeEllipse(ellipse, ctx) {
@@ -1273,11 +1273,11 @@ function FrameOval(ellipse, lineWidth, stroke) {
     return ellipse0;
 }
 
-let nameId$a = 0;
+let nameId$b = 0;
 class Polygon extends Elements {
     name = {
-        name: "polygon" + nameId$a.toString(),
-        graphicId: nameId$a
+        name: "polygon" + nameId$b.toString(),
+        graphicId: nameId$b
     };
     constructor(opts) {
         super();
@@ -1294,7 +1294,7 @@ class Polygon extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$a++;
+        nameId$b++;
     }
 }
 function makePolygon(polygon, ctx) {
@@ -1354,11 +1354,11 @@ function FillPoly(polygon, fill) {
     return polygon0;
 }
 
-let nameId$9 = 0;
+let nameId$a = 0;
 class Texts extends Elements {
     name = {
-        name: "text" + nameId$9.toString(),
-        graphicId: nameId$9
+        name: "text" + nameId$a.toString(),
+        graphicId: nameId$a
     };
     constructor(opts) {
         super();
@@ -1385,7 +1385,7 @@ class Texts extends Elements {
                 textB: 'alphabetic'
             };
         }
-        nameId$9++;
+        nameId$a++;
     }
     setTextLine(textLine) {
         if (textLine) {
@@ -1439,7 +1439,7 @@ function Replace(str, str_o, str_r) {
     return result;
 }
 
-let nameId$8 = 0;
+let nameId$9 = 0;
 class RGBA {
     R;
     G;
@@ -1453,8 +1453,8 @@ class RGBA_Array {
 }
 class Img extends Elements {
     name = {
-        name: "img" + nameId$8.toString(),
-        graphicId: nameId$8
+        name: "img" + nameId$9.toString(),
+        graphicId: nameId$9
     };
     Img;
     ImgData;
@@ -1507,7 +1507,7 @@ class Img extends Elements {
             console.dir(imageData);
             that.ImgData = imageData;
         });
-        nameId$8++;
+        nameId$9++;
     }
     init() {
         let that = this;
@@ -1698,11 +1698,11 @@ function createGratLinearGradient(ctx, [x0, y0, x1, y1], num, s) {
     return fill;
 }
 
-let nameId$7 = 0;
+let nameId$8 = 0;
 class Grat extends Elements {
     name = {
-        name: "grat" + nameId$7.toString(),
-        graphicId: nameId$7
+        name: "grat" + nameId$8.toString(),
+        graphicId: nameId$8
     };
     constructor(opts) {
         super();
@@ -1729,7 +1729,7 @@ class Grat extends Elements {
         //         lineWidth: 2
         //     }
         // }
-        nameId$7++;
+        nameId$8++;
     }
     play(speed, delay) {
         if (!delay) {
@@ -1921,11 +1921,11 @@ function pre_noise_singrat$1(radius, pixels_per_degree, spatial_frequency, angle
     }
 }
 
-let nameId$6 = 0;
+let nameId$7 = 0;
 class sinGrating extends Elements {
     name = {
-        name: "singrating" + nameId$6.toString(),
-        graphicId: nameId$6
+        name: "singrating" + nameId$7.toString(),
+        graphicId: nameId$7
     };
     param;
     width;
@@ -1952,7 +1952,7 @@ class sinGrating extends Elements {
         const timeFrequency = opts.shape.timeFrequency || 0;
         this.timeFrequency = timeFrequency;
         this.fps = 60;
-        nameId$6++;
+        nameId$7++;
     }
     async pre_draw() {
         const timeFrequency = this.timeFrequency;
@@ -2076,11 +2076,11 @@ class sinGrating extends Elements {
 //     return getUint8Memory0(wasm).subarray(ptr / 1, ptr / 1 + len);
 // }
 
-let nameId$5 = 0;
+let nameId$6 = 0;
 class RandomDot extends Elements {
     name = {
-        name: "randomDot" + nameId$5.toString(),
-        graphicId: nameId$5
+        name: "randomDot" + nameId$6.toString(),
+        graphicId: nameId$6
     };
     RandomDotArray;
     maskBand;
@@ -2124,7 +2124,7 @@ class RandomDot extends Elements {
         // })
         this.translation = getRandom(this.shape.maxSpeed, this.shape.minSpeed, this.shape.number);
         this.IsAnimation = true;
-        nameId$5++;
+        nameId$6++;
     }
 }
 function playRandomDot(randomDot, ctx) {
@@ -2268,10 +2268,206 @@ function setRandom(maxSpeed, minSpeed) {
     return num;
 }
 
-let nameId$4 = 0;
+let nameId$5 = 0;
 //光栅
 //pixelsPerDegree=57, spatialFrequency=1 对应一度视角
 class sinGrat extends Elements {
+    name = {
+        name: "singrat" + nameId$5.toString(),
+        graphicId: nameId$5
+    };
+    sinGrat; //光栅图片数据
+    imgDataList; //用于储存参与动画的图片
+    isNoise;
+    // singratParam;   //用于储存 左上角坐标, 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位等信息
+    // level;          //噪声等级(此类型默认为0)
+    constructor(opts) {
+        //x,y为光栅的左上角坐标, 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
+        super();
+        this.shape = opts.shape;
+        // let sh = this.shape;
+        if (!opts.isNoise)
+            this.isNoise = false;
+        else
+            this.isNoise = opts.isNoise;
+        this.imgDataList = new Array();
+        nameId$5++;
+    }
+    count() {
+        let sh = this.shape;
+        if (!this.isNoise)
+            this.sinGrat = getSingrat$3(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma);
+        else {
+            this.sinGrat = getNoiseSingrat$3(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma);
+        }
+    }
+    async pre_draw() {
+        let sh = this.shape;
+        if (!this.isNoise)
+            this.sinGrat = getSingrat$3(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma);
+        else {
+            if (!sh.level)
+                sh.level = 1;
+            this.sinGrat = getNoiseSingrat$3(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.level, sh.gamma);
+        }
+    }
+    //绘制方法, 参数ctx为canvas.getContext('2d')
+    draw() {
+        this.shape;
+        this.ctx.putImageData(this.sinGrat, this.shape.x - 1.5 * this.shape.r, this.shape.y - 1.5 * this.shape.r);
+    }
+    //给原有光栅加上噪声, 参数level为噪声等级
+    imNoise(level) {
+        let th = this.shape;
+        this.isNoise = true;
+        this.sinGrat = getNoiseSingrat$3(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase, level, th.gamma);
+        th.level = level;
+    }
+    //运动方法, 参数ctx为canvas.getContext('2d') 参数cycle为每秒运行光栅的周期数(默认为1)
+    play(timeFrequency, time) {
+        if (!timeFrequency)
+            timeFrequency = 1;
+        if (!time)
+            time = 1000;
+        let fps = 60;
+        let fpsnum = Math.floor(time / 1000 * fps);
+        let interval = 2 * Math.PI * timeFrequency / fps;
+        let that = this;
+        let ctx = this.ctx;
+        // let num = Math.floor(60/timeFrequency);
+        let th = this.shape;
+        for (let i = 0; i < fps; i++) {
+            if (this.isNoise)
+                this.imgDataList.push(getNoiseSingrat$3(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase + i * interval, this.shape.level, this.shape.gamma));
+            else
+                this.imgDataList.push(getSingrat$3(th.r, th.pixelsPerDegree, th.spatialFrequency, th.angle, th.contrast, th.phase + i * interval, this.shape.gamma));
+        }
+        //异步函数
+        (async function () {
+            for (let i = 0; i < fpsnum; i++) {
+                // i = i%fps;
+                let index = i % fps;
+                ctx.putImageData(that.imgDataList[index], that.shape.x - 1.5 * that.shape.r, that.shape.y - 1.5 * that.shape.r);
+                // console.dir(that.storage)
+                await delay_frame(1);
+                that.clear();
+            }
+        })();
+    }
+    //清除光栅所在位置的矩形区域
+    clear() {
+        const ctx = this.ctx;
+        let width = 2 * (1.5 * this.shape.r) + 1;
+        let height = 2 * (1.5 * this.shape.r) + 1;
+        ctx.clearRect(this.shape.x - 1.5 * this.shape.r, this.shape.y - 1.5 * this.shape.r, width, height);
+    }
+}
+//生成噪声光栅, 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位, 噪声等级
+//返回imageData图片信息
+function getNoiseSingrat$3(radius, pixelsPerDegree, spatialFrequency, angle, contrast, phase, level, gamma) {
+    let c = document.createElement('canvas');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    let ctx = c.getContext('2d');
+    if (level === undefined)
+        level = 1;
+    if (level > 1)
+        level = 1;
+    let maskBand = 0.5 * radius;
+    let imagesize = radius + maskBand;
+    let width = 2 * imagesize + 1;
+    let [x, y] = meshgrid$3(imagesize);
+    let mask = new Array();
+    for (let i = 0; i < width * width; i++) {
+        let m = Math.pow(x[i], 2) + Math.pow(y[i], 2);
+        let n = Math.pow(radius, 2);
+        mask[i] = Math.exp(-m / n * 4) * Math.exp(4);
+        if (mask[i] >= 1)
+            mask[i] = 1;
+    }
+    let w = 2 * Math.PI * spatialFrequency / pixelsPerDegree;
+    let a = Math.cos(angle * Math.PI / 180) * w;
+    let b = Math.sin(angle * Math.PI / 180) * w;
+    let noise = get_noise$3(width);
+    const NoiseGratDegree = new Array();
+    const noiseSinGrat = ctx.createImageData(width, width);
+    for (let i = 0; i < mask.length; i++) {
+        let p = (1 - level) * (0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase)) + level * (0.5 + 0.5 * mask[i] * noise[i] / 255);
+        p = Math.pow(p, 1 / gamma);
+        p = 255 * p;
+        NoiseGratDegree[i] = Math.min(Math.floor(p), 255);
+    }
+    for (let i = 0, j = 0; i < noiseSinGrat.data.length; i += 4, j++) {
+        noiseSinGrat.data[i + 0] = NoiseGratDegree[j];
+        noiseSinGrat.data[i + 1] = NoiseGratDegree[j];
+        noiseSinGrat.data[i + 2] = NoiseGratDegree[j];
+        noiseSinGrat.data[i + 3] = 255;
+    }
+    return noiseSinGrat;
+}
+function get_noise$3(width) {
+    const greyDegree = new Array();
+    for (let i = 0; i < width * width; i++) {
+        greyDegree[i] = Math.random() * 256;
+    }
+    return greyDegree;
+}
+//生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
+//返回imageData图片信息
+function getSingrat$3(radius, pixelsPerDegree, spatialFrequency, angle, contrast, phase, gamma) {
+    let c = document.createElement('canvas');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    let ctx = c.getContext('2d');
+    let maskBand = 0.5 * radius;
+    let imagesize = radius + maskBand;
+    let [x, y] = meshgrid$3(imagesize);
+    let w = 2 * Math.PI * spatialFrequency / pixelsPerDegree;
+    let a = Math.cos(angle * Math.PI / 180) * w;
+    let b = Math.sin(angle * Math.PI / 180) * w;
+    const width = 2 * imagesize + 1;
+    let mask = new Array();
+    for (let i = 0; i < width * width; i++) {
+        let m = Math.pow(x[i], 2) + Math.pow(y[i], 2);
+        let n = Math.pow(radius, 2);
+        mask[i] = Math.exp(-m / n * 4) * Math.exp(4);
+        if (mask[i] >= 1)
+            mask[i] = 1;
+    }
+    const gratDegree = new Array();
+    for (let i = 0; i < mask.length; i++) {
+        let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
+        p = Math.pow(p, 1 / gamma);
+        p = 255 * p;
+        gratDegree[i] = Math.min(Math.floor(p), 255);
+    }
+    let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
+    for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
+        imgData.data[i + 0] = gratDegree[j];
+        imgData.data[i + 1] = gratDegree[j];
+        imgData.data[i + 2] = gratDegree[j];
+        imgData.data[i + 3] = 255;
+    }
+    return imgData;
+}
+//生成网格采样点 参数: 半径
+//返回x, y两个采样数组
+function meshgrid$3(radius) {
+    let x = new Array();
+    let y = new Array();
+    for (let i = -radius, k = 0; i <= radius; i++, k++) {
+        for (let j = -radius, t = 0; j <= radius; j++, t++) {
+            x[(2 * radius + 1) * k + t] = i;
+            y[(2 * radius + 1) * k + t] = j;
+        }
+    }
+    return [x, y];
+}
+
+let nameId$4 = 0;
+//光栅
+//pixelsPerDegree=57, spatialFrequency=1 对应一度视角
+class sinGrat0 extends Elements {
     name = {
         name: "singrat" + nameId$4.toString(),
         graphicId: nameId$4
@@ -2394,13 +2590,14 @@ function getNoiseSingrat$2(radius, pixelsPerDegree, spatialFrequency, angle, con
     for (let i = 0; i < mask.length; i++) {
         let p = (1 - level) * (0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase)) + level * (0.5 + 0.5 * mask[i] * noise[i] / 255);
         p = Math.pow(p, 1 / gamma);
-        p = 255 * p;
-        NoiseGratDegree[i] = Math.min(Math.floor(p), 255);
+        p = 1785 * p;
+        NoiseGratDegree[i] = Math.min(Math.floor(p), 1785);
     }
     for (let i = 0, j = 0; i < noiseSinGrat.data.length; i += 4, j++) {
-        noiseSinGrat.data[i + 0] = NoiseGratDegree[j];
-        noiseSinGrat.data[i + 1] = NoiseGratDegree[j];
-        noiseSinGrat.data[i + 2] = NoiseGratDegree[j];
+        const rgb = searchMap124(NoiseGratDegree[j]);
+        noiseSinGrat.data[i + 0] = rgb.r;
+        noiseSinGrat.data[i + 1] = rgb.g;
+        noiseSinGrat.data[i + 2] = rgb.b;
         noiseSinGrat.data[i + 3] = 255;
     }
     return noiseSinGrat;
@@ -2411,6 +2608,45 @@ function get_noise$2(width) {
         greyDegree[i] = Math.random() * 256;
     }
     return greyDegree;
+}
+function searchMap124(num) {
+    const x = Math.floor(num / 7);
+    const rgb = {
+        r: x,
+        g: x,
+        b: x
+    };
+    switch (num % 7) {
+        case 0:
+            break;
+        case 1:
+            rgb.b += 1;
+            break;
+        case 2:
+            rgb.r += 1;
+            break;
+        case 3:
+            rgb.b += 1;
+            rgb.r += 1;
+            break;
+        case 4:
+            rgb.g += 1;
+            break;
+        case 5:
+            rgb.b += 1;
+            rgb.g += 1;
+            break;
+        case 6:
+            rgb.r += 1;
+            rgb.g += 1;
+            break;
+        default:
+            throw Error("Unknown Error");
+    }
+    return rgb;
+}
+function jitter$1(value) {
+    return Math.max(0, Math.min(255, value + Math.floor(Math.random() * 5) - 2));
 }
 //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
 //返回imageData图片信息
@@ -2438,14 +2674,15 @@ function getSingrat$2(radius, pixelsPerDegree, spatialFrequency, angle, contrast
     for (let i = 0; i < mask.length; i++) {
         let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
         p = Math.pow(p, 1 / gamma);
-        p = 255 * p;
-        gratDegree[i] = Math.min(Math.floor(p), 255);
+        p = 1785 * p;
+        gratDegree[i] = Math.min(Math.floor(p), 1785);
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        imgData.data[i + 0] = gratDegree[j];
-        imgData.data[i + 1] = gratDegree[j];
-        imgData.data[i + 2] = gratDegree[j];
+        const rgb = searchMap124(gratDegree[j]);
+        imgData.data[i + 0] = jitter$1(rgb.r);
+        imgData.data[i + 1] = jitter$1(rgb.g);
+        imgData.data[i + 2] = jitter$1(rgb.b);
         imgData.data[i + 3] = 255;
     }
     return imgData;
@@ -2467,7 +2704,7 @@ function meshgrid$2(radius) {
 let nameId$3 = 0;
 //光栅
 //pixelsPerDegree=57, spatialFrequency=1 对应一度视角
-class sinGrat0 extends Elements {
+class sinGrat1 extends Elements {
     name = {
         name: "singrat" + nameId$3.toString(),
         graphicId: nameId$3
@@ -2590,14 +2827,13 @@ function getNoiseSingrat$1(radius, pixelsPerDegree, spatialFrequency, angle, con
     for (let i = 0; i < mask.length; i++) {
         let p = (1 - level) * (0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase)) + level * (0.5 + 0.5 * mask[i] * noise[i] / 255);
         p = Math.pow(p, 1 / gamma);
-        p = 1785 * p;
-        NoiseGratDegree[i] = Math.min(Math.floor(p), 1785);
+        p = 255 * p;
+        NoiseGratDegree[i] = Math.min(Math.floor(p), 255);
     }
     for (let i = 0, j = 0; i < noiseSinGrat.data.length; i += 4, j++) {
-        const rgb = searchMap124(NoiseGratDegree[j]);
-        noiseSinGrat.data[i + 0] = rgb.r;
-        noiseSinGrat.data[i + 1] = rgb.g;
-        noiseSinGrat.data[i + 2] = rgb.b;
+        noiseSinGrat.data[i + 0] = NoiseGratDegree[j];
+        noiseSinGrat.data[i + 1] = NoiseGratDegree[j];
+        noiseSinGrat.data[i + 2] = NoiseGratDegree[j];
         noiseSinGrat.data[i + 3] = 255;
     }
     return noiseSinGrat;
@@ -2609,35 +2845,31 @@ function get_noise$1(width) {
     }
     return greyDegree;
 }
-function searchMap124(num) {
+function searchMap112(num) {
     const x = Math.floor(num / 7);
     const rgb = {
         r: x,
         g: x,
         b: x
     };
-    switch (num % 7) {
+    const random = Math.floor(Math.random() * 2);
+    switch (num % 4) {
         case 0:
             break;
         case 1:
-            rgb.b += 1;
+            if (random)
+                rgb.b += 1;
+            else
+                rgb.r += 1;
             break;
         case 2:
-            rgb.r += 1;
+            rgb.g += 1;
             break;
         case 3:
-            rgb.b += 1;
-            rgb.r += 1;
-            break;
-        case 4:
-            rgb.g += 1;
-            break;
-        case 5:
-            rgb.b += 1;
-            rgb.g += 1;
-            break;
-        case 6:
-            rgb.r += 1;
+            if (random)
+                rgb.b += 1;
+            else
+                rgb.r += 1;
             rgb.g += 1;
             break;
         default:
@@ -2645,7 +2877,7 @@ function searchMap124(num) {
     }
     return rgb;
 }
-function jitter$1(value) {
+function jitter(value) {
     return Math.max(0, Math.min(255, value + Math.floor(Math.random() * 5) - 2));
 }
 //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
@@ -2674,15 +2906,15 @@ function getSingrat$1(radius, pixelsPerDegree, spatialFrequency, angle, contrast
     for (let i = 0; i < mask.length; i++) {
         let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
         p = Math.pow(p, 1 / gamma);
-        p = 1785 * p;
-        gratDegree[i] = Math.min(Math.floor(p), 1785);
+        p = 1020 * p;
+        gratDegree[i] = Math.min(Math.floor(p), 1020);
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        const rgb = searchMap124(gratDegree[j]);
-        imgData.data[i + 0] = jitter$1(rgb.r);
-        imgData.data[i + 1] = jitter$1(rgb.g);
-        imgData.data[i + 2] = jitter$1(rgb.b);
+        const res = searchMap112(gratDegree[j]);
+        imgData.data[i + 0] = jitter(res.r);
+        imgData.data[i + 1] = jitter(res.g);
+        imgData.data[i + 2] = jitter(res.b);
         imgData.data[i + 3] = 255;
     }
     return imgData;
@@ -2704,7 +2936,7 @@ function meshgrid$1(radius) {
 let nameId$2 = 0;
 //光栅
 //pixelsPerDegree=57, spatialFrequency=1 对应一度视角
-class sinGrat1 extends Elements {
+class sinGrat2 extends Elements {
     name = {
         name: "singrat" + nameId$2.toString(),
         graphicId: nameId$2
@@ -2845,40 +3077,25 @@ function get_noise(width) {
     }
     return greyDegree;
 }
-function searchMap112(num) {
-    const x = Math.floor(num / 7);
-    const rgb = {
-        r: x,
-        g: x,
-        b: x
-    };
-    const random = Math.floor(Math.random() * 2);
-    switch (num % 4) {
-        case 0:
-            break;
-        case 1:
-            if (random)
-                rgb.b += 1;
-            else
-                rgb.r += 1;
-            break;
-        case 2:
-            rgb.g += 1;
-            break;
-        case 3:
-            if (random)
-                rgb.b += 1;
-            else
-                rgb.r += 1;
-            rgb.g += 1;
-            break;
-        default:
-            throw Error("Unknown Error");
-    }
-    return rgb;
+function randomInt(num) {
+    const random = num - Math.floor(num);
+    let res = num;
+    if (Math.random() <= random)
+        res = Math.ceil(num);
+    else
+        res = Math.floor(num);
+    return res;
 }
-function jitter(value) {
-    return Math.max(0, Math.min(255, value + Math.floor(Math.random() * 5) - 2));
+function randomNoise(num) {
+    const noise = (Math.floor(Math.random() * 1001) / 1000) - 0.5;
+    const noisyValue = num + noise;
+    return noisyValue;
+}
+function noiseBit(num) {
+    let res = num;
+    res = randomNoise(res);
+    res = randomInt(res);
+    return res;
 }
 //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
 //返回imageData图片信息
@@ -2906,15 +3123,14 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
     for (let i = 0; i < mask.length; i++) {
         let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
         p = Math.pow(p, 1 / gamma);
-        p = 1020 * p;
-        gratDegree[i] = Math.min(Math.floor(p), 1020);
+        p = 255 * p;
+        gratDegree[i] = p;
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        const res = searchMap112(gratDegree[j]);
-        imgData.data[i + 0] = jitter(res.r);
-        imgData.data[i + 1] = jitter(res.g);
-        imgData.data[i + 2] = jitter(res.b);
+        imgData.data[i + 0] = noiseBit(gratDegree[j]);
+        imgData.data[i + 1] = noiseBit(gratDegree[j]);
+        imgData.data[i + 2] = noiseBit(gratDegree[j]);
         imgData.data[i + 3] = 255;
     }
     return imgData;
@@ -2992,6 +3208,9 @@ async function judgeElement(el, ctx) {
         el.pre_draw();
     }
     else if (el instanceof sinGrat1) {
+        el.pre_draw();
+    }
+    else if (el instanceof sinGrat2) {
         el.pre_draw();
     }
     else if (el instanceof sinGrating) {
@@ -8403,6 +8622,7 @@ var EZPSY = /*#__PURE__*/Object.freeze({
     sinGrat: sinGrat,
     sinGrat0: sinGrat0,
     sinGrat1: sinGrat1,
+    sinGrat2: sinGrat2,
     Grat: Grat,
     Time: Time,
     RandomDot: RandomDot,

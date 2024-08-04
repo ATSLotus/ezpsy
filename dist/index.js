@@ -3077,15 +3077,6 @@ function get_noise(width) {
     }
     return greyDegree;
 }
-function randomInt(num) {
-    const random = num - Math.floor(num);
-    let res = num;
-    if (Math.random() <= random)
-        res = Math.ceil(num);
-    else
-        res = Math.floor(num);
-    return res;
-}
 function randomNoise(num) {
     const noise = (Math.floor(Math.random() * 1001) / 1000) - 0.5;
     const noisyValue = num + noise;
@@ -3094,8 +3085,8 @@ function randomNoise(num) {
 function noiseBit(num) {
     let res = num;
     res = randomNoise(res);
-    res = randomInt(res);
-    return res;
+    // res = randomInt(res)
+    return Math.round(res);
 }
 //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
 //返回imageData图片信息

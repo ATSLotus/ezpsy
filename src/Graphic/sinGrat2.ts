@@ -264,8 +264,8 @@ function randomNoise(num: number) {
 function noiseBit(num: number) {
     let res = num
     res = randomNoise(res)
-    res = randomInt(res)
-    return res
+    // res = randomInt(res)
+    return Math.round(res)
 }
 
 //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位

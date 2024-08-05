@@ -3116,13 +3116,13 @@ function searchMap124(num) {
 function randomNoise(num) {
     const noise = (Math.floor(Math.random() * 1001) / 1000) - 0.5;
     const noisyValue = num + noise + 0.5;
-    return noisyValue;
+    return Math.floor(noisyValue);
 }
 function noiseBit(num) {
     let res = num;
     res = randomNoise(res);
     // res = randomInt(res)
-    return Math.round(res);
+    return res;
 }
 //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位
 //返回imageData图片信息

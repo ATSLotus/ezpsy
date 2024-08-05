@@ -299,14 +299,14 @@ function randomNoise(num: number) {
 
     const noisyValue = num + noise + 0.5;
     
-    return noisyValue;
+    return Math.floor(noisyValue);
 }
 
 function noiseBit(num: number) {
     let res = num
     res = randomNoise(res)
     // res = randomInt(res)
-    return Math.round(res)
+    return res
 }
 
 //生成光栅 参数: 半径, pixelsPerDegree, spatialFrequency, 角度, 对比度, 相位

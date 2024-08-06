@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="../../dist/ezpsy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
 </head>
 
 <body>
     <div id="sinGrat"></div>
 </body>
+<script>eruda.init();</script>
 <script>
     const average = (arr) => {
         let num = 0
@@ -39,11 +41,19 @@
             },
             isNoise: false
         })
-        ez.add(a)
-        await a.pre_draw()
-        setTimeout(() => {
-            a.draw()
-        }, 100)
+        // ez.add(a)
+        let res = []
+        for(let i = 0; i < 1000; i++) {
+            const t0 = performance.now()
+            await a.pre_draw()
+            const t1 = performance.now()  
+            res.push(t1 - t0)
+        }
+        console.log(res.join("\n"))
+        // console.log(t1 - t0)
+        // setTimeout(() => {
+        //     a.draw()
+        // }, 100)
         // setInterval(() => {
         //     if(isShow) {
         //         a.draw()

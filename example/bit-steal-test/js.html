@@ -42,13 +42,14 @@
             isNoise: false
         })
         let res = []
-        for(let i = 0; i < 1000; i++) {
+        for(let i = 0; i < 1005; i++) {
             const t0 = performance.now()
             await a.pre_draw()
             const t1 = performance.now()  
             res.push(t1 - t0)
         }
         console.log(res.join("\n"))
+        console.log("AVERAGE", res.reduce((accumulator, currentValue) => accumulator + currentValue, 0)/res.length)
     })()
     
 </script>

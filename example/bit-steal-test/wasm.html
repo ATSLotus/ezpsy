@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../dist/ezpsy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+</head>
+
+<body>
+    <div id="sinGrat"></div>
+</body>
+<script>eruda.init();</script>
+<script>
+    const average = (arr) => {
+        let num = 0
+        arr.forEach(item => {
+            num += item
+        })
+        return num / arr.length
+    }
+    (async () => {
+        let ez = await ezpsy.init({
+            el: document.getElementById('sinGrat'),
+        });
+        const list = [] 
+        let a = new ezpsy.sinGrating1({
+            shape: {
+                x: window.innerWidth / 2,
+                y: window.innerHeight / 2,
+                r: 100,
+                pixelsPerDegree: 57, 
+                spatialFrequency: 2,
+                angle: 90, 
+                contrast: 1 / 255, 
+                phase: 0,
+                level: 0,
+                gamma: 0.5
+            },
+            isNoise: false
+        })
+        // ez.add(a)
+        // const t0 = performance.now()
+        // await a.pre_draw()
+        // const t1 = performance.now()
+        // console.log(t1 - t0)
+        // setTimeout(() => {
+        //     a.draw()
+        // }, 100)
+        let res = []
+        for(let i = 0; i < 1000; i++) {
+            const t0 = performance.now()
+            await a.pre_draw()
+            const t1 = performance.now()  
+            res.push(t1 - t0)
+        }
+        console.log(res.join("\n"))
+    })()
+    
+</script>
+<style>
+    canvas {
+        background-color: #404040;
+    }
+    body {
+        margin: 0;
+    }
+</style>
+</html>

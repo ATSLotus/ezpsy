@@ -420,12 +420,12 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
     for (let i = 0; i < mask.length; i++) {
         let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
         p = Math.pow(p, 1/gamma)
-        p = 2550 * p
+        p = 1785 * p
         gratDegree[i] = p
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        const rgb = searchMap127(noiseBit(gratDegree[j]))
+        const rgb = searchMap124(noiseBit(gratDegree[j]))
         // imgData.data[i + 0] = noiseBit(gratDegree[j]);
         // imgData.data[i + 1] = noiseBit(gratDegree[j]);
         // imgData.data[i + 2] = noiseBit(gratDegree[j]);

@@ -115,7 +115,13 @@ function searchMap127(num: number) {
     return rgb
 }
 
-function calculatePixels(luminance: number) {
+function calculatePixels124(luminance: number) {
+    const pixels = 1785 * luminance
+    return searchMap124(noiseBit(pixels))
+}
+
+
+function calculatePixels127(luminance: number) {
     const pixels = 2550 * luminance
     return searchMap127(noiseBit(pixels))
 }
@@ -143,7 +149,7 @@ export class sinGratBG extends Elements {
         const h = canvas.height
         this.pixelsList = ctx.createImageData(w, h)
         for (let i = 0; i < this.pixelsList.data.length; i+=4) {
-            const rgb = calculatePixels(this.luminance)
+            const rgb = calculatePixels124(this.luminance)
             this.pixelsList.data[i + 0] = rgb.r
             this.pixelsList.data[i + 1] = rgb.g
             this.pixelsList.data[i + 2] = rgb.b

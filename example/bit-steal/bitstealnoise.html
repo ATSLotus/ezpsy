@@ -26,6 +26,13 @@
             el: document.getElementById('sinGrat'),
         });
         const list = [] 
+        let bg = new ezpsy.sinGratBG({
+            style: {
+                luminance: 0.25
+            }
+        })
+        await ez.add(bg)
+        
         let a = new ezpsy.sinGrat2({
             shape: {
                 x: window.innerWidth / 2,
@@ -34,41 +41,25 @@
                 pixelsPerDegree: 57, 
                 spatialFrequency: 2,
                 angle: 90, 
-                contrast: 1 / 255, 
+                contrast: 1 / 1000, 
                 phase: 0,
                 level: 0,
-                gamma: 1
+                gamma: 0.5
             },
             isNoise: false
         })
-        // ez.add(a)
-        let res = []
-        for(let i = 0; i < 1000; i++) {
-            const t0 = performance.now()
-            await a.pre_draw()
-            const t1 = performance.now()  
-            res.push(t1 - t0)
-        }
-        console.log(res.join("\n"))
-        // console.log(t1 - t0)
-        // setTimeout(() => {
-        //     a.draw()
-        // }, 100)
-        // setInterval(() => {
-        //     if(isShow) {
-        //         a.draw()
-        //     } else {
-        //         a.clear()
-        //     }
-        //     isShow = !isShow
-        // }, 500)
+        ez.add(a)
+        await a.pre_draw()
+        setTimeout(() => {
+            a.draw()
+        }, 100)
     })()
     
 </script>
 <style>
-    canvas {
+    /* canvas {
         background-color: #808080;
-    }
+    } */
     body {
         margin: 0;
     }

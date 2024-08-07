@@ -2332,7 +2332,7 @@ var ezpsy = (function () {
     }
 
     let nameId$7 = 0;
-    function searchMap124$2(num) {
+    function searchMap124$1(num) {
         const x = Math.floor(num / 7);
         const rgb = {
             r: x,
@@ -2422,7 +2422,7 @@ var ezpsy = (function () {
                 else
                     param = pre_singrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma);
                 for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
-                    const rgb = searchMap124$2(param[j]);
+                    const rgb = searchMap124$1(param[j]);
                     this.sinGrat.data[i + 0] = rgb.r;
                     this.sinGrat.data[i + 1] = rgb.g;
                     this.sinGrat.data[i + 2] = rgb.b;
@@ -2500,6 +2500,104 @@ var ezpsy = (function () {
                     that.remove();
                 }
             })();
+        }
+    }
+
+    function randomNoise$1(num) {
+        const noise = (Math.floor(Math.random() * 1001) / 1000) - 0.5;
+        const noisyValue = num + noise + 0.5;
+        return Math.floor(noisyValue);
+    }
+    function noiseBit$1(num) {
+        let res = num;
+        res = randomNoise$1(res);
+        return res;
+    }
+    function searchMap127$1(num) {
+        const x = Math.floor(num / 10);
+        const rgb = {
+            r: x,
+            g: x,
+            b: x
+        };
+        switch (num % 7) {
+            case 0:
+                break;
+            case 1:
+                rgb.b += 1;
+                break;
+            case 2:
+                rgb.r += 1;
+                break;
+            case 3:
+                rgb.b += 1;
+                rgb.r += 1;
+                break;
+            case 4:
+                rgb.b -= 1;
+                rgb.r -= 1;
+                rgb.g += 1;
+                break;
+            case 5:
+                rgb.r -= 1;
+                rgb.g += 1;
+                break;
+            case 6:
+                rgb.b -= 1;
+                rgb.g += 1;
+                break;
+            case 7:
+                rgb.g += 1;
+                break;
+            case 8:
+                rgb.b += 1;
+                rgb.g += 1;
+                break;
+            case 9:
+                rgb.r += 1;
+                rgb.g += 1;
+                break;
+            default:
+                throw Error("Unknown Error");
+        }
+        return rgb;
+    }
+    function calculatePixels(luminance) {
+        const pixels = 2550 * luminance;
+        return searchMap127$1(noiseBit$1(pixels));
+    }
+    class sinGratBG extends Elements {
+        pixelsList;
+        luminance;
+        constructor(opts) {
+            super();
+            if (opts.style.luminance < 0) {
+                opts.style.luminance = -opts.style.luminance;
+            }
+            if (opts.style.luminance <= 1) {
+                this.luminance = opts.style.luminance;
+            }
+            else if (opts.style.luminance <= 255) {
+                this.luminance = opts.style.luminance / 255;
+            }
+            else {
+                this.luminance = (opts.style.luminance % 255) / 255;
+            }
+        }
+        draw() {
+            const ctx = this.ctx;
+            const canvas = ctx.canvas;
+            const w = canvas.width;
+            const h = canvas.height;
+            this.pixelsList = ctx.createImageData(w, h);
+            for (let i = 0; i < this.pixelsList.data.length; i += 4) {
+                const rgb = calculatePixels(this.luminance);
+                this.pixelsList.data[i + 0] = rgb.r;
+                this.pixelsList.data[i + 1] = rgb.g;
+                this.pixelsList.data[i + 2] = rgb.b;
+                this.pixelsList.data[i + 3] = 255;
+            }
+            this.ctx.putImageData(this.pixelsList, 0, 0);
         }
     }
 
@@ -3021,7 +3119,7 @@ var ezpsy = (function () {
             NoiseGratDegree[i] = Math.min(Math.floor(p), 1785);
         }
         for (let i = 0, j = 0; i < noiseSinGrat.data.length; i += 4, j++) {
-            const rgb = searchMap124$1(NoiseGratDegree[j]);
+            const rgb = searchMap124(NoiseGratDegree[j]);
             noiseSinGrat.data[i + 0] = rgb.r;
             noiseSinGrat.data[i + 1] = rgb.g;
             noiseSinGrat.data[i + 2] = rgb.b;
@@ -3036,7 +3134,7 @@ var ezpsy = (function () {
         }
         return greyDegree;
     }
-    function searchMap124$1(num) {
+    function searchMap124(num) {
         const x = Math.floor(num / 7);
         const rgb = {
             r: x,
@@ -3106,7 +3204,7 @@ var ezpsy = (function () {
         }
         let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
         for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-            const rgb = searchMap124$1(gratDegree[j]);
+            const rgb = searchMap124(gratDegree[j]);
             imgData.data[i + 0] = jitter$1(rgb.r);
             imgData.data[i + 1] = jitter$1(rgb.g);
             imgData.data[i + 2] = jitter$1(rgb.b);
@@ -3504,8 +3602,8 @@ var ezpsy = (function () {
         }
         return greyDegree;
     }
-    function searchMap124(num) {
-        const x = Math.floor(num / 7);
+    function searchMap127(num) {
+        const x = Math.floor(num / 10);
         const rgb = {
             r: x,
             g: x,
@@ -3525,13 +3623,26 @@ var ezpsy = (function () {
                 rgb.r += 1;
                 break;
             case 4:
+                rgb.b -= 1;
+                rgb.r -= 1;
                 rgb.g += 1;
                 break;
             case 5:
-                rgb.b += 1;
+                rgb.r -= 1;
                 rgb.g += 1;
                 break;
             case 6:
+                rgb.b -= 1;
+                rgb.g += 1;
+                break;
+            case 7:
+                rgb.g += 1;
+                break;
+            case 8:
+                rgb.b += 1;
+                rgb.g += 1;
+                break;
+            case 9:
                 rgb.r += 1;
                 rgb.g += 1;
                 break;
@@ -3577,12 +3688,12 @@ var ezpsy = (function () {
         for (let i = 0; i < mask.length; i++) {
             let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
             p = Math.pow(p, 1 / gamma);
-            p = 1785 * p;
+            p = 2550 * p;
             gratDegree[i] = p;
         }
         let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
         for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-            const rgb = searchMap124(noiseBit(gratDegree[j]));
+            const rgb = searchMap127(noiseBit(gratDegree[j]));
             // imgData.data[i + 0] = noiseBit(gratDegree[j]);
             // imgData.data[i + 1] = noiseBit(gratDegree[j]);
             // imgData.data[i + 2] = noiseBit(gratDegree[j]);
@@ -3678,6 +3789,10 @@ var ezpsy = (function () {
         else if (el instanceof sinGrating1) {
             // console.dir("Add Success!");
             el.pre_draw();
+        }
+        else if (el instanceof sinGratBG) {
+            // console.dir("Add Success!");
+            el.draw();
         }
         else if (el instanceof wasmSinGrating) {
             // console.dir("Add Success!");
@@ -9016,6 +9131,7 @@ var ezpsy = (function () {
         sinGrat0: sinGrat0,
         sinGrat1: sinGrat1,
         sinGrat2: sinGrat2,
+        sinGratBG: sinGratBG,
         Grat: Grat,
         Time: Time,
         RandomDot: RandomDot,

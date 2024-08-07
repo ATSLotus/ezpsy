@@ -290,6 +290,90 @@ function searchMap124(num: number) {
     return rgb
 }
 
+function searchMap112(num: number) {
+    const x = Math.floor(num / 7)
+    const rgb = {
+        r: x,
+        g: x,
+        b: x
+    }
+    const random = Math.floor(Math.random() * 2)
+    switch(num % 4) {
+        case 0:
+            break
+        case 1: 
+            if(random)
+                rgb.b += 1
+            else
+                rgb.r += 1
+            break
+        case 2: 
+            rgb.g += 1
+            break
+        case 3:
+            if(random)
+                rgb.b += 1
+            else
+                rgb.r += 1
+            rgb.g += 1
+            break
+        default:
+            throw Error("Unknown Error")
+    }
+    return rgb
+}
+
+
+function searchMap127(num: number) {
+    const x = Math.floor(num / 10)
+    const rgb = {
+        r: x,
+        g: x,
+        b: x
+    }
+    switch(num % 7) {
+        case 0:
+            break
+        case 1: 
+            rgb.b += 1
+            break
+        case 2: 
+            rgb.r += 1
+            break
+        case 3:
+            rgb.b += 1
+            rgb.r += 1
+            break
+        case 4:
+            rgb.b -= 1
+            rgb.r -= 1
+            rgb.g += 1
+            break
+        case 5:
+            rgb.r -= 1
+            rgb.g += 1
+            break
+        case 6:
+            rgb.b -= 1
+            rgb.g += 1
+            break
+        case 7:
+            rgb.g += 1
+            break
+        case 8:
+            rgb.b += 1
+            rgb.g += 1
+            break
+        case 9:
+            rgb.r += 1
+            rgb.g += 1
+            break
+        default:
+            throw Error("Unknown Error")
+    }
+    return rgb
+}
+
 function jitter(value) {
     return Math.max(0, Math.min(255, value + Math.floor(Math.random() * 5) - 2));
 }
@@ -336,12 +420,12 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
     for (let i = 0; i < mask.length; i++) {
         let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
         p = Math.pow(p, 1/gamma)
-        p = 1785 * p
+        p = 2550 * p
         gratDegree[i] = p
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        const rgb = searchMap124(noiseBit(gratDegree[j]))
+        const rgb = searchMap127(noiseBit(gratDegree[j]))
         // imgData.data[i + 0] = noiseBit(gratDegree[j]);
         // imgData.data[i + 1] = noiseBit(gratDegree[j]);
         // imgData.data[i + 2] = noiseBit(gratDegree[j]);

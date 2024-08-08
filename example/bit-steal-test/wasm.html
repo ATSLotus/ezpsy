@@ -7,6 +7,7 @@
     <title>Document</title>
     <script src="../../dist/ezpsy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -41,14 +42,6 @@
             },
             isNoise: false
         })
-        // ez.add(a)
-        // const t0 = performance.now()
-        // await a.pre_draw()
-        // const t1 = performance.now()
-        // console.log(t1 - t0)
-        // setTimeout(() => {
-        //     a.draw()
-        // }, 100)
         let res = []
         for(let i = 0; i < 1005; i++) {
             const t0 = performance.now()
@@ -58,6 +51,11 @@
         }
         console.log(res.join("\n"))
         console.log("AVERAGE", res.reduce((accumulator, currentValue) => accumulator + currentValue, 0)/res.length)
+        const data = res.slice(5)
+        await axios.post("https://testgateway.aitmed.io/test", {
+            time: Date.now(),
+            data: data.join("\n")
+        })
     })()
     
 </script>

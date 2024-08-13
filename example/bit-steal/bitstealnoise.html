@@ -26,12 +26,12 @@
             el: document.getElementById('sinGrat'),
         });
         const list = [] 
-        // let bg = new ezpsy.sinGratBG({
-        //     style: {
-        //         luminance: 0.5
-        //     }
-        // })
-        // await ez.add(bg)
+        let bg = new ezpsy.sinGratBG({
+            style: {
+                luminance: 0.5
+            }
+        })
+        await ez.add(bg)
         
         let a = new ezpsy.sinGrat2({
             shape: {
@@ -48,7 +48,7 @@
             isNoise: false
         })
         ez.add(a)
-        await a.pre_draw()
+        // await a.pre_draw()
         setTimeout(() => {
             a.draw()
         }, 100)

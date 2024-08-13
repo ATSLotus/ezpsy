@@ -1,10 +1,10 @@
 
-class time{
+class time {
     hour: number
     minutes: number
     seconds: number
     milliseconds: number
-    constructor(){
+    constructor() {
         let date = new Date()
         this.hour = date.getHours()
         this.minutes = date.getMinutes()
@@ -13,13 +13,13 @@ class time{
     }
 }
 
-export class Time0{
+export class Time0 {
     startTime: time
     instantTime: Array<time>
     timeStamp: Array<time>
     item: number
     timeValue: Array<number>
-    constructor(){
+    constructor() {
         this.item = 0;
         this.startTime = new time()
         this.instantTime = []
@@ -27,10 +27,10 @@ export class Time0{
         this.timeValue = []
         this.timeStamp = []
     }
-    start(){
+    start() {
         this.startTime = new time()
     }
-    record(){
+    record() {
         let t = new time()
         this.instantTime.push(t)
         this.item++
@@ -89,24 +89,24 @@ export class Time0{
 //     return t
 // }
 
-export function delay_ms(delay: number){
-    return new Promise(function(resolve,reject){
+export function delay_ms(delay: number) {
+    return new Promise(function (resolve, reject) {
         setTimeout(function () {
             resolve(true);
         }, delay);
     })
 }
 
-export function delay_frame(delay:number){
-    let count=0;     
+export function delay_frame(delay: number) {
+    let count = 0;
     return new Promise(function (resolve, reject) {
-        (function raf(){
+        (function raf() {
             count++;
-            let id =window.requestAnimationFrame(raf);
-        if( count>delay){
-            window.cancelAnimationFrame(id);
-            resolve(true);
-        }
-    }())
+            let id = window.requestAnimationFrame(raf);
+            if (count > delay) {
+                window.cancelAnimationFrame(id);
+                resolve(true);
+            }
+        }())
     })
 };

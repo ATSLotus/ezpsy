@@ -75,3 +75,17 @@ export function WaitSecs(delay: number): Promise<number>{
         res(1)
     })
 }
+
+export function delay_frame(delay: number) {
+    let count = 0;
+    return new Promise(function (resolve, reject) {
+        (function raf() {
+            count++;
+            let id = window.requestAnimationFrame(raf);
+            if (count > delay) {
+                window.cancelAnimationFrame(id);
+                resolve(true);
+            }
+        }())
+    })
+};

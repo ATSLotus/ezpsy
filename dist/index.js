@@ -2239,7 +2239,7 @@ function pre_noise_singrat(radius, pixels_per_degree, spatial_frequency, angle, 
 }
 
 let nameId$8 = 0;
-function searchMap124$3(num) {
+function searchMap124$2(num) {
     const x = Math.floor(num / 7);
     const rgb = {
         r: x,
@@ -2329,7 +2329,7 @@ class sinGrating1 extends Elements {
             else
                 param = pre_singrat(sh.r, sh.pixelsPerDegree, sh.spatialFrequency, sh.angle, sh.contrast, sh.phase, sh.gamma);
             for (let i = 0, j = 0; i < this.sinGrat.data.length; i += 4, j++) {
-                const rgb = searchMap124$3(param[j]);
+                const rgb = searchMap124$2(param[j]);
                 this.sinGrat.data[i + 0] = rgb.r;
                 this.sinGrat.data[i + 1] = rgb.g;
                 this.sinGrat.data[i + 2] = rgb.b;
@@ -2420,7 +2420,7 @@ function noiseBit$1(num) {
     res = randomNoise$1(res);
     return res;
 }
-function searchMap124$2(num) {
+function searchMap124$1(num) {
     const x = Math.floor(num / 7);
     const rgb = {
         r: x,
@@ -2458,7 +2458,7 @@ function searchMap124$2(num) {
 }
 function calculatePixels124(luminance) {
     const pixels = 1785 * luminance;
-    return searchMap124$2(noiseBit$1(pixels));
+    return searchMap124$1(noiseBit$1(pixels));
 }
 class sinGratBG extends Elements {
     pixelsList;
@@ -3013,7 +3013,7 @@ function getNoiseSingrat$2(radius, pixelsPerDegree, spatialFrequency, angle, con
         NoiseGratDegree[i] = Math.min(Math.floor(p), 1785);
     }
     for (let i = 0, j = 0; i < noiseSinGrat.data.length; i += 4, j++) {
-        const rgb = searchMap124$1(NoiseGratDegree[j]);
+        const rgb = searchMap124(NoiseGratDegree[j]);
         noiseSinGrat.data[i + 0] = rgb.r;
         noiseSinGrat.data[i + 1] = rgb.g;
         noiseSinGrat.data[i + 2] = rgb.b;
@@ -3028,7 +3028,7 @@ function get_noise$2(width) {
     }
     return greyDegree;
 }
-function searchMap124$1(num) {
+function searchMap124(num) {
     const x = Math.floor(num / 7);
     const rgb = {
         r: x,
@@ -3098,7 +3098,7 @@ function getSingrat$2(radius, pixelsPerDegree, spatialFrequency, angle, contrast
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        const rgb = searchMap124$1(gratDegree[j]);
+        const rgb = searchMap124(gratDegree[j]);
         imgData.data[i + 0] = jitter$1(rgb.r);
         imgData.data[i + 1] = jitter$1(rgb.g);
         imgData.data[i + 2] = jitter$1(rgb.b);
@@ -3496,14 +3496,14 @@ function get_noise(width) {
     }
     return greyDegree;
 }
-function searchMap124(num) {
-    const x = Math.floor(num / 7);
+function searchMap136(num) {
+    const x = Math.floor(num / 10);
     const rgb = {
         r: x,
         g: x,
         b: x
     };
-    switch (num % 7) {
+    switch (num % 10) {
         case 0:
             break;
         case 1:
@@ -3511,19 +3511,33 @@ function searchMap124(num) {
             break;
         case 2:
             rgb.r += 1;
+            rgb.b -= 1;
             break;
         case 3:
-            rgb.b += 1;
             rgb.r += 1;
             break;
         case 4:
+            rgb.b += 1;
+            rgb.r -= 1;
             rgb.g += 1;
             break;
         case 5:
-            rgb.b += 1;
+            rgb.b -= 1;
             rgb.g += 1;
             break;
         case 6:
+            rgb.g += 1;
+            break;
+        case 7:
+            rgb.b += 1;
+            rgb.g += 1;
+            break;
+        case 8:
+            rgb.b -= 1;
+            rgb.r += 1;
+            rgb.g += 1;
+            break;
+        case 9:
             rgb.r += 1;
             rgb.g += 1;
             break;
@@ -3576,16 +3590,16 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        searchMap124(noiseBit(gratDegree[j]));
-        // imgData.data[i + 0] = noiseBit(gratDegree[j]);
-        // imgData.data[i + 1] = noiseBit(gratDegree[j]);
-        // imgData.data[i + 2] = noiseBit(gratDegree[j]);
+        searchMap136(noiseBit(gratDegree[j]));
+        imgData.data[i + 0] = noiseBit(gratDegree[j]);
+        imgData.data[i + 1] = noiseBit(gratDegree[j]);
+        imgData.data[i + 2] = noiseBit(gratDegree[j]);
         // imgData.data[i + 0] = rgb.r;
         // imgData.data[i + 1] = rgb.g;
         // imgData.data[i + 2] = rgb.b;
-        imgData.data[i + 0] = gratDegree[j];
-        imgData.data[i + 1] = gratDegree[j];
-        imgData.data[i + 2] = gratDegree[j];
+        // imgData.data[i + 0] = gratDegree[j];
+        // imgData.data[i + 1] = gratDegree[j];
+        // imgData.data[i + 2] = gratDegree[j];
         imgData.data[i + 3] = 255;
     }
     return imgData;
@@ -8638,10 +8652,32 @@ class sinGabor extends Elements {
     count() {
         let sh = this.shape;
         this.sinGabor = this.ctx.createImageData(sh.r, sh.r);
+        const f = sh.spatialFrequency / this.ctx.canvas.width;
+        const sigma = sh.sigma;
+        const contrast = sh.contrast;
+        const bias = Math.PI;
+        for (let x = 0; x < sh.r; x++) {
+            for (let y = 0; y < sh.r; y++) {
+                const x0 = x - sh.r / 2;
+                const y0 = y - sh.r / 2;
+                const value = gabor(x0, y0, f, sigma, contrast, bias);
+                const gray = Math.floor((value + 1) * 127.5);
+                const index = (y * sh.r + x) * 4;
+                this.sinGabor.data[index] = gray;
+                this.sinGabor.data[index + 1] = gray;
+                this.sinGabor.data[index + 2] = gray;
+                this.sinGabor.data[index + 3] = 255;
+            }
+        }
     }
     draw() {
         this.ctx.putImageData(this.sinGabor, this.shape.x - 0.5 * this.shape.r, this.shape.y - 0.5 * this.shape.r);
     }
+}
+function gabor(x, y, f, sigma, contrast, bias) {
+    const expPart = Math.exp(-(x * x + y * y) / (2 * sigma * sigma));
+    const sinusoid = Math.cos(2 * Math.PI * f * x + bias);
+    return contrast * expPart * sinusoid;
 }
 
 let nameId = 0;

@@ -477,16 +477,16 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
     for (let i = 0, j = 0; i < imgData.data.length; i += 4, j++) {
-        const rgb = searchMap124(noiseBit(gratDegree[j]))
-        // imgData.data[i + 0] = noiseBit(gratDegree[j]);
-        // imgData.data[i + 1] = noiseBit(gratDegree[j]);
-        // imgData.data[i + 2] = noiseBit(gratDegree[j]);
+        const rgb = searchMap136(noiseBit(gratDegree[j]))
+        imgData.data[i + 0] = noiseBit(gratDegree[j]);
+        imgData.data[i + 1] = noiseBit(gratDegree[j]);
+        imgData.data[i + 2] = noiseBit(gratDegree[j]);
         // imgData.data[i + 0] = rgb.r;
         // imgData.data[i + 1] = rgb.g;
         // imgData.data[i + 2] = rgb.b;
-        imgData.data[i + 0] = gratDegree[j];
-        imgData.data[i + 1] = gratDegree[j];
-        imgData.data[i + 2] = gratDegree[j];
+        // imgData.data[i + 0] = gratDegree[j];
+        // imgData.data[i + 1] = gratDegree[j];
+        // imgData.data[i + 2] = gratDegree[j];
         imgData.data[i + 3] = 255;
     }
     return imgData;

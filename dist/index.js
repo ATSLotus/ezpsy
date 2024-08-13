@@ -236,7 +236,7 @@ class RectGroup extends Group {
         this.ParentsRect = rect;
     }
 }
-let nameId$h = 0;
+let nameId$i = 0;
 // class TypeTest implements RectangleShape{
 //     x: number
 //     y: number
@@ -245,8 +245,8 @@ let nameId$h = 0;
 // }
 class Rectangle extends Elements {
     name = {
-        name: "rect" + nameId$h.toString(),
-        graphicId: nameId$h
+        name: "rect" + nameId$i.toString(),
+        graphicId: nameId$i
     };
     constructor(opts) {
         super();
@@ -262,7 +262,7 @@ class Rectangle extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$h++;
+        nameId$i++;
     }
 }
 class logicRect extends Rectangle {
@@ -789,11 +789,11 @@ function FrameRect(rect, lineWidth, stroke) {
     return rect0;
 }
 
-let nameId$g = 0;
+let nameId$h = 0;
 class Circle extends Elements {
     name = {
-        name: "circle" + nameId$g.toString(),
-        graphicId: nameId$g
+        name: "circle" + nameId$h.toString(),
+        graphicId: nameId$h
     };
     constructor(opts) {
         super();
@@ -810,7 +810,7 @@ class Circle extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$g++;
+        nameId$h++;
     }
 }
 function makeCircle(circle, ctx) {
@@ -839,11 +839,11 @@ function DrawDots([x, y, r], color) {
     return circle;
 }
 
-let nameId$f = 0;
+let nameId$g = 0;
 class Line extends Elements {
     name = {
-        name: "line" + nameId$f.toString(),
-        graphicId: nameId$f
+        name: "line" + nameId$g.toString(),
+        graphicId: nameId$g
     };
     constructor(opts) {
         super();
@@ -860,7 +860,7 @@ class Line extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$f++;
+        nameId$g++;
     }
 }
 // export class line{
@@ -994,11 +994,11 @@ function LineStipple([x, y, xEnd, yEnd], widthGap) {
 //     }
 // }
 
-let nameId$e = 0;
+let nameId$f = 0;
 class Arc extends Elements {
     name = {
-        name: "arc" + nameId$e.toString(),
-        graphicId: nameId$e
+        name: "arc" + nameId$f.toString(),
+        graphicId: nameId$f
     };
     constructor(opts) {
         super();
@@ -1015,7 +1015,7 @@ class Arc extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$e++;
+        nameId$f++;
     }
 }
 function makeArc(arc, ctx) {
@@ -1100,11 +1100,11 @@ function FillArc(arc, fill) {
     return arc0;
 }
 
-let nameId$d = 0;
+let nameId$e = 0;
 class Ellipse extends Elements {
     name = {
-        name: "ellipse" + nameId$d.toString(),
-        graphicId: nameId$d
+        name: "ellipse" + nameId$e.toString(),
+        graphicId: nameId$e
     };
     constructor(opts) {
         super();
@@ -1121,7 +1121,7 @@ class Ellipse extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$d++;
+        nameId$e++;
     }
 }
 function makeEllipse(ellipse, ctx) {
@@ -1183,11 +1183,11 @@ function FrameOval(ellipse, lineWidth, stroke) {
     return ellipse0;
 }
 
-let nameId$c = 0;
+let nameId$d = 0;
 class Polygon extends Elements {
     name = {
-        name: "polygon" + nameId$c.toString(),
-        graphicId: nameId$c
+        name: "polygon" + nameId$d.toString(),
+        graphicId: nameId$d
     };
     constructor(opts) {
         super();
@@ -1204,7 +1204,7 @@ class Polygon extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$c++;
+        nameId$d++;
     }
 }
 function makePolygon(polygon, ctx) {
@@ -1264,11 +1264,11 @@ function FillPoly(polygon, fill) {
     return polygon0;
 }
 
-let nameId$b = 0;
+let nameId$c = 0;
 class Texts extends Elements {
     name = {
-        name: "text" + nameId$b.toString(),
-        graphicId: nameId$b
+        name: "text" + nameId$c.toString(),
+        graphicId: nameId$c
     };
     constructor(opts) {
         super();
@@ -1295,7 +1295,7 @@ class Texts extends Elements {
                 textB: 'alphabetic'
             };
         }
-        nameId$b++;
+        nameId$c++;
     }
     setTextLine(textLine) {
         if (textLine) {
@@ -1349,7 +1349,7 @@ function Replace(str, str_o, str_r) {
     return result;
 }
 
-let nameId$a = 0;
+let nameId$b = 0;
 class RGBA {
     R;
     G;
@@ -1363,8 +1363,8 @@ class RGBA_Array {
 }
 class Img extends Elements {
     name = {
-        name: "img" + nameId$a.toString(),
-        graphicId: nameId$a
+        name: "img" + nameId$b.toString(),
+        graphicId: nameId$b
     };
     Img;
     ImgData;
@@ -1417,7 +1417,7 @@ class Img extends Elements {
             console.dir(imageData);
             that.ImgData = imageData;
         });
-        nameId$a++;
+        nameId$b++;
     }
     init() {
         let that = this;
@@ -1608,11 +1608,11 @@ function createGratLinearGradient(ctx, [x0, y0, x1, y1], num, s) {
     return fill;
 }
 
-let nameId$9 = 0;
+let nameId$a = 0;
 class Grat extends Elements {
     name = {
-        name: "grat" + nameId$9.toString(),
-        graphicId: nameId$9
+        name: "grat" + nameId$a.toString(),
+        graphicId: nameId$a
     };
     constructor(opts) {
         super();
@@ -1639,7 +1639,7 @@ class Grat extends Elements {
         //         lineWidth: 2
         //     }
         // }
-        nameId$9++;
+        nameId$a++;
     }
     play(speed, delay) {
         if (!delay) {
@@ -2013,11 +2013,11 @@ function pre_noise_singrat$1(radius, pixels_per_degree, spatial_frequency, angle
     }
 }
 
-let nameId$8 = 0;
+let nameId$9 = 0;
 class sinGrating extends Elements {
     name = {
-        name: "singrating" + nameId$8.toString(),
-        graphicId: nameId$8
+        name: "singrating" + nameId$9.toString(),
+        graphicId: nameId$9
     };
     param;
     width;
@@ -2044,7 +2044,7 @@ class sinGrating extends Elements {
         const timeFrequency = opts.shape.timeFrequency || 0;
         this.timeFrequency = timeFrequency;
         this.fps = 60;
-        nameId$8++;
+        nameId$9++;
     }
     async pre_draw() {
         const timeFrequency = this.timeFrequency;
@@ -2238,7 +2238,7 @@ function pre_noise_singrat(radius, pixels_per_degree, spatial_frequency, angle, 
     }
 }
 
-let nameId$7 = 0;
+let nameId$8 = 0;
 function searchMap124$3(num) {
     const x = Math.floor(num / 7);
     const rgb = {
@@ -2288,8 +2288,8 @@ function searchMap124$3(num) {
 // }
 class sinGrating1 extends Elements {
     name = {
-        name: "singrating" + nameId$7.toString(),
-        graphicId: nameId$7
+        name: "singrating" + nameId$8.toString(),
+        graphicId: nameId$8
     };
     param;
     width;
@@ -2316,7 +2316,7 @@ class sinGrating1 extends Elements {
         const timeFrequency = opts.shape.timeFrequency || 0;
         this.timeFrequency = timeFrequency;
         this.fps = 60;
-        nameId$7++;
+        nameId$8++;
     }
     async pre_draw() {
         const timeFrequency = this.timeFrequency;
@@ -2495,11 +2495,11 @@ class sinGratBG extends Elements {
     }
 }
 
-let nameId$6 = 0;
+let nameId$7 = 0;
 class RandomDot extends Elements {
     name = {
-        name: "randomDot" + nameId$6.toString(),
-        graphicId: nameId$6
+        name: "randomDot" + nameId$7.toString(),
+        graphicId: nameId$7
     };
     RandomDotArray;
     maskBand;
@@ -2543,7 +2543,7 @@ class RandomDot extends Elements {
         // })
         this.translation = getRandom(this.shape.maxSpeed, this.shape.minSpeed, this.shape.number);
         this.IsAnimation = true;
-        nameId$6++;
+        nameId$7++;
     }
 }
 function playRandomDot(randomDot, ctx) {
@@ -2687,13 +2687,13 @@ function setRandom(maxSpeed, minSpeed) {
     return num;
 }
 
-let nameId$5 = 0;
+let nameId$6 = 0;
 //光栅
 //pixelsPerDegree=57, spatialFrequency=1 对应一度视角
 class sinGrat extends Elements {
     name = {
-        name: "singrat" + nameId$5.toString(),
-        graphicId: nameId$5
+        name: "singrat" + nameId$6.toString(),
+        graphicId: nameId$6
     };
     sinGrat; //光栅图片数据
     imgDataList; //用于储存参与动画的图片
@@ -2710,7 +2710,7 @@ class sinGrat extends Elements {
         else
             this.isNoise = opts.isNoise;
         this.imgDataList = new Array();
-        nameId$5++;
+        nameId$6++;
     }
     count() {
         let sh = this.shape;
@@ -2883,13 +2883,13 @@ function meshgrid$3(radius) {
     return [x, y];
 }
 
-let nameId$4 = 0;
+let nameId$5 = 0;
 //光栅
 //pixelsPerDegree=57, spatialFrequency=1 对应一度视角
 class sinGrat0 extends Elements {
     name = {
-        name: "singrat" + nameId$4.toString(),
-        graphicId: nameId$4
+        name: "singrat" + nameId$5.toString(),
+        graphicId: nameId$5
     };
     sinGrat; //光栅图片数据
     imgDataList; //用于储存参与动画的图片
@@ -2906,7 +2906,7 @@ class sinGrat0 extends Elements {
         else
             this.isNoise = opts.isNoise;
         this.imgDataList = new Array();
-        nameId$4++;
+        nameId$5++;
     }
     count() {
         let sh = this.shape;
@@ -3120,13 +3120,13 @@ function meshgrid$2(radius) {
     return [x, y];
 }
 
-let nameId$3 = 0;
+let nameId$4 = 0;
 //光栅
 //pixelsPerDegree=57, spatialFrequency=1 对应一度视角
 class sinGrat1 extends Elements {
     name = {
-        name: "singrat" + nameId$3.toString(),
-        graphicId: nameId$3
+        name: "singrat" + nameId$4.toString(),
+        graphicId: nameId$4
     };
     sinGrat; //光栅图片数据
     imgDataList; //用于储存参与动画的图片
@@ -3143,7 +3143,7 @@ class sinGrat1 extends Elements {
         else
             this.isNoise = opts.isNoise;
         this.imgDataList = new Array();
-        nameId$3++;
+        nameId$4++;
     }
     count() {
         let sh = this.shape;
@@ -3352,13 +3352,13 @@ function meshgrid$1(radius) {
     return [x, y];
 }
 
-let nameId$2 = 0;
+let nameId$3 = 0;
 //光栅
 //pixelsPerDegree=57, spatialFrequency=1 对应一度视角
 class sinGrat2 extends Elements {
     name = {
-        name: "singrat" + nameId$2.toString(),
-        graphicId: nameId$2
+        name: "singrat" + nameId$3.toString(),
+        graphicId: nameId$3
     };
     sinGrat; //光栅图片数据
     imgDataList; //用于储存参与动画的图片
@@ -3375,7 +3375,7 @@ class sinGrat2 extends Elements {
         else
             this.isNoise = opts.isNoise;
         this.imgDataList = new Array();
-        nameId$2++;
+        nameId$3++;
     }
     count() {
         let sh = this.shape;
@@ -3674,6 +3674,10 @@ async function judgeElement(el, ctx) {
     else if (el instanceof sinGratBG) {
         // console.dir("Add Success!");
         el.draw();
+    }
+    else if (el instanceof sinGabor) {
+        // console.dir("Add Success!");
+        el.count();
     }
     else if (el instanceof wasmSinGrating) {
         // console.dir("Add Success!");
@@ -8546,15 +8550,15 @@ const createLinstenner = (id, key, keyType, func, IsDestroy, callback) => {
 };
 
 // import { Elements } from "./Element";
-let nameId$1 = 0;
+let nameId$2 = 0;
 class Functions {
     name;
     constructor() {
         this.name = {
-            name: "Funtion" + nameId$1.toString(),
-            graphicId: nameId$1
+            name: "Funtion" + nameId$2.toString(),
+            graphicId: nameId$2
         };
-        nameId$1++;
+        nameId$2++;
     }
 }
 class RandomFunctions extends Functions {
@@ -8600,6 +8604,38 @@ class RandomFunctions extends Functions {
     }
     getIndex() {
         return this.index;
+    }
+}
+
+let nameId$1 = 0;
+class sinGabor extends Elements {
+    name = {
+        name: "singrat" + nameId$1.toString(),
+        graphicId: nameId$1
+    };
+    sinGabor;
+    shape = {
+        x: 0,
+        y: 0,
+        r: 300,
+        pixelsPerDegree: 57,
+        spatialFrequency: 2,
+        angle: 0,
+        contrast: 1,
+        phase: 0,
+        gamma: 0,
+        sigma: 20,
+    };
+    constructor(opts) {
+        super();
+        this.shape = opts.shape;
+    }
+    count() {
+        let sh = this.shape;
+        this.sinGabor = this.ctx.createImageData(sh.r, sh.r);
+    }
+    draw() {
+        this.ctx.putImageData(this.sinGabor, this.shape.x - 0.5 * this.shape.r, this.shape.y - 0.5 * this.shape.r);
     }
 }
 
@@ -9030,6 +9066,7 @@ var EZPSY = /*#__PURE__*/Object.freeze({
     Time: Time,
     RandomDot: RandomDot,
     RandomFunctions: RandomFunctions,
+    sinGabor: sinGabor,
     wasmSinGrating: wasmSinGrating,
     RectGroup: RectGroup,
     makeRectangle: makeRectangle,

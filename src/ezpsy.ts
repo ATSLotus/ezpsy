@@ -58,6 +58,7 @@ export { Grat } from './Graphic/grating'
 export { Time } from './Time/timePerformance'
 export { RandomDot } from './Graphic/randomDot'
 export { RandomFunctions } from './Functions';
+export { sinGabor } from "./Graphic/sinGabor"
 
 export { wasmSinGrating } from './Graphic/singratWasm'
 

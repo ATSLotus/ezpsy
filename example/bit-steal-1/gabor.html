@@ -26,30 +26,29 @@
             el: document.getElementById('sinGrat'),
         });
         const list = [] 
-        let bg = new ezpsy.sinGratBG({
-            style: {
-                luminance: 0.25
-            }
-        })
-        await ez.add(bg)
+        // let bg = new ezpsy.sinGratBG({
+        //     style: {
+        //         luminance: 0.25
+        //     }
+        // })
+        // await ez.add(bg)
         
-        let a = new ezpsy.sinGrat2({
+        let a = new ezpsy.sinGabor({
             shape: {
                 x: window.innerWidth / 2,
                 y: window.innerHeight / 2,
-                r: 100,
+                r: 150,
                 pixelsPerDegree: 57, 
-                spatialFrequency: 1,
-                angle: 90, 
-                contrast: 1, 
+                spatialFrequency: 2,
+                angle: 0, 
+                contrast: 0.1, 
                 phase: 0,
-                level: 0,
-                gamma: 0.5
-            },
-            isNoise: false
+                gamma: 1,
+                sigma: 57
+            }
         })
         ez.add(a)
-        await a.pre_draw()
+        // await a.pre_draw()
         setTimeout(() => {
             a.draw()
         }, 100)
@@ -57,9 +56,9 @@
     
 </script>
 <style>
-    /* canvas {
+    canvas {
         background-color: #808080;
-    } */
+    }
     body {
         margin: 0;
     }

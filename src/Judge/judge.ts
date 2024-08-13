@@ -22,7 +22,7 @@ import * as ezSinGrat1 from '../Graphic/sinGrat1'
 import * as ezSinGrat2 from '../Graphic/sinGrat2'
 import * as ezCanvas from '../Canvas/canvas'
 import { DlgContent } from '../Dialogue/dialogue0'
-import { wasmSinGrating } from '../ezpsy'
+import { sinGabor, wasmSinGrating } from '../ezpsy'
 
 export function judgeCanvasStyle(cStyle: canvasStyle):canvasStyle{
     if(!cStyle) 
@@ -218,6 +218,10 @@ export async function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRend
     else if(el instanceof sinGratBG){
         // console.dir("Add Success!");
         (<sinGratBG>el).draw();
+    }
+    else if(el instanceof sinGabor){
+        // console.dir("Add Success!");
+        (<sinGabor>el).count();
     }
     else if(el instanceof wasmSinGrating){
         // console.dir("Add Success!");

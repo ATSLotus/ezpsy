@@ -323,6 +323,56 @@ function searchMap112(num: number) {
     return rgb
 }
 
+function searchMap136(num: number) {
+    const x = Math.floor(num / 10)
+    const rgb = {
+        r: x,
+        g: x,
+        b: x
+    }
+    switch(num % 10) {
+        case 0:
+            break
+        case 1: 
+            rgb.b += 1
+            break
+        case 2: 
+            rgb.r += 1
+            rgb.b -= 1
+            break
+        case 3:
+            rgb.r += 1
+            break
+        case 4:
+            rgb.b += 1
+            rgb.r -= 1
+            rgb.g += 1
+            break
+        case 5:
+            rgb.b -= 1
+            rgb.g += 1
+            break
+        case 6:
+            rgb.g += 1
+            break
+        case 7:
+            rgb.b += 1
+            rgb.g += 1
+            break
+        case 8:
+            rgb.b -= 1
+            rgb.r += 1
+            rgb.g += 1
+            break
+        case 9:
+            rgb.r += 1
+            rgb.g += 1
+            break
+        default:
+            throw Error("Unknown Error")
+    }
+    return rgb
+}
 
 function searchMap127(num: number) {
     const x = Math.floor(num / 10)
@@ -331,7 +381,7 @@ function searchMap127(num: number) {
         g: x,
         b: x
     }
-    switch(num % 7) {
+    switch(num % 10) {
         case 0:
             break
         case 1: 
@@ -420,7 +470,9 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
     for (let i = 0; i < mask.length; i++) {
         let p = 0.5 + 0.5 * contrast * mask[i] * Math.sin(a * x[i] + b * y[i] + phase);
         p = Math.pow(p, 1/gamma)
-        p = 1785 * p
+        // p = 1785 * p
+        // p = 2550 * p
+        p = 255 * p
         gratDegree[i] = p
     }
     let imgData = ctx.createImageData(imagesize * 2 + 1, imagesize * 2 + 1);
@@ -429,9 +481,12 @@ function getSingrat(radius, pixelsPerDegree, spatialFrequency, angle, contrast, 
         // imgData.data[i + 0] = noiseBit(gratDegree[j]);
         // imgData.data[i + 1] = noiseBit(gratDegree[j]);
         // imgData.data[i + 2] = noiseBit(gratDegree[j]);
-        imgData.data[i + 0] = rgb.r;
-        imgData.data[i + 1] = rgb.g;
-        imgData.data[i + 2] = rgb.b;
+        // imgData.data[i + 0] = rgb.r;
+        // imgData.data[i + 1] = rgb.g;
+        // imgData.data[i + 2] = rgb.b;
+        imgData.data[i + 0] = gratDegree[j];
+        imgData.data[i + 1] = gratDegree[j];
+        imgData.data[i + 2] = gratDegree[j];
         imgData.data[i + 3] = 255;
     }
     return imgData;

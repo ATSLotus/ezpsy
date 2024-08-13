@@ -72,7 +72,7 @@ function searchMap127(num: number) {
         g: x,
         b: x
     }
-    switch(num % 7) {
+    switch(num % 10) {
         case 0:
             break
         case 1: 
@@ -115,6 +115,58 @@ function searchMap127(num: number) {
     return rgb
 }
 
+function searchMap136(num: number) {
+    const x = Math.floor(num / 10)
+    const rgb = {
+        r: x,
+        g: x,
+        b: x
+    }
+    switch(num % 10) {
+        case 0:
+            break
+        case 1: 
+            rgb.b += 1
+            break
+        case 2: 
+            rgb.r += 1
+            rgb.b -= 1
+            break
+        case 3:
+            rgb.r += 1
+            break
+        case 4:
+            rgb.b += 1
+            rgb.r -= 1
+            rgb.g += 1
+            break
+        case 5:
+            rgb.b -= 1
+            rgb.g += 1
+            break
+        case 6:
+            rgb.g += 1
+            break
+        case 7:
+            rgb.b += 1
+            rgb.g += 1
+            break
+        case 8:
+            rgb.b -= 1
+            rgb.r += 1
+            rgb.g += 1
+            break
+        case 9:
+            rgb.r += 1
+            rgb.g += 1
+            break
+        default:
+            throw Error("Unknown Error")
+    }
+    return rgb
+}
+
+
 function calculatePixels124(luminance: number) {
     const pixels = 1785 * luminance
     return searchMap124(noiseBit(pixels))
@@ -124,6 +176,11 @@ function calculatePixels124(luminance: number) {
 function calculatePixels127(luminance: number) {
     const pixels = 2550 * luminance
     return searchMap127(noiseBit(pixels))
+}
+
+function calculatePixels136(luminance: number) {
+    const pixels = 2550 * luminance
+    return searchMap136(noiseBit(pixels))
 }
 
 export class sinGratBG extends Elements {

@@ -26,12 +26,12 @@
             el: document.getElementById('sinGrat'),
         });
         const list = [] 
-        let bg = new ezpsy.sinGratBG({
-            style: {
-                luminance: 0.25
-            }
-        })
-        await ez.add(bg)
+        // let bg = new ezpsy.sinGratBG({
+        //     style: {
+        //         luminance: 0.5
+        //     }
+        // })
+        // await ez.add(bg)
         
         let a = new ezpsy.sinGrat2({
             shape: {
@@ -39,12 +39,11 @@
                 y: window.innerHeight / 2,
                 r: 100,
                 pixelsPerDegree: 57, 
-                spatialFrequency: 1,
+                spatialFrequency: 2,
                 angle: 90, 
-                contrast: 1, 
+                contrast: 1/1000, 
                 phase: 0,
-                level: 0,
-                gamma: 0.5
+                gamma: 1
             },
             isNoise: false
         })

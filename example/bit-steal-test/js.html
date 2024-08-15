@@ -35,7 +35,7 @@
                 pixelsPerDegree: 57, 
                 spatialFrequency: 2,
                 angle: 90, 
-                contrast: 1 / 255, 
+                contrast: 0.1, 
                 phase: 0,
                 level: 0,
                 gamma: 0.5
@@ -49,13 +49,14 @@
             const t1 = performance.now()  
             res.push(t1 - t0)
         }
-        console.log(res.join("\n"))
+        // console.log(res.join("\n"))
         console.log("AVERAGE", res.reduce((accumulator, currentValue) => accumulator + currentValue, 0)/res.length)
         const data = res.slice(5)
-        await axios.post("https://testgateway.aitmed.io/test", {
-            time: Date.now(),
-            data: data.join("\n")
-        })
+        console.log(data.join("\n"))
+        // await axios.post("https://testgateway.aitmed.io/test", {
+        //     time: Date.now(),
+        //     data: data.join("\n")
+        // })
     })()
     
 </script>

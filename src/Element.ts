@@ -20,6 +20,7 @@ export class Elements{
     rotate?: number
     IsAnimation?: boolean
     IsPause?: boolean
+    dpr: number
     constructor(){
         this.translate = {
             x: 0,
@@ -32,6 +33,7 @@ export class Elements{
         this.rotate = 0
         this.IsAnimation = false
         this.IsPause = false
+        this.dpr = window.devicePixelRatio || 1;
     }
     noFill(){
         this.style.fill = 'none';

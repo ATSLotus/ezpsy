@@ -130,7 +130,7 @@ export class Storage{
         // }
         this.ElementList.forEach(async (value, _key) => {
             value.ctx = ctx
-            ezJudge.judgeElement(value, ctx)
+            await ezJudge.judgeElement(value, ctx)
         })
     }
 }

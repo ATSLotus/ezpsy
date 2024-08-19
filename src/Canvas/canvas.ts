@@ -44,7 +44,10 @@ const styleValueParse = (attr: string | number) => {
         return parseInt(attr.endsWith('px') ? attr.split('px')[0] : attr)
     }
 }
-export function exportContext(init?: initProperties): CanvasRenderingContext2D{
+export function exportContext(init?: initProperties): {
+    canvas: HTMLCanvasElement
+    ctx: CanvasRenderingContext2D
+}{
     let parentEle:HTMLElement = init.el
     let ele:HTMLCanvasElement = document.createElement('canvas')
     // 默认宽高为全屏
@@ -52,10 +55,26 @@ export function exportContext(init?: initProperties): CanvasRenderingContext2D{
         width: window.innerWidth,
         height: window.innerHeight
     }
-    ele.width = style.width ? styleValueParse(style.width) : window.innerWidth;
-    ele.height = style.height ? styleValueParse(style.height) : window.innerHeight
+    const dpr = window.devicePixelRatio || 1;
+    console.log("DPR", dpr)
+    const logicalWidth = style.width ? styleValueParse(style.width) : window.innerWidth;
+    const logicalHeight = style.height ? styleValueParse(style.height) : window.innerHeight;
+    console.log("LOGICAL", logicalWidth, logicalHeight)
+    const physicalWidth = logicalWidth * dpr;
+    const physicalHeight = logicalHeight * dpr;
+    console.log("PHYSICAL", physicalWidth, physicalHeight)
+    ele.width = physicalWidth;
+    ele.height = physicalHeight
+    ele.style.width = `${logicalWidth}px`;
+    ele.style.height = `${logicalHeight}px`;
+    // ele.width = style.width ? styleValueParse(style.width) : window.innerWidth
+    // ele.height = style.height ? styleValueParse(style.height) : window.innerHeight;
     ele.style.position = 'absolute'
     const ctx = ele.getContext('2d');
+    ctx.scale(dpr, dpr);
     parentEle.append(ele)
-    return ctx;
+    return {
+        canvas: ele,
+        ctx: ctx
+    };
 }

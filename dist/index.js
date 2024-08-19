@@ -37,12 +37,28 @@ function exportContext(init) {
         width: window.innerWidth,
         height: window.innerHeight
     };
-    ele.width = style.width ? styleValueParse(style.width) : window.innerWidth;
-    ele.height = style.height ? styleValueParse(style.height) : window.innerHeight;
+    const dpr = window.devicePixelRatio || 1;
+    console.log("DPR", dpr);
+    const logicalWidth = style.width ? styleValueParse(style.width) : window.innerWidth;
+    const logicalHeight = style.height ? styleValueParse(style.height) : window.innerHeight;
+    console.log("LOGICAL", logicalWidth, logicalHeight);
+    const physicalWidth = logicalWidth * dpr;
+    const physicalHeight = logicalHeight * dpr;
+    console.log("PHYSICAL", physicalWidth, physicalHeight);
+    ele.width = physicalWidth;
+    ele.height = physicalHeight;
+    ele.style.width = `${logicalWidth}px`;
+    ele.style.height = `${logicalHeight}px`;
+    // ele.width = style.width ? styleValueParse(style.width) : window.innerWidth
+    // ele.height = style.height ? styleValueParse(style.height) : window.innerHeight;
     ele.style.position = 'absolute';
     const ctx = ele.getContext('2d');
+    ctx.scale(dpr, dpr);
     parentEle.append(ele);
-    return ctx;
+    return {
+        canvas: ele,
+        ctx: ctx
+    };
 }
 
 function delay_frame$1(delay) {
@@ -71,6 +87,7 @@ class Elements {
     rotate;
     IsAnimation;
     IsPause;
+    dpr;
     constructor() {
         this.translate = {
             x: 0,
@@ -83,6 +100,7 @@ class Elements {
         this.rotate = 0;
         this.IsAnimation = false;
         this.IsPause = false;
+        this.dpr = window.devicePixelRatio || 1;
     }
     noFill() {
         this.style.fill = 'none';
@@ -236,7 +254,7 @@ class RectGroup extends Group {
         this.ParentsRect = rect;
     }
 }
-let nameId$i = 0;
+let nameId$j = 0;
 // class TypeTest implements RectangleShape{
 //     x: number
 //     y: number
@@ -245,8 +263,8 @@ let nameId$i = 0;
 // }
 class Rectangle extends Elements {
     name = {
-        name: "rect" + nameId$i.toString(),
-        graphicId: nameId$i
+        name: "rect" + nameId$j.toString(),
+        graphicId: nameId$j
     };
     constructor(opts) {
         super();
@@ -262,7 +280,7 @@ class Rectangle extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$i++;
+        nameId$j++;
     }
 }
 class logicRect extends Rectangle {
@@ -789,11 +807,11 @@ function FrameRect(rect, lineWidth, stroke) {
     return rect0;
 }
 
-let nameId$h = 0;
+let nameId$i = 0;
 class Circle extends Elements {
     name = {
-        name: "circle" + nameId$h.toString(),
-        graphicId: nameId$h
+        name: "circle" + nameId$i.toString(),
+        graphicId: nameId$i
     };
     constructor(opts) {
         super();
@@ -810,7 +828,7 @@ class Circle extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$h++;
+        nameId$i++;
     }
 }
 function makeCircle(circle, ctx) {
@@ -839,11 +857,11 @@ function DrawDots([x, y, r], color) {
     return circle;
 }
 
-let nameId$g = 0;
+let nameId$h = 0;
 class Line extends Elements {
     name = {
-        name: "line" + nameId$g.toString(),
-        graphicId: nameId$g
+        name: "line" + nameId$h.toString(),
+        graphicId: nameId$h
     };
     constructor(opts) {
         super();
@@ -860,7 +878,7 @@ class Line extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$g++;
+        nameId$h++;
     }
 }
 // export class line{
@@ -994,11 +1012,11 @@ function LineStipple([x, y, xEnd, yEnd], widthGap) {
 //     }
 // }
 
-let nameId$f = 0;
+let nameId$g = 0;
 class Arc extends Elements {
     name = {
-        name: "arc" + nameId$f.toString(),
-        graphicId: nameId$f
+        name: "arc" + nameId$g.toString(),
+        graphicId: nameId$g
     };
     constructor(opts) {
         super();
@@ -1015,7 +1033,7 @@ class Arc extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$f++;
+        nameId$g++;
     }
 }
 function makeArc(arc, ctx) {
@@ -1100,11 +1118,11 @@ function FillArc(arc, fill) {
     return arc0;
 }
 
-let nameId$e = 0;
+let nameId$f = 0;
 class Ellipse extends Elements {
     name = {
-        name: "ellipse" + nameId$e.toString(),
-        graphicId: nameId$e
+        name: "ellipse" + nameId$f.toString(),
+        graphicId: nameId$f
     };
     constructor(opts) {
         super();
@@ -1121,7 +1139,7 @@ class Ellipse extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$e++;
+        nameId$f++;
     }
 }
 function makeEllipse(ellipse, ctx) {
@@ -1183,11 +1201,11 @@ function FrameOval(ellipse, lineWidth, stroke) {
     return ellipse0;
 }
 
-let nameId$d = 0;
+let nameId$e = 0;
 class Polygon extends Elements {
     name = {
-        name: "polygon" + nameId$d.toString(),
-        graphicId: nameId$d
+        name: "polygon" + nameId$e.toString(),
+        graphicId: nameId$e
     };
     constructor(opts) {
         super();
@@ -1204,7 +1222,7 @@ class Polygon extends Elements {
                 lineWidth: 2
             };
         }
-        nameId$d++;
+        nameId$e++;
     }
 }
 function makePolygon(polygon, ctx) {
@@ -1264,11 +1282,11 @@ function FillPoly(polygon, fill) {
     return polygon0;
 }
 
-let nameId$c = 0;
+let nameId$d = 0;
 class Texts extends Elements {
     name = {
-        name: "text" + nameId$c.toString(),
-        graphicId: nameId$c
+        name: "text" + nameId$d.toString(),
+        graphicId: nameId$d
     };
     constructor(opts) {
         super();
@@ -1295,7 +1313,7 @@ class Texts extends Elements {
                 textB: 'alphabetic'
             };
         }
-        nameId$c++;
+        nameId$d++;
     }
     setTextLine(textLine) {
         if (textLine) {
@@ -1349,7 +1367,7 @@ function Replace(str, str_o, str_r) {
     return result;
 }
 
-let nameId$b = 0;
+let nameId$c = 0;
 class RGBA {
     R;
     G;
@@ -1363,8 +1381,8 @@ class RGBA_Array {
 }
 class Img extends Elements {
     name = {
-        name: "img" + nameId$b.toString(),
-        graphicId: nameId$b
+        name: "img" + nameId$c.toString(),
+        graphicId: nameId$c
     };
     Img;
     ImgData;
@@ -1417,7 +1435,7 @@ class Img extends Elements {
             console.dir(imageData);
             that.ImgData = imageData;
         });
-        nameId$b++;
+        nameId$c++;
     }
     init() {
         let that = this;
@@ -1608,11 +1626,11 @@ function createGratLinearGradient(ctx, [x0, y0, x1, y1], num, s) {
     return fill;
 }
 
-let nameId$a = 0;
+let nameId$b = 0;
 class Grat extends Elements {
     name = {
-        name: "grat" + nameId$a.toString(),
-        graphicId: nameId$a
+        name: "grat" + nameId$b.toString(),
+        graphicId: nameId$b
     };
     constructor(opts) {
         super();
@@ -1639,7 +1657,7 @@ class Grat extends Elements {
         //         lineWidth: 2
         //     }
         // }
-        nameId$a++;
+        nameId$b++;
     }
     play(speed, delay) {
         if (!delay) {
@@ -2013,11 +2031,11 @@ function pre_noise_singrat$1(radius, pixels_per_degree, spatial_frequency, angle
     }
 }
 
-let nameId$9 = 0;
+let nameId$a = 0;
 class sinGrating extends Elements {
     name = {
-        name: "singrating" + nameId$9.toString(),
-        graphicId: nameId$9
+        name: "singrating" + nameId$a.toString(),
+        graphicId: nameId$a
     };
     param;
     width;
@@ -2044,7 +2062,7 @@ class sinGrating extends Elements {
         const timeFrequency = opts.shape.timeFrequency || 0;
         this.timeFrequency = timeFrequency;
         this.fps = 60;
-        nameId$9++;
+        nameId$a++;
     }
     async pre_draw() {
         const timeFrequency = this.timeFrequency;
@@ -2238,7 +2256,7 @@ function pre_noise_singrat(radius, pixels_per_degree, spatial_frequency, angle, 
     }
 }
 
-let nameId$8 = 0;
+let nameId$9 = 0;
 function searchMap124$3(num) {
     const x = Math.floor(num / 7);
     const rgb = {
@@ -2288,8 +2306,8 @@ function searchMap124$3(num) {
 // }
 class sinGrating1 extends Elements {
     name = {
-        name: "singrating" + nameId$8.toString(),
-        graphicId: nameId$8
+        name: "singrating" + nameId$9.toString(),
+        graphicId: nameId$9
     };
     param;
     width;
@@ -2316,7 +2334,7 @@ class sinGrating1 extends Elements {
         const timeFrequency = opts.shape.timeFrequency || 0;
         this.timeFrequency = timeFrequency;
         this.fps = 60;
-        nameId$8++;
+        nameId$9++;
     }
     async pre_draw() {
         const timeFrequency = this.timeFrequency;
@@ -2460,7 +2478,12 @@ function calculatePixels124(luminance) {
     const pixels = 1785 * luminance;
     return searchMap124$2(noiseBit$1(pixels));
 }
+let nameId$8 = 0;
 class sinGratBG extends Elements {
+    name = {
+        name: "sinGratBG" + nameId$8.toString(),
+        graphicId: nameId$8
+    };
     pixelsList;
     luminance;
     constructor(opts) {
@@ -3778,22 +3801,22 @@ function judgeStyle_text(el, ctx) {
         };
     }
     if (el.shape.maxWidth === undefined) {
-        el.shape.maxWidth = ctx.canvas.width;
+        el.shape.maxWidth = ctx.canvas.width / el.dpr;
     }
     let st = el.style;
     if (st.fill !== 'none' && st.fill !== undefined) {
         ctx.fillStyle = st.fill;
-        ctx.fillText(el.shape.text, el.shape.x, el.shape.y, el.shape.maxWidth);
+        ctx.fillText(el.shape.text, el.shape.x / el.dpr, el.shape.y / el.dpr, el.shape.maxWidth);
     }
     else {
         if (st.stroke !== 'none' && st.stroke !== undefined) {
             ctx.strokeStyle = st.stroke;
-            ctx.strokeText(el.shape.text, el.shape.x, el.shape.y, el.shape.maxWidth);
+            ctx.strokeText(el.shape.text, el.shape.x / el.dpr, el.shape.y / el.dpr, el.shape.maxWidth);
         }
         else {
             st.stroke = "#000";
             ctx.strokeStyle = st.stroke;
-            ctx.strokeText(el.shape.text, el.shape.x, el.shape.y, el.shape.maxWidth);
+            ctx.strokeText(el.shape.text, el.shape.x / el.dpr, el.shape.y / el.dpr, el.shape.maxWidth);
         }
     }
 }
@@ -3904,6 +3927,9 @@ function judgeTextStyle(el, ctx) {
     }
     else {
         st.fontSize = '18px';
+    }
+    if (st.fontFamily === undefined) {
+        st.fontFamily = "Arial";
     }
     fontString = st.fontStyle + ' ' + st.fontVariant + ' ' + st.fontWeight + ' ' + st.fontSize + ' ' + st.fontFamily;
     ctx.font = fontString;
@@ -4206,7 +4232,7 @@ class Storage {
         // }
         this.ElementList.forEach(async (value, _key) => {
             value.ctx = ctx;
-            judgeElement(value, ctx);
+            await judgeElement(value, ctx);
         });
     }
 }
@@ -8833,8 +8859,10 @@ class wasmSinGrating extends Elements {
 class Ezpsy {
     id;
     // dom: HTMLElement
+    canvas;
     ctx;
     storage;
+    dpr;
     cStyle;
     // Rectangle: Rectangle
     // constructor(id: number,dom: HTMLElement,cStyle?: canvasStyle){
@@ -8847,12 +8875,15 @@ class Ezpsy {
     // }
     constructor(init) {
         this.id = Count();
+        this.dpr = window.devicePixelRatio || 1;
         this.storage = new Storage();
         this.cStyle = init.style || {
             width: window.innerWidth,
             height: window.innerHeight
         };
-        this.ctx = exportContext(init); //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
+        const eles = exportContext(init); //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
+        this.canvas = eles.canvas;
+        this.ctx = eles.ctx;
     }
     setCanvasStyle(cStyle) {
         let c = this.ctx.canvas;
@@ -8899,20 +8930,20 @@ class Ezpsy {
             // if(index !== -1)
             if (st.ElementList.has(el.name)) {
                 el.remove();
-                this.add(el);
+                await this.add(el);
                 this.refresh();
             }
             else {
                 this.storage.push(el);
                 el.ctx = ctx;
                 el.storage = this.storage;
-                judgeElement(el, ctx);
+                await judgeElement(el, ctx);
             }
         }
         else {
             for (let i = 0; i < el.length; i++) {
                 let e = el[i];
-                this.add(e);
+                await this.add(e);
                 // el[i].ctx = ctx
                 // el[i].storage = this.storage
                 // ezJudge.judgeElement(el[i],ctx)

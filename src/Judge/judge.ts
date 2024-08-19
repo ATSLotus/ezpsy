@@ -327,23 +327,22 @@ export function judgeStyle_text(el: Elements,ctx: CanvasRenderingContext2D){
     }
     if(el.shape.maxWidth === undefined)
     {
-        el.shape.maxWidth = ctx.canvas.width;
+        el.shape.maxWidth = ctx.canvas.width / el.dpr;
     }
     let st = el.style;
     if(st.fill !== 'none' && st.fill !== undefined){
-
         ctx.fillStyle = st.fill;
-        ctx.fillText(el.shape.text,el.shape.x,el.shape.y,el.shape.maxWidth);
+        ctx.fillText(el.shape.text,el.shape.x/el.dpr,el.shape.y/el.dpr,el.shape.maxWidth);
     }
     else{
         if(st.stroke !== 'none' && st.stroke !== undefined){
             ctx.strokeStyle = st.stroke;
-            ctx.strokeText(el.shape.text,el.shape.x,el.shape.y,el.shape.maxWidth);
+            ctx.strokeText(el.shape.text,el.shape.x/el.dpr,el.shape.y/el.dpr,el.shape.maxWidth);
         }
         else{
             st.stroke = "#000"
             ctx.strokeStyle = st.stroke;
-            ctx.strokeText(el.shape.text,el.shape.x,el.shape.y,el.shape.maxWidth);
+            ctx.strokeText(el.shape.text,el.shape.x/el.dpr,el.shape.y/el.dpr,el.shape.maxWidth);
         }
     }
 }
@@ -481,6 +480,9 @@ export function judgeTextStyle(el: Elements,ctx: CanvasRenderingContext2D){
     }
     else{
         st.fontSize = '18px'
+    }
+    if(st.fontFamily === undefined) {
+        st.fontFamily = "Arial"
     }
     fontString = st.fontStyle + ' ' + st.fontVariant + ' ' + st.fontWeight + ' ' + st.fontSize + ' ' + st.fontFamily;
     ctx.font = fontString;

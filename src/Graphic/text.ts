@@ -87,8 +87,6 @@ export function makeText(text: Texts,ctx: CanvasRenderingContext2D): Texts{
     judgeTRS(text)
 
     judgeStyle_text(text,ctx)
-
-    
     
     ctx.closePath()
     ctx.restore()

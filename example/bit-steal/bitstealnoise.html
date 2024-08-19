@@ -6,14 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="../../dist/ezpsy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script> -->
 </head>
 
 <body>
     <div id="sinGrat"></div>
 </body>
-<script>eruda.init();</script>
+<!-- <script>eruda.init();</script> -->
 <script>
+
+    window.addEventListener("resize", () => {
+        location.reload()
+    })
+    
     const average = (arr) => {
         let num = 0
         arr.forEach(item => {
@@ -21,29 +26,66 @@
         })
         return num / arr.length
     }
+    
     (async () => {
         let ez = await ezpsy.init({
-            el: document.getElementById('sinGrat'),
+            el: document.getElementById('sinGrat')
         });
+        const canvas = ez.canvas
+        const physicalWidth = canvas.width;
+        const physicalHeight = canvas.height;
+        const dpr = ez.dpr || 1;
+        const fixationSize = 50
+        let radius = 0
+        const min = Math.min(physicalWidth, physicalHeight)
+        const max = Math.max(physicalWidth, physicalHeight)
+        const radio = 0.75
+        console.log("MAX MIN", max, min)
+        if(max > radio * 2 * min) {
+            radius = Math.floor(radio * min / 3)
+        } else {
+            radius = Math.floor(radio * max / 2 / 3)
+        }
+        const imageSize = 3 * radius + 1
+        console.log("SIZE", radius, imageSize)
+        const offset = Math.floor(radio * (max / 2 - imageSize) / 4)
+        console.log("OFFSET", offset)
         const list = [] 
         let bg = new ezpsy.sinGratBG({
             style: {
-                luminance: 0.5
+                luminance: 0.25
             }
         })
         await ez.add(bg)
         
+        let fixation = new ezpsy.Texts({
+            shape: {
+                text: "+",
+                x: physicalWidth / 2,
+                y: physicalHeight / 2,
+            },
+            style: {
+                fill: "#333333",
+                fontSize: fixationSize
+            },
+            textLine: {
+                textA: "center",
+                textB: "middle"
+            }
+        })
+        await ez.add(fixation)
+        
         let a = new ezpsy.sinGrat2({
             shape: {
-                x: window.innerWidth / 2,
-                y: window.innerHeight / 2,
-                r: 100,
+                x: 1 * physicalWidth / 4 + offset,
+                y: physicalHeight / 2,
+                r: radius,
                 pixelsPerDegree: 57, 
-                spatialFrequency: 2,
+                spatialFrequency: 2 / dpr,
                 angle: 90, 
-                contrast: 1/1000, 
+                contrast:  0.1, 
                 phase: 0,
-                gamma: 1
+                gamma: 0.5
             },
             isNoise: false
         })
@@ -52,6 +94,27 @@
         setTimeout(() => {
             a.draw()
         }, 100)
+
+        let b = new ezpsy.sinGrat2({
+            shape: {
+                x: 3 * physicalWidth / 4 - offset,
+                y: physicalHeight / 2,
+                r: radius,
+                pixelsPerDegree: 57, 
+                spatialFrequency: 2 / dpr,
+                angle: 90, 
+                contrast:  0.1, 
+                phase: 0,
+                gamma: 0.5
+            },
+            isNoise: false
+        })
+        ez.add(b)
+        // await a.pre_draw()
+        setTimeout(() => {
+            b.draw()
+        }, 100)
+
     })()
     
 </script>

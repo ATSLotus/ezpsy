@@ -70,8 +70,10 @@ export { wasmSinGrating } from './Graphic/singratWasm'
 class Ezpsy {
     readonly id: number
     // dom: HTMLElement
+    readonly canvas: HTMLCanvasElement
     readonly ctx: CanvasRenderingContext2D
     private storage: Storage
+    dpr: number
     cStyle?: canvasStyle
 
     // Rectangle: Rectangle
@@ -86,12 +88,15 @@ class Ezpsy {
     // }
     constructor(init?: initProperties){
         this.id = ezUtils.Count();
+        this.dpr = window.devicePixelRatio || 1;
         this.storage = new Storage()
         this.cStyle = init.style || {
             width: window.innerWidth,
             height: window.innerHeight
         }
-        this.ctx = ezCanvas.exportContext(init);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
+        const eles = ezCanvas.exportContext(init);    //此处创建canvas，可仅创建一个canvas，但是目前无法仅清除一个图形
+        this.canvas = eles.canvas
+        this.ctx = eles.ctx
     }
 
     setCanvasStyle(cStyle: canvasStyle){
@@ -145,14 +150,14 @@ class Ezpsy {
             if(st.ElementList.has(el.name))
             {
                 el.remove()
-                this.add(el)
+                await this.add(el)
                 this.refresh()
             }
             else{
                 this.storage.push(el)
                 el.ctx = ctx;
                 el.storage = this.storage
-                ezJudge.judgeElement(el,ctx)
+                await ezJudge.judgeElement(el,ctx)
             }
             
         }
@@ -160,7 +165,7 @@ class Ezpsy {
             for(let i = 0;i < el.length;i++)
             {
                 let e = el[i]
-                this.add(e)
+                await this.add(e)
                 // el[i].ctx = ctx
                 // el[i].storage = this.storage
                 // ezJudge.judgeElement(el[i],ctx)

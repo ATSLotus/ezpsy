@@ -1,5 +1,5 @@
 import { Elements } from "../Element";
-import { Shape, Opts, Style } from "../DataType/dataType";
+import { Shape, Opts, Style, nameStyle } from "../DataType/dataType";
 
 interface GratBGShape extends Shape {
 
@@ -183,7 +183,12 @@ function calculatePixels136(luminance: number) {
     return searchMap136(noiseBit(pixels))
 }
 
+let nameId = 0;
 export class sinGratBG extends Elements {
+    readonly name?: nameStyle = {
+        name: "sinGratBG" + nameId.toString(),
+        graphicId: nameId
+    }
     pixelsList: ImageData;
     luminance: number;
     constructor(opts: GratBGOpts) {

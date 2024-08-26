@@ -60,6 +60,12 @@ function exportContext(init) {
         ctx: ctx
     };
 }
+function refreshContext({ canvas, ctx }) {
+    canvas.width = canvas.width;
+    canvas.height = canvas.height;
+    const dpr = window.devicePixelRatio || 1;
+    ctx.scale(dpr, dpr);
+}
 
 function delay_frame$1(delay) {
     let count = 0;
@@ -2327,7 +2333,7 @@ class sinGrating1 extends Elements {
         this.shape.pixelsPerDegree = !this.shape.pixelsPerDegree ? 57 : this.shape.pixelsPerDegree;
         this.shape.spatialFrequency = !this.shape.spatialFrequency ? 2 : this.shape.spatialFrequency;
         this.shape.angle = !this.shape.angle ? 0 : this.shape.angle;
-        this.shape.contrast = !this.shape.contrast ? 1 : this.shape.contrast;
+        this.shape.contrast = this.shape.contrast === undefined ? 1 : this.shape.contrast;
         this.shape.phase = !this.shape.phase ? 0 : this.shape.phase;
         this.shape.level = !this.shape.level ? 0.5 : this.shape.level;
         this.shape.gamma = !this.shape.gamma ? 1 : this.shape.gamma;
@@ -8953,8 +8959,12 @@ class Ezpsy {
     remove(el) {
         let ctx = this.ctx;
         let c = ctx.canvas;
-        c.width = this.cStyle.width;
-        c.height = this.cStyle.height;
+        // c.width = this.cStyle.width
+        // c.height = this.cStyle.height
+        refreshContext({
+            canvas: c,
+            ctx: ctx
+        });
         this.storage.remove(el);
         this.storage.reDraw(ctx);
     }

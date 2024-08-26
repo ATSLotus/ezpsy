@@ -177,8 +177,12 @@ class Ezpsy {
     {
         let ctx = this.ctx
         let c  = ctx.canvas
-        c.width = this.cStyle.width
-        c.height = this.cStyle.height
+        // c.width = this.cStyle.width
+        // c.height = this.cStyle.height
+        ezCanvas.refreshContext({
+            canvas: c,
+            ctx: ctx
+        })
         this.storage.remove(el);
         this.storage.reDraw(ctx);   
     }

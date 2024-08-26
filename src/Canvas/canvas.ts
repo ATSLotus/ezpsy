@@ -78,3 +78,16 @@ export function exportContext(init?: initProperties): {
         ctx: ctx
     };
 }
+
+export function refreshContext({
+    canvas,
+    ctx
+}: {
+    canvas: HTMLCanvasElement
+    ctx: CanvasRenderingContext2D
+}) {
+    canvas.width = canvas.width
+    canvas.height = canvas.height
+    const dpr = window.devicePixelRatio || 1;
+    ctx.scale(dpr, dpr);
+}

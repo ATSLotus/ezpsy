@@ -3689,24 +3689,24 @@ var ezpsy = (function () {
             makeImg(el, ctx);
         }
         else if (el instanceof sinGrat) {
-            el.pre_draw();
+            await el.pre_draw();
         }
         else if (el instanceof sinGrat0) {
-            el.pre_draw();
+            await el.pre_draw();
         }
         else if (el instanceof sinGrat1) {
-            el.pre_draw();
+            await el.pre_draw();
         }
         else if (el instanceof sinGrat2) {
-            el.pre_draw();
+            await el.pre_draw();
         }
         else if (el instanceof sinGrating) {
             // console.dir("Add Success!");
-            el.pre_draw();
+            await el.pre_draw();
         }
         else if (el instanceof sinGrating1) {
             // console.dir("Add Success!");
-            el.pre_draw();
+            await el.pre_draw();
         }
         else if (el instanceof sinGratBG) {
             // console.dir("Add Success!");

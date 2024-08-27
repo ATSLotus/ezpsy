@@ -193,27 +193,27 @@ export async function judgeElement(el: Elements|Group|Elements[],ctx: CanvasRend
     }
     else if(el instanceof ezSinGrat.sinGrat)
     {
-        (<ezSinGrat.sinGrat>el).pre_draw();
+        await (<ezSinGrat.sinGrat>el).pre_draw();
     }
     else if(el instanceof ezSinGrat0.sinGrat0)
     {
-        (<ezSinGrat0.sinGrat0>el).pre_draw();
+        await (<ezSinGrat0.sinGrat0>el).pre_draw();
     }
     else if(el instanceof ezSinGrat1.sinGrat1)
     {
-        (<ezSinGrat1.sinGrat1>el).pre_draw();
+        await (<ezSinGrat1.sinGrat1>el).pre_draw();
     }
     else if(el instanceof ezSinGrat2.sinGrat2)
     {
-        (<ezSinGrat2.sinGrat2>el).pre_draw();
+        await (<ezSinGrat2.sinGrat2>el).pre_draw();
     }
     else if(el instanceof sinGrating){
         // console.dir("Add Success!");
-        (<sinGrating>el).pre_draw();
+        await (<sinGrating>el).pre_draw();
     }
     else if(el instanceof sinGrating1){
         // console.dir("Add Success!");
-        (<sinGrating1>el).pre_draw();
+        await (<sinGrating1>el).pre_draw();
     }
     else if(el instanceof sinGratBG){
         // console.dir("Add Success!");

@@ -56,13 +56,13 @@ export function exportContext(init?: initProperties): {
         height: window.innerHeight
     }
     const dpr = window.devicePixelRatio || 1;
-    console.log("DPR", dpr)
+    // console.log("DPR", dpr)
     const logicalWidth = style.width ? styleValueParse(style.width) : window.innerWidth;
     const logicalHeight = style.height ? styleValueParse(style.height) : window.innerHeight;
-    console.log("LOGICAL", logicalWidth, logicalHeight)
+    // console.log("LOGICAL", logicalWidth, logicalHeight)
     const physicalWidth = logicalWidth * dpr;
     const physicalHeight = logicalHeight * dpr;
-    console.log("PHYSICAL", physicalWidth, physicalHeight)
+    // console.log("PHYSICAL", physicalWidth, physicalHeight)
     ele.width = physicalWidth;
     ele.height = physicalHeight
     ele.style.width = `${logicalWidth}px`;
@@ -70,6 +70,7 @@ export function exportContext(init?: initProperties): {
     // ele.width = style.width ? styleValueParse(style.width) : window.innerWidth
     // ele.height = style.height ? styleValueParse(style.height) : window.innerHeight;
     ele.style.position = 'absolute'
+    ele.id = "canvas"
     const ctx = ele.getContext('2d');
     ctx.scale(dpr, dpr);
     parentEle.append(ele)

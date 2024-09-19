@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../dist/ezpsy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./sys.js"></script>
+</head>
+
+<body>
+    <div id="sinGrat"></div>
+</body>
+<script>eruda.init();</script>
+<script>
+    const average = (arr) => {
+        let num = 0
+        arr.forEach(item => {
+            num += item
+        })
+        return num / arr.length
+    }
+    (async () => {
+        let ez = await ezpsy.init({
+            el: document.getElementById('sinGrat'),
+        });
+        const list = [] 
+        let a = new ezpsy.sinGrating2({
+            shape: {
+                x: window.innerWidth / 2,
+                y: window.innerHeight / 2,
+                // r: 200,
+                r: 100,
+                pixelsPerDegree: 57, 
+                spatialFrequency: 2,
+                angle: 90, 
+                contrast: 0.1, 
+                phase: 0,
+                level: 0,
+                gamma: 0.5
+            },
+            isNoise: false
+        })
+        let res = []
+        // const t0 = performance.now()
+        // await ez.add(a)
+        // const t1 = performance.now()
+        // console.log(t1 - t0)
+        // await a.pre_draw()
+        // a.draw()
+        for(let i = 0; i < 1005; i++) {
+            const t0 = performance.now()
+            await ez.add(a)
+            const t1 = performance.now()  
+            res.push(t1 - t0)
+        }
+        // console.log(res.join("\n"))
+        const data = res.slice(5)
+        await axios.post("https://testgateway.aitmed.io/test", {
+            time: Date.now(),
+            type: "wasm",
+            browser: getBrowserInfo(),
+            sys: getOperatingSystem(),
+            size: "301",
+            data: data.join("\n")
+        })
+        // console.log(data.join("\n"))
+        console.log("AVERAGE", data.reduce((accumulator, currentValue) => accumulator + currentValue, 0)/data.length)
+    })()
+    
+</script>
+<style>
+    canvas {
+        background-color: #404040;
+    }
+    body {
+        margin: 0;
+    }
+</style>
+</html>

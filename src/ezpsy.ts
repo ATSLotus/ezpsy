@@ -8,6 +8,7 @@ import { Group } from './Group/group'
 import { Storage } from './Storage/storage'
 import { TextLine,Texts } from './Graphic/text'
 import { getWasm } from './setWasm'
+import { setWasm } from './setWasm2'
 import { initWasm } from './initWasm'
 // import { GratOpts,sinGrat } from './Graphic/sinGrat'
 
@@ -49,6 +50,7 @@ export { keypress } from "./Keypress/keypress"
 // export { Dialogue_0} from './Dialogue/dialogue'
 export { sinGrating } from './Graphic/sinGrating'
 export { sinGrating1 } from './Graphic/sinGrating1'
+export { sinGrating2 } from './Graphic/sinGrating2'
 export { sinGrat } from './Graphic/sinGrat'
 export { sinGrat0 } from './Graphic/sinGrat0'
 export { sinGrat1 } from './Graphic/sinGrat1'
@@ -347,6 +349,7 @@ class Ezpsy {
 export async function init(init?: initProperties) {
     await initWasm()
     await getWasm()
+    await setWasm()
     return new Ezpsy(init);
 }
 

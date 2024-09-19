@@ -1,0 +1,30 @@
+[package]
+name = "singrat_opt"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "lib/lib.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "0.2.59"
+js-sys = "0.3.36"
+getrandom = { version = "0.2", features = ["js"] }
+rand = "0.8"
+web-sys = { version = "0.3", features = [ "Window", "Document", "HtmlCanvasElement", "CanvasRenderingContext2d", "ImageData"] }
+
+[profile.release]
+lto = true
+opt-level = 3
+codegen-units = 1
+panic = 'abort'
+
+[profile.dev]
+lto = true
+opt-level = 3
+codegen-units = 1
+panic = 'abort'
+
+[target.'cfg(target_arch = "wasm32")'.features]
+wasm32-unknown-unknown = ["atomics", "bulk-memory"]

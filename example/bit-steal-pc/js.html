@@ -6,16 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="../../dist/ezpsy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="./sys.js"></script>
+    <script src="./sys.js"></script> -->
 </head>
 
 <body>
     <div id="sinGrat"></div>
 </body>
-<script>eruda.init();</script>
+<!-- <script>eruda.init();</script> -->
 <script type="module">
+    function delay_frame(delay) {
+        let count = 0;
+        return new Promise(function (resolve, reject) {
+            (function raf() {
+                count++;
+                let id = window.requestAnimationFrame(raf);
+                if (count > delay) {
+                    window.cancelAnimationFrame(id);
+                    resolve(true);
+                }
+            }())
+        })
+    };
     (async () => {
         const dpr = window.devicePixelRatio || 1;
         const average = (arr) => {
@@ -44,10 +57,9 @@
             },
             isNoise: false
         })
-        // await ez.add(a)
-        // a.draw()
         const list = []
-        for (let i = 0; i < 255; i++) {
+        for (let i = 0; i < 1005; i++) {
+            console.log(i)
             const t0 = performance.now()
             await ez.add(a)
             a.draw()
@@ -56,14 +68,7 @@
             await delay_frame(1)
         }
         const data = list.slice(5)
-        await axios.post("https://testgateway.aitmed.io/test", {
-            time: Date.now(),
-            type: "js-opt",
-            browser: getBrowserInfo(),
-            sys: getOperatingSystem(),
-            size: "1201",
-            data: data.join("\n")
-        })
+        console.log(data.join("\n"))
         console.log("AVERAGE", data.reduce((accumulator, currentValue) => accumulator + currentValue, 0) / data.length)
     })()
 </script>

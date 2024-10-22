@@ -33,7 +33,7 @@
                 x: window.innerWidth / 2,
                 y: window.innerHeight / 2,
                 // r: 200,
-                r: 100,
+                r: 400,
                 pixelsPerDegree: 57, 
                 spatialFrequency: 2,
                 angle: 90, 
@@ -45,30 +45,30 @@
             isNoise: false
         })
         let res = []
-        // const t0 = performance.now()
-        // await ez.add(a)
-        // const t1 = performance.now()
-        // console.log(t1 - t0)
+        const t0 = performance.now()
+        await ez.add(a)
+        const t1 = performance.now()
+        console.log(t1 - t0)
         // await a.pre_draw()
         // a.draw()
-        for(let i = 0; i < 1005; i++) {
-            const t0 = performance.now()
-            await ez.add(a)
-            const t1 = performance.now()  
-            res.push(t1 - t0)
-        }
-        // console.log(res.join("\n"))
-        const data = res.slice(5)
-        await axios.post("https://testgateway.aitmed.io/test", {
-            time: Date.now(),
-            type: "wasm",
-            browser: getBrowserInfo(),
-            sys: getOperatingSystem(),
-            size: "301",
-            data: data.join("\n")
-        })
-        // console.log(data.join("\n"))
-        console.log("AVERAGE", data.reduce((accumulator, currentValue) => accumulator + currentValue, 0)/data.length)
+        // for(let i = 0; i < 1005; i++) {
+        //     const t0 = performance.now()
+        //     await ez.add(a)
+        //     const t1 = performance.now()  
+        //     res.push(t1 - t0)
+        // }
+        // // console.log(res.join("\n"))
+        // const data = res.slice(5)
+        // await axios.post("https://testgateway.aitmed.io/test", {
+        //     time: Date.now(),
+        //     type: "wasm",
+        //     browser: getBrowserInfo(),
+        //     sys: getOperatingSystem(),
+        //     size: "301",
+        //     data: data.join("\n")
+        // })
+        // // console.log(data.join("\n"))
+        // console.log("AVERAGE", data.reduce((accumulator, currentValue) => accumulator + currentValue, 0)/data.length)
     })()
     
 </script>

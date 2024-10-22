@@ -6,7 +6,8 @@ function getOperatingSystem() {
     if (/iPhone|iPad|iPod/i.test(userAgent)) {
         os = 'iOS';
     } else if(/Android/i.test(userAgent)) {
-        os = "Android"
+        // os = "Android"
+        os = "Harmony"
     } else {
         os = 'Unknown';
     }
@@ -26,7 +27,23 @@ function getBrowserInfo() {
         browserName = "Edge";
     } else if (userAgent.indexOf("Safari") > -1) {
         browserName = "Safari";
-    } 
+    } else {
+        browserName = "Firefox";
+    }
 
     return browserName
 }
+
+function delay_frame(delay) {
+    let count = 0;
+    return new Promise(function (resolve, reject) {
+        (function raf() {
+            count++;
+            let id = window.requestAnimationFrame(raf);
+            if (count > delay) {
+                window.cancelAnimationFrame(id);
+                resolve(true);
+            }
+        }())
+    })
+};

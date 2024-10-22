@@ -51,14 +51,14 @@
         // console.log(t1 - t0)
         // await a.pre_draw()
         // a.draw()
-        for(let i = 0; i < 1005; i++) {
+        for(let i = 0; i < 120; i++) {
             const t0 = performance.now()
             await ez.add(a)
             const t1 = performance.now()  
             res.push(t1 - t0)
         }
         // console.log(res.join("\n"))
-        const data = res.slice(5)
+        const data = res.slice(20)
         await axios.post("https://testgateway.aitmed.io/test", {
             time: Date.now(),
             type: "wasm",

@@ -9,12 +9,13 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./sys.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
 </head>
 
 <body>
     <div id="sinGrat"></div>
 </body>
-<!-- <script>eruda.init();</script> -->
+<script>eruda.init();</script>
 <script type="module">
     function delay_frame(delay) {
         let count = 0;
@@ -41,40 +42,32 @@
         const EZPSY = ezpsy.default
         const ez = await ezpsy.init({
             el: document.getElementById('sinGrat'),
+            style: {
+                width: window.innerWidth,
+                height: window.innerHeight,
+            }
         });
-        let a = new ezpsy.sinGrat2({
+
+        const rect = new ezpsy.Rectangle({
             shape: {
-                x: window.innerWidth / 2 * dpr,
-                y: window.innerHeight / 2 * dpr,
-                r: 400,
-                pixelsPerDegree: 57,
-                spatialFrequency: 2,
-                angle: 90,
-                contrast: 0.1,
-                phase: 0,
-                level: 0,
-                gamma: 0.5
+                x: window.innerWidth / 2 - 100,
+                y: window.innerHeight / 2 - 100,
+                width: 200,
+                height: 200,
             },
-            isNoise: false
+            style: {
+                fill: "black"
+            }
         })
-        // const t0 = performance.now()
-        // await ez.add(a)
-        // a.draw()
-        // const t1 = performance.now()
-        // console.log(t1 - t0)
-        const list = []
-        for (let i = 0; i < 1005; i++) {
-            console.log(i)
-            const t0 = performance.now()
-            await ez.add(a)
-            a.draw()
-            const t1 = performance.now()
-            list.push(t1 - t0)
-            await delay_frame(1)
+
+        const frame = 2
+        for(let i = 0; i < frame * 10000; i++) {
+            await ez.add(rect)
+            await delay_frame(frame)
+            ez.remove(rect)
+            await delay_frame(frame)
         }
-        const data = list.slice(5)
-        console.log(data.join("\n"))
-        console.log("AVERAGE", data.reduce((accumulator, currentValue) => accumulator + currentValue, 0) / data.length)
+
     })()
 </script>
 <style>
